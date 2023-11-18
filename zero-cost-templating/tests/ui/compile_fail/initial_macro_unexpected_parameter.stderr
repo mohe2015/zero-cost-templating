@@ -1,0 +1,10 @@
+error: no rules expected the token `"unexpected"`
+  --> tests/ui/compile_fail/initial_macro_unexpected_parameter.rs:11:30
+   |
+9  | #[template_stream("../../../../zero-cost-templating/test.html.hbs")]
+   | -------------------------------------------------------------------- when calling this macro
+10 | pub async fn test() {
+11 |     let template = initial0!("unexpected");
+   |                              ^^^^^^^^^^^^ no rules expected this token in macro call
+   |
+   = note: while trying to match end of macro

@@ -1,0 +1,18 @@
+[package]
+name = "zero-cost-templating-macros"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+proc-macro = true
+
+[dependencies]
+zero-cost-templating-lib = { path = "../zero-cost-templating-lib" }
+syn = { version = "2", features = ["full", "extra-traits"] }
+quote = "1"
+proc-macro2 = "1"
+nom = "7"
+itertools = "0.11"
+petgraph = "0.6"
