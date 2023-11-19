@@ -61,6 +61,8 @@ pub fn children_to_ast(
     for child in input {
         match child {
             Child::Variable(next_variable) => {
+                // https://html.spec.whatwg.org/dev/syntax.html
+                // https://github.com/cure53/DOMPurify/blob/main/src/tags.js
                 let escaping_fun = match parent {
                     "h1" | "li" | "span" => EscapingFunction::HtmlElementInner,
                     other => panic!("unknown escaping rules for element {other}"),
@@ -122,8 +124,10 @@ pub fn element_to_ast(
         for value_part in attribute.value {
             match value_part {
                 AttributeValuePart::Variable(next_variable) => {
+                    // https://html.spec.whatwg.org/dev/syntax.html
+                    // https://github.com/cure53/DOMPurify/blob/main/src/attrs.js
                     let escaping_fun = match (name.as_str(), attribute.key.as_str()) {
-                        ("input", "value") | (_, "class") => EscapingFunction::HtmlAttribute,
+                        (_, "value" | "class") => EscapingFunction::HtmlAttribute,
                         (name, attr) => panic!(
                             "in element {name}, unknown escaping rules for attribute name {attr}"
                         ),

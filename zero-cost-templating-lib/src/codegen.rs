@@ -127,9 +127,14 @@ impl InnerMacroReplace {
                         EscapingFunction::NoVariableStart => quote! {
                             unreachable();
                         },
-                        EscapingFunction::HtmlAttribute | EscapingFunction::HtmlElementInner => {
+                        EscapingFunction::HtmlAttribute => {
                             quote! {
-                                yield zero_cost_templating::encode_safe(#second_parameter);
+                                yield zero_cost_templating::encode_double_quoted_attribute(#second_parameter);
+                            }
+                        }
+                        EscapingFunction::HtmlElementInner => {
+                            quote! {
+                                yield zero_cost_templating::encode_element_text(#second_parameter);
                             }
                         }
                     };
