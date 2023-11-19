@@ -120,33 +120,37 @@ pub fn element_to_ast(
     let name = input.name;
     write!(&mut current.text, "<{name}").unwrap();
     for attribute in input.attributes {
-        write!(&mut current.text, r#" {}=""#, attribute.key).unwrap();
-        for value_part in attribute.value {
-            match value_part {
-                AttributeValuePart::Variable(next_variable) => {
-                    // https://html.spec.whatwg.org/dev/syntax.html
-                    // https://github.com/cure53/DOMPurify/blob/main/src/attrs.js
-                    let escaping_fun = match (name.as_str(), attribute.key.as_str()) {
-                        (_, "value" | "class") => EscapingFunction::HtmlAttribute,
-                        (name, attr) => panic!(
-                            "in element {name}, unknown escaping rules for attribute name {attr}"
-                        ),
-                    };
-                    let previous = last;
-                    last = graph.add_node(());
-                    graph.add_edge(previous, last, current);
-                    current = IntermediateAstElement {
-                        variable: Some(next_variable),
-                        escaping_fun,
-                        text: String::new(),
-                    };
-                }
-                AttributeValuePart::Literal(string) => {
-                    write!(&mut current.text, "{string}").unwrap();
+        write!(&mut current.text, r#" {}="#, attribute.key).unwrap();
+        if let Some(value) = attribute.value {
+            write!(&mut current.text, r#"""#).unwrap();
+            for value_part in value {
+                match value_part {
+                    AttributeValuePart::Variable(next_variable) => {
+                        // https://html.spec.whatwg.org/dev/syntax.html
+                        // https://github.com/cure53/DOMPurify/blob/main/src/attrs.js
+                        let escaping_fun = match (name.as_str(), attribute.key.as_str()) {
+                            (_, "value" | "class") => EscapingFunction::HtmlAttribute,
+                            (name, attr) => panic!(
+                                "in element {name}, unknown escaping rules for attribute name \
+                                 {attr}"
+                            ),
+                        };
+                        let previous = last;
+                        last = graph.add_node(());
+                        graph.add_edge(previous, last, current);
+                        current = IntermediateAstElement {
+                            variable: Some(next_variable),
+                            escaping_fun,
+                            text: String::new(),
+                        };
+                    }
+                    AttributeValuePart::Literal(string) => {
+                        write!(&mut current.text, "{string}").unwrap();
+                    }
                 }
             }
+            write!(&mut current.text, r#"""#).unwrap();
         }
-        write!(&mut current.text, r#"""#).unwrap();
     }
     write!(&mut current.text, ">").unwrap();
     (last, current) = children_to_ast(graph, last, current, input.children, &name);
