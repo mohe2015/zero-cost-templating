@@ -1,4 +1,4 @@
-use heck::{ToUpperCamelCase};
+use heck::ToUpperCamelCase;
 use itertools::Itertools;
 use petgraph::prelude::NodeIndex;
 use petgraph::stable_graph::StableGraph;

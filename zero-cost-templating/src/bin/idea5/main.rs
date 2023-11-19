@@ -8,7 +8,7 @@ use std::pin::pin;
 use futures::StreamExt;
 use futures_async_stream::stream;
 use tokio::io::{stdout, AsyncWriteExt};
-use zero_cost_templating_macros::template_stream;
+use zero_cost_templating::template_stream;
 
 // https://github.com/dtolnay/cargo-expand
 
