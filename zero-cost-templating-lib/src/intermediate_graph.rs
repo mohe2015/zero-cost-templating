@@ -4,7 +4,7 @@ use petgraph::stable_graph::{NodeIndex, StableGraph};
 
 use crate::html_recursive_descent::{AttributeValuePart, Child, Element};
 
-#[derive(Debug, PartialEq, Eq, Hash, PartialOrd, Ord, Clone)]
+#[derive(Debug, PartialEq, Eq, Hash, PartialOrd, Ord, Clone, Copy)]
 pub enum EscapingFunction {
     NoVariableStart,
     HtmlAttribute,
@@ -56,16 +56,21 @@ pub fn children_to_ast(
     mut last: NodeIndex,
     mut current: IntermediateAstElement,
     input: Vec<Child>,
+    parent: &str,
 ) -> (NodeIndex, IntermediateAstElement) {
     for child in input {
         match child {
             Child::Variable(next_variable) => {
+                let escaping_fun = match parent {
+                    "h1" | "li" | "span" => EscapingFunction::HtmlElementInner,
+                    other => panic!("unknown escaping rules for element {other}"),
+                };
                 let previous = last;
                 last = graph.add_node(());
                 graph.add_edge(previous, last, current);
                 current = IntermediateAstElement {
                     variable: Some(next_variable),
-                    escaping_fun: EscapingFunction::HtmlElementInner,
+                    escaping_fun,
                     text: String::new(),
                 };
             }
@@ -73,6 +78,10 @@ pub fn children_to_ast(
                 write!(&mut current.text, "{string}").unwrap();
             }
             Child::Element(element) => {
+                assert!(
+                    !(parent == "script" || parent == "style"),
+                    "children are unsafe in <script> and <style>"
+                );
                 (last, current) = element_to_ast(graph, last, current, element);
             }
             Child::Each(_identifier, children) => {
@@ -85,7 +94,7 @@ pub fn children_to_ast(
                     escaping_fun: EscapingFunction::NoVariableStart,
                     text: String::new(),
                 };
-                (last, current) = children_to_ast(graph, last, current, children);
+                (last, current) = children_to_ast(graph, last, current, children, parent);
                 graph.add_edge(last, loop_start, current);
                 current = IntermediateAstElement {
                     variable: None,
@@ -113,12 +122,18 @@ pub fn element_to_ast(
         for value_part in attribute.value {
             match value_part {
                 AttributeValuePart::Variable(next_variable) => {
+                    let escaping_fun = match (name.as_str(), attribute.key.as_str()) {
+                        ("input", "value") | (_, "class") => EscapingFunction::HtmlAttribute,
+                        (name, attr) => panic!(
+                            "in element {name}, unknown escaping rules for attribute name {attr}"
+                        ),
+                    };
                     let previous = last;
                     last = graph.add_node(());
                     graph.add_edge(previous, last, current);
                     current = IntermediateAstElement {
                         variable: Some(next_variable),
-                        escaping_fun: EscapingFunction::HtmlElementInner,
+                        escaping_fun,
                         text: String::new(),
                     };
                 }
@@ -130,7 +145,7 @@ pub fn element_to_ast(
         write!(&mut current.text, r#"""#).unwrap();
     }
     write!(&mut current.text, ">").unwrap();
-    (last, current) = children_to_ast(graph, last, current, input.children);
+    (last, current) = children_to_ast(graph, last, current, input.children, &name);
     write!(&mut current.text, "</{name}>").unwrap();
     (last, current)
 }
