@@ -64,7 +64,7 @@ pub fn children_to_ast(
                 // https://html.spec.whatwg.org/dev/syntax.html
                 // https://github.com/cure53/DOMPurify/blob/main/src/tags.js
                 let escaping_fun = match parent {
-                    "h1" | "li" | "span" => EscapingFunction::HtmlElementInner,
+                    "h1" | "li" | "span" | "title" | "main" => EscapingFunction::HtmlElementInner,
                     other => panic!("unknown escaping rules for element {other}"),
                 };
                 let previous = last;
