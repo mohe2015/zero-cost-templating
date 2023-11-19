@@ -119,7 +119,7 @@ pub fn encode_element_text<'a, I: Into<Cow<'a, str>>>(input: I) -> Cow<'a, str> 
     // https://html.spec.whatwg.org/dev/syntax.html
     // https://www.php.net/manual/en/function.htmlspecialchars.php
     static REGEX: OnceLock<regex::Regex> = OnceLock::new();
-    let regex = REGEX.get_or_init(|| regex::Regex::new("[&<>]").unwrap());
+    let regex = REGEX.get_or_init(|| regex::Regex::new("[&<]").unwrap());
 
     let input = input.into();
     match regex.replace_all(&input, |captures: &Captures| {

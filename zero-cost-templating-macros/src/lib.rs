@@ -118,9 +118,9 @@ use quote::quote;
 use syn::visit_mut::VisitMut;
 use syn::{parse_macro_input, Item, LitStr};
 use zero_cost_templating_lib::codegen::{codegen, InnerMacroReplace};
-use zero_cost_templating_lib::html_recursive_descent::parse_element;
+use zero_cost_templating_lib::html_recursive_descent::parse_children;
 use zero_cost_templating_lib::intermediate_graph::{
-    element_to_ast, EscapingFunction, IntermediateAstElement,
+    children_to_ast, EscapingFunction, IntermediateAstElement,
 };
 
 // https://veykril.github.io/posts/ide-proc-macros/
@@ -142,7 +142,7 @@ pub fn template_stream(
         .unwrap_or_else(|err| panic!("failed to read file at path: {} {}", path.display(), err));
 
     let mut input = peek_nth(input.chars());
-    let dom = match parse_element(&mut input) {
+    let dom = match parse_children(&mut input) {
         Ok(element) => {
             let remaining_input: String = input.collect();
             assert_eq!(
@@ -165,7 +165,7 @@ pub fn template_stream(
         escaping_fun: EscapingFunction::NoVariableStart,
         text: String::new(),
     };
-    (last, current) = element_to_ast(&mut graph, last, current, dom);
+    (last, current) = children_to_ast(&mut graph, last, current, dom, "root");
     let previous = last;
     last = graph.add_node(());
     graph.add_edge(previous, last, current);
