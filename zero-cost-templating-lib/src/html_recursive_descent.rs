@@ -130,7 +130,7 @@ pub fn parse_attribute_value<I: Iterator<Item = char>>(
 #[derive(PartialEq, Eq, Debug)]
 pub struct Attribute {
     pub key: String,
-    pub value: Vec<AttributeValuePart>,
+    pub value: Option<Vec<AttributeValuePart>>,
 }
 
 pub fn parse_attribute<I: Iterator<Item = char>>(
@@ -138,21 +138,38 @@ pub fn parse_attribute<I: Iterator<Item = char>>(
 ) -> Result<Attribute, String> {
     let mut inner = || -> Result<_, String> {
         let mut key = String::new();
-        loop {
-            match input.next() {
-                Some('=') => break,
-                Some(byte) => {
+        let has_value = loop {
+            match input.peek() {
+                Some('=') => {
+                    input.next().unwrap();
+                    break true;
+                }
+                Some('>') => {
+                    break false;
+                }
+                Some(byte) if byte.is_ascii_whitespace() => {
+                    break false;
+                }
+                Some(_) => {
+                    let byte = input.next().unwrap();
                     key.push(byte);
                 }
                 None => {
                     return Err("expected = but found end of input".to_owned());
                 }
             }
+        };
+        if has_value {
+            expect(input, '"')?;
+            let value = parse_attribute_value(input)?;
+            expect(input, '"')?;
+            Ok(Attribute {
+                key,
+                value: Some(value),
+            })
+        } else {
+            Ok(Attribute { key, value: None })
         }
-        expect(input, '"')?;
-        let value = parse_attribute_value(input)?;
-        expect(input, '"')?;
-        Ok(Attribute { key, value })
     };
     inner().map_err(|err| format!("{err}\nwhile parsing attribute"))
 }
@@ -270,18 +287,29 @@ pub fn parse_element<I: Iterator<Item = char>>(input: &mut PeekNth<I>) -> Result
                 }
             }
         }
-        let children = parse_children(input)?;
-        expect(input, '<')?;
-        expect(input, '/')?;
-        for character in name.chars() {
-            expect(input, character)?;
+        // https://html.spec.whatwg.org/dev/syntax.html#void-elements
+        match name.as_str() {
+            "!doctype" | "area" | "base" | "br" | "col" | "embed" | "hr" | "img" | "input"
+            | "link" | "meta" | "source" | "track" | "wbr" => Ok(Element {
+                name,
+                attributes,
+                children: Vec::new(),
+            }),
+            _ => {
+                let children = parse_children(input)?;
+                expect(input, '<')?;
+                expect(input, '/')?;
+                for character in name.chars() {
+                    expect(input, character)?;
+                }
+                expect(input, '>')?;
+                Ok(Element {
+                    name,
+                    attributes,
+                    children,
+                })
+            }
         }
-        expect(input, '>')?;
-        Ok(Element {
-            name,
-            attributes,
-            children,
-        })
     };
     inner().map_err(|err| format!("{err}\nwhile parsing element"))
 }
@@ -449,7 +477,7 @@ mod tests {
         assert_eq!(
             Ok(Attribute {
                 key: String::new(),
-                value: vec![]
+                value: Some(vec![])
             }),
             parse_attribute(&mut peek_nth(peek_nth(r#"="""#.chars())))
         );
@@ -460,7 +488,7 @@ mod tests {
         assert_eq!(
             Ok(Attribute {
                 key: "a".to_owned(),
-                value: vec![]
+                value: Some(vec![])
             }),
             parse_attribute(&mut peek_nth(r#"a="""#.chars()))
         );
@@ -471,7 +499,7 @@ mod tests {
         assert_eq!(
             Ok(Attribute {
                 key: "a".to_owned(),
-                value: vec![AttributeValuePart::Literal("test".to_owned()),]
+                value: Some(vec![AttributeValuePart::Literal("test".to_owned()),])
             }),
             parse_attribute(&mut peek_nth(r#"a="test""#.chars()))
         );
@@ -487,7 +515,7 @@ mod tests {
         assert_eq!(
             Ok(vec![Attribute {
                 key: "a".to_owned(),
-                value: vec![AttributeValuePart::Literal("test".to_owned()),]
+                value: Some(vec![AttributeValuePart::Literal("test".to_owned()),])
             }]),
             parse_attributes(&mut peek_nth(r#"a="test""#.chars()))
         );
@@ -499,11 +527,11 @@ mod tests {
             Ok(vec![
                 Attribute {
                     key: "a".to_owned(),
-                    value: vec![AttributeValuePart::Literal("test".to_owned()),]
+                    value: Some(vec![AttributeValuePart::Literal("test".to_owned()),])
                 },
                 Attribute {
                     key: "b".to_owned(),
-                    value: vec![AttributeValuePart::Literal("jo".to_owned()),]
+                    value: Some(vec![AttributeValuePart::Literal("jo".to_owned()),])
                 }
             ]),
             parse_attributes(&mut peek_nth("a=\"test\" \n\tb=\"jo\"".chars()))
@@ -602,7 +630,7 @@ mod tests {
                 name: "a".to_owned(),
                 attributes: vec![Attribute {
                     key: "a".to_owned(),
-                    value: vec![AttributeValuePart::Literal("hi".to_owned())]
+                    value: Some(vec![AttributeValuePart::Literal("hi".to_owned())])
                 }],
                 children: vec![],
             }),
