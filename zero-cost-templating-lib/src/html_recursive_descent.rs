@@ -270,18 +270,29 @@ pub fn parse_element<I: Iterator<Item = char>>(input: &mut PeekNth<I>) -> Result
                 }
             }
         }
-        let children = parse_children(input)?;
-        expect(input, '<')?;
-        expect(input, '/')?;
-        for character in name.chars() {
-            expect(input, character)?;
+        // https://html.spec.whatwg.org/dev/syntax.html#void-elements
+        match name.as_str() {
+            "!doctype" | "area" | "base" | "br" | "col" | "embed" | "hr" | "img" | "input"
+            | "link" | "meta" | "source" | "track" | "wbr" => Ok(Element {
+                name,
+                attributes,
+                children: Vec::new(),
+            }),
+            _ => {
+                let children = parse_children(input)?;
+                expect(input, '<')?;
+                expect(input, '/')?;
+                for character in name.chars() {
+                    expect(input, character)?;
+                }
+                expect(input, '>')?;
+                Ok(Element {
+                    name,
+                    attributes,
+                    children,
+                })
+            }
         }
-        expect(input, '>')?;
-        Ok(Element {
-            name,
-            attributes,
-            children,
-        })
     };
     inner().map_err(|err| format!("{err}\nwhile parsing element"))
 }
