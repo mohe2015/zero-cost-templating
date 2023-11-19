@@ -117,10 +117,11 @@ use petgraph::stable_graph::StableGraph;
 use quote::quote;
 use syn::visit_mut::VisitMut;
 use syn::{parse_macro_input, Item, LitStr};
-use zero_cost_templating_lib::codegen::{
-    codegen, element_to_ast, EscapingFunction, InnerMacroReplace, IntermediateAstElement,
-};
+use zero_cost_templating_lib::codegen::{codegen, InnerMacroReplace};
 use zero_cost_templating_lib::html_recursive_descent::parse_element;
+use zero_cost_templating_lib::intermediate_graph::{
+    element_to_ast, EscapingFunction, IntermediateAstElement,
+};
 
 // https://veykril.github.io/posts/ide-proc-macros/
 // https://github.com/rust-lang/rust-analyzer/pull/11444
