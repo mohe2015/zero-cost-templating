@@ -105,8 +105,34 @@
 #![feature(coroutines)]
 #![feature(lint_reasons)]
 
+extern crate alloc;
+
+use alloc::borrow::Cow;
+use std::sync::OnceLock;
+
 pub use futures::stream::iter;
 pub use futures::Stream;
+use regex::Captures;
+//pub use html_escape::{encode_double_quoted_attribute, encode_safe};
+
+pub fn encode_safe<'a, I: Into<Cow<'a, str>>>(input: I) -> Cow<'a, str> {
+    static REGEX: OnceLock<regex::Regex> = OnceLock::new();
+    let regex = REGEX.get_or_init(|| regex::Regex::new("[&<>\"]").unwrap());
+
+    let input = input.into();
+    match regex.replace_all(&input, |captures: &Captures| {
+        match captures.get(0).unwrap().as_str() {
+            "&" => "&amp;",
+            "<" => "&lt;",
+            ">" => "&gt;",
+            "\"" => "&quot;",
+            _ => unreachable!(),
+        }
+    }) {
+        Cow::Borrowed(_) => input,
+        Cow::Owned(owned) => Cow::Owned(owned),
+    }
+}
 
 #[cfg(test)]
 mod tests {

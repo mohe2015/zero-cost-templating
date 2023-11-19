@@ -32,19 +32,19 @@ pub async fn get_articles_stream() {
 pub async fn test() {
     let template = initial0!();
     let template = template0!(template);
-    let page_title = Cow::from("thetitle");
+    let page_title = "the>t&it<l\"e";
     let template = page_title1!(template, page_title);
-    let csrf_token = Cow::from("thetoken");
+    let csrf_token = "thetoken";
     let mut template = csrf_token2!(template, csrf_token);
     let articles = get_articles_stream();
     #[for_await]
     for article in articles {
         let inner_template = template3!(template);
         let inner_template = title4!(inner_template, article);
-        template = text5!(inner_template, Cow::from("a"));
+        template = text5!(inner_template, "a");
     }
     let template = template6!(template);
-    copyright_year7!(template, Cow::from("2023".to_string()));
+    copyright_year7!(template, "2023");
 }
 
 #[tokio::main]

@@ -256,13 +256,23 @@ impl InnerMacroReplace {
                     let tmp = quote! {
                         let magic_expression_result: #template_struct = #first_parameter;
                     };
+                    let escaped_value = match edge.weight().escaping_fun {
+                        EscapingFunction::NoVariableStart => quote! {
+                            unreachable();
+                        },
+                        EscapingFunction::HtmlAttribute | EscapingFunction::HtmlElementInner => {
+                            quote! {
+                                yield zero_cost_templating::encode_safe(#second_parameter);
+                            }
+                        }
+                    };
                     Some(Expr::Verbatim(quote! {
                         {
                             {
                                 #tmp
                                 drop(magic_expression_result);
                             }
-                            yield #second_parameter;
+                            #escaped_value
                             yield Cow::from(#text);
                             #next_template_struct
                         } #semicolon
