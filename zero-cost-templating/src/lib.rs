@@ -113,6 +113,7 @@ use std::sync::OnceLock;
 pub use futures::stream::iter;
 pub use futures::Stream;
 use regex::Captures;
+pub use zero_cost_templating_macros::template_stream;
 //pub use html_escape::{encode_double_quoted_attribute, encode_safe};
 
 pub fn encode_element_text<'a, I: Into<Cow<'a, str>>>(input: I) -> Cow<'a, str> {
