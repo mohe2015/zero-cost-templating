@@ -21,7 +21,6 @@ use zero_cost_templating_macros::template_stream;
 // search for
 // `{static coroutine@
 
-#[inline(always)]
 #[stream(item = Cow<'static, str>)]
 pub async fn get_articles_stream() {
     yield Cow::from("hi");
