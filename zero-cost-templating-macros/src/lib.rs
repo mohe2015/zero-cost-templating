@@ -143,7 +143,14 @@ pub fn template_stream(
 
     let mut input = peek_nth(input.chars());
     let dom = match parse_element(&mut input) {
-        Ok(element) => element,
+        Ok(element) => {
+            let remaining_input: String = input.collect();
+            assert_eq!(
+                remaining_input, "",
+                "{element:?}\nremaining input: {remaining_input}"
+            );
+            element
+        }
         Err(error) => {
             let remaining_input: String = input.collect();
             panic!("{error}\nremaining input: {remaining_input}");
