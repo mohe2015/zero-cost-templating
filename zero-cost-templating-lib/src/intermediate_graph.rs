@@ -120,9 +120,9 @@ pub fn element_to_ast(
     let name = input.name;
     write!(&mut current.text, "<{name}").unwrap();
     for attribute in input.attributes {
-        write!(&mut current.text, r#" {}="#, attribute.key).unwrap();
+        write!(&mut current.text, r#" {}"#, attribute.key).unwrap();
         if let Some(value) = attribute.value {
-            write!(&mut current.text, r#"""#).unwrap();
+            write!(&mut current.text, r#"=""#).unwrap();
             for value_part in value {
                 match value_part {
                     AttributeValuePart::Variable(next_variable) => {
@@ -154,6 +154,13 @@ pub fn element_to_ast(
     }
     write!(&mut current.text, ">").unwrap();
     (last, current) = children_to_ast(graph, last, current, input.children, &name);
-    write!(&mut current.text, "</{name}>").unwrap();
+    // https://html.spec.whatwg.org/dev/syntax.html#void-elements
+    match name.as_str() {
+        "!doctype" | "area" | "base" | "br" | "col" | "embed" | "hr" | "img" | "input" | "link"
+        | "meta" | "source" | "track" | "wbr" => {}
+        _ => {
+            write!(&mut current.text, "</{name}>").unwrap();
+        }
+    }
     (last, current)
 }

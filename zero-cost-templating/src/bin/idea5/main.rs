@@ -23,8 +23,8 @@ use zero_cost_templating_macros::template_stream;
 
 #[stream(item = Cow<'static, str>)]
 pub async fn get_articles_stream() {
-    yield Cow::from("hi");
-    yield Cow::from("jo");
+    yield Cow::from("ef>eft&t<lef\"efe");
+    yield Cow::from("ab>eeehvdft&t<l\"e");
 }
 
 #[template_stream("test.html.hbs")]
@@ -33,17 +33,17 @@ pub async fn test() {
     let template = template0!(template);
     let page_title = "the>t&it<l\"e";
     let template = page_title1!(template, page_title);
-    let csrf_token = "thetoken";
+    let csrf_token = "the>t&ok<e\"n";
     let mut template = csrf_token2!(template, csrf_token);
     let articles = get_articles_stream();
     #[for_await]
     for article in articles {
         let inner_template = template3!(template);
         let inner_template = title4!(inner_template, article);
-        template = text5!(inner_template, "a");
+        template = text5!(inner_template, "twdhfewfe>et&ieft<l\"e");
     }
     let template = template6!(template);
-    copyright_year7!(template, "2023");
+    copyright_year7!(template, "errhj>et&t<l\"e");
 }
 
 #[tokio::main]
