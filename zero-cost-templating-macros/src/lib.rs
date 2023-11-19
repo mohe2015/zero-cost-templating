@@ -114,7 +114,7 @@ use std::path::PathBuf;
 use itertools::peek_nth;
 use petgraph::dot::Dot;
 use petgraph::stable_graph::StableGraph;
-use quote::quote;
+use quote::{format_ident, quote};
 use syn::visit_mut::VisitMut;
 use syn::{parse_macro_input, Item, LitStr};
 use zero_cost_templating_lib::codegen::{codegen, InnerMacroReplace};
@@ -137,6 +137,9 @@ pub fn template_stream(
     let input_path = parse_macro_input!(attributes as LitStr);
     let root = PathBuf::from(env::var("CARGO_MANIFEST_DIR").unwrap());
     let path = root.join(input_path.value());
+
+    let file_name = path.file_name().unwrap().to_string_lossy();
+    let template_name = file_name.trim_end_matches(".html.hbs");
 
     let input = std::fs::read_to_string(&path)
         .unwrap_or_else(|err| panic!("failed to read file at path: {} {}", path.display(), err));
@@ -170,7 +173,7 @@ pub fn template_stream(
     last = graph.add_node(());
     graph.add_edge(previous, last, current);
 
-    let mut file = File::create("foo.dot").unwrap();
+    let mut file = File::create(format!("{template_name}.dot")).unwrap();
     file.write_all(
         format!(
             "{}",
@@ -182,14 +185,21 @@ pub fn template_stream(
         .as_bytes(),
     )
     .unwrap();
-    let code = codegen(&graph, first, last);
+    let code = codegen(template_name, &graph, first, last);
 
     let mut item = parse_macro_input!(item as Item);
 
-    InnerMacroReplace { graph, first, last }.visit_item_mut(&mut item);
+    InnerMacroReplace {
+        template_name: template_name.to_owned(),
+        graph,
+        first,
+        last,
+    }
+    .visit_item_mut(&mut item);
 
+    let recompile_ident = format_ident!("_{}_FORCE_RECOMPILE", template_name);
     let expanded = quote! {
-        const _FORCE_RECOMPILE: &'static str = include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/", #input_path));
+        const #recompile_ident: &'static str = include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/", #input_path));
 
         #code
 

@@ -1,3 +1,4 @@
+use heck::{AsUpperCamelCase, ToUpperCamelCase};
 use itertools::Itertools;
 use petgraph::prelude::NodeIndex;
 use petgraph::stable_graph::StableGraph;
@@ -11,6 +12,7 @@ use syn::{visit_mut, Expr, Macro, Stmt, Token};
 use crate::intermediate_graph::{EscapingFunction, IntermediateAstElement};
 
 pub struct InnerMacroReplace {
+    pub template_name: String,
     pub graph: StableGraph<(), IntermediateAstElement>,
     pub first: NodeIndex,
     pub last: NodeIndex,
@@ -37,7 +39,9 @@ impl InnerMacroReplace {
                         // fall back to compiler macro error
                         return None;
                     }
-                    let template_struct = format_ident!("Template{}", self.first.index());
+                    let template_struct = format_ident!(
+                        "{}Template{}",
+                        self.template_name.to_upper_camel_case(), self.first.index());
                     return Some(Expr::Verbatim(quote_spanned! {span=>
                         {
                             #template_struct
@@ -57,7 +61,8 @@ impl InnerMacroReplace {
 
                     let text = &edge.weight().text;
                     let template_struct = format_ident!(
-                        "Template{}",
+                        "{}Template{}",
+                        self.template_name.to_upper_camel_case(),
                         edge.source().index(),
                         span = input.path.span()
                     ); // good span for mismatched type error
@@ -66,7 +71,9 @@ impl InnerMacroReplace {
                             ()
                         }
                     } else {
-                        let ident = format_ident!("Template{}", edge.target().index(), span = span);
+                        let ident = format_ident!(
+                            "{}Template{}",
+                            self.template_name.to_upper_camel_case(), edge.target().index(), span = span);
                         quote! {
                             #ident
                         }
@@ -105,7 +112,8 @@ impl InnerMacroReplace {
                     let _second_parameter_span = second_parameter.span();
 
                     let template_struct = format_ident!(
-                        "Template{}",
+                        "{}Template{}",
+                        self.template_name.to_upper_camel_case(),
                         edge.source().index(),
                         span = input.path.span()
                     ); // good span for mismatched type error
@@ -114,7 +122,9 @@ impl InnerMacroReplace {
                             ()
                         }
                     } else {
-                        let ident = format_ident!("Template{}", edge.target().index(), span = span);
+                        let ident = format_ident!(
+                            "{}Template{}",
+                            self.template_name.to_upper_camel_case(), edge.target().index(), span = span);
                         quote! {
                             #ident
                         }
@@ -179,20 +189,26 @@ impl VisitMut for InnerMacroReplace {
 
 #[must_use]
 pub fn codegen(
+    template_name: &str,
     graph: &StableGraph<(), IntermediateAstElement>,
     first: NodeIndex,
     last: NodeIndex,
 ) -> proc_macro2::TokenStream {
     let instructions = graph.node_references().map(|(node_index, _node)| {
-        let template_struct = format_ident!("Template{}", node_index.index());
+        let template_struct = format_ident!(
+            "{}Template{}",
+            template_name.to_upper_camel_case(),
+            node_index.index()
+        );
 
         quote! {
             #[must_use]
             pub struct #template_struct;
         }
     });
-    let edges = graph.edge_references().map(|edge| {
-        edge.weight().variable.as_ref().map_or_else(
+    let edges =
+        graph.edge_references().map(|edge| {
+            edge.weight().variable.as_ref().map_or_else(
             || {
                 let variable_name = format_ident!("{}{}", "template", edge.id().index());
                 let next_template_struct = if edge.target() == last {
@@ -200,7 +216,9 @@ pub fn codegen(
                         ()
                     }
                 } else {
-                    let ident = format_ident!("Template{}", edge.target().index());
+                    let ident = format_ident!(
+                        "{}Template{}",
+                        template_name.to_upper_camel_case(), edge.target().index());
                     quote! {
                         #ident
                     }
@@ -219,7 +237,9 @@ pub fn codegen(
                         ()
                     }
                 } else {
-                    let ident = format_ident!("Template{}", edge.target().index());
+                    let ident = format_ident!(
+                        "{}Template{}",
+                        template_name.to_upper_camel_case(), edge.target().index());
                     quote! {
                         #ident
                     }
@@ -232,10 +252,14 @@ pub fn codegen(
                 }
             },
         )
-    });
+        });
     let first_index = first.index();
     let ident = format_ident!("initial{}", first_index);
-    let template_struct = format_ident!("Template{}", first_index);
+    let template_struct = format_ident!(
+        "{}Template{}",
+        template_name.to_upper_camel_case(),
+        first_index
+    );
     let other = quote! {
         #[allow(unused)]
         macro_rules! #ident {
