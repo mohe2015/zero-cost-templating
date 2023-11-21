@@ -696,4 +696,12 @@ mod tests {
             ))
         );
     }
+
+    #[test]
+    fn partial_partial_block() {
+        assert_eq!(
+            Ok(()),
+            parse_partial_block(&mut peek_nth("test{{@partial-block}}test".chars()))
+        );
+    }
 }
