@@ -106,6 +106,7 @@ pub fn children_to_ast(
                 last = loop_start;
             }
             Child::Partial(_, _) => todo!(),
+            Child::PartialBlockPartial => todo!(),
         }
     }
     (last, current)
