@@ -106,23 +106,24 @@ pub fn children_to_ast(
                 last = loop_start;
             }
             Child::PartialBlock(name, children) => {
-                let before_inner_template = last;
+                let first = last;
                 let inner_template = graph.add_node(None);
                 last = inner_template;
-                graph.add_edge(before_inner_template, last, current);
+                graph.add_edge(first, last, current);
+
+                let inner_template_start = graph.add_node(None);
+                last = inner_template_start;
                 current = IntermediateAstElement {
                     variable: None,
                     escaping_fun: EscapingFunction::NoVariableStart,
                     text: String::new(),
                 };
 
-                // TODO FIXME get first new node created in there (maybe none?)
                 (last, current) = children_to_ast(graph, last, current, children, parent);
 
                 let previous = last;
                 let after_all = graph.add_node(None);
                 last = after_all;
-                graph.add_edge(previous, last, current);
                 current = IntermediateAstElement {
                     variable: None,
                     escaping_fun: EscapingFunction::NoVariableStart,
@@ -131,7 +132,7 @@ pub fn children_to_ast(
 
                 graph[inner_template] = Some(format!(
                     "{name}Template<Template{}, Template{}>",
-                    before_inner_template.index(),
+                    inner_template_start.index(),
                     after_all.index(),
                 ));
             }
