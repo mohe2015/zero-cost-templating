@@ -161,7 +161,7 @@ pub fn template_stream(
     };
 
     let mut graph = StableGraph::new();
-    let first = graph.add_node(());
+    let first = graph.add_node(None);
     let mut last = first;
     let mut current = IntermediateAstElement {
         variable: None,
@@ -170,7 +170,7 @@ pub fn template_stream(
     };
     (last, current) = children_to_ast(&mut graph, last, current, dom, "root");
     let previous = last;
-    last = graph.add_node(());
+    last = graph.add_node(None);
     graph.add_edge(previous, last, current);
 
     let mut file = File::create(format!("{template_name}.dot")).unwrap();

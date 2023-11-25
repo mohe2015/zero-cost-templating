@@ -52,7 +52,7 @@ impl Display for IntermediateAstElement {
 // must return at least one node
 #[must_use]
 pub fn children_to_ast(
-    graph: &mut StableGraph<(), IntermediateAstElement>,
+    graph: &mut StableGraph<Option<String>, IntermediateAstElement>,
     mut last: NodeIndex,
     mut current: IntermediateAstElement,
     input: Vec<Child>,
@@ -68,7 +68,7 @@ pub fn children_to_ast(
                     other => panic!("unknown escaping rules for element {other}"),
                 };
                 let previous = last;
-                last = graph.add_node(());
+                last = graph.add_node(None);
                 graph.add_edge(previous, last, current);
                 current = IntermediateAstElement {
                     variable: Some(next_variable),
@@ -88,7 +88,7 @@ pub fn children_to_ast(
             }
             Child::Each(_identifier, children) => {
                 let previous = last;
-                last = graph.add_node(());
+                last = graph.add_node(None);
                 let loop_start = last;
                 graph.add_edge(previous, loop_start, current);
                 current = IntermediateAstElement {
@@ -106,7 +106,16 @@ pub fn children_to_ast(
                 last = loop_start;
             }
             Child::PartialBlock(name, children) => todo!(),
-            Child::PartialBlockPartial => {}
+            Child::PartialBlockPartial => {
+                let previous = last;
+                last = graph.add_node(Some("Generic".to_owned()));
+                graph.add_edge(previous, last, current);
+                current = IntermediateAstElement {
+                    variable: None,
+                    escaping_fun: EscapingFunction::NoVariableStart,
+                    text: String::new(),
+                };
+            }
         }
     }
     (last, current)
@@ -114,7 +123,7 @@ pub fn children_to_ast(
 
 #[must_use]
 pub fn element_to_ast(
-    graph: &mut StableGraph<(), IntermediateAstElement>,
+    graph: &mut StableGraph<Option<String>, IntermediateAstElement>,
     mut last: NodeIndex,
     mut current: IntermediateAstElement,
     input: Element,
@@ -138,7 +147,7 @@ pub fn element_to_ast(
                             ),
                         };
                         let previous = last;
-                        last = graph.add_node(());
+                        last = graph.add_node(None);
                         graph.add_edge(previous, last, current);
                         current = IntermediateAstElement {
                             variable: Some(next_variable),

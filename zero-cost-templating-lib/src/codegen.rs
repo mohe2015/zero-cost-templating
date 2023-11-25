@@ -13,7 +13,7 @@ use crate::intermediate_graph::{EscapingFunction, IntermediateAstElement};
 
 pub struct InnerMacroReplace {
     pub template_name: String,
-    pub graph: StableGraph<(), IntermediateAstElement>,
+    pub graph: StableGraph<Option<String>, IntermediateAstElement>,
     pub first: NodeIndex,
     pub last: NodeIndex,
 }
@@ -190,7 +190,7 @@ impl VisitMut for InnerMacroReplace {
 #[must_use]
 pub fn codegen(
     template_name: &str,
-    graph: &StableGraph<(), IntermediateAstElement>,
+    graph: &StableGraph<Option<String>, IntermediateAstElement>,
     first: NodeIndex,
     last: NodeIndex,
 ) -> proc_macro2::TokenStream {
