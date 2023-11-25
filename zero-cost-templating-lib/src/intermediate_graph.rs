@@ -124,11 +124,14 @@ pub fn children_to_ast(
                 let previous = last;
                 let after_all = graph.add_node(None);
                 last = after_all;
+                graph.add_edge(previous, last, current);
                 current = IntermediateAstElement {
                     variable: None,
                     escaping_fun: EscapingFunction::NoVariableStart,
                     text: String::new(),
                 };
+
+                last = inner_template;
 
                 graph[inner_template] = Some(format!(
                     "{name}Template<Template{}, Template{}>",
