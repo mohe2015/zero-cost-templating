@@ -5,6 +5,5 @@ digraph {
     3 [ label = "3: Some(\"Next\")" ]
     0 -> 1 [ label = "0: hello" ]
     1 -> 2 [ label = "1: children" ]
-    0 -> 1 [ label = "2: " ]
-    2 -> 3 [ label = "3: world" ]
+    2 -> 3 [ label = "2: world" ]
 }

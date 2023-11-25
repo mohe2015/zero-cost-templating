@@ -126,15 +126,6 @@ pub fn children_to_ast(
                     escaping_fun: EscapingFunction::NoVariableStart,
                     text: String::new(),
                 };
-                graph.add_edge(
-                    before_inner_template,
-                    inner_template,
-                    IntermediateAstElement {
-                        variable: None,
-                        escaping_fun: EscapingFunction::NoVariableStart,
-                        text: String::new(),
-                    },
-                );
 
                 graph[inner_template] = Some(format!(
                     "{name}Template<Template{}>",
