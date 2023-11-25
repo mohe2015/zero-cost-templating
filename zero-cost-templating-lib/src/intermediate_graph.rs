@@ -107,7 +107,9 @@ pub fn children_to_ast(
             }
             Child::PartialBlock(name, children) => {
                 let previous = last;
-                last = graph.add_node(Some(format!("{name}Template"))); // TODO FIXME this should not be a generic
+                last = graph.add_node(Some(format!(
+                    "{name}Template<ChildrenGraphIndex, AfterChildrenGraphIndex>"
+                ))); // TODO FIXME this should not be a generic
                 let children_start = last;
                 graph.add_edge(previous, children_start, current);
                 current = IntermediateAstElement {
