@@ -107,17 +107,27 @@ pub fn children_to_ast(
             }
             Child::PartialBlock(name, children) => {
                 let previous = last;
-                last = graph.add_node(Some(format!(
-                    "{name}Template<ChildrenGraphIndex, AfterChildrenGraphIndex>"
-                ))); // TODO FIXME this should not be a generic
-                let children_start = last;
-                graph.add_edge(previous, children_start, current);
+                last = graph.add_node(None);
+                graph.add_edge(previous, last, current);
                 current = IntermediateAstElement {
                     variable: None,
                     escaping_fun: EscapingFunction::NoVariableStart,
                     text: String::new(),
                 };
-                (last, current) = children_to_ast(graph, last, current, children, parent);
+
+                let before_children = last;
+                let children_last;
+                (children_last, current) = children_to_ast(graph, last, current, children, parent);
+                let inner_template = graph.add_node(Some(format!(
+                    "{name}Template<Template{}, Template{}>",
+                    before_children.index(),
+                    children_last.index()
+                )));
+                last = inner_template;
+
+                let previous = last;
+                last = graph.add_node(None);
+                graph.add_edge(previous, last, current);
                 current = IntermediateAstElement {
                     variable: None,
                     escaping_fun: EscapingFunction::NoVariableStart,
