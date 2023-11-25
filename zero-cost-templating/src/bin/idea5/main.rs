@@ -70,6 +70,11 @@ pub async fn partial_block_partial() {
     todo!()
 }
 
+#[template_stream("partial_block.html.hbs")]
+pub async fn partial_block() {
+    todo!()
+}
+
 #[tokio::main]
 pub async fn main() -> Result<(), std::io::Error> {
     println!("cow size {}", std::mem::size_of::<Cow<'static, str>>()); // 24
