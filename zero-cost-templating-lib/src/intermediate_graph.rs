@@ -106,23 +106,17 @@ pub fn children_to_ast(
                 last = loop_start;
             }
             Child::PartialBlock(name, children) => {
-                let previous = last;
-                last = graph.add_node(None);
-                graph.add_edge(previous, last, current);
+                let before_inner_template = last;
+                let inner_template = graph.add_node(None);
+                last = inner_template;
+                graph.add_edge(before_inner_template, last, current);
                 current = IntermediateAstElement {
                     variable: None,
                     escaping_fun: EscapingFunction::NoVariableStart,
                     text: String::new(),
                 };
 
-                let before_children = last;
-                let children_last;
-                (children_last, current) = children_to_ast(graph, last, current, children, parent);
-                let inner_template = graph.add_node(Some(format!(
-                    "{name}Template<Template{}>",
-                    before_children.index(),
-                )));
-                last = inner_template;
+                (last, current) = children_to_ast(graph, last, current, children, parent);
 
                 let previous = last;
                 last = graph.add_node(None);
@@ -133,7 +127,7 @@ pub fn children_to_ast(
                     text: String::new(),
                 };
                 graph.add_edge(
-                    before_children,
+                    before_inner_template,
                     inner_template,
                     IntermediateAstElement {
                         variable: None,
@@ -141,6 +135,11 @@ pub fn children_to_ast(
                         text: String::new(),
                     },
                 );
+
+                graph[inner_template] = Some(format!(
+                    "{name}Template<Template{}>",
+                    before_inner_template.index(),
+                ));
             }
             Child::PartialBlockPartial => {
                 let previous = last;
