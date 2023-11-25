@@ -170,7 +170,7 @@ pub fn template_stream(
     };
     (last, current) = children_to_ast(&mut graph, last, current, dom, "root");
     let previous = last;
-    last = graph.add_node(None);
+    last = graph.add_node(Some("Next".to_owned()));
     graph.add_edge(previous, last, current);
 
     let mut file = File::create(format!("{template_name}.dot")).unwrap();
@@ -178,7 +178,7 @@ pub fn template_stream(
         format!(
             "{}",
             Dot::new(&graph.map(
-                |node_idx, _node| format!("{}", node_idx.index()),
+                |node_idx, node| format!("{}: {:?}", node_idx.index(), node),
                 |edge_idx, edge| format!("{}: {}", edge_idx.index(), edge)
             ))
         )
