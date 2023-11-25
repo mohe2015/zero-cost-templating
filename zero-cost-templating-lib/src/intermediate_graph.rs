@@ -131,12 +131,19 @@ pub fn children_to_ast(
                     text: String::new(),
                 };
 
-                last = inner_template;
+                let previous = last;
+                last = graph.add_node(None);
+                graph.add_edge(inner_template, last, current);
+                current = IntermediateAstElement {
+                    variable: None,
+                    escaping_fun: EscapingFunction::NoVariableStart,
+                    text: String::new(),
+                };
 
                 graph[inner_template] = Some(format!(
                     "{name}Template<Template{}, Template{}>",
                     inner_template_start.index(),
-                    after_all.index(),
+                    last.index(),
                 ));
             }
             Child::PartialBlockPartial => {
