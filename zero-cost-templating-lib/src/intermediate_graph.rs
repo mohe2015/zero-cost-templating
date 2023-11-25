@@ -119,9 +119,8 @@ pub fn children_to_ast(
                 let children_last;
                 (children_last, current) = children_to_ast(graph, last, current, children, parent);
                 let inner_template = graph.add_node(Some(format!(
-                    "{name}Template<Template{}, Template{}>",
+                    "{name}Template<Template{}>",
                     before_children.index(),
-                    children_last.index()
                 )));
                 last = inner_template;
 
@@ -133,6 +132,15 @@ pub fn children_to_ast(
                     escaping_fun: EscapingFunction::NoVariableStart,
                     text: String::new(),
                 };
+                graph.add_edge(
+                    before_children,
+                    inner_template,
+                    IntermediateAstElement {
+                        variable: None,
+                        escaping_fun: EscapingFunction::NoVariableStart,
+                        text: String::new(),
+                    },
+                );
             }
             Child::PartialBlockPartial => {
                 let previous = last;
