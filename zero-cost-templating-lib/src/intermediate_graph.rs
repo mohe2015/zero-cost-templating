@@ -105,7 +105,23 @@ pub fn children_to_ast(
                 };
                 last = loop_start;
             }
-            Child::PartialBlock(name, children) => todo!(),
+            Child::PartialBlock(name, children) => {
+                let previous = last;
+                last = graph.add_node(Some(format!("{name}Template"))); // TODO FIXME this should not be a generic
+                let children_start = last;
+                graph.add_edge(previous, children_start, current);
+                current = IntermediateAstElement {
+                    variable: None,
+                    escaping_fun: EscapingFunction::NoVariableStart,
+                    text: String::new(),
+                };
+                (last, current) = children_to_ast(graph, last, current, children, parent);
+                current = IntermediateAstElement {
+                    variable: None,
+                    escaping_fun: EscapingFunction::NoVariableStart,
+                    text: String::new(),
+                };
+            }
             Child::PartialBlockPartial => {
                 let previous = last;
                 last = graph.add_node(Some("Generic".to_owned()));
