@@ -44,6 +44,12 @@ impl Display for IntermediateAstElement {
     }
 }
 
+pub enum NodeType {
+    PartialBlock,
+    InnerTemplate { name: String, partial: String },
+    Other,
+}
+
 // what about creating a graph with also nodes that just print text and then merge in a postpass?
 // I think with branching etc it is pretty hard to merge them to only have nodes with variables
 
@@ -52,7 +58,7 @@ impl Display for IntermediateAstElement {
 // must return at least one node
 #[must_use]
 pub fn children_to_ast(
-    graph: &mut StableGraph<Option<String>, IntermediateAstElement>,
+    graph: &mut StableGraph<NodeType, IntermediateAstElement>,
     mut last: NodeIndex,
     mut current: IntermediateAstElement,
     input: Vec<Child>,
