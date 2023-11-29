@@ -1,7 +1,7 @@
 digraph {
-    0 [ label = "0: None" ]
-    1 [ label = "1: Some(\"Generic\")" ]
-    2 [ label = "2: Some(\"Next\")" ]
+    0 [ label = "0: Other" ]
+    1 [ label = "1: PartialBlock" ]
+    2 [ label = "2: Other" ]
     0 -> 1 [ label = "0: a" ]
     1 -> 2 [ label = "1: b" ]
 }

@@ -3,17 +3,17 @@ use itertools::Itertools;
 use petgraph::prelude::NodeIndex;
 use petgraph::stable_graph::StableGraph;
 use petgraph::visit::{EdgeRef, IntoEdgeReferences, IntoNodeReferences, NodeRef};
-use proc_macro2::TokenTree;
+use proc_macro2::{Span, TokenTree};
 use quote::{format_ident, quote, quote_spanned};
 use syn::spanned::Spanned;
 use syn::visit_mut::VisitMut;
 use syn::{visit_mut, Expr, Macro, Stmt, Token};
 
-use crate::intermediate_graph::{EscapingFunction, IntermediateAstElement};
+use crate::intermediate_graph::{EscapingFunction, IntermediateAstElement, NodeType};
 
 pub struct InnerMacroReplace {
     pub template_name: String,
-    pub graph: StableGraph<Option<String>, IntermediateAstElement>,
+    pub graph: StableGraph<NodeType, IntermediateAstElement>,
     pub first: NodeIndex,
     pub last: NodeIndex,
 }
@@ -39,9 +39,7 @@ impl InnerMacroReplace {
                         // fall back to compiler macro error
                         return None;
                     }
-                    let template_struct = format_ident!(
-                        "{}Template{}",
-                        self.template_name.to_upper_camel_case(), self.graph[self.first].clone().unwrap_or_else(|| self.first.index().to_string()));
+                    let template_struct = node_type_to_type(self.template_name.as_str(), &self.graph, self.first);
                     return Some(Expr::Verbatim(quote_spanned! {span=>
                         {
                             #template_struct
@@ -60,23 +58,13 @@ impl InnerMacroReplace {
                     }
 
                     let text = &edge.weight().text;
-                    let template_struct = format_ident!(
-                        "{}Template{}",
-                        self.template_name.to_upper_camel_case(),
-                        self.graph[edge.source()].clone().unwrap_or_else(|| edge.source().index().to_string()),
-                        span = input.path.span()
-                    ); // good span for mismatched type error
+                    let template_struct = node_type_to_type_with_span(self.template_name.as_str(), &self.graph, edge.source(), input.path.span()); // good span for mismatched type error
                     let next_template_struct = if edge.target() == self.last {
                         quote_spanned! {span=>
                             ()
                         }
                     } else {
-                        let ident = format_ident!(
-                            "{}Template{}",
-                            self.template_name.to_upper_camel_case(), self.graph[edge.target()].clone().unwrap_or_else(|| edge.target().index().to_string()), span = span);
-                        quote! {
-                            #ident
-                        }
+                        node_type_to_type_with_span(self.template_name.as_str(), &self.graph, edge.target(), span)
                     };
 
                     let tmp = quote! {
@@ -111,23 +99,13 @@ impl InnerMacroReplace {
                     let text = &edge.weight().text;
                     let _second_parameter_span = second_parameter.span();
 
-                    let template_struct = format_ident!(
-                        "{}Template{}",
-                        self.template_name.to_upper_camel_case(),
-                        self.graph[edge.source()].clone().unwrap_or_else(|| edge.source().index().to_string()),
-                        span = input.path.span()
-                    ); // good span for mismatched type error
+                    let template_struct = node_type_to_type_with_span(self.template_name.as_str(), &self.graph, edge.source(), input.path.span()); // good span for mismatched type error
                     let next_template_struct = if edge.target() == self.last {
                         quote_spanned! {span=>
                             ()
                         }
                     } else {
-                        let ident = format_ident!(
-                            "{}Template{}",
-                            self.template_name.to_upper_camel_case(), self.graph[edge.target()].clone().unwrap_or_else(|| edge.target().index().to_string()), span = span);
-                        quote! {
-                            #ident
-                        }
+                        node_type_to_type_with_span(self.template_name.as_str(), &self.graph, edge.target(), span)
                     };
 
                     let tmp = quote! {
@@ -187,21 +165,46 @@ impl VisitMut for InnerMacroReplace {
     }
 }
 
+fn node_type_to_type(
+    template_name: &str,
+    graph: &StableGraph<NodeType, IntermediateAstElement>,
+    node_index: NodeIndex,
+) -> proc_macro2::TokenStream {
+    node_type_to_type_with_span(template_name, graph, node_index, Span::call_site())
+}
+
+fn node_type_to_type_with_span(
+    template_name: &str,
+    graph: &StableGraph<NodeType, IntermediateAstElement>,
+    node_index: NodeIndex,
+    span: Span,
+) -> proc_macro2::TokenStream {
+    match &graph[node_index] {
+        NodeType::PartialBlock => todo!(),
+        NodeType::InnerTemplate { name, partial } => todo!(),
+        NodeType::Other => {
+            let ident = format_ident!(
+                "{}Template{}",
+                template_name.to_upper_camel_case(),
+                node_index.index().to_string(),
+                span = span
+            );
+            quote! {
+                #ident
+            }
+        }
+    }
+}
+
 #[must_use]
 pub fn codegen(
     template_name: &str,
-    graph: &StableGraph<Option<String>, IntermediateAstElement>,
+    graph: &StableGraph<NodeType, IntermediateAstElement>,
     first: NodeIndex,
     last: NodeIndex,
 ) -> proc_macro2::TokenStream {
     let instructions = graph.node_references().map(|(node_index, _node)| {
-        let template_struct = format_ident!(
-            "{}Template{}",
-            template_name.to_upper_camel_case(),
-            graph[node_index]
-                .clone()
-                .unwrap_or_else(|| node_index.index().to_string())
-        );
+        let template_struct = node_type_to_type(template_name, graph, node_index);
 
         quote! {
             #[must_use]
@@ -217,16 +220,7 @@ pub fn codegen(
                         ()
                     }
                 } else {
-                    let ident = format_ident!(
-                        "{}Template{}",
-                        template_name.to_upper_camel_case(),
-                        graph[edge.target()]
-                            .clone()
-                            .unwrap_or_else(|| edge.target().index().to_string())
-                    );
-                    quote! {
-                        #ident
-                    }
+                    node_type_to_type(template_name, graph, edge.target())
                 };
                 quote! {
                     #[allow(unused)]
@@ -242,16 +236,7 @@ pub fn codegen(
                         ()
                     }
                 } else {
-                    let ident = format_ident!(
-                        "{}Template{}",
-                        template_name.to_upper_camel_case(),
-                        graph[edge.target()]
-                            .clone()
-                            .unwrap_or_else(|| edge.target().index().to_string())
-                    );
-                    quote! {
-                        #ident
-                    }
+                    node_type_to_type(template_name, graph, edge.target())
                 };
                 quote! {
                     #[allow(unused)]
@@ -263,13 +248,7 @@ pub fn codegen(
         )
     });
     let ident = format_ident!("initial{}", first.index());
-    let template_struct = format_ident!(
-        "{}Template{}",
-        template_name.to_upper_camel_case(),
-        graph[first]
-            .clone()
-            .unwrap_or_else(|| first.index().to_string())
-    );
+    let template_struct = node_type_to_type(template_name, graph, first);
     let other = quote! {
         #[allow(unused)]
         macro_rules! #ident {

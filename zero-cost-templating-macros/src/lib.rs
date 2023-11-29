@@ -120,7 +120,7 @@ use syn::{parse_macro_input, Item, LitStr};
 use zero_cost_templating_lib::codegen::{codegen, InnerMacroReplace};
 use zero_cost_templating_lib::html_recursive_descent::parse_children;
 use zero_cost_templating_lib::intermediate_graph::{
-    children_to_ast, EscapingFunction, IntermediateAstElement,
+    children_to_ast, EscapingFunction, IntermediateAstElement, NodeType,
 };
 
 // https://veykril.github.io/posts/ide-proc-macros/
@@ -161,7 +161,7 @@ pub fn template_stream(
     };
 
     let mut graph = StableGraph::new();
-    let first = graph.add_node(None);
+    let first = graph.add_node(NodeType::Other);
     let mut last = first;
     let mut current = IntermediateAstElement {
         variable: None,
@@ -170,7 +170,7 @@ pub fn template_stream(
     };
     (last, current) = children_to_ast(&mut graph, last, current, dom, "root");
     let previous = last;
-    last = graph.add_node(Some("Next".to_owned()));
+    last = graph.add_node(NodeType::Other);
     graph.add_edge(previous, last, current);
 
     let mut file = File::create(format!("{template_name}.dot")).unwrap();

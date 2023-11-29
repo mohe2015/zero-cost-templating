@@ -44,6 +44,7 @@ impl Display for IntermediateAstElement {
     }
 }
 
+#[derive(Debug, Clone)]
 pub enum NodeType {
     PartialBlock,
     InnerTemplate { name: String, partial: String },
@@ -74,7 +75,7 @@ pub fn children_to_ast(
                     other => panic!("unknown escaping rules for element {other}"),
                 };
                 let previous = last;
-                last = graph.add_node(None);
+                last = graph.add_node(NodeType::Other);
                 graph.add_edge(previous, last, current);
                 current = IntermediateAstElement {
                     variable: Some(next_variable),
@@ -94,7 +95,7 @@ pub fn children_to_ast(
             }
             Child::Each(_identifier, children) => {
                 let previous = last;
-                last = graph.add_node(None);
+                last = graph.add_node(NodeType::Other);
                 let loop_start = last;
                 graph.add_edge(previous, loop_start, current);
                 current = IntermediateAstElement {
@@ -113,11 +114,11 @@ pub fn children_to_ast(
             }
             Child::PartialBlock(name, children) => {
                 let first = last;
-                let inner_template = graph.add_node(None);
+                let inner_template = graph.add_node(NodeType::Other);
                 last = inner_template;
                 graph.add_edge(first, last, current);
 
-                let inner_template_start = graph.add_node(None);
+                let inner_template_start = graph.add_node(NodeType::Other);
                 last = inner_template_start;
                 current = IntermediateAstElement {
                     variable: None,
@@ -128,7 +129,7 @@ pub fn children_to_ast(
                 (last, current) = children_to_ast(graph, last, current, children, parent);
 
                 let previous = last;
-                let after_all = graph.add_node(None);
+                let after_all = graph.add_node(NodeType::Other);
                 last = after_all;
                 graph.add_edge(previous, last, current);
                 current = IntermediateAstElement {
@@ -139,14 +140,14 @@ pub fn children_to_ast(
 
                 last = inner_template;
 
-                graph[inner_template] = Some(format!(
-                    "{name}Template<Template{}>",
-                    inner_template_start.index(),
-                ));
+                graph[inner_template] = NodeType::InnerTemplate {
+                    name: format!("{name}Template<Template{}>", inner_template_start.index(),),
+                    partial: String::new(),
+                };
             }
             Child::PartialBlockPartial => {
                 let previous = last;
-                last = graph.add_node(Some("Generic".to_owned()));
+                last = graph.add_node(NodeType::PartialBlock);
                 graph.add_edge(previous, last, current);
                 current = IntermediateAstElement {
                     variable: None,
@@ -161,7 +162,7 @@ pub fn children_to_ast(
 
 #[must_use]
 pub fn element_to_ast(
-    graph: &mut StableGraph<Option<String>, IntermediateAstElement>,
+    graph: &mut StableGraph<NodeType, IntermediateAstElement>,
     mut last: NodeIndex,
     mut current: IntermediateAstElement,
     input: Element,
@@ -185,7 +186,7 @@ pub fn element_to_ast(
                             ),
                         };
                         let previous = last;
-                        last = graph.add_node(None);
+                        last = graph.add_node(NodeType::Other);
                         graph.add_edge(previous, last, current);
                         current = IntermediateAstElement {
                             variable: Some(next_variable),
