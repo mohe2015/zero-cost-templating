@@ -59,6 +59,7 @@ pub enum NodeType {
 // must return at least one node
 #[must_use]
 pub fn children_to_ast(
+    template_name: &str,
     graph: &mut StableGraph<NodeType, IntermediateAstElement>,
     mut last: NodeIndex,
     mut current: IntermediateAstElement,
@@ -91,7 +92,7 @@ pub fn children_to_ast(
                     !(parent == "script" || parent == "style"),
                     "children are unsafe in <script> and <style>"
                 );
-                (last, current) = element_to_ast(graph, last, current, element);
+                (last, current) = element_to_ast(template_name, graph, last, current, element);
             }
             Child::Each(_identifier, children) => {
                 let previous = last;
@@ -103,7 +104,8 @@ pub fn children_to_ast(
                     escaping_fun: EscapingFunction::NoVariableStart,
                     text: String::new(),
                 };
-                (last, current) = children_to_ast(graph, last, current, children, parent);
+                (last, current) =
+                    children_to_ast(template_name, graph, last, current, children, parent);
                 graph.add_edge(last, loop_start, current);
                 current = IntermediateAstElement {
                     variable: None,
@@ -126,7 +128,8 @@ pub fn children_to_ast(
                     text: String::new(),
                 };
 
-                (last, current) = children_to_ast(graph, last, current, children, parent);
+                (last, current) =
+                    children_to_ast(template_name, graph, last, current, children, parent);
 
                 let previous = last;
                 let after_all = graph.add_node(NodeType::Other);
@@ -141,8 +144,8 @@ pub fn children_to_ast(
                 last = inner_template;
 
                 graph[inner_template] = NodeType::InnerTemplate {
-                    name: format!("{name}Template<Template{}>", inner_template_start.index(),),
-                    partial: String::new(),
+                    name: format!("{name}Template0"), // Start
+                    partial: format!("{name}Template{}", inner_template_start.index()),
                 };
             }
             Child::PartialBlockPartial => {
@@ -162,6 +165,7 @@ pub fn children_to_ast(
 
 #[must_use]
 pub fn element_to_ast(
+    template_name: &str,
     graph: &mut StableGraph<NodeType, IntermediateAstElement>,
     mut last: NodeIndex,
     mut current: IntermediateAstElement,
@@ -203,7 +207,7 @@ pub fn element_to_ast(
         }
     }
     write!(&mut current.text, ">").unwrap();
-    (last, current) = children_to_ast(graph, last, current, input.children, &name);
+    (last, current) = children_to_ast(template_name, graph, last, current, input.children, &name);
     // https://html.spec.whatwg.org/dev/syntax.html#void-elements
     match name.as_str() {
         "!doctype" | "area" | "base" | "br" | "col" | "embed" | "hr" | "img" | "input" | "link"

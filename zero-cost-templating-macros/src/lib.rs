@@ -168,7 +168,7 @@ pub fn template_stream(
         escaping_fun: EscapingFunction::NoVariableStart,
         text: String::new(),
     };
-    (last, current) = children_to_ast(&mut graph, last, current, dom, "root");
+    (last, current) = children_to_ast(template_name, &mut graph, last, current, dom, "root");
     let previous = last;
     last = graph.add_node(NodeType::Other);
     graph.add_edge(previous, last, current);
