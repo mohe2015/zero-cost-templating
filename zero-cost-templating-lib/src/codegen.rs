@@ -180,8 +180,19 @@ fn node_type_to_type_with_span(
     span: Span,
 ) -> proc_macro2::TokenStream {
     match &graph[node_index] {
-        NodeType::PartialBlock => todo!(),
-        NodeType::InnerTemplate { name, partial } => todo!(),
+        NodeType::PartialBlock => {
+            let ident = format_ident!("PartialType");
+            quote! {
+                #ident
+            }
+        }
+        NodeType::InnerTemplate { name, partial } => {
+            let name = format_ident!("{}", name);
+            let partial = format_ident!("{}", partial);
+            quote! {
+                #name<#partial>
+            }
+        }
         NodeType::Other => {
             let ident = format_ident!(
                 "{}Template{}",
