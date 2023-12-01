@@ -1,5 +1,6 @@
 use core::fmt::{Display, Write};
 
+use heck::ToUpperCamelCase;
 use petgraph::stable_graph::{NodeIndex, StableGraph};
 
 use crate::html_recursive_descent::{AttributeValuePart, Child, Element};
@@ -144,8 +145,12 @@ pub fn children_to_ast(
                 last = inner_template;
 
                 graph[inner_template] = NodeType::InnerTemplate {
-                    name: format!("{name}Template0"), // Start
-                    partial: format!("{name}Template{}", inner_template_start.index()),
+                    name: format!("{}Template0", name.to_upper_camel_case()), // Start
+                    partial: format!(
+                        "{}Template{}",
+                        template_name.to_upper_camel_case(),
+                        inner_template_start.index()
+                    ),
                 };
             }
             Child::PartialBlockPartial => {
