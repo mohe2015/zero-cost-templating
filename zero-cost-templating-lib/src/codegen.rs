@@ -83,15 +83,18 @@ impl InnerMacroReplace {
             }).flatten().next()
             },
             |_comma| {
+                let second_parameter = template.collect::<proc_macro2::TokenStream>();
+
+                self.0.iter().map(|template_codegen| {
+
                 // macro call with two parameters
-                let edge = self.graph.edge_references().find(|edge| {
+                let edge = template_codegen.graph.edge_references().find(|edge| {
                     edge.weight().variable.as_ref().map_or(false, |variable| {
                         let expected_ident = format_ident!("{}{}", variable, edge.id().index());
                         ident == &expected_ident
                     })
                 });
                 edge.and_then(|edge| {
-                    let second_parameter = template.collect::<proc_macro2::TokenStream>();
                     if first_parameter.is_empty() || second_parameter.is_empty() {
                         // one of the parameters is empty
                         // fall back to compiler macro error
@@ -101,13 +104,13 @@ impl InnerMacroReplace {
                     let text = &edge.weight().text;
                     let _second_parameter_span = second_parameter.span();
 
-                    let template_struct = node_type_to_type_with_span(self.template_name.as_str(), &self.graph, edge.source(), input.path.span()); // good span for mismatched type error
-                    let next_template_struct = if edge.target() == self.last {
+                    let template_struct = node_type_to_type_with_span(template_codegen.template_name.as_str(), &template_codegen.graph, edge.source(), input.path.span()); // good span for mismatched type error
+                    let next_template_struct = if edge.target() == template_codegen.last {
                         quote_spanned! {span=>
                             ()
                         }
                     } else {
-                        node_type_to_create_type_with_span(self.template_name.as_str(), &self.graph, edge.target(), span)
+                        node_type_to_create_type_with_span(template_codegen.template_name.as_str(), &template_codegen.graph, edge.target(), span)
                     };
 
                     let tmp = quote! {
@@ -140,6 +143,8 @@ impl InnerMacroReplace {
                         } #semicolon
                     }))
                 })
+            }).flatten().next()
+
             },
         )
     }
