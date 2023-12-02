@@ -2,7 +2,7 @@ use heck::ToUpperCamelCase;
 use itertools::Itertools;
 use petgraph::prelude::NodeIndex;
 use petgraph::stable_graph::StableGraph;
-use petgraph::visit::{EdgeRef, IntoEdgeReferences, IntoNodeReferences, NodeRef};
+use petgraph::visit::{EdgeRef, IntoEdgeReferences, IntoNodeReferences};
 use proc_macro2::{Span, TokenTree};
 use quote::{format_ident, quote, quote_spanned};
 use syn::spanned::Spanned;
@@ -214,14 +214,23 @@ pub fn codegen(
     first: NodeIndex,
     last: NodeIndex,
 ) -> proc_macro2::TokenStream {
-    let instructions = graph.node_references().map(|(node_index, _node)| {
-        let template_struct = node_type_to_type(template_name, graph, node_index);
+    let instructions = graph
+        .node_references()
+        .filter_map(|(node_index, node)| match node {
+            NodeType::InnerTemplate { .. } | NodeType::PartialBlock => None,
+            NodeType::Other => Some(node_index),
+        })
+        .map(|node_index| {
+            let template_struct = node_type_to_type(template_name, graph, node_index);
 
-        quote! {
-            #[must_use]
-            pub struct #template_struct;
-        }
-    });
+            quote! {
+                #[must_use]
+                pub struct #template_struct<PartialType, EndType> {
+                    partial_type: ::core::marker::PhantomData<PartialType>,
+                    end_type: ::core::marker::PhantomData<EndType>,
+                }
+            }
+        });
     let edges = graph.edge_references().map(|edge| {
         edge.weight().variable.as_ref().map_or_else(
             || {

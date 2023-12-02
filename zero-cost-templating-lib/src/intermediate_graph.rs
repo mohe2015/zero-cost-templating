@@ -52,12 +52,6 @@ pub enum NodeType {
     Other,
 }
 
-// what about creating a graph with also nodes that just print text and then merge in a postpass?
-// I think with branching etc it is pretty hard to merge them to only have nodes with variables
-
-// returns first node, graph, last node
-// first node always has no variable
-// must return at least one node
 #[must_use]
 pub fn children_to_ast(
     template_name: &str,

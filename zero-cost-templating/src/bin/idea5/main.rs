@@ -2,12 +2,6 @@
 
 extern crate alloc;
 
-use alloc::borrow::Cow;
-use std::pin::pin;
-
-use futures::StreamExt;
-use futures_async_stream::stream;
-use tokio::io::{stdout, AsyncWriteExt};
 use zero_cost_templating::template_stream;
 
 // https://github.com/dtolnay/cargo-expand
@@ -20,7 +14,7 @@ use zero_cost_templating::template_stream;
 // RUSTFLAGS="-Zprint-type-sizes" cargo run --release --bin idea5 > type-sizes.txt
 // search for
 // `{static coroutine@
-
+/*
 #[stream(item = Cow<'static, str>)]
 pub async fn get_articles_stream() {
     yield Cow::from("ef>eft&t<lef\"efe");
@@ -69,12 +63,13 @@ pub async fn test2() {
 pub async fn partial_block_partial() {
     todo!()
 }
-
+ */
 #[template_stream("partial_block.html.hbs")]
 pub async fn partial_block() {
     todo!()
 }
 
+/*
 #[tokio::main]
 pub async fn main() -> Result<(), std::io::Error> {
     println!("cow size {}", std::mem::size_of::<Cow<'static, str>>()); // 24
@@ -101,3 +96,6 @@ pub async fn main() -> Result<(), std::io::Error> {
     }
     Ok(())
 }
+*/
+
+pub fn main() {}
