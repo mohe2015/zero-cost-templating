@@ -63,16 +63,13 @@ impl InnerMacroReplace {
                             ()
                         }
                     } else {
-                        node_type_to_type_with_span(template_codegen.template_name.as_str(), &template_codegen.graph, edge.target(), span)
+                        node_type_to_create_type_with_span(template_codegen.template_name.as_str(), &template_codegen.graph, edge.target(), span)
                     };
 
-                    let tmp = quote! {
-                        let magic_expression_result: #template_struct = #first_parameter;
-                    };
                     Some(Expr::Verbatim(quote! {
                         {
                             {
-                                #tmp
+                                let magic_expression_result: #template_struct = #first_parameter;
                                 drop(magic_expression_result);
                             }
                             yield ::alloc::borrow::Cow::from(#text);

@@ -787,6 +787,7 @@ dependencies = [
  "itertools",
  "nom",
  "petgraph",
+ "prettyplease",
  "proc-macro2",
  "quote",
  "syn",
