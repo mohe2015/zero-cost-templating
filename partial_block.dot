@@ -1,6 +1,6 @@
 digraph {
     0 [ label = "0: Other" ]
-    1 [ label = "1: InnerTemplate { name: \"PartialNameTemplate0\", partial: \"PartialBlockTemplate2\" }" ]
+    1 [ label = "1: InnerTemplate { name: \"PartialBlockPartialTemplate0\", partial: \"PartialBlockTemplate2\" }" ]
     2 [ label = "2: Other" ]
     3 [ label = "3: Other" ]
     4 [ label = "4: Other" ]

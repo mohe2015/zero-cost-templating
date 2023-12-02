@@ -207,10 +207,7 @@ pub fn template_stream(
 
     InnerMacroReplace(inputs.clone()).visit_item_mut(&mut item);
 
-    let recompile_ident =
-        format_ident!("_{}_FORCE_RECOMPILE", inputs.first().unwrap().template_name);
     let expanded = quote! {
-        const #recompile_ident: &'static str = include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/", #input_paths));
 
         #code
 

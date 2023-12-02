@@ -331,12 +331,16 @@ pub fn codegen(templates: Vec<TemplateCodegen>) -> proc_macro2::TokenStream {
                 () => { unreachable!(); #template_struct }
             }
         };
+        let recompile_ident = format_ident!("_{}_FORCE_RECOMPILE", template.template_name);
+        let input = format!("{}.html.hbs", template.template_name);
         quote! {
             #(#instructions)*
 
             #(#edges)*
 
             #other
+
+            const #recompile_ident: &'static str = include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/", #input));
         }
     });
 
