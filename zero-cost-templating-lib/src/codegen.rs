@@ -76,7 +76,7 @@ impl InnerMacroReplace {
                                 #tmp
                                 drop(magic_expression_result);
                             }
-                            yield Cow::from(#text);
+                            yield ::alloc::borrow::Cow::from(#text);
                             #next_template_struct
                         } #semicolon
                     }))
@@ -133,7 +133,7 @@ impl InnerMacroReplace {
                                 drop(magic_expression_result);
                             }
                             #escaped_value
-                            yield Cow::from(#text);
+                            yield ::alloc::borrow::Cow::from(#text);
                             #next_template_struct
                         } #semicolon
                     }))
@@ -190,7 +190,7 @@ fn node_type_to_type_with_span(
             let name = format_ident!("{}", name);
             let partial = format_ident!("{}", partial);
             quote! {
-                #name<#partial>
+                #name::<#partial>
             }
         }
         NodeType::Other => {

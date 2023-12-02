@@ -67,6 +67,7 @@ pub async fn partial_block_partial() {
 #[template_stream("partial_block.html.hbs")]
 pub async fn partial_block() {
     let template = initial0!();
+    let template = template0!(template);
 }
 
 /*
