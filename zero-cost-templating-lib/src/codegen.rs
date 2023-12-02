@@ -27,8 +27,9 @@ impl InnerMacroReplace {
         let span = input.span();
         comma.map_or_else(
             || {
+              self.0.iter().map(|template| {
                 // macro call without zero or one parameters
-                let first_index = self.first.index();
+                let first_index = template.first.index();
                 let initial_ident = format_ident!("initial{}", first_index);
                 if &initial_ident == ident {
                     if !first_parameter.is_empty() {
@@ -36,7 +37,7 @@ impl InnerMacroReplace {
                         // fall back to compiler macro error
                         return None;
                     }
-                    let template_struct = node_type_to_create_type(self.template_name.as_str(), &self.graph, self.first);
+                    let template_struct = node_type_to_create_type(template.template_name.as_str(), &template.graph, template.first);
                     return Some(Expr::Verbatim(quote_spanned! {span=>
                         {
                             #template_struct
@@ -44,7 +45,7 @@ impl InnerMacroReplace {
                     }));
                 }
 
-                let edge = self.graph.edge_references().find(|edge| {
+                let edge = template.graph.edge_references().find(|edge| {
                     let expected_ident = format_ident!("{}{}", "template", edge.id().index());
                     ident == &expected_ident
                 });
@@ -56,13 +57,13 @@ impl InnerMacroReplace {
                     }
 
                     let text = &edge.weight().text;
-                    let template_struct = node_type_to_type_with_span(self.template_name.as_str(), &self.graph, edge.source(), input.path.span()); // good span for mismatched type error
-                    let next_template_struct = if edge.target() == self.last {
+                    let template_struct = node_type_to_type_with_span(template.template_name.as_str(), &template.graph, edge.source(), input.path.span()); // good span for mismatched type error
+                    let next_template_struct = if edge.target() == template.last {
                         quote_spanned! {span=>
                             ()
                         }
                     } else {
-                        node_type_to_type_with_span(self.template_name.as_str(), &self.graph, edge.target(), span)
+                        node_type_to_type_with_span(template.template_name.as_str(), &template.graph, edge.target(), span)
                     };
 
                     let tmp = quote! {
@@ -79,6 +80,7 @@ impl InnerMacroReplace {
                         } #semicolon
                     }))
                 })
+            }).flatten().next()
             },
             |_comma| {
                 // macro call with two parameters
