@@ -1,2 +1,2 @@
 [build]
-rustflags = ["-Zproc-macro-backtrace", "-Zmacro-backtrace"]
+rustflags = ["-Zproc-macro-backtrace"]

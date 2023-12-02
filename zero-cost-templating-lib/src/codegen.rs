@@ -63,6 +63,8 @@ impl InnerMacroReplace {
                             ()
                         }
                     } else {
+                        // here?
+                        
                         node_type_to_create_type_with_span(template_codegen.template_name.as_str(), &template_codegen.graph, edge.target(), span)
                     };
 
@@ -191,11 +193,7 @@ fn node_type_to_type_with_span(
             }
         }
         NodeType::InnerTemplate { name, partial } => {
-            let name = format_ident!("{}", name);
-            let partial = format_ident!("{}", partial);
-            quote! {
-                #name::<#partial>
-            }
+            todo!()
         }
         NodeType::Other => {
             let ident = format_ident!(
@@ -233,10 +231,48 @@ fn node_type_to_create_type_with_span(
             }
         }
         NodeType::InnerTemplate { name, partial } => {
+            todo!()
+        }
+        NodeType::Other => {
+            let ident = format_ident!(
+                "{}Template{}",
+                template_name.to_upper_camel_case(),
+                node_index.index().to_string(),
+                span = span
+            );
+            quote! {
+                #ident::<(), ()> { partial_type: ::core::marker::PhantomData, end_type: ::core::marker::PhantomData }
+            }
+        }
+    }
+}
+
+
+fn node_type_to_create_type_with_target_and_span(
+    template_name: &str,
+    graph: &StableGraph<NodeType, IntermediateAstElement>,
+    node_index: NodeIndex,
+    target: NodeIndex,
+    span: Span,
+) -> proc_macro2::TokenStream {
+    match &graph[node_index] {
+        NodeType::PartialBlock => {
+            let ident = format_ident!("PartialType");
+            quote! {
+                #ident
+            }
+        }
+        NodeType::InnerTemplate { name, partial } => {
             let name = format_ident!("{}", name);
             let partial = format_ident!("{}", partial);
+            let end = format_ident!(
+                "{}Template{}",
+                template_name.to_upper_camel_case(),
+                target.index().to_string(),
+                span = span
+            );
             quote! {
-                #name<#partial>
+                #name::<#partial, #end<(), ()>> { partial_type: ::core::marker::PhantomData, end_type: ::core::marker::PhantomData }
             }
         }
         NodeType::Other => {
@@ -292,6 +328,7 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
                         ()
                     }
                 } else {
+                    // TODO FIXME
                     node_type_to_create_type(&template.template_name, &template.graph, edge.target())
                 };
                 quote! {
