@@ -118,7 +118,7 @@ use quote::{format_ident, quote};
 use syn::punctuated::Punctuated;
 use syn::visit_mut::VisitMut;
 use syn::{parse_macro_input, Item, LitStr, Token};
-use zero_cost_templating_lib::codegen::{codegen, InnerMacroReplace};
+use zero_cost_templating_lib::codegen::{codegen, InnerMacroReplace, TemplateCodegen};
 use zero_cost_templating_lib::html_recursive_descent::parse_children;
 use zero_cost_templating_lib::intermediate_graph::{
     children_to_ast, EscapingFunction, IntermediateAstElement, NodeType,
@@ -138,61 +138,70 @@ pub fn template_stream(
     let input_paths = parse_macro_input!(attributes with Punctuated::<LitStr, Token![,]>::parse_separated_nonempty);
     let root = PathBuf::from(env::var("CARGO_MANIFEST_DIR").unwrap());
 
-    let inputs = input_paths.iter().map(|file| {
-        let path = root.join(file.value());
+    let inputs: Vec<_> = input_paths
+        .iter()
+        .map(|file| {
+            let path = root.join(file.value());
 
-        let file_name = path.file_name().unwrap().to_string_lossy();
-        let template_name = file_name.trim_end_matches(".html.hbs");
+            let file_name = path.file_name().unwrap().to_string_lossy();
+            let template_name = file_name.trim_end_matches(".html.hbs");
 
-        let input = std::fs::read_to_string(&path).unwrap_or_else(|err| {
-            panic!("failed to read file at path: {} {}", path.display(), err)
-        });
+            let input = std::fs::read_to_string(&path).unwrap_or_else(|err| {
+                panic!("failed to read file at path: {} {}", path.display(), err)
+            });
 
-        let mut input = peek_nth(input.chars());
-        let dom = match parse_children(&mut input) {
-            Ok(element) => {
-                let remaining_input: String = input.collect();
-                assert_eq!(
-                    remaining_input, "",
-                    "{element:?}\nremaining input: {remaining_input}"
-                );
-                element
-            }
-            Err(error) => {
-                let remaining_input: String = input.collect();
-                panic!("{error}\nremaining input: {remaining_input}");
-            }
-        };
+            let mut input = peek_nth(input.chars());
+            let dom = match parse_children(&mut input) {
+                Ok(element) => {
+                    let remaining_input: String = input.collect();
+                    assert_eq!(
+                        remaining_input, "",
+                        "{element:?}\nremaining input: {remaining_input}"
+                    );
+                    element
+                }
+                Err(error) => {
+                    let remaining_input: String = input.collect();
+                    panic!("{error}\nremaining input: {remaining_input}");
+                }
+            };
 
-        let mut graph = StableGraph::new();
-        let first = graph.add_node(NodeType::Other);
-        let mut last = first;
-        let mut current = IntermediateAstElement {
-            variable: None,
-            escaping_fun: EscapingFunction::NoVariableStart,
-            text: String::new(),
-        };
-        (last, current) = children_to_ast(template_name, &mut graph, last, current, dom, "root");
-        let previous = last;
-        last = graph.add_node(NodeType::Other);
-        graph.add_edge(previous, last, current);
+            let mut graph = StableGraph::new();
+            let first = graph.add_node(NodeType::Other);
+            let mut last = first;
+            let mut current = IntermediateAstElement {
+                variable: None,
+                escaping_fun: EscapingFunction::NoVariableStart,
+                text: String::new(),
+            };
+            (last, current) =
+                children_to_ast(template_name, &mut graph, last, current, dom, "root");
+            let previous = last;
+            last = graph.add_node(NodeType::Other);
+            graph.add_edge(previous, last, current);
 
-        let mut file = File::create(format!("{template_name}.dot")).unwrap();
-        file.write_all(
-            format!(
-                "{}",
-                Dot::new(&graph.map(
-                    |node_idx, node| format!("{}: {:?}", node_idx.index(), node),
-                    |edge_idx, edge| format!("{}: {}", edge_idx.index(), edge)
-                ))
+            let mut file = File::create(format!("{template_name}.dot")).unwrap();
+            file.write_all(
+                format!(
+                    "{}",
+                    Dot::new(&graph.map(
+                        |node_idx, node| format!("{}: {:?}", node_idx.index(), node),
+                        |edge_idx, edge| format!("{}: {}", edge_idx.index(), edge)
+                    ))
+                )
+                .as_bytes(),
             )
-            .as_bytes(),
-        )
-        .unwrap();
-        (template_name, graph, first, last)
-    });
+            .unwrap();
+            TemplateCodegen {
+                template_name,
+                graph,
+                first,
+                last,
+            }
+        })
+        .collect();
 
-    let code = codegen(template_name, &graph, first, last);
+    let code = codegen(inputs);
 
     let mut item = parse_macro_input!(item as Item);
 

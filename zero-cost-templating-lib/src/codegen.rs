@@ -249,40 +249,45 @@ fn node_type_to_create_type_with_span(
     }
 }
 
-#[must_use]
-pub fn codegen(
-    template_name: &str,
-    graph: &StableGraph<NodeType, IntermediateAstElement>,
-    first: NodeIndex,
-    last: NodeIndex,
-) -> proc_macro2::TokenStream {
-    let instructions = graph
-        .node_references()
-        .filter_map(|(node_index, node)| match node {
-            NodeType::InnerTemplate { .. } | NodeType::PartialBlock => None,
-            NodeType::Other => Some(node_index),
-        })
-        .map(|node_index| {
-            let template_struct = node_type_to_type(template_name, graph, node_index);
+pub struct TemplateCodegen<'a> {
+    pub template_name: &'a str,
+    pub graph: StableGraph<NodeType, IntermediateAstElement>,
+    pub first: NodeIndex,
+    pub last: NodeIndex,
+}
 
-            quote! {
-                #[must_use]
-                pub struct #template_struct<PartialType, EndType> {
-                    partial_type: ::core::marker::PhantomData<PartialType>,
-                    end_type: ::core::marker::PhantomData<EndType>,
+#[must_use]
+pub fn codegen(templates: Vec<TemplateCodegen>) -> proc_macro2::TokenStream {
+    let code = templates.iter().map(|template| {
+        let instructions = template
+            .graph
+            .node_references()
+            .filter_map(|(node_index, node)| match node {
+                NodeType::InnerTemplate { .. } | NodeType::PartialBlock => None,
+                NodeType::Other => Some(node_index),
+            })
+            .map(|node_index| {
+                let template_struct =
+                    node_type_to_type(template.template_name, &template.graph, node_index);
+
+                quote! {
+                    #[must_use]
+                    pub struct #template_struct<PartialType, EndType> {
+                        partial_type: ::core::marker::PhantomData<PartialType>,
+                        end_type: ::core::marker::PhantomData<EndType>,
+                    }
                 }
-            }
-        });
-    let edges = graph.edge_references().map(|edge| {
-        edge.weight().variable.as_ref().map_or_else(
+            });
+        let edges = template.graph.edge_references().map(|edge| {
+            edge.weight().variable.as_ref().map_or_else(
             || {
                 let variable_name = format_ident!("{}{}", "template", edge.id().index());
-                let next_template_struct = if edge.target() == last {
+                let next_template_struct = if edge.target() == template.last {
                     quote! {
                         ()
                     }
                 } else {
-                    node_type_to_create_type(template_name, graph, edge.target())
+                    node_type_to_create_type(template.template_name, &template.graph, edge.target())
                 };
                 quote! {
                     #[allow(unused)]
@@ -293,12 +298,12 @@ pub fn codegen(
             },
             |variable| {
                 let variable_name = format_ident!("{}{}", variable, edge.id().index());
-                let next_template_struct = if edge.target() == last {
+                let next_template_struct = if edge.target() == template.last {
                     quote! {
                         ()
                     }
                 } else {
-                    node_type_to_create_type(template_name, graph, edge.target())
+                    node_type_to_create_type(template.template_name, &template.graph, edge.target())
                 };
                 quote! {
                     #[allow(unused)]
@@ -308,22 +313,27 @@ pub fn codegen(
                 }
             },
         )
-    });
-    let ident = format_ident!("initial{}", first.index());
-    let template_struct = node_type_to_create_type(template_name, graph, first);
-    let other = quote! {
-        #[allow(unused)]
-        macro_rules! #ident {
-            () => { unreachable!(); #template_struct }
+        });
+        let ident = format_ident!("initial{}", template.first.index());
+        let template_struct =
+            node_type_to_create_type(template.template_name, &template.graph, template.first);
+        let other = quote! {
+            #[allow(unused)]
+            macro_rules! #ident {
+                () => { unreachable!(); #template_struct }
+            }
+        };
+        quote! {
+            #(#instructions)*
+
+            #(#edges)*
+
+            #other
         }
-    };
+    });
 
     let result = quote! {
-        #(#instructions)*
-
-        #(#edges)*
-
-        #other
+        #(#code)*
     };
     result
 }
