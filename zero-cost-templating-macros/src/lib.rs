@@ -193,7 +193,7 @@ pub fn template_stream(
             )
             .unwrap();
             TemplateCodegen {
-                template_name,
+                template_name: template_name.to_owned(),
                 graph,
                 first,
                 last,
@@ -205,13 +205,7 @@ pub fn template_stream(
 
     let mut item = parse_macro_input!(item as Item);
 
-    InnerMacroReplace {
-        template_name: template_name.to_owned(),
-        graph,
-        first,
-        last,
-    }
-    .visit_item_mut(&mut item);
+    InnerMacroReplace(inputs).visit_item_mut(&mut item);
 
     let recompile_ident = format_ident!("_{}_FORCE_RECOMPILE", template_name);
     let expanded = quote! {

@@ -11,12 +11,7 @@ use syn::{visit_mut, Expr, Macro, Stmt, Token};
 
 use crate::intermediate_graph::{EscapingFunction, IntermediateAstElement, NodeType};
 
-pub struct InnerMacroReplace {
-    pub template_name: String,
-    pub graph: StableGraph<NodeType, IntermediateAstElement>,
-    pub first: NodeIndex,
-    pub last: NodeIndex,
-}
+pub struct InnerMacroReplace(Vec<TemplateCodegen>);
 
 impl InnerMacroReplace {
     #[expect(clippy::too_many_lines, reason = "tmp")]
@@ -32,10 +27,12 @@ impl InnerMacroReplace {
         let span = input.span();
         comma.map_or_else(
             || {
+                // macro call without zero or one parameters
                 let first_index = self.first.index();
                 let initial_ident = format_ident!("initial{}", first_index);
                 if &initial_ident == ident {
                     if !first_parameter.is_empty() {
+                        // one parameter
                         // fall back to compiler macro error
                         return None;
                     }
@@ -53,6 +50,7 @@ impl InnerMacroReplace {
                 });
                 edge.and_then(|edge| {
                     if first_parameter.is_empty() {
+                        // no parameters
                         // fall back to compiler macro error
                         return None;
                     }
@@ -83,6 +81,7 @@ impl InnerMacroReplace {
                 })
             },
             |_comma| {
+                // macro call with two parameters
                 let edge = self.graph.edge_references().find(|edge| {
                     edge.weight().variable.as_ref().map_or(false, |variable| {
                         let expected_ident = format_ident!("{}{}", variable, edge.id().index());
@@ -92,6 +91,7 @@ impl InnerMacroReplace {
                 edge.and_then(|edge| {
                     let second_parameter = template.collect::<proc_macro2::TokenStream>();
                     if first_parameter.is_empty() || second_parameter.is_empty() {
+                        // one of the parameters is empty
                         // fall back to compiler macro error
                         return None;
                     }
@@ -249,8 +249,8 @@ fn node_type_to_create_type_with_span(
     }
 }
 
-pub struct TemplateCodegen<'a> {
-    pub template_name: &'a str,
+pub struct TemplateCodegen {
+    pub template_name: String,
     pub graph: StableGraph<NodeType, IntermediateAstElement>,
     pub first: NodeIndex,
     pub last: NodeIndex,
@@ -268,7 +268,7 @@ pub fn codegen(templates: Vec<TemplateCodegen>) -> proc_macro2::TokenStream {
             })
             .map(|node_index| {
                 let template_struct =
-                    node_type_to_type(template.template_name, &template.graph, node_index);
+                    node_type_to_type(&template.template_name, &template.graph, node_index);
 
                 quote! {
                     #[must_use]
@@ -287,7 +287,7 @@ pub fn codegen(templates: Vec<TemplateCodegen>) -> proc_macro2::TokenStream {
                         ()
                     }
                 } else {
-                    node_type_to_create_type(template.template_name, &template.graph, edge.target())
+                    node_type_to_create_type(&template.template_name, &template.graph, edge.target())
                 };
                 quote! {
                     #[allow(unused)]
@@ -303,7 +303,7 @@ pub fn codegen(templates: Vec<TemplateCodegen>) -> proc_macro2::TokenStream {
                         ()
                     }
                 } else {
-                    node_type_to_create_type(template.template_name, &template.graph, edge.target())
+                    node_type_to_create_type(&template.template_name, &template.graph, edge.target())
                 };
                 quote! {
                     #[allow(unused)]
@@ -316,7 +316,7 @@ pub fn codegen(templates: Vec<TemplateCodegen>) -> proc_macro2::TokenStream {
         });
         let ident = format_ident!("initial{}", template.first.index());
         let template_struct =
-            node_type_to_create_type(template.template_name, &template.graph, template.first);
+            node_type_to_create_type(&template.template_name, &template.graph, template.first);
         let other = quote! {
             #[allow(unused)]
             macro_rules! #ident {
