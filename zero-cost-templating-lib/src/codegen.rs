@@ -27,10 +27,10 @@ impl InnerMacroReplace {
         let span = input.span();
         comma.map_or_else(
             || {
-              self.0.iter().map(|template_codegen| {
+              self.0.iter().find_map(|template_codegen| {
                 // macro call without zero or one parameters
                 let first_index = template_codegen.first.index();
-                let initial_ident = format_ident!("initial{}", first_index);
+                let initial_ident = format_ident!("{}_initial{}", template_codegen.template_name, first_index);
                 if &initial_ident == ident {
                     if !first_parameter.is_empty() {
                         // one parameter
@@ -46,7 +46,7 @@ impl InnerMacroReplace {
                 }
 
                 let edge = template_codegen.graph.edge_references().find(|edge| {
-                    let expected_ident = format_ident!("{}{}", "template", edge.id().index());
+                    let expected_ident = format_ident!("{}_template{}", template_codegen.template_name, edge.id().index());
                     ident == &expected_ident
                 });
                 edge.and_then(|edge| {
@@ -80,17 +80,17 @@ impl InnerMacroReplace {
                         } #semicolon
                     }))
                 })
-            }).flatten().next()
+            })
             },
             |_comma| {
                 let second_parameter = template.collect::<proc_macro2::TokenStream>();
 
-                self.0.iter().map(|template_codegen| {
+                self.0.iter().find_map(|template_codegen| {
 
                 // macro call with two parameters
                 let edge = template_codegen.graph.edge_references().find(|edge| {
                     edge.weight().variable.as_ref().map_or(false, |variable| {
-                        let expected_ident = format_ident!("{}{}", variable, edge.id().index());
+                        let expected_ident = format_ident!("{}_{}{}", template_codegen.template_name, variable, edge.id().index());
                         ident == &expected_ident
                     })
                 });
@@ -143,7 +143,7 @@ impl InnerMacroReplace {
                         } #semicolon
                     }))
                 })
-            }).flatten().next()
+            })
 
             },
         )
@@ -265,7 +265,7 @@ pub struct TemplateCodegen {
 }
 
 #[must_use]
-pub fn codegen(templates: Vec<TemplateCodegen>) -> proc_macro2::TokenStream {
+pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
     let code = templates.iter().map(|template| {
         let instructions = template
             .graph
@@ -289,7 +289,7 @@ pub fn codegen(templates: Vec<TemplateCodegen>) -> proc_macro2::TokenStream {
         let edges = template.graph.edge_references().map(|edge| {
             edge.weight().variable.as_ref().map_or_else(
             || {
-                let variable_name = format_ident!("{}{}", "template", edge.id().index());
+                let variable_name = format_ident!("{}_template{}", template.template_name, edge.id().index());
                 let next_template_struct = if edge.target() == template.last {
                     quote! {
                         ()
@@ -305,7 +305,7 @@ pub fn codegen(templates: Vec<TemplateCodegen>) -> proc_macro2::TokenStream {
                 }
             },
             |variable| {
-                let variable_name = format_ident!("{}{}", variable, edge.id().index());
+                let variable_name = format_ident!("{}_{}{}", template.template_name, variable, edge.id().index());
                 let next_template_struct = if edge.target() == template.last {
                     quote! {
                         ()
@@ -322,7 +322,7 @@ pub fn codegen(templates: Vec<TemplateCodegen>) -> proc_macro2::TokenStream {
             },
         )
         });
-        let ident = format_ident!("initial{}", template.first.index());
+        let ident = format_ident!("{}_initial{}", template.template_name, template.first.index());
         let template_struct =
             node_type_to_create_type(&template.template_name, &template.graph, template.first);
         let other = quote! {

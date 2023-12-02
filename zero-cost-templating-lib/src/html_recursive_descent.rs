@@ -288,16 +288,13 @@ pub fn parse_children<I: Iterator<Item = char>>(
                             }
                         },
                         Some('#') => {
-                            match input.peek_nth(3) {
-                                Some('>') => {
-                                    // partial block (which may contain inner elements)
-                                    let (partial_name, children) = parse_partial_block(input)?;
-                                    result.push(Child::PartialBlock(partial_name, children));
-                                }
-                                _ => {
-                                    let (identifier, children) = parse_each(input)?;
-                                    result.push(Child::Each(identifier, children));
-                                }
+                            if input.peek_nth(3) == Some(&'>') {
+                                // partial block (which may contain inner elements)
+                                let (partial_name, children) = parse_partial_block(input)?;
+                                result.push(Child::PartialBlock(partial_name, children));
+                            } else {
+                                let (identifier, children) = parse_each(input)?;
+                                result.push(Child::Each(identifier, children));
                             }
                         }
                         Some(_) => result.push(Child::Variable(parse_variable(input)?)),

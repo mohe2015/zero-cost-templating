@@ -114,7 +114,7 @@ use std::path::PathBuf;
 use itertools::peek_nth;
 use petgraph::dot::Dot;
 use petgraph::stable_graph::StableGraph;
-use quote::{format_ident, quote};
+use quote::quote;
 use syn::punctuated::Punctuated;
 use syn::visit_mut::VisitMut;
 use syn::{parse_macro_input, Item, LitStr, Token};
@@ -201,11 +201,11 @@ pub fn template_stream(
         })
         .collect();
 
-    let code = codegen(inputs.clone());
+    let code = codegen(&inputs);
 
     let mut item = parse_macro_input!(item as Item);
 
-    InnerMacroReplace(inputs.clone()).visit_item_mut(&mut item);
+    InnerMacroReplace(inputs).visit_item_mut(&mut item);
 
     let expanded = quote! {
 
