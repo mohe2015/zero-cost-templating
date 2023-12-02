@@ -39,7 +39,7 @@ impl InnerMacroReplace {
                         // fall back to compiler macro error
                         return None;
                     }
-                    let template_struct = node_type_to_type(self.template_name.as_str(), &self.graph, self.first);
+                    let template_struct = node_type_to_create_type(self.template_name.as_str(), &self.graph, self.first);
                     return Some(Expr::Verbatim(quote_spanned! {span=>
                         {
                             #template_struct
@@ -105,7 +105,7 @@ impl InnerMacroReplace {
                             ()
                         }
                     } else {
-                        node_type_to_type_with_span(self.template_name.as_str(), &self.graph, edge.target(), span)
+                        node_type_to_create_type_with_span(self.template_name.as_str(), &self.graph, edge.target(), span)
                     };
 
                     let tmp = quote! {
@@ -207,6 +207,48 @@ fn node_type_to_type_with_span(
     }
 }
 
+fn node_type_to_create_type(
+    template_name: &str,
+    graph: &StableGraph<NodeType, IntermediateAstElement>,
+    node_index: NodeIndex,
+) -> proc_macro2::TokenStream {
+    node_type_to_create_type_with_span(template_name, graph, node_index, Span::call_site())
+}
+
+fn node_type_to_create_type_with_span(
+    template_name: &str,
+    graph: &StableGraph<NodeType, IntermediateAstElement>,
+    node_index: NodeIndex,
+    span: Span,
+) -> proc_macro2::TokenStream {
+    match &graph[node_index] {
+        NodeType::PartialBlock => {
+            let ident = format_ident!("PartialType");
+            quote! {
+                #ident
+            }
+        }
+        NodeType::InnerTemplate { name, partial } => {
+            let name = format_ident!("{}", name);
+            let partial = format_ident!("{}", partial);
+            quote! {
+                #name<#partial>
+            }
+        }
+        NodeType::Other => {
+            let ident = format_ident!(
+                "{}Template{}",
+                template_name.to_upper_camel_case(),
+                node_index.index().to_string(),
+                span = span
+            );
+            quote! {
+                #ident { partial_type: ::core::marker::PhantomData, end_type: ::core::marker::PhantomData }
+            }
+        }
+    }
+}
+
 #[must_use]
 pub fn codegen(
     template_name: &str,
@@ -240,7 +282,7 @@ pub fn codegen(
                         ()
                     }
                 } else {
-                    node_type_to_type(template_name, graph, edge.target())
+                    node_type_to_create_type(template_name, graph, edge.target())
                 };
                 quote! {
                     #[allow(unused)]
@@ -256,7 +298,7 @@ pub fn codegen(
                         ()
                     }
                 } else {
-                    node_type_to_type(template_name, graph, edge.target())
+                    node_type_to_create_type(template_name, graph, edge.target())
                 };
                 quote! {
                     #[allow(unused)]
@@ -268,7 +310,7 @@ pub fn codegen(
         )
     });
     let ident = format_ident!("initial{}", first.index());
-    let template_struct = node_type_to_type(template_name, graph, first);
+    let template_struct = node_type_to_create_type(template_name, graph, first);
     let other = quote! {
         #[allow(unused)]
         macro_rules! #ident {
