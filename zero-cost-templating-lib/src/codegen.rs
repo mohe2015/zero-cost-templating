@@ -11,7 +11,7 @@ use syn::{visit_mut, Expr, Macro, Stmt, Token};
 
 use crate::intermediate_graph::{EscapingFunction, IntermediateAstElement, NodeType};
 
-pub struct InnerMacroReplace(Vec<TemplateCodegen>);
+pub struct InnerMacroReplace(pub Vec<TemplateCodegen>);
 
 impl InnerMacroReplace {
     #[expect(clippy::too_many_lines, reason = "tmp")]
@@ -27,9 +27,9 @@ impl InnerMacroReplace {
         let span = input.span();
         comma.map_or_else(
             || {
-              self.0.iter().map(|template| {
+              self.0.iter().map(|template_codegen| {
                 // macro call without zero or one parameters
-                let first_index = template.first.index();
+                let first_index = template_codegen.first.index();
                 let initial_ident = format_ident!("initial{}", first_index);
                 if &initial_ident == ident {
                     if !first_parameter.is_empty() {
@@ -37,7 +37,7 @@ impl InnerMacroReplace {
                         // fall back to compiler macro error
                         return None;
                     }
-                    let template_struct = node_type_to_create_type(template.template_name.as_str(), &template.graph, template.first);
+                    let template_struct = node_type_to_create_type(template_codegen.template_name.as_str(), &template_codegen.graph, template_codegen.first);
                     return Some(Expr::Verbatim(quote_spanned! {span=>
                         {
                             #template_struct
@@ -45,7 +45,7 @@ impl InnerMacroReplace {
                     }));
                 }
 
-                let edge = template.graph.edge_references().find(|edge| {
+                let edge = template_codegen.graph.edge_references().find(|edge| {
                     let expected_ident = format_ident!("{}{}", "template", edge.id().index());
                     ident == &expected_ident
                 });
@@ -57,13 +57,13 @@ impl InnerMacroReplace {
                     }
 
                     let text = &edge.weight().text;
-                    let template_struct = node_type_to_type_with_span(template.template_name.as_str(), &template.graph, edge.source(), input.path.span()); // good span for mismatched type error
-                    let next_template_struct = if edge.target() == template.last {
+                    let template_struct = node_type_to_type_with_span(template_codegen.template_name.as_str(), &template_codegen.graph, edge.source(), input.path.span()); // good span for mismatched type error
+                    let next_template_struct = if edge.target() == template_codegen.last {
                         quote_spanned! {span=>
                             ()
                         }
                     } else {
-                        node_type_to_type_with_span(template.template_name.as_str(), &template.graph, edge.target(), span)
+                        node_type_to_type_with_span(template_codegen.template_name.as_str(), &template_codegen.graph, edge.target(), span)
                     };
 
                     let tmp = quote! {
@@ -256,6 +256,7 @@ fn node_type_to_create_type_with_span(
     }
 }
 
+#[derive(Debug, Clone)]
 pub struct TemplateCodegen {
     pub template_name: String,
     pub graph: StableGraph<NodeType, IntermediateAstElement>,

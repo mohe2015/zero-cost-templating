@@ -201,13 +201,14 @@ pub fn template_stream(
         })
         .collect();
 
-    let code = codegen(inputs);
+    let code = codegen(inputs.clone());
 
     let mut item = parse_macro_input!(item as Item);
 
-    InnerMacroReplace(inputs).visit_item_mut(&mut item);
+    InnerMacroReplace(inputs.clone()).visit_item_mut(&mut item);
 
-    let recompile_ident = format_ident!("_{}_FORCE_RECOMPILE", template_name);
+    let recompile_ident =
+        format_ident!("_{}_FORCE_RECOMPILE", inputs.first().unwrap().template_name);
     let expanded = quote! {
         const #recompile_ident: &'static str = include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/", #input_paths));
 
