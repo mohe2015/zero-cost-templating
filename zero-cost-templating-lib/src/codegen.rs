@@ -13,7 +13,7 @@ use crate::intermediate_graph::{EscapingFunction, IntermediateAstElement, NodeTy
 
 pub struct InnerMacroReplace(pub Vec<TemplateCodegen>);
 
-fn a(
+fn handle_macro_call_zero_or_one_parameter(
     input: &Macro,
     ident: &Ident,
     span: Span,
@@ -33,8 +33,8 @@ fn a(
             template_codegen.template_name.as_str(),
             &template_codegen.graph,
             template_codegen.first,
-            quote! { () },
-            quote! { () },
+            &quote! { () },
+            &quote! { () },
         );
         return Some(Expr::Verbatim(quote_spanned! {span=>
             {
@@ -76,8 +76,8 @@ fn a(
                 &template_codegen.graph,
                 edge.target(),
                 span,
-                quote! { magic_expression_result.partial_type },
-                quote! { magic_expression_result.end_type },
+                &quote! { magic_expression_result.partial_type },
+                &quote! { magic_expression_result.end_type },
             )
         };
 
@@ -92,7 +92,7 @@ fn a(
     })
 }
 
-fn b(
+fn handle_macro_call_two_parameters(
     input: &Macro,
     ident: &Ident,
     span: Span,
@@ -139,8 +139,8 @@ fn b(
                 &template_codegen.graph,
                 edge.target(),
                 span,
-                quote! { magic_expression_result.partial_type },
-                quote! { magic_expression_result.end_type },
+                &quote! { magic_expression_result.partial_type },
+                &quote! { magic_expression_result.end_type },
             )
         };
 
@@ -185,7 +185,7 @@ impl InnerMacroReplace {
             || {
                 // macro call without zero or one parameters
                 self.0.iter().find_map(|template_codegen| {
-                    a(
+                    handle_macro_call_zero_or_one_parameter(
                         input,
                         ident,
                         span,
@@ -199,7 +199,7 @@ impl InnerMacroReplace {
                 let second_parameter = template.collect::<proc_macro2::TokenStream>();
 
                 self.0.iter().find_map(|template_codegen| {
-                    b(
+                    handle_macro_call_two_parameters(
                         input,
                         ident,
                         span,
@@ -244,8 +244,6 @@ fn node_type_to_type_with_span(
 ) -> proc_macro2::TokenStream {
     match &graph[node_index] {
         NodeType::PartialBlock => {
-            // TODO FIXME
-            let ident = format_ident!("PartialType");
             quote! {
                 "TODO FIXME"
             }
@@ -282,9 +280,9 @@ fn node_type_to_create_type(
     template_name: &str,
     graph: &StableGraph<NodeType, IntermediateAstElement>,
     node_index: NodeIndex,
-    partial_type: proc_macro2::TokenStream,
-    end_type: proc_macro2::TokenStream,
-) -> proc_macro2::TokenStream {
+    partial_type: &TokenStream,
+    end_type: &TokenStream,
+) -> TokenStream {
     node_type_to_create_type_with_span(
         template_name,
         graph,
@@ -300,9 +298,9 @@ fn node_type_to_create_type_with_span(
     graph: &StableGraph<NodeType, IntermediateAstElement>,
     node_index: NodeIndex,
     span: Span,
-    partial_type: proc_macro2::TokenStream,
-    end_type: proc_macro2::TokenStream,
-) -> proc_macro2::TokenStream {
+    partial_type: &TokenStream,
+    end_type: &TokenStream,
+) -> TokenStream {
     match &graph[node_index] {
         NodeType::PartialBlock => {
             quote! {
@@ -347,6 +345,7 @@ pub struct TemplateCodegen {
 }
 
 #[must_use]
+#[expect(clippy::too_many_lines, reason = "tmp")]
 pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
     let code = templates.iter().map(|template| {
         let instructions = template
@@ -387,8 +386,8 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
                         &template.template_name,
                         &template.graph,
                         edge.target(),
-                        quote! { $template.partial_type },
-                        quote! { $template.end_type }
+                        &quote! { $template.partial_type },
+                        &quote! { $template.end_type }
                     )
                 };
                 quote! {
@@ -414,8 +413,8 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
                         &template.template_name,
                         &template.graph,
                         edge.target(),
-                        quote! { $template.partial_type },
-                        quote! { $template.end_type }
+                        &quote! { $template.partial_type },
+                        &quote! { $template.end_type }
                     )
                 };
                 quote! {
@@ -436,8 +435,8 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
             &template.template_name,
             &template.graph,
             template.first,
-            quote! { () },
-            quote! { () },
+            &quote! { () },
+            &quote! { () },
         );
         let other = quote! {
             #[allow(unused)]
