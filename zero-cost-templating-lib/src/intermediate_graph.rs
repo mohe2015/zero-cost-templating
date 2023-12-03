@@ -48,7 +48,11 @@ impl Display for IntermediateAstElement {
 #[derive(Debug, Clone)]
 pub enum NodeType {
     PartialBlock,
-    InnerTemplate { name: String, partial: String },
+    InnerTemplate {
+        name: String,
+        partial: String,
+        after: String,
+    },
     Other,
 }
 
@@ -144,6 +148,11 @@ pub fn children_to_ast(
                         "{}Template{}",
                         template_name.to_upper_camel_case(),
                         inner_template_start.index()
+                    ),
+                    after: format!(
+                        "{}Template{}",
+                        template_name.to_upper_camel_case(),
+                        after_all.index()
                     ),
                 };
             }

@@ -192,8 +192,13 @@ fn node_type_to_type_with_span(
                 #ident
             }
         }
-        NodeType::InnerTemplate { name, partial } => {
-            todo!()
+        NodeType::InnerTemplate { name, partial, after } => {
+            let name = format_ident!("{}", name);
+            let partial = format_ident!("{}", partial);
+            let after = format_ident!("{}", after);
+            quote! {
+                #name<#partial, #after<(), ()>>
+            }
         }
         NodeType::Other => {
             let ident = format_ident!(
@@ -203,7 +208,7 @@ fn node_type_to_type_with_span(
                 span = span
             );
             quote! {
-                #ident
+                #ident<(), ()>
             }
         }
     }
@@ -230,49 +235,12 @@ fn node_type_to_create_type_with_span(
                 #ident
             }
         }
-        NodeType::InnerTemplate { name, partial } => {
-            todo!()
-        }
-        NodeType::Other => {
-            let ident = format_ident!(
-                "{}Template{}",
-                template_name.to_upper_camel_case(),
-                node_index.index().to_string(),
-                span = span
-            );
-            quote! {
-                #ident::<(), ()> { partial_type: ::core::marker::PhantomData, end_type: ::core::marker::PhantomData }
-            }
-        }
-    }
-}
-
-
-fn node_type_to_create_type_with_target_and_span(
-    template_name: &str,
-    graph: &StableGraph<NodeType, IntermediateAstElement>,
-    node_index: NodeIndex,
-    target: NodeIndex,
-    span: Span,
-) -> proc_macro2::TokenStream {
-    match &graph[node_index] {
-        NodeType::PartialBlock => {
-            let ident = format_ident!("PartialType");
-            quote! {
-                #ident
-            }
-        }
-        NodeType::InnerTemplate { name, partial } => {
+        NodeType::InnerTemplate { name, partial, after } => {
             let name = format_ident!("{}", name);
             let partial = format_ident!("{}", partial);
-            let end = format_ident!(
-                "{}Template{}",
-                template_name.to_upper_camel_case(),
-                target.index().to_string(),
-                span = span
-            );
+            let after = format_ident!("{}", after);
             quote! {
-                #name::<#partial, #end<(), ()>> { partial_type: ::core::marker::PhantomData, end_type: ::core::marker::PhantomData }
+                #name::<#partial, #after::<(), ()>> { partial_type: ::core::marker::PhantomData, end_type: ::core::marker::PhantomData }
             }
         }
         NodeType::Other => {
