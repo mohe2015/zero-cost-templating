@@ -228,7 +228,8 @@ fn node_type_to_type_with_span(
                 node_index.index().to_string(),
                 span = span
             );
-            // TODO FIXME do we need to be more accurate here? with <something, something> (probably yes)
+            // TODO FIXME do we need to be more accurate here? with <something, something>
+            // (probably yes)
             quote! {
                 #ident<_, _>
             }
