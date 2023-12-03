@@ -133,10 +133,13 @@ fn handle_macro_call_two_parameters(
             edge.source(),
             input.path.span(),
         ); // good span for mismatched type error
-        let next_template_struct = if edge.target() == template_codegen.last {
-            quote_spanned! {span=>
-                ()
-            }
+        let last_node = template_codegen
+            .graph
+            .edges_directed(edge.target(), Direction::Outgoing)
+            .next()
+            .is_none();
+        let next_template_struct = if last_node {
+            quote! { magic_expression_result.end_type }
         } else {
             node_type_to_create_type_with_span(
                 template_codegen.template_name.as_str(),
@@ -351,15 +354,15 @@ pub struct TemplateCodegen {
 #[must_use]
 #[expect(clippy::too_many_lines, reason = "tmp")]
 pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
-    let code = templates.iter().map(|template| {
-        let instructions = template
+    let code = templates.iter().map(|template_codegen| {
+        let instructions = template_codegen
             .graph
             .node_references()
             .filter_map(|(node_index, node)| match node {
                 NodeType::InnerTemplate { .. } | NodeType::PartialBlock => None,
                 NodeType::Other => Some(format_ident!(
                     "{}Template{}",
-                    template.template_name.to_upper_camel_case(),
+                    template_codegen.template_name.to_upper_camel_case(),
                     node_index.index().to_string(),
                 )),
             })
@@ -372,28 +375,31 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
                     }
                 }
             });
-        let edges = template.graph.edge_references().map(|edge| {
+        let edges = template_codegen.graph.edge_references().map(|edge| {
             edge.weight().variable.as_ref().map_or_else(
             || {
                 let variable_name = format_ident!(
                     "{}_template{}",
-                    template.template_name,
+                    template_codegen.template_name,
                     edge.id().index()
                 );
-                let next_template_struct = if edge.target() == template.last {
-                    quote! {
-                        ()
-                    }
-                } else {
-                    // TODO FIXME
-                    node_type_to_create_type(
-                        &template.template_name,
-                        &template.graph,
-                        edge.target(),
-                        &quote! { $template.partial_type },
-                        &quote! { $template.end_type }
-                    )
-                };
+                let last_node = template_codegen
+            .graph
+            .edges_directed(edge.target(), Direction::Outgoing)
+            .next()
+            .is_none();
+        let next_template_struct = if last_node {
+            quote! { magic_expression_result.end_type }
+        } else {
+            // TODO FIXME
+            node_type_to_create_type(
+                &template_codegen.template_name,
+                &template_codegen.graph,
+                edge.target(),
+                &quote! { $template.partial_type },
+                &quote! { $template.end_type }
+            )
+        };
                 quote! {
                     #[allow(unused)]
                     macro_rules! #variable_name {
@@ -404,23 +410,26 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
             |variable| {
                 let variable_name = format_ident!(
                     "{}_{}{}",
-                    template.template_name,
+                    template_codegen.template_name,
                     variable,
                     edge.id().index()
                 );
-                let next_template_struct = if edge.target() == template.last {
-                    quote! {
-                        ()
-                    }
-                } else {
-                    node_type_to_create_type(
-                        &template.template_name,
-                        &template.graph,
-                        edge.target(),
-                        &quote! { $template.partial_type },
-                        &quote! { $template.end_type }
-                    )
-                };
+                let last_node = template_codegen
+            .graph
+            .edges_directed(edge.target(), Direction::Outgoing)
+            .next()
+            .is_none();
+        let next_template_struct = if last_node {
+            quote! { magic_expression_result.end_type }
+        } else {
+            node_type_to_create_type(
+                &template_codegen.template_name,
+                &template_codegen.graph,
+                edge.target(),
+                &quote! { $template.partial_type },
+                &quote! { $template.end_type }
+            )
+        };
                 quote! {
                     #[allow(unused)]
                     macro_rules! #variable_name {
@@ -432,13 +441,13 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
         });
         let ident = format_ident!(
             "{}_initial{}",
-            template.template_name,
-            template.first.index()
+            template_codegen.template_name,
+            template_codegen.first.index()
         );
         let template_struct = node_type_to_create_type(
-            &template.template_name,
-            &template.graph,
-            template.first,
+            &template_codegen.template_name,
+            &template_codegen.graph,
+            template_codegen.first,
             &quote! { () },
             &quote! { () },
         );
@@ -448,8 +457,8 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
                 () => { unreachable!(); #template_struct }
             }
         };
-        let recompile_ident = format_ident!("_{}_FORCE_RECOMPILE", template.template_name);
-        let input = format!("{}.html.hbs", template.template_name);
+        let recompile_ident = format_ident!("_{}_FORCE_RECOMPILE", template_codegen.template_name);
+        let input = format!("{}.html.hbs", template_codegen.template_name);
         quote! {
             #(#instructions)*
 
