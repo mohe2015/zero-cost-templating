@@ -2,6 +2,8 @@
 
 extern crate alloc;
 
+use std::marker::PhantomData;
+
 use zero_cost_templating::template_stream;
 
 // https://github.com/dtolnay/cargo-expand
@@ -100,4 +102,17 @@ pub async fn main() -> Result<(), std::io::Error> {
 }
 */
 
-pub fn main() {}
+pub fn main() {
+    /*
+    pub struct Generic1<T> {
+        t: PhantomData<T>,
+    }
+
+    pub struct Generic2<T> {
+        t: PhantomData<T>,
+    }
+
+    let a = Generic1::<u32> { t: PhantomData };
+    let b = Generic2 { t: a.t };
+    */
+}
