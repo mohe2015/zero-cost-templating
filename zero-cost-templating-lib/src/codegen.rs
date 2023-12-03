@@ -187,9 +187,10 @@ fn node_type_to_type_with_span(
 ) -> proc_macro2::TokenStream {
     match &graph[node_index] {
         NodeType::PartialBlock => {
+            // TODO FIXME
             let ident = format_ident!("PartialType");
             quote! {
-                #ident
+                ()
             }
         }
         NodeType::InnerTemplate { name, partial, after } => {
@@ -207,6 +208,7 @@ fn node_type_to_type_with_span(
                 node_index.index().to_string(),
                 span = span
             );
+            // TODO FIXME do we need to be more accurate here? with <something, something> (probably yes)
             quote! {
                 #ident<(), ()>
             }
@@ -230,9 +232,10 @@ fn node_type_to_create_type_with_span(
 ) -> proc_macro2::TokenStream {
     match &graph[node_index] {
         NodeType::PartialBlock => {
+            // TODO FIXME
             let ident = format_ident!("PartialType");
             quote! {
-                #ident
+                ()
             }
         }
         NodeType::InnerTemplate { name, partial, after } => {
@@ -240,7 +243,7 @@ fn node_type_to_create_type_with_span(
             let partial = format_ident!("{}", partial);
             let after = format_ident!("{}", after);
             quote! {
-                #name::<#partial, #after::<(), ()>> { partial_type: ::core::marker::PhantomData, end_type: ::core::marker::PhantomData }
+                #name::<#partial::<(), ()>, #after::<(), ()>> { partial_type: ::core::marker::PhantomData, end_type: ::core::marker::PhantomData }
             }
         }
         NodeType::Other => {
@@ -273,12 +276,13 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
             .node_references()
             .filter_map(|(node_index, node)| match node {
                 NodeType::InnerTemplate { .. } | NodeType::PartialBlock => None,
-                NodeType::Other => Some(node_index),
+                NodeType::Other => Some( format_ident!(
+                    "{}Template{}",
+                    template.template_name.to_upper_camel_case(),
+                    node_index.index().to_string(),
+                )),
             })
-            .map(|node_index| {
-                let template_struct =
-                    node_type_to_type(&template.template_name, &template.graph, node_index);
-
+            .map(|template_struct| {
                 quote! {
                     #[must_use]
                     pub struct #template_struct<PartialType, EndType> {
