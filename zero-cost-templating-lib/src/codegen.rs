@@ -245,7 +245,7 @@ fn node_type_to_create_type_with_span(
             let partial = format_ident!("{}", partial);
             let after = format_ident!("{}", after);
             quote! {
-                #name::<#partial::<(), ()>, #after::<(), ()>> { partial_type: ::core::marker::PhantomData, end_type: ::core::marker::PhantomData }
+                #name::<#partial::<(), ()>, #after::<(), ()>> { partial_type: #partial::<(), ()> { partial_type: (), end_type: () }, end_type: #after::<(), ()> { partial_type: (), end_type: () } }
             }
         }
         NodeType::Other => {
@@ -288,8 +288,8 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
                 quote! {
                     #[must_use]
                     pub struct #template_struct<PartialType, EndType> {
-                        partial_type: ::core::marker::PhantomData<PartialType>,
-                        end_type: ::core::marker::PhantomData<EndType>,
+                        partial_type: PartialType,
+                        end_type: EndType,
                     }
                 }
             });
