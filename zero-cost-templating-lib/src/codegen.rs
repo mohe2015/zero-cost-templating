@@ -173,7 +173,7 @@ fn node_type_to_type_with_span(
             // TODO FIXME
             let ident = format_ident!("PartialType");
             quote! {
-                ()
+                "TODO FIXME"
             }
         }
         NodeType::InnerTemplate {
@@ -230,10 +230,8 @@ fn node_type_to_create_type_with_span(
 ) -> proc_macro2::TokenStream {
     match &graph[node_index] {
         NodeType::PartialBlock => {
-            // TODO FIXME
-            let ident = format_ident!("PartialType");
             quote! {
-                ()
+                #partial_type
             }
         }
         NodeType::InnerTemplate {
