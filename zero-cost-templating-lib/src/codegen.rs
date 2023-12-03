@@ -94,6 +94,72 @@ impl InnerMacroReplace {
         })
     }
 
+    fn b(
+        input: &Macro,
+        ident: &Ident,
+        span: Span,
+        first_parameter: &TokenStream,
+        second_parameter: &TokenStream,
+        semicolon: Option<Token![;]>,
+        template_codegen: &TemplateCodegen,
+    ) -> Option<Expr> {
+        // macro call with two parameters
+        let edge = template_codegen.graph.edge_references().find(|edge| {
+            edge.weight().variable.as_ref().map_or(false, |variable| {
+                let expected_ident = format_ident!(
+                    "{}_{}{}",
+                    template_codegen.template_name,
+                    variable,
+                    edge.id().index()
+                );
+                ident == &expected_ident
+            })
+        });
+        edge.and_then(|edge| {
+            if first_parameter.is_empty() || second_parameter.is_empty() {
+                // one of the parameters is empty
+                // fall back to compiler macro error
+                return None;
+            }
+
+            let text = &edge.weight().text;
+            let _second_parameter_span = second_parameter.span();
+
+            let template_struct = node_type_to_type_with_span(template_codegen.template_name.as_str(), &template_codegen.graph, edge.source(), input.path.span()); // good span for mismatched type error
+            let next_template_struct = if edge.target() == template_codegen.last {
+                quote_spanned! {span=>
+                    ()
+                }
+            } else {
+                node_type_to_create_type_with_span(template_codegen.template_name.as_str(), &template_codegen.graph, edge.target(), span, quote! { magic_expression_result.partial_type }, quote! { magic_expression_result.end_type })
+            };
+
+            let escaped_value = match edge.weight().escaping_fun {
+                EscapingFunction::NoVariableStart => quote! {
+                    unreachable();
+                },
+                EscapingFunction::HtmlAttribute => {
+                    quote! {
+                        yield zero_cost_templating::encode_double_quoted_attribute(#second_parameter);
+                    }
+                }
+                EscapingFunction::HtmlElementInner => {
+                    quote! {
+                        yield zero_cost_templating::encode_element_text(#second_parameter);
+                    }
+                }
+            };
+            Some(Expr::Verbatim(quote! {
+                {
+                    let magic_expression_result: #template_struct = #first_parameter;
+                    #escaped_value
+                    yield ::alloc::borrow::Cow::from(#text);
+                    #next_template_struct
+                } #semicolon
+            }))
+        })
+    }
+
     fn magic(&self, input: &Macro, semicolon: Option<Token![;]>) -> Option<syn::Expr> {
         let ident = input.path.require_ident().unwrap();
         let template = input.tokens.clone();
@@ -107,67 +173,31 @@ impl InnerMacroReplace {
         comma.map_or_else(
             || {
                 // macro call without zero or one parameters
-              self.0.iter().find_map(|template_codegen| {
-                Self::a(input, ident, span, &first_parameter, semicolon, template_codegen)
-            })
+                self.0.iter().find_map(|template_codegen| {
+                    Self::a(
+                        input,
+                        ident,
+                        span,
+                        &first_parameter,
+                        semicolon,
+                        template_codegen,
+                    )
+                })
             },
             |_comma| {
                 let second_parameter = template.collect::<proc_macro2::TokenStream>();
 
                 self.0.iter().find_map(|template_codegen| {
-
-                // macro call with two parameters
-                let edge = template_codegen.graph.edge_references().find(|edge| {
-                    edge.weight().variable.as_ref().map_or(false, |variable| {
-                        let expected_ident = format_ident!("{}_{}{}", template_codegen.template_name, variable, edge.id().index());
-                        ident == &expected_ident
-                    })
-                });
-                edge.and_then(|edge| {
-                    if first_parameter.is_empty() || second_parameter.is_empty() {
-                        // one of the parameters is empty
-                        // fall back to compiler macro error
-                        return None;
-                    }
-
-                    let text = &edge.weight().text;
-                    let _second_parameter_span = second_parameter.span();
-
-                    let template_struct = node_type_to_type_with_span(template_codegen.template_name.as_str(), &template_codegen.graph, edge.source(), input.path.span()); // good span for mismatched type error
-                    let next_template_struct = if edge.target() == template_codegen.last {
-                        quote_spanned! {span=>
-                            ()
-                        }
-                    } else {
-                        node_type_to_create_type_with_span(template_codegen.template_name.as_str(), &template_codegen.graph, edge.target(), span, quote! { magic_expression_result.partial_type }, quote! { magic_expression_result.end_type })
-                    };
-
-                    let escaped_value = match edge.weight().escaping_fun {
-                        EscapingFunction::NoVariableStart => quote! {
-                            unreachable();
-                        },
-                        EscapingFunction::HtmlAttribute => {
-                            quote! {
-                                yield zero_cost_templating::encode_double_quoted_attribute(#second_parameter);
-                            }
-                        }
-                        EscapingFunction::HtmlElementInner => {
-                            quote! {
-                                yield zero_cost_templating::encode_element_text(#second_parameter);
-                            }
-                        }
-                    };
-                    Some(Expr::Verbatim(quote! {
-                        {
-                            let magic_expression_result: #template_struct = #first_parameter;
-                            #escaped_value
-                            yield ::alloc::borrow::Cow::from(#text);
-                            #next_template_struct
-                        } #semicolon
-                    }))
+                    Self::b(
+                        input,
+                        ident,
+                        span,
+                        &first_parameter,
+                        &second_parameter,
+                        semicolon,
+                        template_codegen,
+                    )
                 })
-            })
-
             },
         )
     }
