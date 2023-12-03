@@ -7,3 +7,5 @@ format_strings = true
 imports_granularity = "Module"
 reorder_impl_items = true
 group_imports = "StdExternalCrate"
+error_on_line_overflow = true
+error_on_unformatted = true
