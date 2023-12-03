@@ -2,7 +2,8 @@ use heck::ToUpperCamelCase;
 use itertools::Itertools;
 use petgraph::prelude::NodeIndex;
 use petgraph::stable_graph::StableGraph;
-use petgraph::visit::{EdgeRef, IntoEdgeReferences, IntoNodeReferences};
+use petgraph::visit::{EdgeRef, IntoEdgeReferences, IntoEdgesDirected, IntoNodeReferences};
+use petgraph::Direction;
 use proc_macro2::{Ident, Span, TokenStream, TokenTree};
 use quote::{format_ident, quote, quote_spanned};
 use syn::spanned::Spanned;
@@ -65,10 +66,13 @@ fn handle_macro_call_zero_or_one_parameter(
             edge.source(),
             input.path.span(),
         ); // good span for mismatched type error
-        let next_template_struct = if edge.target() == template_codegen.last {
-            quote_spanned! {span=>
-                ()
-            }
+        let last_node = template_codegen
+            .graph
+            .edges_directed(edge.target(), Direction::Outgoing)
+            .next()
+            .is_none();
+        let next_template_struct = if last_node {
+            quote! { magic_expression_result.end_type }
         } else {
             // here?
             node_type_to_create_type_with_span(
