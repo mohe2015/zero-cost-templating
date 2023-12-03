@@ -198,7 +198,7 @@ fn node_type_to_type_with_span(
             let partial = format_ident!("{}", partial);
             let after = format_ident!("{}", after);
             quote! {
-                #name<#partial, #after<(), ()>>
+                #name<#partial<(), ()>, #after<(), ()>>
             }
         }
         NodeType::Other => {
