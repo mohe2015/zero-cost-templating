@@ -68,7 +68,7 @@ pub async fn partial_block_partial() {
 pub async fn partial_block() {
     let template = partial_block_initial0!();
     let template = partial_block_template0!(template);
-    partial_block_partial_template0!(template);
+    let template = partial_block_partial_template0!(template);
 }
 
 /*

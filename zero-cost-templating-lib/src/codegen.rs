@@ -68,12 +68,10 @@ impl InnerMacroReplace {
                         node_type_to_create_type_with_span(template_codegen.template_name.as_str(), &template_codegen.graph, edge.target(), span)
                     };
 
+                    // TODO FIXME forward type of generics
                     Some(Expr::Verbatim(quote! {
                         {
-                            {
-                                let magic_expression_result: #template_struct = #first_parameter;
-                                drop(magic_expression_result);
-                            }
+                            let magic_expression_result: #template_struct = #first_parameter;
                             yield ::alloc::borrow::Cow::from(#text);
                             #next_template_struct
                         } #semicolon
@@ -112,9 +110,6 @@ impl InnerMacroReplace {
                         node_type_to_create_type_with_span(template_codegen.template_name.as_str(), &template_codegen.graph, edge.target(), span)
                     };
 
-                    let tmp = quote! {
-                        let magic_expression_result: #template_struct = #first_parameter;
-                    };
                     let escaped_value = match edge.weight().escaping_fun {
                         EscapingFunction::NoVariableStart => quote! {
                             unreachable();
@@ -132,10 +127,7 @@ impl InnerMacroReplace {
                     };
                     Some(Expr::Verbatim(quote! {
                         {
-                            {
-                                #tmp
-                                drop(magic_expression_result);
-                            }
+                            let magic_expression_result: #template_struct = #first_parameter;
                             #escaped_value
                             yield ::alloc::borrow::Cow::from(#text);
                             #next_template_struct
@@ -171,14 +163,6 @@ impl VisitMut for InnerMacroReplace {
     }
 }
 
-fn node_type_to_type(
-    template_name: &str,
-    graph: &StableGraph<NodeType, IntermediateAstElement>,
-    node_index: NodeIndex,
-) -> proc_macro2::TokenStream {
-    node_type_to_type_with_span(template_name, graph, node_index, Span::call_site())
-}
-
 fn node_type_to_type_with_span(
     template_name: &str,
     graph: &StableGraph<NodeType, IntermediateAstElement>,
@@ -210,7 +194,7 @@ fn node_type_to_type_with_span(
             );
             // TODO FIXME do we need to be more accurate here? with <something, something> (probably yes)
             quote! {
-                #ident<(), ()>
+                #ident<_, _>
             }
         }
     }
