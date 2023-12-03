@@ -68,6 +68,8 @@ pub async fn partial_block_partial() {
  */
 #[template_stream("partial_block.html.hbs", "partial_block_partial.html.hbs")]
 pub async fn partial_block() {
+    // is it important that this possibly stays composable? should we maybe merge the graphs at compile time?
+
     // TODO FIXME make the naming so its easier to know which method to call next
     // currently the .dot file are probably most helpful (the edge numbers should be the method names and the node numbers should be the types?)
     // xdot zero-cost-templating/partial_block.dot
