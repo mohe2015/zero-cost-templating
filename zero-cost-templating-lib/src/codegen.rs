@@ -37,7 +37,7 @@ impl InnerMacroReplace {
                         // fall back to compiler macro error
                         return None;
                     }
-                    let template_struct = node_type_to_create_type(template_codegen.template_name.as_str(), &template_codegen.graph, template_codegen.first);
+                    let template_struct = node_type_to_create_type(template_codegen.template_name.as_str(), &template_codegen.graph, template_codegen.first, quote! { () }, quote! { () });
                     return Some(Expr::Verbatim(quote_spanned! {span=>
                         {
                             #template_struct
@@ -64,8 +64,7 @@ impl InnerMacroReplace {
                         }
                     } else {
                         // here?
-                        
-                        node_type_to_create_type_with_span(template_codegen.template_name.as_str(), &template_codegen.graph, edge.target(), span)
+                        node_type_to_create_type_with_span(template_codegen.template_name.as_str(), &template_codegen.graph, edge.target(), span, quote! { magic_expression_result.partial_type }, quote! { magic_expression_result.end_type })
                     };
 
                     // TODO FIXME forward type of generics
@@ -107,7 +106,7 @@ impl InnerMacroReplace {
                             ()
                         }
                     } else {
-                        node_type_to_create_type_with_span(template_codegen.template_name.as_str(), &template_codegen.graph, edge.target(), span)
+                        node_type_to_create_type_with_span(template_codegen.template_name.as_str(), &template_codegen.graph, edge.target(), span, quote! { magic_expression_result.partial_type }, quote! { magic_expression_result.end_type })
                     };
 
                     let escaped_value = match edge.weight().escaping_fun {
@@ -177,7 +176,11 @@ fn node_type_to_type_with_span(
                 ()
             }
         }
-        NodeType::InnerTemplate { name, partial, after } => {
+        NodeType::InnerTemplate {
+            name,
+            partial,
+            after,
+        } => {
             let name = format_ident!("{}", name);
             let partial = format_ident!("{}", partial);
             let after = format_ident!("{}", after);
@@ -204,8 +207,17 @@ fn node_type_to_create_type(
     template_name: &str,
     graph: &StableGraph<NodeType, IntermediateAstElement>,
     node_index: NodeIndex,
+    partial_type: proc_macro2::TokenStream,
+    end_type: proc_macro2::TokenStream,
 ) -> proc_macro2::TokenStream {
-    node_type_to_create_type_with_span(template_name, graph, node_index, Span::call_site())
+    node_type_to_create_type_with_span(
+        template_name,
+        graph,
+        node_index,
+        Span::call_site(),
+        partial_type,
+        end_type,
+    )
 }
 
 fn node_type_to_create_type_with_span(
@@ -213,6 +225,8 @@ fn node_type_to_create_type_with_span(
     graph: &StableGraph<NodeType, IntermediateAstElement>,
     node_index: NodeIndex,
     span: Span,
+    partial_type: proc_macro2::TokenStream,
+    end_type: proc_macro2::TokenStream,
 ) -> proc_macro2::TokenStream {
     match &graph[node_index] {
         NodeType::PartialBlock => {
@@ -222,7 +236,11 @@ fn node_type_to_create_type_with_span(
                 ()
             }
         }
-        NodeType::InnerTemplate { name, partial, after } => {
+        NodeType::InnerTemplate {
+            name,
+            partial,
+            after,
+        } => {
             let name = format_ident!("{}", name);
             let partial = format_ident!("{}", partial);
             let after = format_ident!("{}", after);
@@ -285,7 +303,7 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
                     }
                 } else {
                     // TODO FIXME
-                    node_type_to_create_type(&template.template_name, &template.graph, edge.target())
+                    node_type_to_create_type(&template.template_name, &template.graph, edge.target(), quote! { $template.partial_type }, quote! { $template.end_type })
                 };
                 quote! {
                     #[allow(unused)]
@@ -301,7 +319,7 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
                         ()
                     }
                 } else {
-                    node_type_to_create_type(&template.template_name, &template.graph, edge.target())
+                    node_type_to_create_type(&template.template_name, &template.graph, edge.target(), quote! { $template.partial_type }, quote! { $template.end_type })
                 };
                 quote! {
                     #[allow(unused)]
@@ -314,7 +332,7 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
         });
         let ident = format_ident!("{}_initial{}", template.template_name, template.first.index());
         let template_struct =
-            node_type_to_create_type(&template.template_name, &template.graph, template.first);
+            node_type_to_create_type(&template.template_name, &template.graph, template.first, quote! { () }, quote! { () });
         let other = quote! {
             #[allow(unused)]
             macro_rules! #ident {
