@@ -318,7 +318,10 @@ fn node_type_to_create_type_with_span(
             let partial = format_ident!("{}", partial);
             let after = format_ident!("{}", after);
             quote! {
-                #name::<#partial::<(), ()>, #after::<(), ()>> { partial_type: #partial::<(), ()> { partial_type: (), end_type: () }, end_type: #after::<(), ()> { partial_type: (), end_type: () } }
+                #name::<#partial::<(), ()>, #after::<(), ()>> {
+                    partial_type: #partial::<(), ()> { partial_type: (), end_type: () },
+                    end_type: #after::<(), ()> { partial_type: (), end_type: () }
+                }
             }
         }
         NodeType::Other => {
@@ -351,7 +354,7 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
             .node_references()
             .filter_map(|(node_index, node)| match node {
                 NodeType::InnerTemplate { .. } | NodeType::PartialBlock => None,
-                NodeType::Other => Some( format_ident!(
+                NodeType::Other => Some(format_ident!(
                     "{}Template{}",
                     template.template_name.to_upper_camel_case(),
                     node_index.index().to_string(),
@@ -369,14 +372,24 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
         let edges = template.graph.edge_references().map(|edge| {
             edge.weight().variable.as_ref().map_or_else(
             || {
-                let variable_name = format_ident!("{}_template{}", template.template_name, edge.id().index());
+                let variable_name = format_ident!(
+                    "{}_template{}",
+                    template.template_name,
+                    edge.id().index()
+                );
                 let next_template_struct = if edge.target() == template.last {
                     quote! {
                         ()
                     }
                 } else {
                     // TODO FIXME
-                    node_type_to_create_type(&template.template_name, &template.graph, edge.target(), quote! { $template.partial_type }, quote! { $template.end_type })
+                    node_type_to_create_type(
+                        &template.template_name,
+                        &template.graph,
+                        edge.target(),
+                        quote! { $template.partial_type },
+                        quote! { $template.end_type }
+                    )
                 };
                 quote! {
                     #[allow(unused)]
@@ -386,13 +399,24 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
                 }
             },
             |variable| {
-                let variable_name = format_ident!("{}_{}{}", template.template_name, variable, edge.id().index());
+                let variable_name = format_ident!(
+                    "{}_{}{}",
+                    template.template_name,
+                    variable,
+                    edge.id().index()
+                );
                 let next_template_struct = if edge.target() == template.last {
                     quote! {
                         ()
                     }
                 } else {
-                    node_type_to_create_type(&template.template_name, &template.graph, edge.target(), quote! { $template.partial_type }, quote! { $template.end_type })
+                    node_type_to_create_type(
+                        &template.template_name,
+                        &template.graph,
+                        edge.target(),
+                        quote! { $template.partial_type },
+                        quote! { $template.end_type }
+                    )
                 };
                 quote! {
                     #[allow(unused)]
@@ -403,9 +427,18 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
             },
         )
         });
-        let ident = format_ident!("{}_initial{}", template.template_name, template.first.index());
-        let template_struct =
-            node_type_to_create_type(&template.template_name, &template.graph, template.first, quote! { () }, quote! { () });
+        let ident = format_ident!(
+            "{}_initial{}",
+            template.template_name,
+            template.first.index()
+        );
+        let template_struct = node_type_to_create_type(
+            &template.template_name,
+            &template.graph,
+            template.first,
+            quote! { () },
+            quote! { () },
+        );
         let other = quote! {
             #[allow(unused)]
             macro_rules! #ident {
@@ -421,7 +454,8 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
 
             #other
 
-            const #recompile_ident: &'static str = include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/", #input));
+            const #recompile_ident: &'static str =
+                include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/", #input));
         }
     });
 
