@@ -256,7 +256,7 @@ fn node_type_to_create_type_with_span(
                 span = span
             );
             quote! {
-                #ident::<(), ()> { partial_type: ::core::marker::PhantomData, end_type: ::core::marker::PhantomData }
+                #ident::<_, _> { partial_type: #partial_type, end_type: #end_type }
             }
         }
     }

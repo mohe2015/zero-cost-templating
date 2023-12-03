@@ -113,6 +113,6 @@ pub fn main() {
     }
 
     let a = Generic1::<u32> { t: PhantomData };
-    let b = Generic2 { t: a.t };
+    let b: Generic2<_> = Generic2 { t: a.t };
     */
 }
