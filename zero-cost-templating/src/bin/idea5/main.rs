@@ -78,7 +78,7 @@ pub async fn partial_block() {
     // xdot zero-cost-templating/partial_block_partial.dot
     let template = partial_block_initial0!();
     let template = partial_block_template0!(template);
-    let template = partial_block_partial_template0!(template);
+    let template = partial_block_partial_template0!(template); // should keep partial and end type
     let template = partial_block_template1!(template);
     // this should be an end node so already go to other type?
     let template = partial_block_template2!(template);
