@@ -310,6 +310,8 @@ fn node_type_to_create_type_with_span(
 ) -> TokenStream {
     match &graph[node_index] {
         NodeType::PartialBlock => {
+            // TODO FIXME the after needs to be the node after this @partial-block
+            // but the outer after still needs to be preserved
             quote! {
                 #partial_type
             }
