@@ -134,13 +134,26 @@ pub fn children_to_ast(
                 let after_all = graph.add_node(NodeType::Other);
                 last = after_all;
                 graph.add_edge(previous, last, current);
+
+                last = inner_template;
+
+                let test = graph.add_node(NodeType::Other);
+                graph.add_edge(
+                    last,
+                    test,
+                    IntermediateAstElement {
+                        variable: None,
+                        escaping_fun: EscapingFunction::NoVariableStart,
+                        text: String::new(),
+                    },
+                );
+                last = test;
+
                 current = IntermediateAstElement {
                     variable: None,
                     escaping_fun: EscapingFunction::NoVariableStart,
                     text: String::new(),
                 };
-
-                last = inner_template;
 
                 graph[inner_template] = NodeType::InnerTemplate {
                     name: format!("{}Template0", name.to_upper_camel_case()), // Start
@@ -152,7 +165,7 @@ pub fn children_to_ast(
                     after: format!(
                         "{}Template{}",
                         template_name.to_upper_camel_case(),
-                        after_all.index()
+                        test.index()
                     ),
                 };
             }
