@@ -2,8 +2,6 @@
 
 extern crate alloc;
 
-use std::marker::PhantomData;
-
 use zero_cost_templating::template_stream;
 
 // https://github.com/dtolnay/cargo-expand
@@ -87,11 +85,9 @@ pub async fn partial_block() {
 /*
 #[tokio::main]
 pub async fn main() -> Result<(), std::io::Error> {
-    println!("cow size {}", std::mem::size_of::<Cow<'static, str>>()); // 24
     let mut stdout = stdout();
     {
         let stream = test();
-        println!("size: {}", std::mem::size_of_val(&stream));
         let mut stream = pin!(stream);
         while let Some(value) = stream.next().await {
             stdout.write_all(value.as_bytes()).await?;
@@ -101,7 +97,6 @@ pub async fn main() -> Result<(), std::io::Error> {
     }
     {
         let stream = test2();
-        println!("size: {}", std::mem::size_of_val(&stream));
         let mut stream = pin!(stream);
         while let Some(value) = stream.next().await {
             stdout.write_all(value.as_bytes()).await?;
@@ -113,17 +108,4 @@ pub async fn main() -> Result<(), std::io::Error> {
 }
 */
 
-pub fn main() {
-    /*
-    pub struct Generic1<T> {
-        t: PhantomData<T>,
-    }
-
-    pub struct Generic2<T> {
-        t: PhantomData<T>,
-    }
-
-    let a = Generic1::<u32> { t: PhantomData };
-    let b: Generic2<_> = Generic2 { t: a.t };
-    */
-}
+pub fn main() {}

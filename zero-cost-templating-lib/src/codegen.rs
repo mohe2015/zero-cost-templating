@@ -2,7 +2,7 @@ use heck::ToUpperCamelCase;
 use itertools::Itertools;
 use petgraph::prelude::NodeIndex;
 use petgraph::stable_graph::StableGraph;
-use petgraph::visit::{EdgeRef, IntoEdgeReferences, IntoEdgesDirected, IntoNodeReferences};
+use petgraph::visit::{EdgeRef, IntoEdgeReferences, IntoNodeReferences};
 use petgraph::Direction;
 use proc_macro2::{Ident, Span, TokenStream, TokenTree};
 use quote::{format_ident, quote, quote_spanned};
@@ -264,7 +264,7 @@ fn node_type_to_type_with_span(
             let partial = format_ident!("{}", partial);
             let after = format_ident!("{}", after);
             quote! {
-                #name<#partial<(), ()>, #after<(), ()>>
+                #name<#partial<(), #after<(), ()>>, #after<(), ()>>
             }
         }
         NodeType::Other => {
@@ -323,8 +323,8 @@ fn node_type_to_create_type_with_span(
             let partial = format_ident!("{}", partial);
             let after = format_ident!("{}", after);
             quote! {
-                #name::<#partial::<(), ()>, #after::<(), ()>> {
-                    partial_type: #partial::<(), ()> { partial_type: (), end_type: () },
+                #name::<#partial::<(), #after<(), ()>>, #after::<(), ()>> {
+                    partial_type: #partial::<(), #after<(), ()>> { partial_type: (), end_type: #after::<(), ()> { partial_type: (), end_type: () } },
                     end_type: #after::<(), ()> { partial_type: (), end_type: () }
                 }
             }

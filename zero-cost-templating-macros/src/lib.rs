@@ -215,10 +215,5 @@ pub fn template_stream(
         #item
     };
 
-    println!("{}", expanded);
-    /*let file = syn::parse2(expanded.clone()).unwrap();
-    let file = prettyplease::unparse(&file);
-    println!("{}", file);*/
-
     proc_macro::TokenStream::from(expanded)
 }
