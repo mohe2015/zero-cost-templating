@@ -84,7 +84,7 @@ pub async fn partial_block() {
     let template = partial_block_template1!(template);
     // this should be an end node so already go to other type?
     let template = partial_block_template2!(template);
-    partial_block_template4!(template);
+    let template = partial_block_partial_template1!(template);
 }
 
 #[tokio::main]
