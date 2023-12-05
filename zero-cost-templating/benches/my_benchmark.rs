@@ -4,8 +4,12 @@ extern crate alloc;
 
 use std::pin::pin;
 
-use futures::executor::block_on_stream;
+use futures::{
+    executor::{block_on, block_on_stream},
+    StreamExt,
+};
 use iai_callgrind::{black_box, library_benchmark, library_benchmark_group, main};
+use tokio::task::block_in_place;
 use zero_cost_templating_macros::template_stream;
 
 #[template_stream("partial_block.html.hbs", "partial_block_partial.html.hbs")]
@@ -25,12 +29,11 @@ pub async fn partial_block() {
     partial_block_template4!(template);
 }
 
-fn build_template() -> String {
+async fn build_template() -> String {
     let mut output = String::new();
     let stream = partial_block();
-    let stream = pin!(stream);
-    let stream = block_on_stream(stream);
-    for value in stream {
+    let mut stream = pin!(stream);
+    while let Some(value) = stream.next().await {
         output.push_str(&value);
     }
     output
@@ -39,7 +42,7 @@ fn build_template() -> String {
 #[library_benchmark]
 #[bench::short()]
 fn bench_template() -> String {
-    black_box(build_template())
+    black_box(block_on(build_template()))
 }
 
 library_benchmark_group!(
