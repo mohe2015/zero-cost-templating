@@ -248,11 +248,9 @@ fn node_type_to_type_with_span(
     span: Span,
 ) -> proc_macro2::TokenStream {
     match &graph[node_index] {
-        NodeType::PartialBlock {
-            ..
-        } => {
+        NodeType::PartialBlock { .. } => {
             quote! {
-                "TODO FIXME"
+               _
             }
         }
         NodeType::InnerTemplate {
@@ -274,8 +272,6 @@ fn node_type_to_type_with_span(
                 node_index.index().to_string(),
                 span = span
             );
-            // TODO FIXME do we need to be more accurate here? with <something, something>
-            // (probably yes)
             quote! {
                 #ident<_, _>
             }
@@ -310,9 +306,6 @@ fn node_type_to_create_type_with_span(
 ) -> TokenStream {
     match &graph[node_index] {
         NodeType::PartialBlock { after } => {
-            // TODO FIXME the after needs to be the node after this @partial-block
-            // but the outer after still needs to be preserved
-            // maybe map inner generics?
             let after = format_ident!("{}", after);
             quote! {
                 // TODO FIXME map_partial_type and map_end_type
@@ -405,7 +398,6 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
         let next_template_struct = if last_node {
             quote! { magic_expression_result.end_type }
         } else {
-            // TODO FIXME
             node_type_to_create_type(
                 &template_codegen.template_name,
                 &template_codegen.graph,
