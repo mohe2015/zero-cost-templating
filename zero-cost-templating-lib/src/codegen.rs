@@ -312,7 +312,7 @@ fn node_type_to_create_type_with_span(
             // but the outer after still needs to be preserved
             // maybe map inner generics?
             quote! {
-                #partial_type
+                #partial_type.map_inner((), ())
             }
         }
         NodeType::InnerTemplate {
