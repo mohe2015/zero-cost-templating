@@ -316,7 +316,7 @@ fn node_type_to_create_type_with_span(
             let after = format_ident!("{}", after);
             quote! {
                 // TODO FIXME map_partial_type and map_end_type
-                #partial_type.map_inner((), #after.map_inner((), #end_type))
+                #partial_type.map_inner((), #after { partial_type: (), end_type: #end_type })
             }
         }
         NodeType::InnerTemplate {
