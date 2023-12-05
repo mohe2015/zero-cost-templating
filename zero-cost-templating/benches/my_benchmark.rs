@@ -4,7 +4,7 @@ extern crate alloc;
 
 use std::pin::pin;
 
-use futures::{executor::block_on_stream, StreamExt};
+use futures::executor::block_on_stream;
 use iai_callgrind::{black_box, library_benchmark, library_benchmark_group, main};
 use zero_cost_templating_macros::template_stream;
 

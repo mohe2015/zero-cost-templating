@@ -15,8 +15,8 @@ use zero_cost_templating::template_stream;
 // cargo expand --package zero-cost-templating --bin idea5
 // cargo run --release --bin idea5
 
-// RUSTFLAGS="-Zprint-type-sizes" cargo run --release --bin idea5 >
-// type-sizes.txt search for
+// RUSTFLAGS="-Zprint-type-sizes" cargo run --release --bin idea5 > type-sizes.txt
+// search for
 // `{static coroutine@
 /*
 #[stream(item = Cow<'static, str>)]
