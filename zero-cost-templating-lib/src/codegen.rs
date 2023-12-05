@@ -74,7 +74,6 @@ fn handle_macro_call_zero_or_one_parameter(
         let next_template_struct = if last_node {
             quote! { magic_expression_result.end_type }
         } else {
-            // here?
             node_type_to_create_type_with_span(
                 template_codegen.template_name.as_str(),
                 &template_codegen.graph,
@@ -85,7 +84,6 @@ fn handle_macro_call_zero_or_one_parameter(
             )
         };
 
-        // TODO FIXME forward type of generics
         Some(Expr::Verbatim(quote! {
             {
                 let magic_expression_result: #template_struct = #first_parameter;
@@ -312,6 +310,7 @@ fn node_type_to_create_type_with_span(
         NodeType::PartialBlock => {
             // TODO FIXME the after needs to be the node after this @partial-block
             // but the outer after still needs to be preserved
+            // maybe map inner generics?
             quote! {
                 #partial_type
             }
@@ -374,6 +373,15 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
                     pub struct #template_struct<PartialType, EndType> {
                         partial_type: PartialType,
                         end_type: EndType,
+                    }
+
+                    impl<PartialType, EndType> #template_struct<PartialType, EndType> {
+                        pub fn map_inner<NewPartialType, NewEndType>(self, new_partial_type: NewPartialType, new_end_type: NewEndType) -> #template_struct<NewPartialType, NewEndType> {
+                            #template_struct {
+                                partial_type: new_partial_type,
+                                end_type: new_end_type,
+                            }
+                        }
                     }
                 }
             });
