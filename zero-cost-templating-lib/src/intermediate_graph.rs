@@ -47,7 +47,9 @@ impl Display for IntermediateAstElement {
 
 #[derive(Debug, Clone)]
 pub enum NodeType {
-    PartialBlock,
+    PartialBlock {
+        after: String,
+    },
     InnerTemplate {
         name: String,
         partial: String,
@@ -171,12 +173,36 @@ pub fn children_to_ast(
             }
             Child::PartialBlockPartial => {
                 let previous = last;
-                last = graph.add_node(NodeType::PartialBlock);
+                let partial_block = graph.add_node(NodeType::Other);
+                last = partial_block;
+
                 graph.add_edge(previous, last, current);
                 current = IntermediateAstElement {
                     variable: None,
                     escaping_fun: EscapingFunction::NoVariableStart,
                     text: String::new(),
+                };
+
+                let previous = last;
+                let after_partial_block = graph.add_node(NodeType::Other);
+                last = after_partial_block;
+
+                graph.add_edge(
+                    previous,
+                    last,
+                    IntermediateAstElement {
+                        variable: None,
+                        escaping_fun: EscapingFunction::NoVariableStart,
+                        text: String::new(),
+                    },
+                );
+
+                graph[partial_block] = NodeType::PartialBlock {
+                    after: format!(
+                        "{}Template{}",
+                        template_name.to_upper_camel_case(),
+                        after_partial_block.index()
+                    ),
                 };
             }
         }
