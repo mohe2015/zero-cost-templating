@@ -4,12 +4,8 @@ extern crate alloc;
 
 use std::pin::pin;
 
-use futures::{
-    executor::{block_on, block_on_stream},
-    StreamExt,
-};
+use futures::{executor::block_on, StreamExt};
 use iai_callgrind::{black_box, library_benchmark, library_benchmark_group, main};
-use tokio::task::block_in_place;
 use zero_cost_templating_macros::template_stream;
 
 #[template_stream("partial_block.html.hbs", "partial_block_partial.html.hbs")]
@@ -20,6 +16,8 @@ pub async fn partial_block() {
     // the method names and the node numbers should be the types?)
     // xdot zero-cost-templating/partial_block.dot
     // xdot zero-cost-templating/partial_block_partial.dot
+
+    // TODO FIXME the test variable is not required
     let template = partial_block_initial0!();
     let template = partial_block_template0!(template);
     let template = partial_block_partial_template0!(template);
@@ -29,19 +27,19 @@ pub async fn partial_block() {
     partial_block_template4!(template);
 }
 
-async fn build_template() -> String {
-    let mut output = String::new();
+async fn build_template() -> usize {
+    let mut output_length = 0;
     let stream = partial_block();
     let mut stream = pin!(stream);
     while let Some(value) = stream.next().await {
-        output.push_str(&value);
+        output_length += value.len();
     }
-    output
+    output_length
 }
 
 #[library_benchmark]
 #[bench::short()]
-fn bench_template() -> String {
+fn bench_template() -> usize {
     black_box(block_on(build_template()))
 }
 
