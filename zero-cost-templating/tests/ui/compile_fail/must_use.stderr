@@ -1,8 +1,8 @@
 error: unused `TestTemplate6` that must be used
   --> tests/ui/compile_fail/must_use.rs:18:5
    |
-18 |     template6!(template);
-   |     ^^^^^^^^^^^^^^^^^^^^
+18 |     test_template6!(template);
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^
    |
 note: the lint level is defined here
   --> tests/ui/compile_fail/must_use.rs:1:9
@@ -12,5 +12,5 @@ note: the lint level is defined here
    = note: `#[deny(unused_must_use)]` implied by `#[deny(warnings)]`
 help: use `let _ = ...` to ignore the resulting value
    |
-18 |     let _ = template6!(template);;
-   |     +++++++                     +
+18 |     let _ = test_template6!(template);;
+   |     +++++++                          +

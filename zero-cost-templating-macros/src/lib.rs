@@ -137,7 +137,7 @@ pub fn template_stream(
     let input_paths = parse_macro_input!(attributes with Punctuated::<LitStr, Token![,]>::parse_separated_nonempty);
     // https://github.com/dtolnay/trybuild/issues/202
     let cargo_manifest_dir = std::env::var_os("CARGO_MANIFEST_DIR_OVERRIDE")
-        .or(std::env::var_os("CARGO_MANIFEST_DIR"))
+        .or_else(|| std::env::var_os("CARGO_MANIFEST_DIR"))
         .unwrap();
 
     let root = PathBuf::from(&cargo_manifest_dir);

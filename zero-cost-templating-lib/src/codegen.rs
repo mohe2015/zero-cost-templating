@@ -249,8 +249,8 @@ fn node_type_to_type_with_span(
 ) -> proc_macro2::TokenStream {
     match &graph[node_index] {
         NodeType::PartialBlock { .. } => {
-            quote! {
-               _
+            quote_spanned! {span=>
+                _
             }
         }
         NodeType::InnerTemplate {
@@ -258,10 +258,10 @@ fn node_type_to_type_with_span(
             partial,
             after,
         } => {
-            let name = format_ident!("{}", name);
-            let partial = format_ident!("{}", partial);
-            let after = format_ident!("{}", after);
-            quote! {
+            let name = format_ident!("{}", name, span = span);
+            let partial = format_ident!("{}", partial, span = span);
+            let after = format_ident!("{}", after, span = span);
+            quote_spanned! {span=>
                 #name<#partial<(), #after<(), ()>>, #after<(), ()>>
             }
         }
@@ -272,7 +272,7 @@ fn node_type_to_type_with_span(
                 node_index.index().to_string(),
                 span = span
             );
-            quote! {
+            quote_spanned! {span=>
                 #ident<_, _>
             }
         }
@@ -306,8 +306,8 @@ fn node_type_to_create_type_with_span(
 ) -> TokenStream {
     match &graph[node_index] {
         NodeType::PartialBlock { after } => {
-            let after = format_ident!("{}", after);
-            quote! {
+            let after = format_ident!("{}", after, span = span);
+            quote_spanned! {span=>
                 // TODO FIXME map_partial_type and map_end_type
                 #partial_type.map_inner((), #after { partial_type: (), end_type: #end_type })
             }
@@ -317,10 +317,10 @@ fn node_type_to_create_type_with_span(
             partial,
             after,
         } => {
-            let name = format_ident!("{}", name);
-            let partial = format_ident!("{}", partial);
-            let after = format_ident!("{}", after);
-            quote! {
+            let name = format_ident!("{}", name, span = span);
+            let partial = format_ident!("{}", partial, span = span);
+            let after = format_ident!("{}", after, span = span);
+            quote_spanned! {span=>
                 #name::<#partial::<(), #after<(), ()>>, #after::<(), ()>> {
                     partial_type: #partial::<(), #after<(), ()>> {
                         partial_type: (),
@@ -337,7 +337,7 @@ fn node_type_to_create_type_with_span(
                 node_index.index().to_string(),
                 span = span
             );
-            quote! {
+            quote_spanned! {span=>
                 #ident::<_, _> { partial_type: #partial_type, end_type: #end_type }
             }
         }
