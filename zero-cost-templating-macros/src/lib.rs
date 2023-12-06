@@ -198,6 +198,7 @@ pub fn template_stream(
             .unwrap();
             TemplateCodegen {
                 template_name: template_name.to_owned(),
+                path,
                 graph,
                 first,
                 last,
@@ -205,7 +206,7 @@ pub fn template_stream(
         })
         .collect();
 
-    let code = codegen(&cargo_manifest_dir.to_string_lossy(), &inputs);
+    let code = codegen(&inputs);
 
     let mut item = parse_macro_input!(item as Item);
 

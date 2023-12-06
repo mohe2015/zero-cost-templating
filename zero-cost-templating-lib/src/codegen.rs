@@ -1,3 +1,5 @@
+use std::path::PathBuf;
+
 use heck::ToUpperCamelCase;
 use itertools::Itertools;
 use petgraph::prelude::NodeIndex;
@@ -353,6 +355,7 @@ fn node_type_to_create_type_with_span(
 
 #[derive(Debug, Clone)]
 pub struct TemplateCodegen {
+    pub path: PathBuf,
     pub template_name: String,
     pub graph: StableGraph<NodeType, IntermediateAstElement>,
     pub first: NodeIndex,
@@ -361,10 +364,7 @@ pub struct TemplateCodegen {
 
 #[must_use]
 #[expect(clippy::too_many_lines, reason = "tmp")]
-pub fn codegen(
-    cargo_manifest_dir: &str,
-    templates: &[TemplateCodegen],
-) -> proc_macro2::TokenStream {
+pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
     // TODO FIXME spans
     let code = templates.iter().map(|template_codegen| {
         let instructions = template_codegen
@@ -482,7 +482,7 @@ pub fn codegen(
             }
         };
         let recompile_ident = format_ident!("_{}_FORCE_RECOMPILE", template_codegen.template_name);
-        let input = format!("{}.html.hbs", template_codegen.template_name);
+        let path = template_codegen.path.to_string_lossy();
         quote! {
             #(#instructions)*
 
@@ -490,8 +490,7 @@ pub fn codegen(
 
             #other
 
-            const #recompile_ident: &'static str =
-                include_str!(concat!(#cargo_manifest_dir, "/", #input));
+            const #recompile_ident: &'static str = include_str!(#path);
         }
     });
 
