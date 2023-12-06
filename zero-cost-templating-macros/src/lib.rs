@@ -106,7 +106,6 @@
 #![feature(lint_reasons)]
 #![feature(proc_macro_span)]
 
-use std::env;
 use std::fs::File;
 use std::io::Write;
 use std::path::PathBuf;
@@ -114,13 +113,14 @@ use std::path::PathBuf;
 use itertools::peek_nth;
 use petgraph::dot::Dot;
 use petgraph::stable_graph::StableGraph;
-use quote::{format_ident, quote};
+use quote::quote;
+use syn::punctuated::Punctuated;
 use syn::visit_mut::VisitMut;
-use syn::{parse_macro_input, Item, LitStr};
-use zero_cost_templating_lib::codegen::{codegen, InnerMacroReplace};
+use syn::{parse_macro_input, Item, LitStr, Token};
+use zero_cost_templating_lib::codegen::{codegen, InnerMacroReplace, TemplateCodegen};
 use zero_cost_templating_lib::html_recursive_descent::parse_children;
 use zero_cost_templating_lib::intermediate_graph::{
-    children_to_ast, EscapingFunction, IntermediateAstElement,
+    children_to_ast, EscapingFunction, IntermediateAstElement, NodeType,
 };
 
 // https://veykril.github.io/posts/ide-proc-macros/
@@ -134,72 +134,84 @@ pub fn template_stream(
     attributes: proc_macro::TokenStream,
     item: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
-    let input_path = parse_macro_input!(attributes as LitStr);
-    let root = PathBuf::from(env::var("CARGO_MANIFEST_DIR").unwrap());
-    let path = root.join(input_path.value());
+    let input_paths = parse_macro_input!(attributes with Punctuated::<LitStr, Token![,]>::parse_separated_nonempty);
+    // https://github.com/dtolnay/trybuild/issues/202
+    let cargo_manifest_dir = std::env::var_os("CARGO_MANIFEST_DIR_OVERRIDE")
+        .or_else(|| std::env::var_os("CARGO_MANIFEST_DIR"))
+        .unwrap();
 
-    let file_name = path.file_name().unwrap().to_string_lossy();
-    let template_name = file_name.trim_end_matches(".html.hbs");
+    let root = PathBuf::from(&cargo_manifest_dir);
 
-    let input = std::fs::read_to_string(&path)
-        .unwrap_or_else(|err| panic!("failed to read file at path: {} {}", path.display(), err));
+    let inputs: Vec<_> = input_paths
+        .iter()
+        .map(|file| {
+            let path = root.join(file.value());
 
-    let mut input = peek_nth(input.chars());
-    let dom = match parse_children(&mut input) {
-        Ok(element) => {
-            let remaining_input: String = input.collect();
-            assert_eq!(
-                remaining_input, "",
-                "{element:?}\nremaining input: {remaining_input}"
-            );
-            element
-        }
-        Err(error) => {
-            let remaining_input: String = input.collect();
-            panic!("{error}\nremaining input: {remaining_input}");
-        }
-    };
+            let file_name = path.file_name().unwrap().to_string_lossy();
+            let template_name = file_name.trim_end_matches(".html.hbs");
 
-    let mut graph = StableGraph::new();
-    let first = graph.add_node(());
-    let mut last = first;
-    let mut current = IntermediateAstElement {
-        variable: None,
-        escaping_fun: EscapingFunction::NoVariableStart,
-        text: String::new(),
-    };
-    (last, current) = children_to_ast(&mut graph, last, current, dom, "root");
-    let previous = last;
-    last = graph.add_node(());
-    graph.add_edge(previous, last, current);
+            let input = std::fs::read_to_string(&path).unwrap_or_else(|err| {
+                panic!("failed to read file at path: {} {}", path.display(), err)
+            });
 
-    let mut file = File::create(format!("{template_name}.dot")).unwrap();
-    file.write_all(
-        format!(
-            "{}",
-            Dot::new(&graph.map(
-                |node_idx, _node| format!("{}", node_idx.index()),
-                |edge_idx, edge| format!("{}: {}", edge_idx.index(), edge)
-            ))
-        )
-        .as_bytes(),
-    )
-    .unwrap();
-    let code = codegen(template_name, &graph, first, last);
+            let mut input = peek_nth(input.chars());
+            let dom = match parse_children(&mut input) {
+                Ok(element) => {
+                    let remaining_input: String = input.collect();
+                    assert_eq!(
+                        remaining_input, "",
+                        "{element:?}\nremaining input: {remaining_input}"
+                    );
+                    element
+                }
+                Err(error) => {
+                    let remaining_input: String = input.collect();
+                    panic!("{error}\nremaining input: {remaining_input}");
+                }
+            };
+
+            let mut graph = StableGraph::new();
+            let first = graph.add_node(NodeType::Other);
+            let mut last = first;
+            let mut current = IntermediateAstElement {
+                variable: None,
+                escaping_fun: EscapingFunction::NoVariableStart,
+                text: String::new(),
+            };
+            (last, current) =
+                children_to_ast(template_name, &mut graph, last, current, dom, "root");
+            let previous = last;
+            last = graph.add_node(NodeType::Other);
+            graph.add_edge(previous, last, current);
+
+            let mut file = File::create(format!("{template_name}.dot")).unwrap();
+            file.write_all(
+                format!(
+                    "{}",
+                    Dot::new(&graph.map(
+                        |node_idx, node| format!("{}: {:?}", node_idx.index(), node),
+                        |edge_idx, edge| format!("{}: {}", edge_idx.index(), edge)
+                    ))
+                )
+                .as_bytes(),
+            )
+            .unwrap();
+            TemplateCodegen {
+                template_name: template_name.to_owned(),
+                graph,
+                first,
+                last,
+            }
+        })
+        .collect();
+
+    let code = codegen(&cargo_manifest_dir.to_string_lossy(), &inputs);
 
     let mut item = parse_macro_input!(item as Item);
 
-    InnerMacroReplace {
-        template_name: template_name.to_owned(),
-        graph,
-        first,
-        last,
-    }
-    .visit_item_mut(&mut item);
+    InnerMacroReplace(inputs).visit_item_mut(&mut item);
 
-    let recompile_ident = format_ident!("_{}_FORCE_RECOMPILE", template_name);
     let expanded = quote! {
-        const #recompile_ident: &'static str = include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/", #input_path));
 
         #code
 

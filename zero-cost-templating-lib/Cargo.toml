@@ -12,6 +12,6 @@ proc-macro2 = "1"
 futures = "0.3"
 futures-async-stream = { git = "https://github.com/mohe2015/futures-async-stream.git" }
 prettyplease = "0.2"
-itertools = "0.11"
+itertools = "0.12"
 petgraph = "0.6"
 heck = "0.4"

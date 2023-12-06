@@ -7,15 +7,15 @@ use alloc::borrow::Cow;
 
 use zero_cost_templating_macros::template_stream;
 
-#[template_stream("../../../../zero-cost-templating/test.html.hbs")]
+#[template_stream("test.html.hbs")]
 pub async fn test() {
-    let template = initial0!();
-    let template = template0!(template);
+    let template = test_initial0!();
+    let template = test_template0!(template);
     let page_title = Cow::from("thetitle");
-    let template = page_title1!(template, page_title);
+    let template = test_page_title1!(template, page_title);
     let csrf_token = Cow::from("thetoken");
-    let template = csrf_token2!(template, csrf_token);
-    template6!(template);
+    let template = test_csrf_token2!(template, csrf_token);
+    test_template6!(template);
 }
 
 pub fn main() {}

@@ -1,0 +1,9 @@
+digraph {
+    0 [ label = "0: Other" ]
+    1 [ label = "1: PartialBlock { after: \"PartialBlockPartialTemplate2\" }" ]
+    2 [ label = "2: Other" ]
+    3 [ label = "3: Other" ]
+    0 -> 1 [ label = "0: <p>" ]
+    1 -> 2 [ label = "1: " ]
+    2 -> 3 [ label = "2: </p>" ]
+}

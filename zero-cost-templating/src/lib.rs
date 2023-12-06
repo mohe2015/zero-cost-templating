@@ -140,7 +140,12 @@ pub fn encode_double_quoted_attribute<'a, I: Into<Cow<'a, str>>>(input: I) -> Co
     // https://html.spec.whatwg.org/dev/syntax.html
     // https://html.spec.whatwg.org/#escapingString
     // https://html.spec.whatwg.org/
-    // In the HTML syntax, authors need only remember to use U+0022 QUOTATION MARK characters (") to wrap the attribute contents and then to escape all U+0026 AMPERSAND (&) and U+0022 QUOTATION MARK (") characters, and to specify the sandbox attribute, to ensure safe embedding of content. (And remember to escape ampersands before quotation marks, to ensure quotation marks become &quot; and not &amp;quot;.)
+    // In the HTML syntax, authors need only remember to use U+0022 QUOTATION MARK
+    // characters (") to wrap the attribute contents and then to escape all U+0026
+    // AMPERSAND (&) and U+0022 QUOTATION MARK (") characters, and to specify the
+    // sandbox attribute, to ensure safe embedding of content. (And remember to
+    // escape ampersands before quotation marks, to ensure quotation marks become
+    // &quot; and not &amp;quot;.)
     static REGEX: OnceLock<regex::Regex> = OnceLock::new();
     let regex = REGEX.get_or_init(|| regex::Regex::new("[&\"]").unwrap());
 
@@ -161,6 +166,11 @@ pub fn encode_double_quoted_attribute<'a, I: Into<Cow<'a, str>>>(input: I) -> Co
 mod tests {
     #[test]
     fn ui() {
+        std::env::set_var(
+            "CARGO_MANIFEST_DIR_OVERRIDE",
+            std::env::var_os("CARGO_MANIFEST_DIR").unwrap(),
+        );
+
         let test_cases = trybuild::TestCases::new();
         test_cases.compile_fail("tests/ui/compile_fail/*.rs");
         test_cases.pass("tests/ui/pass/*.rs");

@@ -1,15 +1,15 @@
 error: unexpected end of macro invocation
   --> tests/ui/compile_fail/template_macro_missing_parameter.rs:12:20
    |
-9  | #[template_stream("../../../../zero-cost-templating/test.html.hbs")]
-   | -------------------------------------------------------------------- when calling this macro
+9  | #[template_stream("test.html.hbs")]
+   | ----------------------------------- when calling this macro
 ...
-12 |     let template = template0!();
-   |                    ^^^^^^^^^^^^ missing tokens in macro arguments
+12 |     let template = test_template0!();
+   |                    ^^^^^^^^^^^^^^^^^ missing tokens in macro arguments
    |
 note: while trying to match meta-variable `$template:expr`
   --> tests/ui/compile_fail/template_macro_missing_parameter.rs:9:1
    |
-9  | #[template_stream("../../../../zero-cost-templating/test.html.hbs")]
-   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+9  | #[template_stream("test.html.hbs")]
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
    = note: this error originates in the attribute macro `template_stream` (in Nightly builds, run with -Z macro-backtrace for more info)

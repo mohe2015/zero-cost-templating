@@ -1,5 +1,6 @@
 use core::fmt::{Display, Write};
 
+use heck::ToUpperCamelCase;
 use petgraph::stable_graph::{NodeIndex, StableGraph};
 
 use crate::html_recursive_descent::{AttributeValuePart, Child, Element};
@@ -44,15 +45,23 @@ impl Display for IntermediateAstElement {
     }
 }
 
-// what about creating a graph with also nodes that just print text and then merge in a postpass?
-// I think with branching etc it is pretty hard to merge them to only have nodes with variables
+#[derive(Debug, Clone)]
+pub enum NodeType {
+    PartialBlock {
+        after: String,
+    },
+    InnerTemplate {
+        name: String,
+        partial: String,
+        after: String,
+    },
+    Other,
+}
 
-// returns first node, graph, last node
-// first node always has no variable
-// must return at least one node
 #[must_use]
 pub fn children_to_ast(
-    graph: &mut StableGraph<(), IntermediateAstElement>,
+    template_name: &str,
+    graph: &mut StableGraph<NodeType, IntermediateAstElement>,
     mut last: NodeIndex,
     mut current: IntermediateAstElement,
     input: Vec<Child>,
@@ -64,11 +73,11 @@ pub fn children_to_ast(
                 // https://html.spec.whatwg.org/dev/syntax.html
                 // https://github.com/cure53/DOMPurify/blob/main/src/tags.js
                 let escaping_fun = match parent {
-                    "h1" | "li" | "span" => EscapingFunction::HtmlElementInner,
+                    "h1" | "li" | "span" | "title" | "main" => EscapingFunction::HtmlElementInner,
                     other => panic!("unknown escaping rules for element {other}"),
                 };
                 let previous = last;
-                last = graph.add_node(());
+                last = graph.add_node(NodeType::Other);
                 graph.add_edge(previous, last, current);
                 current = IntermediateAstElement {
                     variable: Some(next_variable),
@@ -84,11 +93,11 @@ pub fn children_to_ast(
                     !(parent == "script" || parent == "style"),
                     "children are unsafe in <script> and <style>"
                 );
-                (last, current) = element_to_ast(graph, last, current, element);
+                (last, current) = element_to_ast(template_name, graph, last, current, element);
             }
             Child::Each(_identifier, children) => {
                 let previous = last;
-                last = graph.add_node(());
+                last = graph.add_node(NodeType::Other);
                 let loop_start = last;
                 graph.add_edge(previous, loop_start, current);
                 current = IntermediateAstElement {
@@ -96,7 +105,8 @@ pub fn children_to_ast(
                     escaping_fun: EscapingFunction::NoVariableStart,
                     text: String::new(),
                 };
-                (last, current) = children_to_ast(graph, last, current, children, parent);
+                (last, current) =
+                    children_to_ast(template_name, graph, last, current, children, parent);
                 graph.add_edge(last, loop_start, current);
                 current = IntermediateAstElement {
                     variable: None,
@@ -105,6 +115,96 @@ pub fn children_to_ast(
                 };
                 last = loop_start;
             }
+            Child::PartialBlock(name, children) => {
+                let first = last;
+                let inner_template = graph.add_node(NodeType::Other);
+                last = inner_template;
+                graph.add_edge(first, last, current);
+
+                let inner_template_start = graph.add_node(NodeType::Other);
+                last = inner_template_start;
+                current = IntermediateAstElement {
+                    variable: None,
+                    escaping_fun: EscapingFunction::NoVariableStart,
+                    text: String::new(),
+                };
+
+                (last, current) =
+                    children_to_ast(template_name, graph, last, current, children, parent);
+
+                let previous = last;
+                let after_all = graph.add_node(NodeType::Other);
+                last = after_all;
+                graph.add_edge(previous, last, current);
+
+                last = inner_template;
+
+                let test = graph.add_node(NodeType::Other);
+                graph.add_edge(
+                    last,
+                    test,
+                    IntermediateAstElement {
+                        variable: None,
+                        escaping_fun: EscapingFunction::NoVariableStart,
+                        text: String::new(),
+                    },
+                );
+                last = test;
+
+                current = IntermediateAstElement {
+                    variable: None,
+                    escaping_fun: EscapingFunction::NoVariableStart,
+                    text: String::new(),
+                };
+
+                graph[inner_template] = NodeType::InnerTemplate {
+                    name: format!("{}Template0", name.to_upper_camel_case()), // Start
+                    partial: format!(
+                        "{}Template{}",
+                        template_name.to_upper_camel_case(),
+                        inner_template_start.index()
+                    ),
+                    after: format!(
+                        "{}Template{}",
+                        template_name.to_upper_camel_case(),
+                        test.index()
+                    ),
+                };
+            }
+            Child::PartialBlockPartial => {
+                let previous = last;
+                let partial_block = graph.add_node(NodeType::Other);
+                last = partial_block;
+
+                graph.add_edge(previous, last, current);
+                current = IntermediateAstElement {
+                    variable: None,
+                    escaping_fun: EscapingFunction::NoVariableStart,
+                    text: String::new(),
+                };
+
+                let previous = last;
+                let after_partial_block = graph.add_node(NodeType::Other);
+                last = after_partial_block;
+
+                graph.add_edge(
+                    previous,
+                    last,
+                    IntermediateAstElement {
+                        variable: None,
+                        escaping_fun: EscapingFunction::NoVariableStart,
+                        text: String::new(),
+                    },
+                );
+
+                graph[partial_block] = NodeType::PartialBlock {
+                    after: format!(
+                        "{}Template{}",
+                        template_name.to_upper_camel_case(),
+                        after_partial_block.index()
+                    ),
+                };
+            }
         }
     }
     (last, current)
@@ -112,7 +212,8 @@ pub fn children_to_ast(
 
 #[must_use]
 pub fn element_to_ast(
-    graph: &mut StableGraph<(), IntermediateAstElement>,
+    template_name: &str,
+    graph: &mut StableGraph<NodeType, IntermediateAstElement>,
     mut last: NodeIndex,
     mut current: IntermediateAstElement,
     input: Element,
@@ -136,7 +237,7 @@ pub fn element_to_ast(
                             ),
                         };
                         let previous = last;
-                        last = graph.add_node(());
+                        last = graph.add_node(NodeType::Other);
                         graph.add_edge(previous, last, current);
                         current = IntermediateAstElement {
                             variable: Some(next_variable),
@@ -153,7 +254,7 @@ pub fn element_to_ast(
         }
     }
     write!(&mut current.text, ">").unwrap();
-    (last, current) = children_to_ast(graph, last, current, input.children, &name);
+    (last, current) = children_to_ast(template_name, graph, last, current, input.children, &name);
     // https://html.spec.whatwg.org/dev/syntax.html#void-elements
     match name.as_str() {
         "!doctype" | "area" | "base" | "br" | "col" | "embed" | "hr" | "img" | "input" | "link"

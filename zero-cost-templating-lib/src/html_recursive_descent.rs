@@ -59,6 +59,18 @@ pub fn parse_variable<I: Iterator<Item = char>>(input: &mut PeekNth<I>) -> Resul
     inner().map_err(|err| format!("{err}\nwhile parsing variable"))
 }
 
+pub fn parse_partial_block_partial<I: Iterator<Item = char>>(
+    input: &mut PeekNth<I>,
+) -> Result<(), String> {
+    let mut inner = || {
+        for character in "{{>@partial-block}}".chars() {
+            expect(input, character)?;
+        }
+        Ok::<_, String>(())
+    };
+    inner().map_err(|err| format!("{err}\nwhile parsing partial block"))
+}
+
 pub fn parse_each<I: Iterator<Item = char>>(
     input: &mut PeekNth<I>,
 ) -> Result<(String, Vec<Child>), String> {
@@ -97,6 +109,42 @@ pub fn parse_each<I: Iterator<Item = char>>(
         Ok((identifier, children))
     };
     inner().map_err(|err| format!("{err}\nwhile parsing each"))
+}
+
+pub fn parse_partial_block<I: Iterator<Item = char>>(
+    input: &mut PeekNth<I>,
+) -> Result<(String, Vec<Child>), String> {
+    // https://handlebarsjs.com/guide/partials.html#partial-blocks
+    let mut inner = || {
+        expect(input, '{')?;
+        expect(input, '{')?;
+        expect(input, '#')?;
+        expect(input, '>')?;
+        let mut partial_name = String::new();
+        loop {
+            match input.next() {
+                Some('}') => break,
+                Some(byte) => {
+                    partial_name.push(byte);
+                }
+                None => {
+                    return Err("expected }} but found end of input".to_owned());
+                }
+            }
+        }
+        expect(input, '}')?;
+        let children = parse_children(input)?;
+        expect(input, '{')?;
+        expect(input, '{')?;
+        expect(input, '/')?;
+        for character in partial_name.chars() {
+            expect(input, character)?;
+        }
+        expect(input, '}')?;
+        expect(input, '}')?;
+        Ok((partial_name, children))
+    };
+    inner().map_err(|err| format!("{err}\nwhile parsing partial"))
 }
 
 #[derive(PartialEq, Eq, Debug)]
@@ -198,6 +246,8 @@ pub enum Child {
     Literal(String),
     Variable(String),
     Each(String, Vec<Child>),
+    PartialBlock(String, Vec<Child>),
+    PartialBlockPartial,
 }
 
 #[derive(PartialEq, Eq, Debug)]
@@ -227,9 +277,25 @@ pub fn parse_children<I: Iterator<Item = char>>(
                 Some('{') => match input.peek_nth(1) {
                     Some('{') => match input.peek_nth(2) {
                         Some('/') => return Ok(result),
+                        Some('>') => match input.peek_nth(3) {
+                            Some('@') => {
+                                parse_partial_block_partial(input)?;
+                                result.push(Child::PartialBlockPartial);
+                            }
+                            _ => {
+                                // TODO FIXME partial without inner elements
+                                return Err("TODO".to_owned());
+                            }
+                        },
                         Some('#') => {
-                            let (identifier, children) = parse_each(input)?;
-                            result.push(Child::Each(identifier, children));
+                            if input.peek_nth(3) == Some(&'>') {
+                                // partial block (which may contain inner elements)
+                                let (partial_name, children) = parse_partial_block(input)?;
+                                result.push(Child::PartialBlock(partial_name, children));
+                            } else {
+                                let (identifier, children) = parse_each(input)?;
+                                result.push(Child::Each(identifier, children));
+                            }
                         }
                         Some(_) => result.push(Child::Variable(parse_variable(input)?)),
                         None => {
@@ -320,7 +386,8 @@ mod tests {
 
     use crate::html_recursive_descent::{
         parse_attribute, parse_attribute_value, parse_attributes, parse_children, parse_element,
-        parse_variable, Attribute, AttributeValuePart, Child, Element,
+        parse_partial_block, parse_partial_block_partial, parse_variable, Attribute,
+        AttributeValuePart, Child, Element,
     };
 
     #[test]
@@ -635,6 +702,56 @@ mod tests {
                 children: vec![],
             }),
             parse_element(&mut peek_nth(r#"<a a="hi"></a>"#.chars()))
+        );
+    }
+
+    #[test]
+    fn partial_block_1() {
+        assert_eq!(
+            Ok((
+                "partial_name".to_owned(),
+                vec![Child::Literal("children".to_owned())]
+            )),
+            parse_partial_block(&mut peek_nth(
+                "{{#>partial_name}}children{{/partial_name}}".chars()
+            ))
+        );
+    }
+
+    #[test]
+    fn children_with_partial_block() {
+        assert_eq!(
+            Ok(vec![
+                Child::Literal("a".to_owned()),
+                Child::PartialBlock(
+                    "partial_name".to_owned(),
+                    vec![Child::Literal("children".to_owned())]
+                ),
+                Child::Literal("b".to_owned()),
+            ]),
+            parse_children(&mut peek_nth(
+                "a{{#>partial_name}}children{{/partial_name}}b".chars()
+            ))
+        );
+    }
+
+    #[test]
+    fn partial_block_partial_1() {
+        assert_eq!(
+            Ok(()),
+            parse_partial_block_partial(&mut peek_nth("{{>@partial-block}}".chars()))
+        );
+    }
+
+    #[test]
+    fn children_with_partial_block_partial() {
+        assert_eq!(
+            Ok(vec![
+                Child::Literal("a".to_owned()),
+                Child::PartialBlockPartial,
+                Child::Literal("b".to_owned()),
+            ]),
+            parse_children(&mut peek_nth("a{{>@partial-block}}b".chars()))
         );
     }
 }

@@ -2,11 +2,9 @@
 
 extern crate alloc;
 
-use alloc::borrow::Cow;
 use std::pin::pin;
 
 use futures::StreamExt;
-use futures_async_stream::stream;
 use tokio::io::{stdout, AsyncWriteExt};
 use zero_cost_templating::template_stream;
 
@@ -20,7 +18,7 @@ use zero_cost_templating::template_stream;
 // RUSTFLAGS="-Zprint-type-sizes" cargo run --release --bin idea5 > type-sizes.txt
 // search for
 // `{static coroutine@
-
+/*
 #[stream(item = Cow<'static, str>)]
 pub async fn get_articles_stream() {
     yield Cow::from("ef>eft&t<lef\"efe");
@@ -65,23 +63,33 @@ pub async fn test2() {
     copyright_year7!(template, "errhj>et&t<l\"e");
 }
 
+#[template_stream("partial_block_partial.html.hbs")]
+pub async fn partial_block_partial() {
+    todo!()
+}
+ */
+#[template_stream("partial_block.html.hbs", "partial_block_partial.html.hbs")]
+pub async fn partial_block() {
+    // is it important that this possibly stays composable?
+    // TODO FIXME make the naming so its easier to know which method to call next
+    // currently the .dot file are probably most helpful (the edge numbers should be
+    // the method names and the node numbers should be the types?)
+    // xdot zero-cost-templating/partial_block.dot
+    // xdot zero-cost-templating/partial_block_partial.dot
+    let template = partial_block_initial0!();
+    let template = partial_block_template0!(template);
+    let template = partial_block_partial_template0!(template);
+    let template = partial_block_template1!(template);
+    let template = partial_block_template2!(template);
+    let template = partial_block_partial_template2!(template);
+    partial_block_template4!(template);
+}
+
 #[tokio::main]
 pub async fn main() -> Result<(), std::io::Error> {
-    println!("cow size {}", std::mem::size_of::<Cow<'static, str>>()); // 24
     let mut stdout = stdout();
     {
-        let stream = test();
-        println!("size: {}", std::mem::size_of_val(&stream));
-        let mut stream = pin!(stream);
-        while let Some(value) = stream.next().await {
-            stdout.write_all(value.as_bytes()).await?;
-        }
-        stdout.write_all(b"\n").await?;
-        stdout.flush().await?;
-    }
-    {
-        let stream = test2();
-        println!("size: {}", std::mem::size_of_val(&stream));
+        let stream = partial_block();
         let mut stream = pin!(stream);
         while let Some(value) = stream.next().await {
             stdout.write_all(value.as_bytes()).await?;

@@ -5,3 +5,9 @@ members = ["zero-cost-templating-lib", "zero-cost-templating-macros", "zero-cost
 [profile.release]
 codegen-units = 1
 lto = true
+
+[profile.dev.build-override]
+debug = true
+
+[profile.bench]
+debug = true
