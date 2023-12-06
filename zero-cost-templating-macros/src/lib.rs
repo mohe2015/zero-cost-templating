@@ -106,7 +106,6 @@
 #![feature(lint_reasons)]
 #![feature(proc_macro_span)]
 
-use std::env;
 use std::fs::File;
 use std::io::Write;
 use std::path::PathBuf;
@@ -141,7 +140,7 @@ pub fn template_stream(
         .or(std::env::var_os("CARGO_MANIFEST_DIR"))
         .unwrap();
 
-    let root = PathBuf::from(cargo_manifest_dir);
+    let root = PathBuf::from(&cargo_manifest_dir);
 
     let inputs: Vec<_> = input_paths
         .iter()
@@ -206,7 +205,7 @@ pub fn template_stream(
         })
         .collect();
 
-    let code = codegen(&inputs);
+    let code = codegen(&cargo_manifest_dir.to_string_lossy(), &inputs);
 
     let mut item = parse_macro_input!(item as Item);
 

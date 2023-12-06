@@ -351,7 +351,7 @@ pub struct TemplateCodegen {
 
 #[must_use]
 #[expect(clippy::too_many_lines, reason = "tmp")]
-pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
+pub fn codegen(cargo_manifest_dir: &str, templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
     let code = templates.iter().map(|template_codegen| {
         let instructions = template_codegen
             .graph
@@ -473,7 +473,7 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
             #other
 
             const #recompile_ident: &'static str =
-                include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/", #input));
+                include_str!(concat!(#cargo_manifest_dir, "/", #input));
         }
     });
 
