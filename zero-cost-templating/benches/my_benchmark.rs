@@ -27,19 +27,19 @@ pub async fn partial_block() {
     partial_block_template4!(template);
 }
 
-async fn build_template() -> usize {
-    let mut output_length = 0;
+async fn build_template() -> String {
+    let mut output = String::new();
     let stream = partial_block();
     let mut stream = pin!(stream);
     while let Some(value) = stream.next().await {
-        output_length += value.len();
+        output += &value;
     }
-    output_length
+    output
 }
 
 #[library_benchmark]
 #[bench::short()]
-fn bench_template() -> usize {
+fn bench_template() -> String {
     black_box(block_on(build_template()))
 }
 
