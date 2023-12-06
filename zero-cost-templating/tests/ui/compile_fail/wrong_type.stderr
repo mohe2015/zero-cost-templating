@@ -1,5 +1,7 @@
 error[E0308]: mismatched types
-  --> tests/ui/compile_fail/wrong_type.rs:19:24
+  --> tests/ui/compile_fail/wrong_type.rs:10:1
    |
-19 |     let test: String = copyright_year7!(template, Cow::from("2023".to_string()));
-   |                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `()`
+10 | #[template_stream("test.html.hbs")]
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `()`
+   |
+   = note: this error originates in the attribute macro `template_stream` (in Nightly builds, run with -Z macro-backtrace for more info)
