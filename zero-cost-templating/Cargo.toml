@@ -21,3 +21,39 @@ iai-callgrind = "0.8.0"
 [[bench]]
 name = "my_benchmark"
 harness = false
+
+[[bin]]
+name = "initial_macro_unexpected_parameter"
+path = "tests/ui/compile_fail/initial_macro_unexpected_parameter.rs"
+
+[[bin]]
+name = "moved_value"
+path = "tests/ui/compile_fail/moved_value.rs"
+
+[[bin]]
+name = "must_use"
+path = "tests/ui/compile_fail/must_use.rs"
+
+[[bin]]
+name = "template_macro_missing_parameter"
+path = "tests/ui/compile_fail/template_macro_missing_parameter.rs"
+
+[[bin]]
+name = "type_mismatch_because_missing_call"
+path = "tests/ui/compile_fail/type_mismatch_because_missing_call.rs"
+
+[[bin]]
+name = "variable_macro_missing_first_parameter"
+path = "tests/ui/compile_fail/variable_macro_missing_first_parameter.rs"
+
+[[bin]]
+name = "variable_macro_missing_parameters"
+path = "tests/ui/compile_fail/variable_macro_missing_parameters.rs"
+
+[[bin]]
+name = "variable_macro_missing_second_parameter"
+path = "tests/ui/compile_fail/variable_macro_missing_second_parameter.rs"
+
+[[bin]]
+name = "wrong_type"
+path = "tests/ui/compile_fail/wrong_type.rs"

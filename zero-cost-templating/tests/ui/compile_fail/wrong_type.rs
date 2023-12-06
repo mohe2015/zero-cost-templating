@@ -7,7 +7,7 @@ use alloc::borrow::Cow;
 
 use zero_cost_templating_macros::template_stream;
 
-#[template_stream("../../../../zero-cost-templating/test.html.hbs")]
+#[template_stream("test.html.hbs")]
 pub async fn test() {
     let template = initial0!();
     let template = template0!(template);
