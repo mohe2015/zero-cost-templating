@@ -23,7 +23,12 @@ fn handle_macro_call_zero_or_one_parameter(
     template_codegen: &TemplateCodegen,
 ) -> Option<Expr> {
     let first_index = template_codegen.first.index();
-    let initial_ident = format_ident!("{}_initial{}", template_codegen.template_name, first_index);
+    let initial_ident = format_ident!(
+        "{}_initial{}",
+        template_codegen.template_name,
+        first_index,
+        span = span
+    );
     if &initial_ident == ident {
         if !first_parameter.is_empty() {
             // one parameter
@@ -34,8 +39,8 @@ fn handle_macro_call_zero_or_one_parameter(
             template_codegen.template_name.as_str(),
             &template_codegen.graph,
             template_codegen.first,
-            &quote! { () },
-            &quote! { () },
+            &quote_spanned! {span=> () },
+            &quote_spanned! {span=> () },
         );
         return Some(Expr::Verbatim(quote_spanned! {span=>
             {
@@ -48,7 +53,8 @@ fn handle_macro_call_zero_or_one_parameter(
         let expected_ident = format_ident!(
             "{}_template{}",
             template_codegen.template_name,
-            edge.id().index()
+            edge.id().index(),
+            span = span
         );
         ident == &expected_ident
     });
@@ -72,21 +78,21 @@ fn handle_macro_call_zero_or_one_parameter(
             .next()
             .is_none();
         let next_template_struct = if last_node {
-            quote! { magic_expression_result.end_type }
+            quote_spanned! {span=> _magic_expression_result.end_type }
         } else {
             node_type_to_create_type_with_span(
                 template_codegen.template_name.as_str(),
                 &template_codegen.graph,
                 edge.target(),
                 span,
-                &quote! { magic_expression_result.partial_type },
-                &quote! { magic_expression_result.end_type },
+                &quote_spanned! {span=> _magic_expression_result.partial_type },
+                &quote_spanned! {span=> _magic_expression_result.end_type },
             )
         };
 
-        Some(Expr::Verbatim(quote! {
+        Some(Expr::Verbatim(quote_spanned! {span=>
             {
-                let magic_expression_result: #template_struct = #first_parameter;
+                let _magic_expression_result: #template_struct = #first_parameter;
                 yield ::alloc::borrow::Cow::from(#text);
                 #next_template_struct
             } #semicolon
@@ -110,7 +116,8 @@ fn handle_macro_call_two_parameters(
                 "{}_{}{}",
                 template_codegen.template_name,
                 variable,
-                edge.id().index()
+                edge.id().index(),
+                span = span
             );
             ident == &expected_ident
         })
@@ -137,36 +144,36 @@ fn handle_macro_call_two_parameters(
             .next()
             .is_none();
         let next_template_struct = if last_node {
-            quote! { magic_expression_result.end_type }
+            quote_spanned! {span=> _magic_expression_result.end_type }
         } else {
             node_type_to_create_type_with_span(
                 template_codegen.template_name.as_str(),
                 &template_codegen.graph,
                 edge.target(),
                 span,
-                &quote! { magic_expression_result.partial_type },
-                &quote! { magic_expression_result.end_type },
+                &quote_spanned! {span=> _magic_expression_result.partial_type },
+                &quote_spanned! {span=> _magic_expression_result.end_type },
             )
         };
 
         let escaped_value = match edge.weight().escaping_fun {
-            EscapingFunction::NoVariableStart => quote! {
+            EscapingFunction::NoVariableStart => quote_spanned! {span=>
                 unreachable();
             },
             EscapingFunction::HtmlAttribute => {
-                quote! {
+                quote_spanned! {span=>
                     yield zero_cost_templating::encode_double_quoted_attribute(#second_parameter);
                 }
             }
             EscapingFunction::HtmlElementInner => {
-                quote! {
+                quote_spanned! {span=>
                     yield zero_cost_templating::encode_element_text(#second_parameter);
                 }
             }
         };
-        Some(Expr::Verbatim(quote! {
+        Some(Expr::Verbatim(quote_spanned! {span=>
             {
-                let magic_expression_result: #template_struct = #first_parameter;
+                let _magic_expression_result: #template_struct = #first_parameter;
                 #escaped_value
                 yield ::alloc::borrow::Cow::from(#text);
                 #next_template_struct
@@ -358,6 +365,7 @@ pub fn codegen(
     cargo_manifest_dir: &str,
     templates: &[TemplateCodegen],
 ) -> proc_macro2::TokenStream {
+    // TODO FIXME spans
     let code = templates.iter().map(|template_codegen| {
         let instructions = template_codegen
             .graph
@@ -406,7 +414,7 @@ pub fn codegen(
             .next()
             .is_none();
         let next_template_struct = if last_node {
-            quote! { magic_expression_result.end_type }
+            quote! { _magic_expression_result.end_type }
         } else {
             node_type_to_create_type(
                 &template_codegen.template_name,
@@ -436,7 +444,7 @@ pub fn codegen(
             .next()
             .is_none();
         let next_template_struct = if last_node {
-            quote! { magic_expression_result.end_type }
+            quote! { _magic_expression_result.end_type }
         } else {
             node_type_to_create_type(
                 &template_codegen.template_name,
