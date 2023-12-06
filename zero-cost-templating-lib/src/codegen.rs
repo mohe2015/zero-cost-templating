@@ -322,7 +322,10 @@ fn node_type_to_create_type_with_span(
             let after = format_ident!("{}", after);
             quote! {
                 #name::<#partial::<(), #after<(), ()>>, #after::<(), ()>> {
-                    partial_type: #partial::<(), #after<(), ()>> { partial_type: (), end_type: #after::<(), ()> { partial_type: (), end_type: () } },
+                    partial_type: #partial::<(), #after<(), ()>> {
+                        partial_type: (),
+                        end_type: #after::<(), ()> { partial_type: (), end_type: () }
+                    },
                     end_type: #after::<(), ()> { partial_type: (), end_type: () }
                 }
             }
@@ -351,7 +354,10 @@ pub struct TemplateCodegen {
 
 #[must_use]
 #[expect(clippy::too_many_lines, reason = "tmp")]
-pub fn codegen(cargo_manifest_dir: &str, templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
+pub fn codegen(
+    cargo_manifest_dir: &str,
+    templates: &[TemplateCodegen],
+) -> proc_macro2::TokenStream {
     let code = templates.iter().map(|template_codegen| {
         let instructions = template_codegen
             .graph
@@ -373,7 +379,11 @@ pub fn codegen(cargo_manifest_dir: &str, templates: &[TemplateCodegen]) -> proc_
                     }
 
                     impl<PartialType, EndType> #template_struct<PartialType, EndType> {
-                        pub fn map_inner<NewPartialType, NewEndType>(self, new_partial_type: NewPartialType, new_end_type: NewEndType) -> #template_struct<NewPartialType, NewEndType> {
+                        pub fn map_inner<NewPartialType, NewEndType>(
+                                    self,
+                                    new_partial_type: NewPartialType,
+                                    new_end_type: NewEndType)
+                                -> #template_struct<NewPartialType, NewEndType> {
                             #template_struct {
                                 partial_type: new_partial_type,
                                 end_type: new_end_type,
