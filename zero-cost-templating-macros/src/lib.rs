@@ -159,14 +159,19 @@ pub fn template_stream(
                 Ok(element) => {
                     let remaining_input: String = input.collect();
                     assert_eq!(
-                        remaining_input, "",
-                        "{element:?}\nremaining input: {remaining_input}"
+                        remaining_input,
+                        "",
+                        "File: {}\n{element:?}\nremaining input: {remaining_input}",
+                        file.value()
                     );
                     element
                 }
                 Err(error) => {
                     let remaining_input: String = input.collect();
-                    panic!("{error}\nremaining input: {remaining_input}");
+                    panic!(
+                        "File: {}\n{error}\nremaining input: {remaining_input}",
+                        file.value()
+                    );
                 }
             };
 
