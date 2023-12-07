@@ -154,6 +154,7 @@ pub fn template_stream(
             let template_name = file_name.trim_end_matches(".html.hbs");
 
             let input = std::fs::read_to_string(&path).unwrap_or_else(|err| {
+                // TODO FIXME don't panic
                 panic!("failed to read file at path: {} {}", path.display(), err)
             });
 

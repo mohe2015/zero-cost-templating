@@ -18,6 +18,7 @@ pub fn expect<I: Iterator<Item = char>>(
 }
 
 pub fn parse_variable<I: Iterator<Item = char>>(input: &mut PeekNth<I>) -> Result<String, String> {
+    // TODO FIXME more lenient parsing, e.g. allow spaces between {{ and name
     let mut inner = || {
         expect(input, '{')?;
         expect(input, '{')?;
