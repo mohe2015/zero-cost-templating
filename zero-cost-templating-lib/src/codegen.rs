@@ -362,46 +362,49 @@ pub struct TemplateCodegen {
     pub last: NodeIndex,
 }
 
-#[must_use]
-#[expect(clippy::too_many_lines, reason = "tmp")]
-pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
-    // TODO FIXME spans
-    let code = templates.iter().map(|template_codegen| {
-        let instructions = template_codegen
-            .graph
-            .node_references()
-            .filter_map(|(node_index, node)| match node {
-                NodeType::InnerTemplate { .. } | NodeType::PartialBlock { .. } => None,
-                NodeType::Other => Some(format_ident!(
-                    "{}Template{}",
-                    template_codegen.template_name.to_upper_camel_case(),
-                    node_index.index().to_string(),
-                )),
-            })
-            .map(|template_struct| {
-                quote! {
-                    #[must_use]
-                    pub struct #template_struct<PartialType, EndType> {
-                        partial_type: PartialType,
-                        end_type: EndType,
-                    }
+pub fn calculate_nodes(
+    template_codegen: &'_ TemplateCodegen,
+) -> impl Iterator<Item = proc_macro2::TokenStream> + '_ {
+    template_codegen
+        .graph
+        .node_references()
+        .filter_map(|(node_index, node)| match node {
+            NodeType::InnerTemplate { .. } | NodeType::PartialBlock { .. } => None,
+            NodeType::Other => Some(format_ident!(
+                "{}Template{}",
+                template_codegen.template_name.to_upper_camel_case(),
+                node_index.index().to_string(),
+            )),
+        })
+        .map(|template_struct| {
+            quote! {
+                #[must_use]
+                pub struct #template_struct<PartialType, EndType> {
+                    partial_type: PartialType,
+                    end_type: EndType,
+                }
 
-                    impl<PartialType, EndType> #template_struct<PartialType, EndType> {
-                        pub fn map_inner<NewPartialType, NewEndType>(
-                                    self,
-                                    new_partial_type: NewPartialType,
-                                    new_end_type: NewEndType)
-                                -> #template_struct<NewPartialType, NewEndType> {
-                            #template_struct {
-                                partial_type: new_partial_type,
-                                end_type: new_end_type,
-                            }
+                impl<PartialType, EndType> #template_struct<PartialType, EndType> {
+                    pub fn map_inner<NewPartialType, NewEndType>(
+                                self,
+                                new_partial_type: NewPartialType,
+                                new_end_type: NewEndType)
+                            -> #template_struct<NewPartialType, NewEndType> {
+                        #template_struct {
+                            partial_type: new_partial_type,
+                            end_type: new_end_type,
                         }
                     }
                 }
-            });
-        let edges = template_codegen.graph.edge_references().map(|edge| {
-            edge.weight().variable.as_ref().map_or_else(
+            }
+        })
+}
+
+pub fn calculate_edges(
+    template_codegen: &'_ TemplateCodegen,
+) -> impl Iterator<Item = proc_macro2::TokenStream> + '_ {
+    template_codegen.graph.edge_references().map(|edge| {
+        edge.weight().variable.as_ref().map_or_else(
             || {
                 let variable_name = format_ident!(
                     "{}_template{}",
@@ -409,21 +412,21 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
                     edge.id().index()
                 );
                 let last_node = template_codegen
-            .graph
-            .edges_directed(edge.target(), Direction::Outgoing)
-            .next()
-            .is_none();
-        let next_template_struct = if last_node {
-            quote! { _magic_expression_result.end_type }
-        } else {
-            node_type_to_create_type(
-                &template_codegen.template_name,
-                &template_codegen.graph,
-                edge.target(),
-                &quote! { $template.partial_type },
-                &quote! { $template.end_type }
-            )
-        };
+                    .graph
+                    .edges_directed(edge.target(), Direction::Outgoing)
+                    .next()
+                    .is_none();
+                let next_template_struct = if last_node {
+                    quote! { _magic_expression_result.end_type }
+                } else {
+                    node_type_to_create_type(
+                        &template_codegen.template_name,
+                        &template_codegen.graph,
+                        edge.target(),
+                        &quote! { $template.partial_type },
+                        &quote! { $template.end_type },
+                    )
+                };
                 quote! {
                     #[allow(unused)]
                     macro_rules! #variable_name {
@@ -439,21 +442,21 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
                     edge.id().index()
                 );
                 let last_node = template_codegen
-            .graph
-            .edges_directed(edge.target(), Direction::Outgoing)
-            .next()
-            .is_none();
-        let next_template_struct = if last_node {
-            quote! { _magic_expression_result.end_type }
-        } else {
-            node_type_to_create_type(
-                &template_codegen.template_name,
-                &template_codegen.graph,
-                edge.target(),
-                &quote! { $template.partial_type },
-                &quote! { $template.end_type }
-            )
-        };
+                    .graph
+                    .edges_directed(edge.target(), Direction::Outgoing)
+                    .next()
+                    .is_none();
+                let next_template_struct = if last_node {
+                    quote! { _magic_expression_result.end_type }
+                } else {
+                    node_type_to_create_type(
+                        &template_codegen.template_name,
+                        &template_codegen.graph,
+                        edge.target(),
+                        &quote! { $template.partial_type },
+                        &quote! { $template.end_type },
+                    )
+                };
                 quote! {
                     #[allow(unused)]
                     macro_rules! #variable_name {
@@ -462,7 +465,14 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
                 }
             },
         )
-        });
+    })
+}
+
+pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
+    // TODO FIXME spans
+    let code = templates.iter().map(|template_codegen| {
+        let instructions = calculate_nodes(template_codegen);
+        let edges = calculate_edges(template_codegen);
         let ident = format_ident!(
             "{}_initial{}",
             template_codegen.template_name,
