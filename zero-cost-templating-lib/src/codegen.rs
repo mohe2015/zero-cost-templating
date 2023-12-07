@@ -430,8 +430,7 @@ pub fn calculate_edges(
                         NodeType::PartialBlock { after } => {
                             let after = format_ident!("{}", after, span = span);
                             quote_spanned! {span=>
-                                // TODO FIXME map_partial_type and map_end_type
-                                #partial_type.map_inner((), #after { partial_type: (), end_type: #end_type })
+                                PartialType<(), #after<(), EndType>>
                             }
                         }
                         NodeType::InnerTemplate {
@@ -443,6 +442,7 @@ pub fn calculate_edges(
                             let partial = format_ident!("{}", partial, span = span);
                             let after = format_ident!("{}", after, span = span);
                             quote_spanned! {span=>
+                                // TODO FIXME
                                 #name::<#partial::<(), #after<(), ()>>, #after::<(), ()>> {
                                     partial_type: #partial::<(), #after<(), ()>> {
                                         partial_type: (),
@@ -460,6 +460,7 @@ pub fn calculate_edges(
                                 span = span
                             );
                             quote_spanned! {span=>
+                                // TODO FIXME
                                 #ident::<_, _> { partial_type: #partial_type, end_type: #end_type }
                             }
                         }
