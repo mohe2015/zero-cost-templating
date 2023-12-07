@@ -129,6 +129,7 @@ use zero_cost_templating_lib::intermediate_graph::{
 // https://github.com/intellij-rust/intellij-rust/pull/9711
 // https://github.com/yewstack/yew/pull/2972
 
+// TODO FIXME allow passing whole directory?
 #[proc_macro_attribute]
 pub fn template_stream(
     attributes: proc_macro::TokenStream,
@@ -148,6 +149,8 @@ pub fn template_stream(
             let path = root.join(file.value());
 
             let file_name = path.file_name().unwrap().to_string_lossy();
+
+            // TODO FIXME error if end doesn't match
             let template_name = file_name.trim_end_matches(".html.hbs");
 
             let input = std::fs::read_to_string(&path).unwrap_or_else(|err| {
