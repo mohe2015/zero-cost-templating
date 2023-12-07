@@ -184,7 +184,7 @@ pub fn template_stream(
             last = graph.add_node(NodeType::Other);
             graph.add_edge(previous, last, current);
 
-            let mut file = File::create(format!("{template_name}.dot")).unwrap();
+            let mut file = File::create(path.with_extension("dot")).unwrap();
             file.write_all(
                 format!(
                     "{}",
