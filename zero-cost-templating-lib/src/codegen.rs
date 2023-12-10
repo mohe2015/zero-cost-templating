@@ -308,7 +308,7 @@ fn node_type_to_create_type_with_span(
             let after = format_ident!("{}", after, span = span);
             quote_spanned! {span=>
                 // TODO FIXME map_partial and map_after
-                #partial.map_inner((), Template { r#type: #after, partial: (), after: #after })
+                #partial.map_inner((), Template { r#type: #after, partial: (), after: Template::<#after, (), ()> { r#type: #after, partial: (), after: () } })
             }
         }
         NodeType::InnerTemplate {
