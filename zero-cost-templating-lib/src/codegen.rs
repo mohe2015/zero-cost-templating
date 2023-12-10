@@ -304,34 +304,34 @@ fn node_type_to_create_type_with_span(
     after: &TokenStream,
 ) -> TokenStream {
     match &graph[node_index] {
-        NodeType::PartialBlock { after } => {
-            let after = format_ident!("{}", after, span = span);
+        NodeType::PartialBlock { after: inner_after } => {
+            let inner_after = format_ident!("{}", inner_after, span = span);
             quote_spanned! {span=>
                 // TODO FIXME map_partial and map_after
-                #partial.map_inner((), Template { r#type: #after, partial: (), after: Template::<#after, (), ()> { r#type: #after, partial: (), after: () } })
+                #partial.map_inner((), Template { r#type: #inner_after, partial: (), after: #after })
             }
         }
         NodeType::InnerTemplate {
             name,
-            partial,
-            after,
+            partial: inner_partial,
+            after: inner_after,
         } => {
             let name = format_ident!("{}", name, span = span);
-            let partial = format_ident!("{}", partial, span = span);
-            let after = format_ident!("{}", after, span = span);
+            let inner_partial = format_ident!("{}", inner_partial, span = span);
+            let inner_after = format_ident!("{}", inner_after, span = span);
             quote_spanned! {span=>
                 Template::<
                     #name,
-                    Template::<#partial, (), Template::<#after, (), ()>>,
-                    Template::<#after, (), ()>
+                    Template::<#inner_partial, (), Template::<#inner_after, (), ()>>,
+                    Template::<#inner_after, (), ()>
                 > {
                     r#type: #name,
-                    partial: Template::<#partial, (), Template::<#after, (), ()>> {
-                        r#type: #partial,
+                    partial: Template::<#inner_partial, (), Template::<#inner_after, (), ()>> {
+                        r#type: #inner_partial,
                         partial: (),
-                        after: Template::<#after, (), ()> { r#type: #after, partial: (), after: () }
+                        after: Template::<#inner_after, (), ()> { r#type: #inner_after, partial: (), after: () }
                     },
-                    after: Template::<#after, (), ()> { r#type: #after, partial: (), after: () }
+                    after: Template::<#inner_after, (), ()> { r#type: #inner_after, partial: (), after: () }
                 }
             }
         }
