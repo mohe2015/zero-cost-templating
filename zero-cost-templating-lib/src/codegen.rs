@@ -308,7 +308,7 @@ fn node_type_to_create_type_with_span(
             let after = format_ident!("{}", after, span = span);
             quote_spanned! {span=>
                 // TODO FIXME map_partial and map_after
-                #partial.map_inner((), #after { partial: (), after: #after })
+                #partial.map_inner((), Template { r#type: #after, partial: (), after: #after })
             }
         }
         NodeType::InnerTemplate {
@@ -409,7 +409,7 @@ pub fn calculate_edges(
                             let after = format_ident!("{}", after, span = span);
                             // TODO FIXME REALLY HERE
                             quote_spanned! {span=>
-                                Partial<(), Template::<#after, (), After>>
+                                Template::<PartialType, (), Template::<#after, (), After>>
                             }
                         }
                         NodeType::InnerTemplate {
@@ -450,13 +450,28 @@ pub fn calculate_edges(
                             template_codegen.template_name.to_upper_camel_case(),
                             edge.source().index().to_string(),
                         );
-                        quote! {
-                            impl<Partial, After> Template<#impl_template_name, Partial, After> {
-                                pub fn #variable_name(template: Self) -> #return_type {
-                                    todo!()
+                        match &template_codegen.graph[edge.target()] {
+                            // TODO FIXME merge this with above
+                            NodeType::PartialBlock { .. } => {
+                                quote! {
+                                    impl<PartialType, PartialPartial, PartialAfter, After> Template<#impl_template_name, Template<PartialType, PartialPartial, PartialAfter>, After> {
+                                        pub fn #variable_name(template: Self) -> #return_type {
+                                            todo!()
+                                        }
+                                    }
+                                }
+                            }
+                            _ => {
+                                quote! {
+                                    impl<Partial, After> Template<#impl_template_name, Partial, After> {
+                                        pub fn #variable_name(template: Self) -> #return_type {
+                                            todo!()
+                                        }
+                                    }
                                 }
                             }
                         }
+                        
                     }),
                 };
                 let next_template_struct = if last_node {
