@@ -273,10 +273,10 @@ fn node_type_to_type_with_span(
             let partial = format_ident!("{}", partial, span = span);
             let after = format_ident!("{}", after, span = span);
             quote_spanned! {span=>
-                ::zero_cost_templating::Template::<
+                Template::<
                     #name,
-                    ::zero_cost_templating::Template::<#partial, (), ::zero_cost_templating::Template::<#after, (), ()>>,
-                    ::zero_cost_templating::Template::<#after, (), ()>
+                    Template::<#partial, (), Template::<#after, (), ()>>,
+                    Template::<#after, (), ()>
                 >
             }
         }
@@ -289,7 +289,7 @@ fn node_type_to_type_with_span(
             );
             // TODO FIXME
             quote_spanned! {span=>
-                ::zero_cost_templating::Template::<#ident, _, _>
+                Template::<#ident, _, _>
             }
         }
     }
@@ -320,16 +320,16 @@ fn node_type_to_create_type_with_span(
             let partial = format_ident!("{}", partial, span = span);
             let after = format_ident!("{}", after, span = span);
             quote_spanned! {span=>
-                ::zero_cost_templating::Template::<
+                Template::<
                     #name,
-                    ::zero_cost_templating::Template::<#partial, (), ::zero_cost_templating::Template::<#after, (), ()>>,
-                    ::zero_cost_templating::Template::<#after, (), ()>
+                    Template::<#partial, (), Template::<#after, (), ()>>,
+                    Template::<#after, (), ()>
                 > {
-                    partial: ::zero_cost_templating::Template::<#partial, (), ::zero_cost_templating::Template::<#after, (), ()>> {
+                    partial: Template::<#partial, (), Template::<#after, (), ()>> {
                         partial: (),
-                        after: ::zero_cost_templating::Template::<#after, (), ()> { partial: (), after: () }
+                        after: Template::<#after, (), ()> { partial: (), after: () }
                     },
-                    after: ::zero_cost_templating::Template::<#after, (), ()> { partial: (), after: () }
+                    after: Template::<#after, (), ()> { partial: (), after: () }
                 }
             }
         }
@@ -342,7 +342,7 @@ fn node_type_to_create_type_with_span(
             );
             // TODO FIXME
             quote_spanned! {span=>
-                ::zero_cost_templating::Template::<#ident, _, _> { partial: #partial, after: #after }
+                Template::<#ident, _, _> { partial: #partial, after: #after }
             }
         }
     }
@@ -407,7 +407,7 @@ pub fn calculate_edges(
                             let after = format_ident!("{}", after, span = span);
                             // TODO FIXME REALLY HERE
                             quote_spanned! {span=>
-                                Partial<(), ::zero_cost_templating::Template::<#after, (), After>>
+                                Partial<(), Template::<#after, (), After>>
                             }
                         }
                         NodeType::InnerTemplate {
@@ -420,10 +420,10 @@ pub fn calculate_edges(
                             let after = format_ident!("{}", after, span = span);
                             quote_spanned! {span=>
                                 // TODO FIXME
-                                ::zero_cost_templating::Template::<
+                                Template::<
                                     #name,
-                                    ::zero_cost_templating::Template::<#partial, (), ::zero_cost_templating::Template::<#after, (), ()>>,
-                                    ::zero_cost_templating::Template::<#after, (), ()>
+                                    Template::<#partial, (), Template::<#after, (), ()>>,
+                                    Template::<#after, (), ()>
                                 >
                             }
                         }
@@ -435,7 +435,7 @@ pub fn calculate_edges(
                                 span = span
                             );
                             quote_spanned! {span=>
-                                ::zero_cost_templating::Template::<#ident, Partial, After>
+                                Template::<#ident, Partial, After>
                             }
                         }
                     }
@@ -541,6 +541,7 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
         let recompile_ident = format_ident!("_{}_FORCE_RECOMPILE", template_codegen.template_name);
         let path = template_codegen.path.to_string_lossy();
         quote! {
+
             #(#instructions)*
 
             #(#edges)*
@@ -552,6 +553,27 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
     });
 
     let result = quote! {
+        #[must_use]
+        pub struct Template<Type, Partial, After> {
+            pub r#type: Type,
+            pub partial: Partial,
+            pub after: After,
+        }
+
+        impl<Type, Partial, After> Template<Type, Partial, After> {
+            pub fn map_inner<NewPartial, NewAfter>(
+                self,
+                new_partial: NewPartial,
+                new_after: NewAfter,
+            ) -> Template<Type, NewPartial, NewAfter> {
+                Template {
+                    r#type: self.r#type,
+                    partial: new_partial,
+                    after: new_after,
+                }
+            }
+        }
+
         #(#code)*
     };
     result
