@@ -1,4 +1,4 @@
-#![feature(coroutines)]
+#![feature(gen_blocks, async_iterator)]
 
 extern crate alloc;
 
@@ -9,7 +9,7 @@ use iai_callgrind::{black_box, library_benchmark, library_benchmark_group, main}
 use zero_cost_templating_macros::template_stream;
 
 #[template_stream("partial_block.html.hbs", "partial_block_partial.html.hbs")]
-pub async fn partial_block() {
+fn partial_block() -> std::borrow::Cow<'static, str> {
     // is it important that this possibly stays composable?
     // TODO FIXME make the naming so its easier to know which method to call next
     // currently the .dot file are probably most helpful (the edge numbers should be

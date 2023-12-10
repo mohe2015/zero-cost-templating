@@ -1,14 +1,15 @@
+cargo-features = ["edition2024"]
+
 [package]
 name = "zero-cost-templating"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 zero-cost-templating-macros = { path = "../zero-cost-templating-macros" }
 futures = "0.3"
-futures-async-stream = { git = "https://github.com/mohe2015/futures-async-stream.git" }
 tokio = { version = "1", features = ["full"] }
 pin-project = "1"
 html-escape = "0.2"

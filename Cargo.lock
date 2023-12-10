@@ -126,26 +126,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "futures-async-stream"
-version = "0.2.9"
-source = "git+https://github.com/mohe2015/futures-async-stream.git#f73fa1d68db546fab2eda79de2dd50a95b8b28e4"
-dependencies = [
- "futures-async-stream-macro",
- "futures-core",
- "pin-project",
-]
-
-[[package]]
-name = "futures-async-stream-macro"
-version = "0.2.9"
-source = "git+https://github.com/mohe2015/futures-async-stream.git#f73fa1d68db546fab2eda79de2dd50a95b8b28e4"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn 2.0.39",
-]
-
-[[package]]
 name = "futures-channel"
 version = "0.3.29"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -839,7 +819,6 @@ name = "zero-cost-templating"
 version = "0.1.0"
 dependencies = [
  "futures",
- "futures-async-stream",
  "html-escape",
  "iai-callgrind",
  "pin-project",
@@ -854,7 +833,6 @@ name = "zero-cost-templating-lib"
 version = "0.1.0"
 dependencies = [
  "futures",
- "futures-async-stream",
  "heck",
  "itertools",
  "petgraph",

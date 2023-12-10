@@ -225,8 +225,7 @@ pub fn template_stream(
 
         #code
 
-        #[::futures_async_stream::stream(item = alloc::borrow::Cow<'static, str>)]
-        #item
+        pub async gen #item
     };
 
     // TODO FIXME remove for production

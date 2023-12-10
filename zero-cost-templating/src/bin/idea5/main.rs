@@ -1,10 +1,9 @@
-#![feature(coroutines)]
+#![feature(gen_blocks, async_iterator)]
 
 extern crate alloc;
 
 use std::pin::pin;
 
-use futures::StreamExt;
 use tokio::io::{stdout, AsyncWriteExt};
 use zero_cost_templating::template_stream;
 
@@ -69,7 +68,7 @@ pub async fn partial_block_partial() {
 }
  */
 #[template_stream("partial_block.html.hbs", "partial_block_partial.html.hbs")]
-pub async fn partial_block() {
+fn partial_block() -> std::borrow::Cow<'static, str> {
     // is it important that this possibly stays composable?
     // TODO FIXME make the naming so its easier to know which method to call next
     // currently the .dot file are probably most helpful (the edge numbers should be
@@ -99,3 +98,47 @@ pub async fn main() -> Result<(), std::io::Error> {
     }
     Ok(())
 }
+
+// Licensed under MIT and Apache-2.0 from https://github.com/rust-lang/rust/blob/master/tests/ui/coroutine/async_gen_fn_iter.rs
+
+use std::pin::Pin;
+use std::task::*;
+use std::async_iter::AsyncIterator;
+use std::future::Future;
+
+trait AsyncIterExt {
+    fn next(&mut self) -> Next<'_, Self>;
+}
+
+impl<T> AsyncIterExt for T {
+    fn next(&mut self) -> Next<'_, Self> {
+        Next { s: self }
+    }
+}
+
+struct Next<'s, S: ?Sized> {
+    s: &'s mut S,
+}
+
+impl<'s, S: AsyncIterator> Future for Next<'s, S> where S: Unpin {
+    type Output = Option<S::Item>;
+
+    fn poll(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Option<S::Item>> {
+        Pin::new(&mut *self.s).poll_next(cx)
+    }
+}
+
+pub fn noop_waker() -> Waker {
+    let raw = RawWaker::new(std::ptr::null(), &NOOP_WAKER_VTABLE);
+
+    // SAFETY: the contracts for RawWaker and RawWakerVTable are upheld
+    unsafe { Waker::from_raw(raw) }
+}
+
+const NOOP_WAKER_VTABLE: RawWakerVTable = RawWakerVTable::new(noop_clone, noop, noop, noop);
+
+unsafe fn noop_clone(_p: *const ()) -> RawWaker {
+    RawWaker::new(std::ptr::null(), &NOOP_WAKER_VTABLE)
+}
+
+unsafe fn noop(_p: *const ()) {}
