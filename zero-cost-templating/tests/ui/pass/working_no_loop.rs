@@ -8,7 +8,7 @@ use alloc::borrow::Cow;
 use zero_cost_templating_macros::template_stream;
 
 #[template_stream("test.html.hbs")]
-fn test() {
+fn test() -> std::borrow::Cow<'static, str> {
     let template = test_initial0!();
     let template = test_template0!(template);
     let page_title = Cow::from("thetitle");
