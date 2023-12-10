@@ -1,4 +1,4 @@
-#![feature(coroutines)]
+#![feature(gen_blocks, async_iterator)]
 
 extern crate alloc;
 
@@ -7,7 +7,7 @@ use alloc::borrow::Cow;
 use zero_cost_templating_macros::template_stream;
 
 #[template_stream("test.html.hbs")]
-pub async fn test() {
+fn test() -> std::borrow::Cow<'static, str> {
     let template = test_initial0!();
     //let template = template0!(template);
     let page_title = Cow::from("thetitle");
