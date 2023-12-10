@@ -454,7 +454,7 @@ pub fn calculate_edges(
                             // TODO FIXME merge this with above
                             NodeType::PartialBlock { .. } => {
                                 quote! {
-                                    impl<PartialType, PartialPartial, PartialAfter, After> Template<#impl_template_name, Template<PartialType, PartialPartial, PartialAfter>, After> {
+                                    impl<PartialType, PartialPartial: Templaty, PartialAfter: Templaty, After: Templaty> Template<#impl_template_name, Template<PartialType, PartialPartial, PartialAfter>, After> {
                                         pub fn #variable_name(template: Self) -> #return_type {
                                             todo!()
                                         }
@@ -463,7 +463,7 @@ pub fn calculate_edges(
                             }
                             _ => {
                                 quote! {
-                                    impl<Partial, After> Template<#impl_template_name, Partial, After> {
+                                    impl<Partial: Templaty, After: Templaty> Template<#impl_template_name, Partial, After> {
                                         pub fn #variable_name(template: Self) -> #return_type {
                                             todo!()
                                         }
@@ -570,15 +570,20 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
     });
 
     let result = quote! {
+        pub trait Templaty {}
+
         #[must_use]
-        pub struct Template<Type, Partial, After> {
+        pub struct Template<Type, Partial: Templaty, After: Templaty> {
             pub r#type: Type,
             pub partial: Partial,
             pub after: After,
         }
 
-        impl<Type, Partial, After> Template<Type, Partial, After> {
-            pub fn map_inner<NewPartial, NewAfter>(
+        impl Templaty for () {}
+        impl<Type, Partial: Templaty, After: Templaty> Templaty for Template<Type, Partial, After> {}
+
+        impl<Type, Partial: Templaty, After: Templaty> Template<Type, Partial, After> {
+            pub fn map_inner<NewPartial: Templaty, NewAfter: Templaty>(
                 self,
                 new_partial: NewPartial,
                 new_after: NewAfter,
