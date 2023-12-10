@@ -231,7 +231,7 @@ pub fn template_stream(
 
     // TODO FIXME remove for production
     if let Err(error) = syn::parse2::<syn::File>(expanded.clone()) {
-        panic!("{error}\n{expanded}")
+        //panic!("{error}\n{expanded}")
     }
 
     proc_macro::TokenStream::from(expanded)

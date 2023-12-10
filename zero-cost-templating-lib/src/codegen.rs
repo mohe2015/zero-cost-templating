@@ -457,7 +457,7 @@ pub fn calculate_edges(
                             NodeType::PartialBlock { .. } => {
                                 quote! {
                                     impl<PartialType: TemplateTypy, PartialPartial: Templaty, PartialAfter: Templaty, After: Templaty> Template<#impl_template_name, Template<PartialType, PartialPartial, PartialAfter>, After> {
-                                        pub fn #variable_name(template: Self) -> #return_type {
+                                        pub fn #variable_name(self) -> #return_type {
                                             todo!()
                                         }
                                     }
@@ -466,7 +466,7 @@ pub fn calculate_edges(
                             _ => {
                                 quote! {
                                     impl<Partial: Templaty, After: Templaty> Template<#impl_template_name, Partial, After> {
-                                        pub fn #variable_name(template: Self) -> #return_type {
+                                        pub fn #variable_name(self) -> #return_type {
                                             todo!()
                                         }
                                     }
