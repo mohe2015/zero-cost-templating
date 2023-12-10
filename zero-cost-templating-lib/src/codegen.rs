@@ -578,9 +578,9 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
 
         #[must_use]
         pub struct Template<Type: TemplateTypy, Partial: Templaty, After: Templaty> {
-            pub r#type: Type,
-            pub partial: Partial,
-            pub after: After,
+            r#type: Type,
+            partial: Partial,
+            after: After,
         }
 
         impl Templaty for () {}
