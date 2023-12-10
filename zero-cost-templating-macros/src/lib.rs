@@ -229,5 +229,7 @@ pub fn template_stream(
         #item
     };
 
+    //panic!("{}", expanded);
+
     proc_macro::TokenStream::from(expanded)
 }

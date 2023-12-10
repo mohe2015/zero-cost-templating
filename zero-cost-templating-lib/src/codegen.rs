@@ -401,26 +401,6 @@ pub fn calculate_edges(
                     .edges_directed(edge.target(), Direction::Outgoing)
                     .next()
                     .is_none();
-                let impl_template_name = match &template_codegen.graph[edge.source()] {
-                    NodeType::InnerTemplate { .. } | NodeType::PartialBlock { .. } => None,
-                    NodeType::Other => Some(format_ident!(
-                        "{}Template{}",
-                        template_codegen.template_name.to_upper_camel_case(),
-                        edge.source().index().to_string(),
-                    )),
-                };
-                let next_template_struct = if last_node {
-                    quote! { _magic_expression_result.end_type }
-                } else {
-                    node_type_to_create_type_with_span(
-                        &template_codegen.template_name,
-                        &template_codegen.graph,
-                        edge.target(),
-                        Span::call_site(),
-                        &quote! { $template.partial_type },
-                        &quote! { $template.end_type },
-                    )
-                };
                 let return_type = if last_node {
                     quote! { EndType }
                 } else {
@@ -442,14 +422,9 @@ pub fn calculate_edges(
                             let partial = format_ident!("{}", partial, span = span);
                             let after = format_ident!("{}", after, span = span);
                             quote_spanned! {span=>
+
                                 // TODO FIXME
-                                #name::<#partial::<(), #after<(), ()>>, #after::<(), ()>> {
-                                    partial_type: #partial::<(), #after<(), ()>> {
-                                        partial_type: (),
-                                        end_type: #after::<(), ()> { partial_type: (), end_type: () }
-                                    },
-                                    end_type: #after::<(), ()> { partial_type: (), end_type: () }
-                                }
+                                #name<#partial<(), #after<(), ()>>, #after<(), ()>>
                             }
                         }
                         NodeType::Other => {
@@ -460,11 +435,39 @@ pub fn calculate_edges(
                                 span = span
                             );
                             quote_spanned! {span=>
-                                // TODO FIXME
-                                #ident::<_, _> { partial_type: #partial_type, end_type: #end_type }
+                                #ident<PartialType, EndType>
                             }
                         }
                     }
+                };
+                let impl_func = match &template_codegen.graph[edge.source()] {
+                    NodeType::InnerTemplate { .. } | NodeType::PartialBlock { .. } => None,
+                    NodeType::Other => Some({
+                        let impl_template_name = format_ident!(
+                            "{}Template{}",
+                            template_codegen.template_name.to_upper_camel_case(),
+                            edge.source().index().to_string(),
+                        );
+                        quote! {
+                            impl<PartialType, EndType> #impl_template_name<PartialType, EndType> {
+                                pub fn #variable_name(template: Self) -> #return_type {
+                                    todo!()
+                                }
+                            }
+                        }
+                    }),
+                };
+                let next_template_struct = if last_node {
+                    quote! { _magic_expression_result.end_type }
+                } else {
+                    node_type_to_create_type_with_span(
+                        &template_codegen.template_name,
+                        &template_codegen.graph,
+                        edge.target(),
+                        Span::call_site(),
+                        &quote! { $template.partial_type },
+                        &quote! { $template.end_type },
+                    )
                 };
                 quote! {
                     #[allow(unused)]
@@ -472,11 +475,7 @@ pub fn calculate_edges(
                         ($template: expr) => { unreachable!(); #next_template_struct }
                     }
 
-                    impl<PartialType, EndType> #impl_template_name<PartialType, EndType> {
-                        pub fn #variable_name(template: Self) -> #return_type {
-                            todo!()
-                        }
-                    }
+                    #impl_func
                 }
             },
             |variable| {
