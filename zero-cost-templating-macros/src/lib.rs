@@ -129,6 +129,7 @@ use zero_cost_templating_lib::intermediate_graph::{
 // https://github.com/intellij-rust/intellij-rust/pull/9711
 // https://github.com/yewstack/yew/pull/2972
 
+// TODO FIXME allow passing whole directory?
 #[proc_macro_attribute]
 pub fn template_stream(
     attributes: proc_macro::TokenStream,
@@ -148,9 +149,12 @@ pub fn template_stream(
             let path = root.join(file.value());
 
             let file_name = path.file_name().unwrap().to_string_lossy();
+
+            // TODO FIXME error if end doesn't match
             let template_name = file_name.trim_end_matches(".html.hbs");
 
             let input = std::fs::read_to_string(&path).unwrap_or_else(|err| {
+                // TODO FIXME don't panic
                 panic!("failed to read file at path: {} {}", path.display(), err)
             });
 
@@ -159,14 +163,19 @@ pub fn template_stream(
                 Ok(element) => {
                     let remaining_input: String = input.collect();
                     assert_eq!(
-                        remaining_input, "",
-                        "{element:?}\nremaining input: {remaining_input}"
+                        remaining_input,
+                        "",
+                        "File: {}\n{element:?}\nremaining input: {remaining_input}",
+                        file.value()
                     );
                     element
                 }
                 Err(error) => {
                     let remaining_input: String = input.collect();
-                    panic!("{error}\nremaining input: {remaining_input}");
+                    panic!(
+                        "File: {}\n{error}\nremaining input: {remaining_input}",
+                        file.value()
+                    );
                 }
             };
 
@@ -184,7 +193,7 @@ pub fn template_stream(
             last = graph.add_node(NodeType::Other);
             graph.add_edge(previous, last, current);
 
-            let mut file = File::create(format!("{template_name}.dot")).unwrap();
+            let mut file = File::create(path.with_extension("dot")).unwrap();
             file.write_all(
                 format!(
                     "{}",
@@ -198,6 +207,7 @@ pub fn template_stream(
             .unwrap();
             TemplateCodegen {
                 template_name: template_name.to_owned(),
+                path,
                 graph,
                 first,
                 last,
@@ -205,7 +215,7 @@ pub fn template_stream(
         })
         .collect();
 
-    let code = codegen(&cargo_manifest_dir.to_string_lossy(), &inputs);
+    let code = codegen(&inputs);
 
     let mut item = parse_macro_input!(item as Item);
 
@@ -218,6 +228,11 @@ pub fn template_stream(
         #[::futures_async_stream::stream(item = alloc::borrow::Cow<'static, str>)]
         #item
     };
+
+    // TODO FIXME remove for production
+    if let Err(_error) = syn::parse2::<syn::File>(expanded.clone()) {
+        //panic!("{error}\n{expanded}")
+    }
 
     proc_macro::TokenStream::from(expanded)
 }

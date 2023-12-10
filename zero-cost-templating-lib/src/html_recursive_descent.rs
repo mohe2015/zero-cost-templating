@@ -18,6 +18,7 @@ pub fn expect<I: Iterator<Item = char>>(
 }
 
 pub fn parse_variable<I: Iterator<Item = char>>(input: &mut PeekNth<I>) -> Result<String, String> {
+    // TODO FIXME more lenient parsing, e.g. allow spaces between {{ and name
     let mut inner = || {
         expect(input, '{')?;
         expect(input, '{')?;
@@ -354,7 +355,7 @@ pub fn parse_element<I: Iterator<Item = char>>(input: &mut PeekNth<I>) -> Result
             }
         }
         // https://html.spec.whatwg.org/dev/syntax.html#void-elements
-        match name.as_str() {
+        match name.to_ascii_lowercase().as_str() {
             "!doctype" | "area" | "base" | "br" | "col" | "embed" | "hr" | "img" | "input"
             | "link" | "meta" | "source" | "track" | "wbr" => Ok(Element {
                 name,

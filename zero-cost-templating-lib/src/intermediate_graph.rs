@@ -256,7 +256,7 @@ pub fn element_to_ast(
     write!(&mut current.text, ">").unwrap();
     (last, current) = children_to_ast(template_name, graph, last, current, input.children, &name);
     // https://html.spec.whatwg.org/dev/syntax.html#void-elements
-    match name.as_str() {
+    match name.to_ascii_lowercase().as_str() {
         "!doctype" | "area" | "base" | "br" | "col" | "embed" | "hr" | "img" | "input" | "link"
         | "meta" | "source" | "track" | "wbr" => {}
         _ => {

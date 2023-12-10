@@ -1,3 +1,5 @@
+use std::path::PathBuf;
+
 use heck::ToUpperCamelCase;
 use itertools::Itertools;
 use petgraph::prelude::NodeIndex;
@@ -35,10 +37,11 @@ fn handle_macro_call_zero_or_one_parameter(
             // fall back to compiler macro error
             return None;
         }
-        let template_struct = node_type_to_create_type(
+        let template_struct = node_type_to_create_type_with_span(
             template_codegen.template_name.as_str(),
             &template_codegen.graph,
             template_codegen.first,
+            Span::call_site(),
             &quote_spanned! {span=> () },
             &quote_spanned! {span=> () },
         );
@@ -78,15 +81,15 @@ fn handle_macro_call_zero_or_one_parameter(
             .next()
             .is_none();
         let next_template_struct = if last_node {
-            quote_spanned! {span=> _magic_expression_result.end_type }
+            quote_spanned! {span=> _magic_expression_result.after }
         } else {
             node_type_to_create_type_with_span(
                 template_codegen.template_name.as_str(),
                 &template_codegen.graph,
                 edge.target(),
                 span,
-                &quote_spanned! {span=> _magic_expression_result.partial_type },
-                &quote_spanned! {span=> _magic_expression_result.end_type },
+                &quote_spanned! {span=> _magic_expression_result.partial },
+                &quote_spanned! {span=> _magic_expression_result.after },
             )
         };
 
@@ -144,15 +147,15 @@ fn handle_macro_call_two_parameters(
             .next()
             .is_none();
         let next_template_struct = if last_node {
-            quote_spanned! {span=> _magic_expression_result.end_type }
+            quote_spanned! {span=> _magic_expression_result.after }
         } else {
             node_type_to_create_type_with_span(
                 template_codegen.template_name.as_str(),
                 &template_codegen.graph,
                 edge.target(),
                 span,
-                &quote_spanned! {span=> _magic_expression_result.partial_type },
-                &quote_spanned! {span=> _magic_expression_result.end_type },
+                &quote_spanned! {span=> _magic_expression_result.partial },
+                &quote_spanned! {span=> _magic_expression_result.after },
             )
         };
 
@@ -256,6 +259,7 @@ fn node_type_to_type_with_span(
 ) -> proc_macro2::TokenStream {
     match &graph[node_index] {
         NodeType::PartialBlock { .. } => {
+            // TODO FIXME
             quote_spanned! {span=>
                 _
             }
@@ -269,7 +273,11 @@ fn node_type_to_type_with_span(
             let partial = format_ident!("{}", partial, span = span);
             let after = format_ident!("{}", after, span = span);
             quote_spanned! {span=>
-                #name<#partial<(), #after<(), ()>>, #after<(), ()>>
+                Template::<
+                    #name,
+                    Template::<#partial, (), Template::<#after, (), ()>>,
+                    Template::<#after, (), ()>
+                >
             }
         }
         NodeType::Other => {
@@ -279,28 +287,12 @@ fn node_type_to_type_with_span(
                 node_index.index().to_string(),
                 span = span
             );
+            // TODO FIXME
             quote_spanned! {span=>
-                #ident<_, _>
+                Template::<#ident, _, _>
             }
         }
     }
-}
-
-fn node_type_to_create_type(
-    template_name: &str,
-    graph: &StableGraph<NodeType, IntermediateAstElement>,
-    node_index: NodeIndex,
-    partial_type: &TokenStream,
-    end_type: &TokenStream,
-) -> TokenStream {
-    node_type_to_create_type_with_span(
-        template_name,
-        graph,
-        node_index,
-        Span::call_site(),
-        partial_type,
-        end_type,
-    )
 }
 
 fn node_type_to_create_type_with_span(
@@ -308,32 +300,38 @@ fn node_type_to_create_type_with_span(
     graph: &StableGraph<NodeType, IntermediateAstElement>,
     node_index: NodeIndex,
     span: Span,
-    partial_type: &TokenStream,
-    end_type: &TokenStream,
+    partial: &TokenStream,
+    after: &TokenStream,
 ) -> TokenStream {
     match &graph[node_index] {
-        NodeType::PartialBlock { after } => {
-            let after = format_ident!("{}", after, span = span);
+        NodeType::PartialBlock { after: inner_after } => {
+            let inner_after = format_ident!("{}", inner_after, span = span);
             quote_spanned! {span=>
-                // TODO FIXME map_partial_type and map_end_type
-                #partial_type.map_inner((), #after { partial_type: (), end_type: #end_type })
+                // TODO FIXME map_partial and map_after
+                #partial.map_inner((), Template { r#type: #inner_after, partial: (), after: #after })
             }
         }
         NodeType::InnerTemplate {
             name,
-            partial,
-            after,
+            partial: inner_partial,
+            after: inner_after,
         } => {
             let name = format_ident!("{}", name, span = span);
-            let partial = format_ident!("{}", partial, span = span);
-            let after = format_ident!("{}", after, span = span);
+            let inner_partial = format_ident!("{}", inner_partial, span = span);
+            let inner_after = format_ident!("{}", inner_after, span = span);
             quote_spanned! {span=>
-                #name::<#partial::<(), #after<(), ()>>, #after::<(), ()>> {
-                    partial_type: #partial::<(), #after<(), ()>> {
-                        partial_type: (),
-                        end_type: #after::<(), ()> { partial_type: (), end_type: () }
+                Template::<
+                    #name,
+                    Template::<#inner_partial, (), Template::<#inner_after, (), ()>>,
+                    Template::<#inner_after, (), ()>
+                > {
+                    r#type: #name,
+                    partial: Template::<#inner_partial, (), Template::<#inner_after, (), ()>> {
+                        r#type: #inner_partial,
+                        partial: (),
+                        after: Template::<#inner_after, (), ()> { r#type: #inner_after, partial: (), after: () }
                     },
-                    end_type: #after::<(), ()> { partial_type: (), end_type: () }
+                    after: Template::<#inner_after, (), ()> { r#type: #inner_after, partial: (), after: () }
                 }
             }
         }
@@ -344,8 +342,9 @@ fn node_type_to_create_type_with_span(
                 node_index.index().to_string(),
                 span = span
             );
+            // TODO FIXME
             quote_spanned! {span=>
-                #ident::<_, _> { partial_type: #partial_type, end_type: #end_type }
+                Template::<#ident, _, _> { r#type: #ident, partial: #partial, after: #after }
             }
         }
     }
@@ -353,85 +352,153 @@ fn node_type_to_create_type_with_span(
 
 #[derive(Debug, Clone)]
 pub struct TemplateCodegen {
+    pub path: PathBuf,
     pub template_name: String,
     pub graph: StableGraph<NodeType, IntermediateAstElement>,
     pub first: NodeIndex,
     pub last: NodeIndex,
 }
 
-#[must_use]
-#[expect(clippy::too_many_lines, reason = "tmp")]
-pub fn codegen(
-    cargo_manifest_dir: &str,
-    templates: &[TemplateCodegen],
-) -> proc_macro2::TokenStream {
-    // TODO FIXME spans
-    let code = templates.iter().map(|template_codegen| {
-        let instructions = template_codegen
-            .graph
-            .node_references()
-            .filter_map(|(node_index, node)| match node {
-                NodeType::InnerTemplate { .. } | NodeType::PartialBlock { .. } => None,
-                NodeType::Other => Some(format_ident!(
-                    "{}Template{}",
-                    template_codegen.template_name.to_upper_camel_case(),
-                    node_index.index().to_string(),
-                )),
-            })
-            .map(|template_struct| {
-                quote! {
-                    #[must_use]
-                    pub struct #template_struct<PartialType, EndType> {
-                        partial_type: PartialType,
-                        end_type: EndType,
-                    }
+pub fn calculate_nodes(
+    template_codegen: &'_ TemplateCodegen,
+) -> impl Iterator<Item = proc_macro2::TokenStream> + '_ {
+    template_codegen
+        .graph
+        .node_references()
+        .filter_map(|(node_index, node)| match node {
+            NodeType::InnerTemplate { .. } | NodeType::PartialBlock { .. } => None,
+            NodeType::Other => Some(format_ident!(
+                "{}Template{}",
+                template_codegen.template_name.to_upper_camel_case(),
+                node_index.index().to_string(),
+            )),
+        })
+        .map(|template_struct| {
+            quote! {
+                #[must_use]
+                pub struct #template_struct;
 
-                    impl<PartialType, EndType> #template_struct<PartialType, EndType> {
-                        pub fn map_inner<NewPartialType, NewEndType>(
-                                    self,
-                                    new_partial_type: NewPartialType,
-                                    new_end_type: NewEndType)
-                                -> #template_struct<NewPartialType, NewEndType> {
-                            #template_struct {
-                                partial_type: new_partial_type,
-                                end_type: new_end_type,
-                            }
-                        }
-                    }
-                }
-            });
-        let edges = template_codegen.graph.edge_references().map(|edge| {
-            edge.weight().variable.as_ref().map_or_else(
+                impl TemplateTypy for #template_struct {}
+            }
+        })
+}
+
+pub fn calculate_edges(
+    template_codegen: &'_ TemplateCodegen,
+) -> impl Iterator<Item = proc_macro2::TokenStream> + '_ {
+    template_codegen.graph.edge_references().map(|edge| {
+        edge.weight().variable.as_ref().map_or_else(
             || {
+                // no variable
                 let variable_name = format_ident!(
                     "{}_template{}",
                     template_codegen.template_name,
                     edge.id().index()
                 );
                 let last_node = template_codegen
-            .graph
-            .edges_directed(edge.target(), Direction::Outgoing)
-            .next()
-            .is_none();
-        let next_template_struct = if last_node {
-            quote! { _magic_expression_result.end_type }
-        } else {
-            node_type_to_create_type(
-                &template_codegen.template_name,
-                &template_codegen.graph,
-                edge.target(),
-                &quote! { $template.partial_type },
-                &quote! { $template.end_type }
-            )
-        };
+                    .graph
+                    .edges_directed(edge.target(), Direction::Outgoing)
+                    .next()
+                    .is_none();
+                let return_type = if last_node {
+                    // TODO FIXME?
+                    quote! { After }
+                } else {
+                    // TODO FIXME extract
+                    let span = Span::call_site();
+                    match &template_codegen.graph[edge.target()] {
+                        NodeType::PartialBlock { after } => {
+                            let after = format_ident!("{}", after, span = span);
+                            // TODO FIXME REALLY HERE
+                            quote_spanned! {span=>
+                                Template::<PartialType, (), Template::<#after, (), After>>
+                            }
+                        }
+                        NodeType::InnerTemplate {
+                            name,
+                            partial,
+                            after,
+                        } => {
+                            let name = format_ident!("{}", name, span = span);
+                            let partial = format_ident!("{}", partial, span = span);
+                            let after = format_ident!("{}", after, span = span);
+                            quote_spanned! {span=>
+                                // TODO FIXME
+                                Template::<
+                                    #name,
+                                    Template::<#partial, (), Template::<#after, (), ()>>,
+                                    Template::<#after, (), ()>
+                                >
+                            }
+                        }
+                        NodeType::Other => {
+                            let ident = format_ident!(
+                                "{}Template{}",
+                                template_codegen.template_name.to_upper_camel_case(),
+                                edge.target().index().to_string(),
+                                span = span
+                            );
+                            quote_spanned! {span=>
+                                Template::<#ident, Partial, After>
+                            }
+                        }
+                    }
+                };
+                let impl_func = match &template_codegen.graph[edge.source()] {
+                    NodeType::InnerTemplate { .. } | NodeType::PartialBlock { .. } => None,
+                    NodeType::Other => Some({
+                        let impl_template_name = format_ident!(
+                            "{}Template{}",
+                            template_codegen.template_name.to_upper_camel_case(),
+                            edge.source().index().to_string(),
+                        );
+                        match &template_codegen.graph[edge.target()] {
+                            // TODO FIXME merge this with above
+                            NodeType::PartialBlock { .. } => {
+                                quote! {
+                                    impl<PartialType: TemplateTypy, PartialPartial: Templaty, PartialAfter: Templaty, After: Templaty> Template<#impl_template_name, Template<PartialType, PartialPartial, PartialAfter>, After> {
+                                        pub fn #variable_name(self) -> #return_type {
+                                            todo!()
+                                        }
+                                    }
+                                }
+                            }
+                            _ => {
+                                quote! {
+                                    impl<Partial: Templaty, After: Templaty> Template<#impl_template_name, Partial, After> {
+                                        pub fn #variable_name(self) -> #return_type {
+                                            todo!()
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }),
+                };
+                let next_template_struct = if last_node {
+                    quote! { _magic_expression_result.after }
+                } else {
+                    node_type_to_create_type_with_span(
+                        &template_codegen.template_name,
+                        &template_codegen.graph,
+                        edge.target(),
+                        Span::call_site(),
+                        &quote! { $template.partial },
+                        &quote! { $template.after },
+                    )
+                };
                 quote! {
                     #[allow(unused)]
                     macro_rules! #variable_name {
                         ($template: expr) => { unreachable!(); #next_template_struct }
                     }
+
+                    #impl_func
                 }
             },
             |variable| {
+                // with variable
                 let variable_name = format_ident!(
                     "{}_{}{}",
                     template_codegen.template_name,
@@ -439,21 +506,22 @@ pub fn codegen(
                     edge.id().index()
                 );
                 let last_node = template_codegen
-            .graph
-            .edges_directed(edge.target(), Direction::Outgoing)
-            .next()
-            .is_none();
-        let next_template_struct = if last_node {
-            quote! { _magic_expression_result.end_type }
-        } else {
-            node_type_to_create_type(
-                &template_codegen.template_name,
-                &template_codegen.graph,
-                edge.target(),
-                &quote! { $template.partial_type },
-                &quote! { $template.end_type }
-            )
-        };
+                    .graph
+                    .edges_directed(edge.target(), Direction::Outgoing)
+                    .next()
+                    .is_none();
+                let next_template_struct = if last_node {
+                    quote! { _magic_expression_result.after }
+                } else {
+                    node_type_to_create_type_with_span(
+                        &template_codegen.template_name,
+                        &template_codegen.graph,
+                        edge.target(),
+                        Span::call_site(),
+                        &quote! { $template.partial },
+                        &quote! { $template.after },
+                    )
+                };
                 quote! {
                     #[allow(unused)]
                     macro_rules! #variable_name {
@@ -462,16 +530,24 @@ pub fn codegen(
                 }
             },
         )
-        });
+    })
+}
+
+pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
+    // TODO FIXME spans
+    let code = templates.iter().map(|template_codegen| {
+        let instructions = calculate_nodes(template_codegen);
+        let edges = calculate_edges(template_codegen);
         let ident = format_ident!(
             "{}_initial{}",
             template_codegen.template_name,
             template_codegen.first.index()
         );
-        let template_struct = node_type_to_create_type(
+        let template_struct = node_type_to_create_type_with_span(
             &template_codegen.template_name,
             &template_codegen.graph,
             template_codegen.first,
+            Span::call_site(),
             &quote! { () },
             &quote! { () },
         );
@@ -482,20 +558,48 @@ pub fn codegen(
             }
         };
         let recompile_ident = format_ident!("_{}_FORCE_RECOMPILE", template_codegen.template_name);
-        let input = format!("{}.html.hbs", template_codegen.template_name);
+        let path = template_codegen.path.to_string_lossy();
         quote! {
+
             #(#instructions)*
 
             #(#edges)*
 
             #other
 
-            const #recompile_ident: &'static str =
-                include_str!(concat!(#cargo_manifest_dir, "/", #input));
+            const #recompile_ident: &'static str = include_str!(#path);
         }
     });
 
     let result = quote! {
+        pub trait Templaty {}
+
+        pub trait TemplateTypy {}
+
+        #[must_use]
+        pub struct Template<Type: TemplateTypy, Partial: Templaty, After: Templaty> {
+            r#type: Type,
+            partial: Partial,
+            after: After,
+        }
+
+        impl Templaty for () {}
+        impl<Type: TemplateTypy, Partial: Templaty, After: Templaty> Templaty for Template<Type, Partial, After> {}
+
+        impl<Type: TemplateTypy, Partial: Templaty, After: Templaty> Template<Type, Partial, After> {
+            pub fn map_inner<NewPartial: Templaty, NewAfter: Templaty>(
+                self,
+                new_partial: NewPartial,
+                new_after: NewAfter,
+            ) -> Template<Type, NewPartial, NewAfter> {
+                Template {
+                    r#type: self.r#type,
+                    partial: new_partial,
+                    after: new_after,
+                }
+            }
+        }
+
         #(#code)*
     };
     result
