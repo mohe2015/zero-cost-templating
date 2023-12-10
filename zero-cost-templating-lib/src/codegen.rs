@@ -325,11 +325,13 @@ fn node_type_to_create_type_with_span(
                     Template::<#partial, (), Template::<#after, (), ()>>,
                     Template::<#after, (), ()>
                 > {
+                    r#type: #name,
                     partial: Template::<#partial, (), Template::<#after, (), ()>> {
+                        r#type: #partial,
                         partial: (),
-                        after: Template::<#after, (), ()> { partial: (), after: () }
+                        after: Template::<#after, (), ()> { r#type: #after, partial: (), after: () }
                     },
-                    after: Template::<#after, (), ()> { partial: (), after: () }
+                    after: Template::<#after, (), ()> { r#type: #after, partial: (), after: () }
                 }
             }
         }
@@ -342,7 +344,7 @@ fn node_type_to_create_type_with_span(
             );
             // TODO FIXME
             quote_spanned! {span=>
-                Template::<#ident, _, _> { partial: #partial, after: #after }
+                Template::<#ident, _, _> { r#type: #ident, partial: #partial, after: #after }
             }
         }
     }
