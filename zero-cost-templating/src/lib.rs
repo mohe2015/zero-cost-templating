@@ -162,6 +162,27 @@ pub fn encode_double_quoted_attribute<'a, I: Into<Cow<'a, str>>>(input: I) -> Co
     }
 }
 
+#[must_use]
+pub struct Template<Type, Partial, After> {
+    t: Type,
+    partial: Partial,
+    after: After,
+}
+
+impl<Type, Partial, After> Template<Type, Partial, After> {
+    pub fn map_inner<NewPartial, NewAfter>(
+        self,
+        new_partial: NewPartial,
+        new_after: NewAfter,
+    ) -> Template<Type, NewPartial, NewAfter> {
+        Template {
+            t: self.t,
+            partial: new_partial,
+            after: new_after,
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     #[test]

@@ -259,6 +259,7 @@ fn node_type_to_type_with_span(
 ) -> proc_macro2::TokenStream {
     match &graph[node_index] {
         NodeType::PartialBlock { .. } => {
+            // TODO FIXME
             quote_spanned! {span=>
                 _
             }
@@ -272,7 +273,11 @@ fn node_type_to_type_with_span(
             let partial = format_ident!("{}", partial, span = span);
             let after = format_ident!("{}", after, span = span);
             quote_spanned! {span=>
-                #name<#partial<(), #after<(), ()>>, #after<(), ()>>
+                ::zero_cost_templating::Template<
+                    #name,
+                    ::zero_cost_templating::Template<#partial, (), ::zero_cost_templating::Template<#after, (), ()>>,
+                    ::zero_cost_templating::Template<#after, (), ()>
+                >
             }
         }
         NodeType::Other => {
@@ -282,8 +287,9 @@ fn node_type_to_type_with_span(
                 node_index.index().to_string(),
                 span = span
             );
+            // TODO FIXME
             quote_spanned! {span=>
-                #ident<_, _>
+                ::zero_cost_templating::Template<#ident, _, _>
             }
         }
     }
@@ -314,12 +320,16 @@ fn node_type_to_create_type_with_span(
             let partial = format_ident!("{}", partial, span = span);
             let after = format_ident!("{}", after, span = span);
             quote_spanned! {span=>
-                #name::<#partial::<(), #after<(), ()>>, #after::<(), ()>> {
-                    partial_type: #partial::<(), #after<(), ()>> {
+                ::zero_cost_templating::Template<
+                    #name,
+                    ::zero_cost_templating::Template<#partial, (), ::zero_cost_templating::Template<#after, (), ()>>,
+                    ::zero_cost_templating::Template<#after, (), ()>
+                > {
+                    partial_type: ::zero_cost_templating::Template<#partial, (), ::zero_cost_templating::Template<#after, (), ()>> {
                         partial_type: (),
-                        end_type: #after::<(), ()> { partial_type: (), end_type: () }
+                        end_type: ::zero_cost_templating::Template<#after, (), ()> { partial_type: (), end_type: () }
                     },
-                    end_type: #after::<(), ()> { partial_type: (), end_type: () }
+                    end_type: ::zero_cost_templating::Template<#after, (), ()> { partial_type: (), end_type: () }
                 }
             }
         }
@@ -330,8 +340,9 @@ fn node_type_to_create_type_with_span(
                 node_index.index().to_string(),
                 span = span
             );
+            // TODO FIXME
             quote_spanned! {span=>
-                #ident::<_, _> { partial_type: #partial_type, end_type: #end_type }
+                ::zero_cost_templating::Template<#ident, _, _> { partial_type: #partial_type, end_type: #end_type }
             }
         }
     }
@@ -363,23 +374,7 @@ pub fn calculate_nodes(
         .map(|template_struct| {
             quote! {
                 #[must_use]
-                pub struct #template_struct<PartialType, EndType> {
-                    partial_type: PartialType,
-                    end_type: EndType,
-                }
-
-                impl<PartialType, EndType> #template_struct<PartialType, EndType> {
-                    pub fn map_inner<NewPartialType, NewEndType>(
-                                self,
-                                new_partial_type: NewPartialType,
-                                new_end_type: NewEndType)
-                            -> #template_struct<NewPartialType, NewEndType> {
-                        #template_struct {
-                            partial_type: new_partial_type,
-                            end_type: new_end_type,
-                        }
-                    }
-                }
+                pub struct #template_struct;
             }
         })
 }
@@ -402,15 +397,17 @@ pub fn calculate_edges(
                     .next()
                     .is_none();
                 let return_type = if last_node {
-                    quote! { EndType }
+                    // TODO FIXME?
+                    quote! { After }
                 } else {
                     // TODO FIXME extract
                     let span = Span::call_site();
                     match &template_codegen.graph[edge.target()] {
                         NodeType::PartialBlock { after } => {
                             let after = format_ident!("{}", after, span = span);
+                            // TODO FIXME REALLY HERE
                             quote_spanned! {span=>
-                                PartialType<(), #after<(), EndType>>
+                                Partial<(), #after<(), After>>
                             }
                         }
                         NodeType::InnerTemplate {
@@ -422,9 +419,12 @@ pub fn calculate_edges(
                             let partial = format_ident!("{}", partial, span = span);
                             let after = format_ident!("{}", after, span = span);
                             quote_spanned! {span=>
-
                                 // TODO FIXME
-                                #name<#partial<(), #after<(), ()>>, #after<(), ()>>
+                                ::zero_cost_templating::Template<
+                                    #name,
+                                    ::zero_cost_templating::Template<#partial, (), ::zero_cost_templating::Template<#after, (), ()>>,
+                                    ::zero_cost_templating::Template<#after, (), ()>
+                                >
                             }
                         }
                         NodeType::Other => {
@@ -435,7 +435,7 @@ pub fn calculate_edges(
                                 span = span
                             );
                             quote_spanned! {span=>
-                                #ident<PartialType, EndType>
+                                ::zero_cost_templating::Template<#ident, Partial, After>
                             }
                         }
                     }
@@ -449,7 +449,7 @@ pub fn calculate_edges(
                             edge.source().index().to_string(),
                         );
                         quote! {
-                            impl<PartialType, EndType> #impl_template_name<PartialType, EndType> {
+                            impl<Partial, After> Template<#impl_template_name, Partial, After> {
                                 pub fn #variable_name(template: Self) -> #return_type {
                                     todo!()
                                 }
