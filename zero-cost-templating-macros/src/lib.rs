@@ -230,7 +230,7 @@ pub fn template_stream(
     };
 
     // TODO FIXME remove for production
-    if let Err(error) = syn::parse2::<syn::File>(expanded.clone()) {
+    if let Err(_error) = syn::parse2::<syn::File>(expanded.clone()) {
         //panic!("{error}\n{expanded}")
     }
 

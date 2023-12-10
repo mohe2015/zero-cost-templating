@@ -1,4 +1,4 @@
-error: unused `TestTemplate6` that must be used
+error: unused `Template` that must be used
   --> tests/ui/compile_fail/must_use.rs:18:5
    |
 18 |     test_template6!(template);
