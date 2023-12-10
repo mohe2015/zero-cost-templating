@@ -164,9 +164,9 @@ pub fn encode_double_quoted_attribute<'a, I: Into<Cow<'a, str>>>(input: I) -> Co
 
 #[must_use]
 pub struct Template<Type, Partial, After> {
-    t: Type,
-    partial: Partial,
-    after: After,
+    pub r#type: Type,
+    pub partial: Partial,
+    pub after: After,
 }
 
 impl<Type, Partial, After> Template<Type, Partial, After> {
@@ -176,7 +176,7 @@ impl<Type, Partial, After> Template<Type, Partial, After> {
         new_after: NewAfter,
     ) -> Template<Type, NewPartial, NewAfter> {
         Template {
-            t: self.t,
+            r#type: self.r#type,
             partial: new_partial,
             after: new_after,
         }

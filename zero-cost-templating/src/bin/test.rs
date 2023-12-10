@@ -1,7 +1,7 @@
 pub struct Template<Type, Partial, After> {
-    t: Type,
-    partial: Partial,
-    after: After,
+    pub t: Type,
+    pub partial: Partial,
+    pub after: After,
 }
 
 pub struct PartialBlockPartialTemplate0;
@@ -15,7 +15,7 @@ impl<PartialType, PartialPartial, PartialAfter, After>
     >
 {
     pub fn partial_block_partial_template0(
-        template: Self,
+        self,
     ) -> Template<PartialType, (), Template<PartialBlockPartialTemplate2, (), After>> {
         todo!()
     }
