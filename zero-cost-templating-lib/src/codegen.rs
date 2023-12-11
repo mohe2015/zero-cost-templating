@@ -44,6 +44,8 @@ fn handle_macro_call_zero_or_one_parameter(
             Span::call_site(),
             &quote_spanned! {span=> () },
             &quote_spanned! {span=> () },
+            &quote_spanned! {span=> _ },
+            &quote_spanned! {span=> _ },
             true,
         );
         return Some(Expr::Verbatim(quote_spanned! {span=>
@@ -77,6 +79,8 @@ fn handle_macro_call_zero_or_one_parameter(
             input.path.span(),
             &quote_spanned! {span=> () },
             &quote_spanned! {span=> () },
+            &quote_spanned! {span=> _ },
+            &quote_spanned! {span=> _ },
             false,
         ); // good span for mismatched type error
         let last_node = template_codegen
@@ -94,6 +98,8 @@ fn handle_macro_call_zero_or_one_parameter(
                 span,
                 &quote_spanned! {span=> _magic_expression_result.partial },
                 &quote_spanned! {span=> _magic_expression_result.after },
+                &quote_spanned! {span=> _ },
+                &quote_spanned! {span=> _ },
                 true,
             )
         };
@@ -146,6 +152,8 @@ fn handle_macro_call_two_parameters(
             input.path.span(),
             &quote_spanned! {span=> () },
             &quote_spanned! {span=> () },
+            &quote_spanned! {span=> _ },
+            &quote_spanned! {span=> _ },
             false,
         ); // good span for mismatched type error
         let last_node = template_codegen
@@ -163,6 +171,8 @@ fn handle_macro_call_two_parameters(
                 span,
                 &quote_spanned! {span=> _magic_expression_result.partial },
                 &quote_spanned! {span=> _magic_expression_result.after },
+                &quote_spanned! {span=> _ },
+                &quote_spanned! {span=> _ },
                 true,
             )
         };
@@ -266,6 +276,8 @@ fn node_type(
     span: Span,
     partial: &TokenStream,
     after: &TokenStream,
+    partial_type: &TokenStream,
+    after_type: &TokenStream,
     create: bool,
 ) -> TokenStream {
     match &graph[node_index] {
@@ -281,7 +293,7 @@ fn node_type(
                 })
             });
             quote_spanned! {span=>
-                Template::<_, (), Template::<#inner_after, (), _>> #create
+                Template::<#partial_type, (), Template::<#inner_after, (), #after_type>> #create
             }
         }
         NodeType::InnerTemplate {
@@ -334,7 +346,7 @@ fn node_type(
                 })
             });
             quote_spanned! {span=>
-                Template::<#ident, _, _> #create
+                Template::<#ident, #partial_type, #after_type> #create
             }
         }
     }
@@ -392,6 +404,8 @@ pub fn calculate_edges(
                 Span::call_site(),
                 &quote! { $template.partial },
                 &quote! { $template.after },
+                &quote! { _ },
+                &quote! { _ },
                 true,
             )
         };
@@ -404,48 +418,20 @@ pub fn calculate_edges(
                     edge.id().index()
                 );
                 let return_type = if last_node {
-                    // TODO FIXME?
                     quote! { After }
                 } else {
-                    // TODO FIXME extract
-                    let span = Span::call_site();
-                    match &template_codegen.graph[edge.target()] {
-                        NodeType::PartialBlock { after } => {
-                            let after = format_ident!("{}", after, span = span);
-                            // TODO FIXME REALLY HERE
-                            quote_spanned! {span=>
-                                Template::<PartialType, (), Template::<#after, (), After>>
-                            }
-                        }
-                        NodeType::InnerTemplate {
-                            name,
-                            partial,
-                            after,
-                        } => {
-                            let name = format_ident!("{}", name, span = span);
-                            let partial = format_ident!("{}", partial, span = span);
-                            let after = format_ident!("{}", after, span = span);
-                            quote_spanned! {span=>
-                                // TODO FIXME
-                                Template::<
-                                    #name,
-                                    Template::<#partial, (), Template::<#after, (), ()>>,
-                                    Template::<#after, (), ()>
-                                >
-                            }
-                        }
-                        NodeType::Other => {
-                            let ident = format_ident!(
-                                "{}Template{}",
-                                template_codegen.template_name.to_upper_camel_case(),
-                                edge.target().index().to_string(),
-                                span = span
-                            );
-                            quote_spanned! {span=>
-                                Template::<#ident, Partial, After>
-                            }
-                        }
-                    }
+                    node_type(
+                        &template_codegen.template_name,
+                        &template_codegen.graph,
+                        edge.target(),
+                        Span::call_site(),
+                        &quote! { $template.partial },
+                        &quote! { $template.after },
+                        //
+                        &quote! { Partial },
+                        &quote! { After },
+                        false,
+                    )
                 };
                 let impl_func = match &template_codegen.graph[edge.source()] {
                     NodeType::InnerTemplate { .. } | NodeType::PartialBlock { .. } => None,
@@ -456,17 +442,16 @@ pub fn calculate_edges(
                             edge.source().index().to_string(),
                         );
                         match &template_codegen.graph[edge.target()] {
-                            // TODO FIXME merge this with above
                             NodeType::PartialBlock { .. } => {
                                 quote! {
-                                    impl<PartialType: TemplateTypy,
+                                    impl<Partial: TemplateTypy,
                                         PartialPartial: Templaty,
                                         PartialAfter: Templaty,
                                         After: Templaty
                                         >
                                         Template<
                                                 #impl_template_name,
-                                                Template<PartialType, PartialPartial, PartialAfter>,
+                                                Template<Partial, PartialPartial, PartialAfter>,
                                                 After
                                                 > {
                                         pub fn #variable_name(self) -> #return_type {
@@ -535,6 +520,8 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
             Span::call_site(),
             &quote! { () },
             &quote! { () },
+            &quote! { _ },
+            &quote! { _ },
             true,
         );
         let other = quote! {
