@@ -1,5 +1,5 @@
 #![deny(warnings)]
-#![feature(gen_blocks, async_iterator)]
+#![feature(gen_blocks, async_iterator, coroutines)]
 
 extern crate alloc;
 
