@@ -377,6 +377,24 @@ pub fn calculate_edges(
     template_codegen: &'_ TemplateCodegen,
 ) -> impl Iterator<Item = proc_macro2::TokenStream> + '_ {
     template_codegen.graph.edge_references().map(|edge| {
+        let last_node = template_codegen
+            .graph
+            .edges_directed(edge.target(), Direction::Outgoing)
+            .next()
+            .is_none();
+        let next_template_struct = if last_node {
+            quote! { _magic_expression_result.after }
+        } else {
+            node_type(
+                &template_codegen.template_name,
+                &template_codegen.graph,
+                edge.target(),
+                Span::call_site(),
+                &quote! { $template.partial },
+                &quote! { $template.after },
+                true,
+            )
+        };
         edge.weight().variable.as_ref().map_or_else(
             || {
                 // no variable
@@ -385,11 +403,6 @@ pub fn calculate_edges(
                     template_codegen.template_name,
                     edge.id().index()
                 );
-                let last_node = template_codegen
-                    .graph
-                    .edges_directed(edge.target(), Direction::Outgoing)
-                    .next()
-                    .is_none();
                 let return_type = if last_node {
                     // TODO FIXME?
                     quote! { After }
@@ -462,7 +475,7 @@ pub fn calculate_edges(
                                     }
                                 }
                             }
-                            _ => {
+                            NodeType::InnerTemplate { .. } | NodeType::Other => {
                                 quote! {
                                     impl<Partial: Templaty, After: Templaty>
                                         Template<#impl_template_name, Partial, After> {
@@ -474,19 +487,6 @@ pub fn calculate_edges(
                             }
                         }
                     }),
-                };
-                let next_template_struct = if last_node {
-                    quote! { _magic_expression_result.after }
-                } else {
-                    node_type(
-                        &template_codegen.template_name,
-                        &template_codegen.graph,
-                        edge.target(),
-                        Span::call_site(),
-                        &quote! { $template.partial },
-                        &quote! { $template.after },
-                        true,
-                    )
                 };
                 quote! {
                     #[allow(unused)]
@@ -505,24 +505,7 @@ pub fn calculate_edges(
                     variable,
                     edge.id().index()
                 );
-                let last_node = template_codegen
-                    .graph
-                    .edges_directed(edge.target(), Direction::Outgoing)
-                    .next()
-                    .is_none();
-                let next_template_struct = if last_node {
-                    quote! { _magic_expression_result.after }
-                } else {
-                    node_type(
-                        &template_codegen.template_name,
-                        &template_codegen.graph,
-                        edge.target(),
-                        Span::call_site(),
-                        &quote! { $template.partial },
-                        &quote! { $template.after },
-                        true,
-                    )
-                };
+
                 quote! {
                     #[allow(unused)]
                     macro_rules! #variable_name {
@@ -534,6 +517,7 @@ pub fn calculate_edges(
     })
 }
 
+#[must_use]
 pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
     // TODO FIXME spans
     let code = templates.iter().map(|template_codegen| {
