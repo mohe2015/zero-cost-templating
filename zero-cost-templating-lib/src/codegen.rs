@@ -37,13 +37,14 @@ fn handle_macro_call_zero_or_one_parameter(
             // fall back to compiler macro error
             return None;
         }
-        let template_struct = node_type_to_create_type_with_span(
+        let template_struct = node_type(
             template_codegen.template_name.as_str(),
             &template_codegen.graph,
             template_codegen.first,
             Span::call_site(),
             &quote_spanned! {span=> () },
             &quote_spanned! {span=> () },
+            true,
         );
         return Some(Expr::Verbatim(quote_spanned! {span=>
             {
@@ -69,11 +70,14 @@ fn handle_macro_call_zero_or_one_parameter(
         }
 
         let text = &edge.weight().text;
-        let template_struct = node_type_to_type_with_span(
+        let template_struct = node_type(
             template_codegen.template_name.as_str(),
             &template_codegen.graph,
             edge.source(),
             input.path.span(),
+            &quote_spanned! {span=> () },
+            &quote_spanned! {span=> () },
+            false,
         ); // good span for mismatched type error
         let last_node = template_codegen
             .graph
@@ -83,13 +87,14 @@ fn handle_macro_call_zero_or_one_parameter(
         let next_template_struct = if last_node {
             quote_spanned! {span=> _magic_expression_result.after }
         } else {
-            node_type_to_create_type_with_span(
+            node_type(
                 template_codegen.template_name.as_str(),
                 &template_codegen.graph,
                 edge.target(),
                 span,
                 &quote_spanned! {span=> _magic_expression_result.partial },
                 &quote_spanned! {span=> _magic_expression_result.after },
+                true,
             )
         };
 
@@ -134,11 +139,14 @@ fn handle_macro_call_two_parameters(
 
         let text = &edge.weight().text;
 
-        let template_struct = node_type_to_type_with_span(
+        let template_struct = node_type(
             template_codegen.template_name.as_str(),
             &template_codegen.graph,
             edge.source(),
             input.path.span(),
+            &quote_spanned! {span=> () },
+            &quote_spanned! {span=> () },
+            false,
         ); // good span for mismatched type error
         let last_node = template_codegen
             .graph
@@ -148,13 +156,14 @@ fn handle_macro_call_two_parameters(
         let next_template_struct = if last_node {
             quote_spanned! {span=> _magic_expression_result.after }
         } else {
-            node_type_to_create_type_with_span(
+            node_type(
                 template_codegen.template_name.as_str(),
                 &template_codegen.graph,
                 edge.target(),
                 span,
                 &quote_spanned! {span=> _magic_expression_result.partial },
                 &quote_spanned! {span=> _magic_expression_result.after },
+                true,
             )
         };
 
@@ -250,67 +259,29 @@ impl VisitMut for InnerMacroReplace {
     }
 }
 
-fn node_type_to_type_with_span(
-    template_name: &str,
-    graph: &StableGraph<NodeType, IntermediateAstElement>,
-    node_index: NodeIndex,
-    span: Span,
-) -> proc_macro2::TokenStream {
-    match &graph[node_index] {
-        NodeType::PartialBlock { .. } => {
-            // TODO FIXME
-            quote_spanned! {span=>
-                _
-            }
-        }
-        NodeType::InnerTemplate {
-            name,
-            partial,
-            after,
-        } => {
-            let name = format_ident!("{}", name, span = span);
-            let partial = format_ident!("{}", partial, span = span);
-            let after = format_ident!("{}", after, span = span);
-            quote_spanned! {span=>
-                Template::<
-                    #name,
-                    Template::<#partial, (), Template::<#after, (), ()>>,
-                    Template::<#after, (), ()>
-                >
-            }
-        }
-        NodeType::Other => {
-            let ident = format_ident!(
-                "{}Template{}",
-                template_name.to_upper_camel_case(),
-                node_index.index().to_string(),
-                span = span
-            );
-            // TODO FIXME
-            quote_spanned! {span=>
-                Template::<#ident, _, _>
-            }
-        }
-    }
-}
-
-fn node_type_to_create_type_with_span(
+fn node_type(
     template_name: &str,
     graph: &StableGraph<NodeType, IntermediateAstElement>,
     node_index: NodeIndex,
     span: Span,
     partial: &TokenStream,
     after: &TokenStream,
+    create: bool,
 ) -> TokenStream {
     match &graph[node_index] {
         NodeType::PartialBlock { after: inner_after } => {
             let inner_after = format_ident!("{}", inner_after, span = span);
+            let create = create.then(|| {
+                Some(quote_spanned! {span=>
+                    {
+                        r#type: #partial.r#type,
+                        partial: (),
+                        after: Template { r#type: #inner_after, partial: (), after: #after }
+                    }
+                })
+            });
             quote_spanned! {span=>
-                Template::<_, (), Template::<#inner_after, (), _>> {
-                    r#type: #partial.r#type,
-                    partial: (),
-                    after: Template { r#type: #inner_after, partial: (), after: #after }
-                }
+                Template::<_, (), Template::<#inner_after, (), _>> #create
             }
         }
         NodeType::InnerTemplate {
@@ -321,20 +292,33 @@ fn node_type_to_create_type_with_span(
             let name = format_ident!("{}", name, span = span);
             let inner_partial = format_ident!("{}", inner_partial, span = span);
             let inner_after = format_ident!("{}", inner_after, span = span);
+            let create = create.then(|| {
+                Some(quote_spanned! {span=>
+                    {
+                        r#type: #name,
+                        partial: Template::<#inner_partial, (), Template::<#inner_after, (), ()>> {
+                            r#type: #inner_partial,
+                            partial: (),
+                            after: Template::<#inner_after, (), ()> {
+                                r#type: #inner_after,
+                                partial: (),
+                                after: ()
+                            }
+                        },
+                        after: Template::<#inner_after, (), ()> {
+                            r#type: #inner_after,
+                            partial: (),
+                            after: ()
+                        }
+                    }
+                })
+            });
             quote_spanned! {span=>
                 Template::<
                     #name,
                     Template::<#inner_partial, (), Template::<#inner_after, (), ()>>,
                     Template::<#inner_after, (), ()>
-                > {
-                    r#type: #name,
-                    partial: Template::<#inner_partial, (), Template::<#inner_after, (), ()>> {
-                        r#type: #inner_partial,
-                        partial: (),
-                        after: Template::<#inner_after, (), ()> { r#type: #inner_after, partial: (), after: () }
-                    },
-                    after: Template::<#inner_after, (), ()> { r#type: #inner_after, partial: (), after: () }
-                }
+                > #create
             }
         }
         NodeType::Other => {
@@ -344,9 +328,13 @@ fn node_type_to_create_type_with_span(
                 node_index.index().to_string(),
                 span = span
             );
-            // TODO FIXME
+            let create = create.then(|| {
+                Some(quote_spanned! {span=>
+                    { r#type: #ident, partial: #partial, after: #after }
+                })
+            });
             quote_spanned! {span=>
-                Template::<#ident, _, _> { r#type: #ident, partial: #partial, after: #after }
+                Template::<#ident, _, _> #create
             }
         }
     }
@@ -458,7 +446,16 @@ pub fn calculate_edges(
                             // TODO FIXME merge this with above
                             NodeType::PartialBlock { .. } => {
                                 quote! {
-                                    impl<PartialType: TemplateTypy, PartialPartial: Templaty, PartialAfter: Templaty, After: Templaty> Template<#impl_template_name, Template<PartialType, PartialPartial, PartialAfter>, After> {
+                                    impl<PartialType: TemplateTypy,
+                                        PartialPartial: Templaty,
+                                        PartialAfter: Templaty,
+                                        After: Templaty
+                                        >
+                                        Template<
+                                                #impl_template_name,
+                                                Template<PartialType, PartialPartial, PartialAfter>,
+                                                After
+                                                > {
                                         pub fn #variable_name(self) -> #return_type {
                                             todo!()
                                         }
@@ -467,7 +464,8 @@ pub fn calculate_edges(
                             }
                             _ => {
                                 quote! {
-                                    impl<Partial: Templaty, After: Templaty> Template<#impl_template_name, Partial, After> {
+                                    impl<Partial: Templaty, After: Templaty>
+                                        Template<#impl_template_name, Partial, After> {
                                         pub fn #variable_name(self) -> #return_type {
                                             todo!()
                                         }
@@ -475,19 +473,19 @@ pub fn calculate_edges(
                                 }
                             }
                         }
-                        
                     }),
                 };
                 let next_template_struct = if last_node {
                     quote! { _magic_expression_result.after }
                 } else {
-                    node_type_to_create_type_with_span(
+                    node_type(
                         &template_codegen.template_name,
                         &template_codegen.graph,
                         edge.target(),
                         Span::call_site(),
                         &quote! { $template.partial },
                         &quote! { $template.after },
+                        true,
                     )
                 };
                 quote! {
@@ -515,13 +513,14 @@ pub fn calculate_edges(
                 let next_template_struct = if last_node {
                     quote! { _magic_expression_result.after }
                 } else {
-                    node_type_to_create_type_with_span(
+                    node_type(
                         &template_codegen.template_name,
                         &template_codegen.graph,
                         edge.target(),
                         Span::call_site(),
                         &quote! { $template.partial },
                         &quote! { $template.after },
+                        true,
                     )
                 };
                 quote! {
@@ -545,13 +544,14 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
             template_codegen.template_name,
             template_codegen.first.index()
         );
-        let template_struct = node_type_to_create_type_with_span(
+        let template_struct = node_type(
             &template_codegen.template_name,
             &template_codegen.graph,
             template_codegen.first,
             Span::call_site(),
             &quote! { () },
             &quote! { () },
+            true,
         );
         let other = quote! {
             #[allow(unused)]
@@ -586,7 +586,8 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
         }
 
         impl Templaty for () {}
-        impl<Type: TemplateTypy, Partial: Templaty, After: Templaty> Templaty for Template<Type, Partial, After> {}
+        impl<Type: TemplateTypy, Partial: Templaty, After: Templaty>
+            Templaty for Template<Type, Partial, After> {}
 
         #(#code)*
     };
