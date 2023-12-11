@@ -133,7 +133,6 @@ fn handle_macro_call_two_parameters(
         }
 
         let text = &edge.weight().text;
-        let _second_parameter_span = second_parameter.span();
 
         let template_struct = node_type_to_type_with_span(
             template_codegen.template_name.as_str(),
@@ -307,8 +306,11 @@ fn node_type_to_create_type_with_span(
         NodeType::PartialBlock { after: inner_after } => {
             let inner_after = format_ident!("{}", inner_after, span = span);
             quote_spanned! {span=>
-                // TODO FIXME map_partial and map_after
-                #partial.map_inner((), Template { r#type: #inner_after, partial: (), after: #after })
+                Template::<_, (), Template::<#inner_after, (), _>> {
+                    r#type: #partial.r#type,
+                    partial: (),
+                    after: Template { r#type: #inner_after, partial: (), after: #after }
+                }
             }
         }
         NodeType::InnerTemplate {
@@ -585,20 +587,6 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
 
         impl Templaty for () {}
         impl<Type: TemplateTypy, Partial: Templaty, After: Templaty> Templaty for Template<Type, Partial, After> {}
-
-        impl<Type: TemplateTypy, Partial: Templaty, After: Templaty> Template<Type, Partial, After> {
-            pub fn map_inner<NewPartial: Templaty, NewAfter: Templaty>(
-                self,
-                new_partial: NewPartial,
-                new_after: NewAfter,
-            ) -> Template<Type, NewPartial, NewAfter> {
-                Template {
-                    r#type: self.r#type,
-                    partial: new_partial,
-                    after: new_after,
-                }
-            }
-        }
 
         #(#code)*
     };
