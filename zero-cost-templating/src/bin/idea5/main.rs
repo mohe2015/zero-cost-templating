@@ -80,9 +80,9 @@ pub async fn partial_block() {
     let template = template.partial_block_template0();
     let template = template.partial_block_partial_template0();
     let template = template.partial_block_template1();
-    let template = partial_block_template2!(template);
-    let template = partial_block_partial_template2!(template);
-    partial_block_template4!(template);
+    let template = template.partial_block_test2("Hi".into());
+    let template = template.partial_block_partial_template2();
+    template.partial_block_template4();
 }
 
 #[tokio::main]
