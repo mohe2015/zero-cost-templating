@@ -409,96 +409,102 @@ pub fn calculate_edges(
                 true,
             )
         };
-        edge.weight().variable.as_ref().map_or_else(
+        let return_type = if last_node {
+            quote! { After }
+        } else {
+            node_type(
+                &template_codegen.template_name,
+                &template_codegen.graph,
+                edge.target(),
+                Span::call_site(),
+                &quote! { $template.partial },
+                &quote! { $template.after },
+                //
+                &quote! { Partial },
+                &quote! { After },
+                false,
+            )
+        };
+        let variable_name = edge.weight().variable.as_ref().map_or_else(
             || {
-                // no variable
-                let variable_name = format_ident!(
+                format_ident!(
                     "{}_template{}",
                     template_codegen.template_name,
                     edge.id().index()
-                );
-                let return_type = if last_node {
-                    quote! { After }
-                } else {
-                    node_type(
-                        &template_codegen.template_name,
-                        &template_codegen.graph,
-                        edge.target(),
-                        Span::call_site(),
-                        &quote! { $template.partial },
-                        &quote! { $template.after },
-                        //
-                        &quote! { Partial },
-                        &quote! { After },
-                        false,
-                    )
-                };
-                let impl_func = match &template_codegen.graph[edge.source()] {
-                    NodeType::InnerTemplate { .. } | NodeType::PartialBlock { .. } => None,
-                    NodeType::Other => Some({
-                        let impl_template_name = format_ident!(
-                            "{}Template{}",
-                            template_codegen.template_name.to_upper_camel_case(),
-                            edge.source().index().to_string(),
-                        );
-                        match &template_codegen.graph[edge.target()] {
-                            NodeType::PartialBlock { .. } => {
-                                quote! {
-                                    impl<Partial: TemplateTypy,
-                                        PartialPartial: Templaty,
-                                        PartialAfter: Templaty,
-                                        After: Templaty
-                                        >
-                                        Template<
-                                                #impl_template_name,
-                                                Template<Partial, PartialPartial, PartialAfter>,
-                                                After
-                                                > {
-                                        pub fn #variable_name(self) -> #return_type {
-                                            todo!()
-                                        }
-                                    }
-                                }
-                            }
-                            NodeType::InnerTemplate { .. } | NodeType::Other => {
-                                quote! {
-                                    impl<Partial: Templaty, After: Templaty>
-                                        Template<#impl_template_name, Partial, After> {
-                                        pub fn #variable_name(self) -> #return_type {
-                                            todo!()
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }),
-                };
-                quote! {
-                    #[allow(unused)]
-                    macro_rules! #variable_name {
-                        ($template: expr) => { unreachable!(); #next_template_struct }
-                    }
-
-                    #impl_func
-                }
+                )
             },
             |variable| {
-                // with variable
-                let variable_name = format_ident!(
+                format_ident!(
                     "{}_{}{}",
                     template_codegen.template_name,
                     variable,
                     edge.id().index()
-                );
-
+                )
+            },
+        );
+        let parameter = edge
+            .weight()
+            .variable
+            .as_ref()
+            .map(|variable| format_ident!("{}", variable))
+            .map(|variable| {
                 quote! {
-                    #[allow(unused)]
-                    macro_rules! #variable_name {
-                        ($template: expr, $value: expr) => { unreachable!(); #next_template_struct }
+                    , #variable: ::alloc::borrow::Cow<'static, str>
+                }
+            });
+        let macro_parameter = edge.weight().variable.as_ref().map(|_| {
+            quote! {
+                , $value: expr
+            }
+        });
+        let impl_func = match &template_codegen.graph[edge.source()] {
+            NodeType::InnerTemplate { .. } | NodeType::PartialBlock { .. } => None,
+            NodeType::Other => Some({
+                let impl_template_name = format_ident!(
+                    "{}Template{}",
+                    template_codegen.template_name.to_upper_camel_case(),
+                    edge.source().index().to_string(),
+                );
+                match &template_codegen.graph[edge.target()] {
+                    NodeType::PartialBlock { .. } => {
+                        quote! {
+                            impl<Partial: TemplateTypy,
+                                PartialPartial: Templaty,
+                                PartialAfter: Templaty,
+                                After: Templaty
+                                >
+                                Template<
+                                        #impl_template_name,
+                                        Template<Partial, PartialPartial, PartialAfter>,
+                                        After
+                                        > {
+                                pub fn #variable_name(self #parameter) -> #return_type {
+                                    todo!()
+                                }
+                            }
+                        }
+                    }
+                    NodeType::InnerTemplate { .. } | NodeType::Other => {
+                        quote! {
+                            impl<Partial: Templaty, After: Templaty>
+                                Template<#impl_template_name, Partial, After> {
+                                pub fn #variable_name(self #parameter) -> #return_type {
+                                    todo!()
+                                }
+                            }
+                        }
                     }
                 }
-            },
-        )
+            }),
+        };
+        quote! {
+            #[allow(unused)]
+            macro_rules! #variable_name {
+                ($template: expr #macro_parameter) => { unreachable!(); #next_template_struct }
+            }
+
+            #impl_func
+        }
     })
 }
 
