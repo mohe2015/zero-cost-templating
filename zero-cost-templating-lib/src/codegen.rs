@@ -306,7 +306,7 @@ impl VisitMut for InnerMacroReplace {
         match node {
             Stmt::Macro(stmt_macro) => {
                 if let Some(result) = self.magic_macro(&stmt_macro.mac, stmt_macro.semi_token) {
-                    *node = Stmt::Expr(result, stmt_macro.semi_token);
+                    *node = Stmt::Expr(result, None);
                 }
             }
             _ => {
@@ -495,8 +495,10 @@ pub fn calculate_edges(
             .as_ref()
             .map(|variable| format_ident!("{}", variable))
             .map(|variable| {
+                // TODO FIXME
+                // <'a, I: Into<Cow<'a, str>>>(input: I) -> Cow<'a, str>
                 quote! {
-                    , #variable: ::alloc::borrow::Cow<'static, str>
+                    , #variable: impl Into<::alloc::borrow::Cow<'static, str>>
                 }
             });
         let macro_parameter = edge.weight().variable.as_ref().map(|_| {
