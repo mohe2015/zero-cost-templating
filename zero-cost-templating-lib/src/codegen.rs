@@ -42,10 +42,10 @@ fn handle_macro_call_zero_or_one_parameter(
             &template_codegen.graph,
             template_codegen.first,
             Span::call_site(),
-            &quote_spanned! {span=> () },
-            &quote_spanned! {span=> () },
-            &quote_spanned! {span=> _ },
-            &quote_spanned! {span=> _ },
+            &quote! { () },
+            &quote! { () },
+            &quote! { _ },
+            &quote! { _ },
             true,
         );
         return Some(Expr::Verbatim(quote_spanned! {span=>
@@ -77,10 +77,10 @@ fn handle_macro_call_zero_or_one_parameter(
             &template_codegen.graph,
             edge.source(),
             path_span,
-            &quote_spanned! {span=> () },
-            &quote_spanned! {span=> () },
-            &quote_spanned! {span=> _ },
-            &quote_spanned! {span=> _ },
+            &quote! {span=> () },
+            &quote! {span=> () },
+            &quote! { _ },
+            &quote! { _ },
             false,
         ); // good span for mismatched type error
         let last_node = template_codegen
@@ -96,10 +96,10 @@ fn handle_macro_call_zero_or_one_parameter(
                 &template_codegen.graph,
                 edge.target(),
                 span,
-                &quote_spanned! {span=> _magic_expression_result.partial },
-                &quote_spanned! {span=> _magic_expression_result.after },
-                &quote_spanned! {span=> _ },
-                &quote_spanned! {span=> _ },
+                &quote! { _magic_expression_result.partial },
+                &quote! { _magic_expression_result.after },
+                &quote! { _ },
+                &quote! { _ },
                 true,
             )
         };
@@ -150,10 +150,10 @@ fn handle_macro_call_two_parameters(
             &template_codegen.graph,
             edge.source(),
             path_span,
-            &quote_spanned! {span=> () },
-            &quote_spanned! {span=> () },
-            &quote_spanned! {span=> _ },
-            &quote_spanned! {span=> _ },
+            &quote! { () },
+            &quote! { () },
+            &quote! { _ },
+            &quote! { _ },
             false,
         ); // good span for mismatched type error
         let last_node = template_codegen
@@ -169,10 +169,10 @@ fn handle_macro_call_two_parameters(
                 &template_codegen.graph,
                 edge.target(),
                 span,
-                &quote_spanned! {span=> _magic_expression_result.partial },
-                &quote_spanned! {span=> _magic_expression_result.after },
-                &quote_spanned! {span=> _ },
-                &quote_spanned! {span=> _ },
+                &quote! { _magic_expression_result.partial },
+                &quote! { _magic_expression_result.after },
+                &quote! { _ },
+                &quote! { _ },
                 true,
             )
         };
