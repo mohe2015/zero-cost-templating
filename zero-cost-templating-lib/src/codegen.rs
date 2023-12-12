@@ -7,7 +7,7 @@ use petgraph::stable_graph::StableGraph;
 use petgraph::visit::{EdgeRef, IntoEdgeReferences, IntoNodeReferences};
 use petgraph::Direction;
 use proc_macro2::{Ident, Span, TokenStream, TokenTree};
-use quote::{format_ident, quote, quote_spanned, ToTokens};
+use quote::{format_ident, quote, ToTokens};
 use syn::spanned::Spanned;
 use syn::visit_mut::VisitMut;
 use syn::{visit_mut, Expr, ExprMethodCall, Macro, Stmt, Token};
@@ -25,12 +25,7 @@ fn handle_macro_call_zero_or_one_parameter(
     template_codegen: &TemplateCodegen,
 ) -> Option<Expr> {
     let first_index = template_codegen.first.index();
-    let initial_ident = format_ident!(
-        "{}_initial{}",
-        template_codegen.template_name,
-        first_index,
-        span = span
-    );
+    let initial_ident = format_ident!("{}_initial{}", template_codegen.template_name, first_index,);
     if &initial_ident == ident {
         if !first_parameter.is_empty() {
             // one parameter
@@ -48,7 +43,7 @@ fn handle_macro_call_zero_or_one_parameter(
             &quote! { _ },
             true,
         );
-        return Some(Expr::Verbatim(quote_spanned! {span=>
+        return Some(Expr::Verbatim(quote! {
             {
                 #template_struct
             } #semicolon
@@ -60,7 +55,6 @@ fn handle_macro_call_zero_or_one_parameter(
             "{}_template{}",
             template_codegen.template_name,
             edge.id().index(),
-            span = span
         );
         ident == &expected_ident
     });
@@ -77,8 +71,8 @@ fn handle_macro_call_zero_or_one_parameter(
             &template_codegen.graph,
             edge.source(),
             path_span,
-            &quote! {span=> () },
-            &quote! {span=> () },
+            &quote! { () },
+            &quote! { () },
             &quote! { _ },
             &quote! { _ },
             false,
@@ -89,7 +83,7 @@ fn handle_macro_call_zero_or_one_parameter(
             .next()
             .is_none();
         let next_template_struct = if last_node {
-            quote_spanned! {span=> _magic_expression_result.after }
+            quote! { _magic_expression_result.after }
         } else {
             node_type(
                 template_codegen.template_name.as_str(),
@@ -104,7 +98,7 @@ fn handle_macro_call_zero_or_one_parameter(
             )
         };
 
-        Some(Expr::Verbatim(quote_spanned! {span=>
+        Some(Expr::Verbatim(quote! {
             {
                 let _magic_expression_result: #template_struct = #first_parameter;
                 yield ::alloc::borrow::Cow::from(#text);
@@ -131,7 +125,6 @@ fn handle_macro_call_two_parameters(
                 template_codegen.template_name,
                 variable,
                 edge.id().index(),
-                span = span
             );
             ident == &expected_ident
         })
@@ -162,7 +155,7 @@ fn handle_macro_call_two_parameters(
             .next()
             .is_none();
         let next_template_struct = if last_node {
-            quote_spanned! {span=> _magic_expression_result.after }
+            quote! { _magic_expression_result.after }
         } else {
             node_type(
                 template_codegen.template_name.as_str(),
@@ -178,21 +171,21 @@ fn handle_macro_call_two_parameters(
         };
 
         let escaped_value = match edge.weight().escaping_fun {
-            EscapingFunction::NoVariableStart => quote_spanned! {span=>
+            EscapingFunction::NoVariableStart => quote! {
                 unreachable();
             },
             EscapingFunction::HtmlAttribute => {
-                quote_spanned! {span=>
+                quote! {
                     yield zero_cost_templating::encode_double_quoted_attribute(#second_parameter);
                 }
             }
             EscapingFunction::HtmlElementInner => {
-                quote_spanned! {span=>
+                quote! {
                     yield zero_cost_templating::encode_element_text(#second_parameter);
                 }
             }
         };
-        Some(Expr::Verbatim(quote_spanned! {span=>
+        Some(Expr::Verbatim(quote! {
             {
                 let _magic_expression_result: #template_struct = #first_parameter;
                 #escaped_value
@@ -213,7 +206,6 @@ impl InnerMacroReplace {
         );
         let first_parameter = first_parameter.collect::<proc_macro2::TokenStream>();
         let comma = template.next();
-        let span = input.span();
         comma.map_or_else(
             || {
                 // macro call without zero or one parameters
@@ -252,7 +244,6 @@ impl InnerMacroReplace {
         semicolon: Option<Token![;]>,
     ) -> Option<syn::Expr> {
         let ident = &input.method;
-        let span = input.span();
         match input.args.len() {
             0 => {
                 // macro call without zero or one parameters
@@ -329,9 +320,9 @@ fn node_type(
 ) -> TokenStream {
     match &graph[node_index] {
         NodeType::PartialBlock { after: inner_after } => {
-            let inner_after = format_ident!("{}", inner_after, span = span);
+            let inner_after = format_ident!("{}", inner_after);
             let create = create.then(|| {
-                Some(quote_spanned! {span=>
+                Some(quote! {
                     {
                         r#type: #partial.r#type,
                         partial: (),
@@ -339,7 +330,7 @@ fn node_type(
                     }
                 })
             });
-            quote_spanned! {span=>
+            quote! {
                 Template::<#partial_type, (), Template::<#inner_after, (), #after_type>> #create
             }
         }
@@ -348,11 +339,11 @@ fn node_type(
             partial: inner_partial,
             after: inner_after,
         } => {
-            let name = format_ident!("{}", name, span = span);
-            let inner_partial = format_ident!("{}", inner_partial, span = span);
-            let inner_after = format_ident!("{}", inner_after, span = span);
+            let name = format_ident!("{}", name);
+            let inner_partial = format_ident!("{}", inner_partial);
+            let inner_after = format_ident!("{}", inner_after);
             let create = create.then(|| {
-                Some(quote_spanned! {span=>
+                Some(quote! {
                     {
                         r#type: #name,
                         partial: Template::<#inner_partial, (), Template::<#inner_after, (), ()>> {
@@ -372,7 +363,7 @@ fn node_type(
                     }
                 })
             });
-            quote_spanned! {span=>
+            quote! {
                 Template::<
                     #name,
                     Template::<#inner_partial, (), Template::<#inner_after, (), ()>>,
@@ -385,14 +376,13 @@ fn node_type(
                 "{}Template{}",
                 template_name.to_upper_camel_case(),
                 node_index.index().to_string(),
-                span = span
             );
             let create = create.then(|| {
-                Some(quote_spanned! {span=>
+                Some(quote! {
                     { r#type: #ident, partial: #partial, after: #after }
                 })
             });
-            quote_spanned! {span=>
+            quote! {
                 Template::<#ident, #partial_type, #after_type> #create
             }
         }
@@ -559,7 +549,6 @@ pub fn calculate_edges(
 
 #[must_use]
 pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
-    // TODO FIXME spans
     let code = templates.iter().map(|template_codegen| {
         let instructions = calculate_nodes(template_codegen);
         let edges = calculate_edges(template_codegen);
