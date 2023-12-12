@@ -6,9 +6,8 @@ use petgraph::prelude::NodeIndex;
 use petgraph::stable_graph::StableGraph;
 use petgraph::visit::{EdgeRef, IntoEdgeReferences, IntoNodeReferences};
 use petgraph::Direction;
-use proc_macro2::{Ident, Span, TokenStream, TokenTree};
+use proc_macro2::{Ident, TokenStream, TokenTree};
 use quote::{format_ident, quote, ToTokens};
-use syn::spanned::Spanned;
 use syn::visit_mut::VisitMut;
 use syn::{visit_mut, Expr, ExprMethodCall, Macro, Stmt, Token};
 
@@ -17,9 +16,7 @@ use crate::intermediate_graph::{EscapingFunction, IntermediateAstElement, NodeTy
 pub struct InnerMacroReplace(pub Vec<TemplateCodegen>);
 
 fn handle_macro_call_zero_or_one_parameter(
-    path_span: Span,
     ident: &Ident,
-    span: Span,
     first_parameter: &TokenStream,
     semicolon: Option<Token![;]>,
     template_codegen: &TemplateCodegen,
@@ -36,7 +33,6 @@ fn handle_macro_call_zero_or_one_parameter(
             template_codegen.template_name.as_str(),
             &template_codegen.graph,
             template_codegen.first,
-            Span::call_site(),
             &quote! { () },
             &quote! { () },
             &quote! { _ },
@@ -70,7 +66,6 @@ fn handle_macro_call_zero_or_one_parameter(
             template_codegen.template_name.as_str(),
             &template_codegen.graph,
             edge.source(),
-            path_span,
             &quote! { () },
             &quote! { () },
             &quote! { _ },
@@ -89,7 +84,6 @@ fn handle_macro_call_zero_or_one_parameter(
                 template_codegen.template_name.as_str(),
                 &template_codegen.graph,
                 edge.target(),
-                span,
                 &quote! { _magic_expression_result.partial },
                 &quote! { _magic_expression_result.after },
                 &quote! { _ },
@@ -109,9 +103,7 @@ fn handle_macro_call_zero_or_one_parameter(
 }
 
 fn handle_macro_call_two_parameters(
-    path_span: Span,
     ident: &Ident,
-    span: Span,
     first_parameter: &TokenStream,
     second_parameter: &TokenStream,
     semicolon: Option<Token![;]>,
@@ -142,7 +134,6 @@ fn handle_macro_call_two_parameters(
             template_codegen.template_name.as_str(),
             &template_codegen.graph,
             edge.source(),
-            path_span,
             &quote! { () },
             &quote! { () },
             &quote! { _ },
@@ -161,7 +152,6 @@ fn handle_macro_call_two_parameters(
                 template_codegen.template_name.as_str(),
                 &template_codegen.graph,
                 edge.target(),
-                span,
                 &quote! { _magic_expression_result.partial },
                 &quote! { _magic_expression_result.after },
                 &quote! { _ },
@@ -211,9 +201,7 @@ impl InnerMacroReplace {
                 // macro call without zero or one parameters
                 self.0.iter().find_map(|template_codegen| {
                     handle_macro_call_zero_or_one_parameter(
-                        input.path.span(),
                         ident,
-                        span,
                         &first_parameter,
                         semicolon,
                         template_codegen,
@@ -225,9 +213,7 @@ impl InnerMacroReplace {
 
                 self.0.iter().find_map(|template_codegen| {
                     handle_macro_call_two_parameters(
-                        input.path.span(),
                         ident,
-                        span,
                         &first_parameter,
                         &second_parameter,
                         semicolon,
@@ -249,9 +235,7 @@ impl InnerMacroReplace {
                 // macro call without zero or one parameters
                 self.0.iter().find_map(|template_codegen| {
                     handle_macro_call_zero_or_one_parameter(
-                        input.method.span(),
                         ident,
-                        span,
                         &input.receiver.to_token_stream(),
                         semicolon,
                         template_codegen,
@@ -260,9 +244,7 @@ impl InnerMacroReplace {
             }
             1 => self.0.iter().find_map(|template_codegen| {
                 handle_macro_call_two_parameters(
-                    input.method.span(),
                     ident,
-                    span,
                     &input.receiver.to_token_stream(),
                     &input.args.first().unwrap().into_token_stream(),
                     semicolon,
@@ -283,7 +265,7 @@ impl VisitMut for InnerMacroReplace {
                 }
             }
             Expr::MethodCall(expr_method_call) => {
-                if let Some(result) = self.magic_method_call(&expr_method_call, None) {
+                if let Some(result) = self.magic_method_call(expr_method_call, None) {
                     *node = result;
                 }
             }
@@ -311,7 +293,6 @@ fn node_type(
     template_name: &str,
     graph: &StableGraph<NodeType, IntermediateAstElement>,
     node_index: NodeIndex,
-    span: Span,
     partial: &TokenStream,
     after: &TokenStream,
     partial_type: &TokenStream,
@@ -438,7 +419,6 @@ pub fn calculate_edges(
                 &template_codegen.template_name,
                 &template_codegen.graph,
                 edge.target(),
-                Span::call_site(),
                 &quote! { $template.partial },
                 &quote! { $template.after },
                 &quote! { _ },
@@ -453,7 +433,6 @@ pub fn calculate_edges(
                 &template_codegen.template_name,
                 &template_codegen.graph,
                 edge.target(),
-                Span::call_site(),
                 &quote! { $template.partial },
                 &quote! { $template.after },
                 //
@@ -561,7 +540,6 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
             &template_codegen.template_name,
             &template_codegen.graph,
             template_codegen.first,
-            Span::call_site(),
             &quote! { () },
             &quote! { () },
             &quote! { _ },
