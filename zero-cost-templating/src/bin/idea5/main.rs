@@ -71,11 +71,6 @@ pub async fn partial_block_partial() {
 #[template_stream("partial_block.html.hbs", "partial_block_partial.html.hbs")]
 pub async fn partial_block() {
     // is it important that this possibly stays composable?
-    // TODO FIXME make the naming so its easier to know which method to call next
-    // currently the .dot file are probably most helpful (the edge numbers should be
-    // the method names and the node numbers should be the types?)
-    // xdot zero-cost-templating/partial_block.dot
-    // xdot zero-cost-templating/partial_block_partial.dot
     let template = partial_block_initial0!();
     let template = template.partial_block_template0();
     let template = template.partial_block_partial_template0();

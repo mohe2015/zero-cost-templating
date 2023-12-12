@@ -7,17 +7,17 @@ use petgraph::stable_graph::StableGraph;
 use petgraph::visit::{EdgeRef, IntoEdgeReferences, IntoNodeReferences};
 use petgraph::Direction;
 use proc_macro2::{Ident, Span, TokenStream, TokenTree};
-use quote::{format_ident, quote, quote_spanned};
+use quote::{format_ident, quote, quote_spanned, ToTokens};
 use syn::spanned::Spanned;
 use syn::visit_mut::VisitMut;
-use syn::{visit_mut, Expr, Macro, Stmt, Token};
+use syn::{visit_mut, Expr, ExprMethodCall, Macro, Stmt, Token};
 
 use crate::intermediate_graph::{EscapingFunction, IntermediateAstElement, NodeType};
 
 pub struct InnerMacroReplace(pub Vec<TemplateCodegen>);
 
 fn handle_macro_call_zero_or_one_parameter(
-    input: &Macro,
+    path_span: Span,
     ident: &Ident,
     span: Span,
     first_parameter: &TokenStream,
@@ -76,7 +76,7 @@ fn handle_macro_call_zero_or_one_parameter(
             template_codegen.template_name.as_str(),
             &template_codegen.graph,
             edge.source(),
-            input.path.span(),
+            path_span,
             &quote_spanned! {span=> () },
             &quote_spanned! {span=> () },
             &quote_spanned! {span=> _ },
@@ -115,7 +115,7 @@ fn handle_macro_call_zero_or_one_parameter(
 }
 
 fn handle_macro_call_two_parameters(
-    input: &Macro,
+    path_span: Span,
     ident: &Ident,
     span: Span,
     first_parameter: &TokenStream,
@@ -149,7 +149,7 @@ fn handle_macro_call_two_parameters(
             template_codegen.template_name.as_str(),
             &template_codegen.graph,
             edge.source(),
-            input.path.span(),
+            path_span,
             &quote_spanned! {span=> () },
             &quote_spanned! {span=> () },
             &quote_spanned! {span=> _ },
@@ -204,7 +204,7 @@ fn handle_macro_call_two_parameters(
 }
 
 impl InnerMacroReplace {
-    fn magic(&self, input: &Macro, semicolon: Option<Token![;]>) -> Option<syn::Expr> {
+    fn magic_macro(&self, input: &Macro, semicolon: Option<Token![;]>) -> Option<syn::Expr> {
         let ident = input.path.require_ident().unwrap();
         let template = input.tokens.clone();
         let mut template = template.into_iter();
@@ -219,7 +219,7 @@ impl InnerMacroReplace {
                 // macro call without zero or one parameters
                 self.0.iter().find_map(|template_codegen| {
                     handle_macro_call_zero_or_one_parameter(
-                        input,
+                        input.path.span(),
                         ident,
                         span,
                         &first_parameter,
@@ -233,7 +233,7 @@ impl InnerMacroReplace {
 
                 self.0.iter().find_map(|template_codegen| {
                     handle_macro_call_two_parameters(
-                        input,
+                        input.path.span(),
                         ident,
                         span,
                         &first_parameter,
@@ -245,26 +245,73 @@ impl InnerMacroReplace {
             },
         )
     }
+
+    fn magic_method_call(
+        &self,
+        input: &ExprMethodCall,
+        semicolon: Option<Token![;]>,
+    ) -> Option<syn::Expr> {
+        let ident = &input.method;
+        let span = input.span();
+        match input.args.len() {
+            0 => {
+                // macro call without zero or one parameters
+                self.0.iter().find_map(|template_codegen| {
+                    handle_macro_call_zero_or_one_parameter(
+                        input.method.span(),
+                        ident,
+                        span,
+                        &input.receiver.to_token_stream(),
+                        semicolon,
+                        template_codegen,
+                    )
+                })
+            }
+            1 => self.0.iter().find_map(|template_codegen| {
+                handle_macro_call_two_parameters(
+                    input.method.span(),
+                    ident,
+                    span,
+                    &input.receiver.to_token_stream(),
+                    &input.args.first().unwrap().into_token_stream(),
+                    semicolon,
+                    template_codegen,
+                )
+            }),
+            _ => panic!(),
+        }
+    }
 }
 
 impl VisitMut for InnerMacroReplace {
     fn visit_expr_mut(&mut self, node: &mut syn::Expr) {
-        if let Expr::Macro(expr_macro) = node {
-            if let Some(result) = self.magic(&expr_macro.mac, None) {
-                *node = result;
+        match node {
+            Expr::Macro(expr_macro) => {
+                if let Some(result) = self.magic_macro(&expr_macro.mac, None) {
+                    *node = result;
+                }
             }
-        } else {
-            visit_mut::visit_expr_mut(self, node);
+            Expr::MethodCall(expr_method_call) => {
+                if let Some(result) = self.magic_method_call(&expr_method_call, None) {
+                    *node = result;
+                }
+            }
+            _ => {
+                visit_mut::visit_expr_mut(self, node);
+            }
         }
     }
 
     fn visit_stmt_mut(&mut self, node: &mut syn::Stmt) {
-        if let Stmt::Macro(stmt_macro) = node {
-            if let Some(result) = self.magic(&stmt_macro.mac, stmt_macro.semi_token) {
-                *node = Stmt::Expr(result, None);
+        match node {
+            Stmt::Macro(stmt_macro) => {
+                if let Some(result) = self.magic_macro(&stmt_macro.mac, stmt_macro.semi_token) {
+                    *node = Stmt::Expr(result, stmt_macro.semi_token);
+                }
             }
-        } else {
-            visit_mut::visit_stmt_mut(self, node);
+            _ => {
+                visit_mut::visit_stmt_mut(self, node);
+            }
         }
     }
 }
