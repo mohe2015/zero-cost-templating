@@ -222,7 +222,7 @@ impl VisitMut for InnerReplace {
                             template_codegen.template_name,
                             first_index,
                         );
-                        if &initial_ident == ident {
+                        (&initial_ident == ident).then(|| {
                             let template_struct = node_type(
                                 template_codegen.template_name.as_str(),
                                 &template_codegen.graph,
@@ -233,14 +233,12 @@ impl VisitMut for InnerReplace {
                                 &quote! { _ },
                                 true,
                             );
-                            Some(Expr::Verbatim(quote! {
+                            Expr::Verbatim(quote! {
                                 {
                                     #template_struct
                                 }
-                            }))
-                        } else {
-                            None
-                        }
+                            })
+                        })
                     });
                     if let Some(result) = result {
                         *node = parse_quote! {
@@ -260,6 +258,7 @@ impl VisitMut for InnerReplace {
     }
 }
 
+#[expect(clippy::too_many_arguments, reason = "tmp")]
 fn node_type(
     template_name: &str,
     graph: &StableGraph<NodeType, IntermediateAstElement>,
