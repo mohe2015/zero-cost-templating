@@ -1,17 +1,11 @@
 
-#![feature(prelude_import)]
 #![feature(coroutines)]
 #![feature(core_panic)]
 #![feature(unsafe_pin_internals)]
-#[prelude_import]
-use std::prelude::rust_2021::*;
-#[macro_use]
-extern crate std;
+#![deny(unreachable_code)]
 extern crate alloc;
-use std::pin::pin;
 use futures::StreamExt;
 use tokio::io::{stdout, AsyncWriteExt};
-use zero_cost_templating::template_stream;
 pub trait Templaty {}
 pub trait TemplateTypy {}
 #[must_use]
@@ -201,11 +195,11 @@ pub fn partial_block() -> impl ::futures_async_stream::__private::stream::Stream
             };
             let template = {
                 if false {
-                    template.partial_block_test2("Hi")
+                    template.partial_block_test2("hi")
                 } else {
                     let _magic_expression_result: Template<PartialBlockTemplate3, _, _> = template;
                     __task_context = (yield ::futures_async_stream::__private::Poll::Ready(
-                        zero_cost_templating::encode_element_text("Hi"),
+                        zero_cost_templating::encode_element_text("hi"),
                     ));
                     __task_context = (yield ::futures_async_stream::__private::Poll::Ready(
                         ::alloc::borrow::Cow::from("childrenend"),

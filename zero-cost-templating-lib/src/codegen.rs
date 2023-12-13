@@ -9,7 +9,7 @@ use petgraph::Direction;
 use proc_macro2::{Ident, TokenStream, TokenTree};
 use quote::{format_ident, quote, ToTokens};
 use syn::visit_mut::VisitMut;
-use syn::{visit_mut, Expr, ExprMethodCall, Macro, Stmt, Token};
+use syn::{parse_quote, visit_mut, Expr, ExprMethodCall, Macro, Stmt, Token};
 
 use crate::intermediate_graph::{EscapingFunction, IntermediateAstElement, NodeType};
 
@@ -18,7 +18,6 @@ pub struct InnerMacroReplace(pub Vec<TemplateCodegen>);
 fn handle_macro_call_zero_or_one_parameter(
     ident: &Ident,
     first_parameter: &TokenStream,
-    semicolon: Option<Token![;]>,
     template_codegen: &TemplateCodegen,
 ) -> Option<Expr> {
     let first_index = template_codegen.first.index();
@@ -42,7 +41,7 @@ fn handle_macro_call_zero_or_one_parameter(
         return Some(Expr::Verbatim(quote! {
             {
                 #template_struct
-            } #semicolon
+            }
         }));
     }
 
@@ -97,7 +96,7 @@ fn handle_macro_call_zero_or_one_parameter(
                 let _magic_expression_result: #template_struct = #first_parameter;
                 yield ::alloc::borrow::Cow::from(#text);
                 #next_template_struct
-            } #semicolon
+            }
         }))
     })
 }
@@ -106,7 +105,6 @@ fn handle_macro_call_two_parameters(
     ident: &Ident,
     first_parameter: &TokenStream,
     second_parameter: &TokenStream,
-    semicolon: Option<Token![;]>,
     template_codegen: &TemplateCodegen,
 ) -> Option<Expr> {
     // macro call with two parameters
@@ -181,13 +179,13 @@ fn handle_macro_call_two_parameters(
                 #escaped_value
                 yield ::alloc::borrow::Cow::from(#text);
                 #next_template_struct
-            } #semicolon
+            }
         }))
     })
 }
 
 impl InnerMacroReplace {
-    fn magic_macro(&self, input: &Macro, semicolon: Option<Token![;]>) -> Option<syn::Expr> {
+    fn magic_macro(&self, input: &Macro) -> Option<syn::Expr> {
         let ident = input.path.require_ident().unwrap();
         let template = input.tokens.clone();
         let mut template = template.into_iter();
@@ -203,7 +201,6 @@ impl InnerMacroReplace {
                     handle_macro_call_zero_or_one_parameter(
                         ident,
                         &first_parameter,
-                        semicolon,
                         template_codegen,
                     )
                 })
@@ -216,7 +213,6 @@ impl InnerMacroReplace {
                         ident,
                         &first_parameter,
                         &second_parameter,
-                        semicolon,
                         template_codegen,
                     )
                 })
@@ -224,11 +220,7 @@ impl InnerMacroReplace {
         )
     }
 
-    fn magic_method_call(
-        &self,
-        input: &ExprMethodCall,
-        semicolon: Option<Token![;]>,
-    ) -> Option<syn::Expr> {
+    fn magic_method_call(&self, input: &ExprMethodCall) -> Option<syn::Expr> {
         let ident = &input.method;
         match input.args.len() {
             0 => {
@@ -237,7 +229,6 @@ impl InnerMacroReplace {
                     handle_macro_call_zero_or_one_parameter(
                         ident,
                         &input.receiver.to_token_stream(),
-                        semicolon,
                         template_codegen,
                     )
                 })
@@ -247,7 +238,6 @@ impl InnerMacroReplace {
                     ident,
                     &input.receiver.to_token_stream(),
                     &input.args.first().unwrap().into_token_stream(),
-                    semicolon,
                     template_codegen,
                 )
             }),
@@ -260,13 +250,25 @@ impl VisitMut for InnerMacroReplace {
     fn visit_expr_mut(&mut self, node: &mut syn::Expr) {
         match node {
             Expr::Macro(expr_macro) => {
-                if let Some(result) = self.magic_macro(&expr_macro.mac, None) {
-                    *node = result;
+                if let Some(result) = self.magic_macro(&expr_macro.mac) {
+                    *node = parse_quote! {
+                        if false {
+                            #expr_macro
+                        } else {
+                            #result
+                        }
+                    };
                 }
             }
             Expr::MethodCall(expr_method_call) => {
-                if let Some(result) = self.magic_method_call(expr_method_call, None) {
-                    *node = result;
+                if let Some(result) = self.magic_method_call(expr_method_call) {
+                    *node = parse_quote! {
+                        if false {
+                            #expr_method_call
+                        } else {
+                            #result
+                        }
+                    };
                 }
             }
             _ => {
@@ -278,8 +280,15 @@ impl VisitMut for InnerMacroReplace {
     fn visit_stmt_mut(&mut self, node: &mut syn::Stmt) {
         match node {
             Stmt::Macro(stmt_macro) => {
-                if let Some(result) = self.magic_macro(&stmt_macro.mac, stmt_macro.semi_token) {
-                    *node = Stmt::Expr(result, None);
+                if let Some(result) = self.magic_macro(&stmt_macro.mac) {
+                    let semi_colon = stmt_macro.semi_token;
+                    *node = parse_quote! {
+                        if false {
+                            #stmt_macro
+                        } else {
+                            #result
+                        } #semi_colon
+                    };
                 }
             }
             _ => {
@@ -518,7 +527,7 @@ pub fn calculate_edges(
         quote! {
             #[allow(unused)]
             macro_rules! #variable_name {
-                ($template: expr #macro_parameter) => { unreachable!(); #next_template_struct }
+                ($template: expr #macro_parameter) => { }
             }
 
             #impl_func
@@ -549,7 +558,7 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
         let other = quote! {
             #[allow(unused)]
             macro_rules! #ident {
-                () => { unreachable!(); #template_struct }
+                () => { }
             }
         };
         let recompile_ident = format_ident!("_{}_FORCE_RECOMPILE", template_codegen.template_name);
