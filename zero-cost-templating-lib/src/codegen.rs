@@ -494,6 +494,7 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
         );
         let other = quote! {
             #[allow(unused)]
+            /// Start
             pub fn #ident() -> #template_struct {
                 unreachable!()
             }
