@@ -7,44 +7,21 @@ use petgraph::visit::{EdgeRef, IntoEdgeReferences, IntoNodeReferences};
 use petgraph::Direction;
 use proc_macro2::{Ident, TokenStream};
 use quote::{format_ident, quote, ToTokens};
+use syn::punctuated::Punctuated;
 use syn::visit_mut::VisitMut;
-use syn::{parse_quote, visit_mut, Expr, ExprMethodCall, Token};
+use syn::{parse_quote, visit_mut, Expr, ExprCall, ExprMethodCall, ExprPath, Path, Token};
 
 use crate::intermediate_graph::{EscapingFunction, IntermediateAstElement, NodeType};
 
 pub struct InnerReplace(pub Vec<TemplateCodegen>);
 
+// TODO FIXME merge these two methods
 fn handle_call_zero_or_one_parameter(
     ident: &Ident,
     first_parameter: &TokenStream,
     semicolon: Option<Token![;]>,
     template_codegen: &TemplateCodegen,
 ) -> Option<Expr> {
-    let first_index = template_codegen.first.index();
-    let initial_ident = format_ident!("{}_initial{}", template_codegen.template_name, first_index,);
-    if &initial_ident == ident {
-        if !first_parameter.is_empty() {
-            // one parameter
-            // fall back to compiler error
-            return None;
-        }
-        let template_struct = node_type(
-            template_codegen.template_name.as_str(),
-            &template_codegen.graph,
-            template_codegen.first,
-            &quote! { () },
-            &quote! { () },
-            &quote! { _ },
-            &quote! { _ },
-            true,
-        );
-        return Some(Expr::Verbatim(quote! {
-            {
-                #template_struct
-            } #semicolon
-        }));
-    }
-
     let edge = template_codegen.graph.edge_references().find(|edge| {
         let expected_ident = format_ident!(
             "{}_template{}",
@@ -230,6 +207,45 @@ impl VisitMut for InnerReplace {
                             #result
                         }
                     };
+                }
+            }
+            Expr::Call(ExprCall {
+                func: box Expr::Path(ExprPath { path, .. }),
+                ..
+            }) => {
+                if let Some(ident) = path.get_ident() {
+                    let res = self.0.iter().find_map(|template_codegen| {
+                        let first_index = template_codegen.first.index();
+                        let initial_ident = format_ident!(
+                            "{}_initial{}",
+                            template_codegen.template_name,
+                            first_index,
+                        );
+                        if &initial_ident == ident {
+                            if !first_parameter.is_empty() {
+                                // one parameter
+                                // fall back to compiler error
+                                return None;
+                            }
+                            let template_struct = node_type(
+                                template_codegen.template_name.as_str(),
+                                &template_codegen.graph,
+                                template_codegen.first,
+                                &quote! { () },
+                                &quote! { () },
+                                &quote! { _ },
+                                &quote! { _ },
+                                true,
+                            );
+                            return Some(Expr::Verbatim(quote! {
+                                {
+                                    #template_struct
+                                } #semicolon
+                            }));
+                        } else {
+                            None
+                        }
+                    });
                 }
             }
             _ => {
