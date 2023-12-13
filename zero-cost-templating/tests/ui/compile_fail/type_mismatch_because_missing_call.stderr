@@ -1,10 +1,11 @@
 error[E0308]: mismatched types
   --> tests/ui/compile_fail/type_mismatch_because_missing_call.rs:14:38
    |
+9  | #[template_stream("test.html.hbs")]
+   | ----------------------------------- expected due to this
+...
 14 |     let template = test_page_title1!(template, page_title);
-   |                    ----------------  ^^^^^^^^ expected `Template<TestTemplate1, _, _>`, found `Template<TestTemplate0, (), ()>`
-   |                    |
-   |                    expected due to this
+   |                                      ^^^^^^^^ expected `Template<TestTemplate1, _, _>`, found `Template<TestTemplate0, (), ()>`
    |
    = note: expected struct `Template<TestTemplate1, _, _>`
               found struct `Template<TestTemplate0, (), ()>`
