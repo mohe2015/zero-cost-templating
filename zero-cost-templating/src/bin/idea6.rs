@@ -119,6 +119,7 @@ impl<
     }
 }
 const _partial_block_partial_FORCE_RECOMPILE: &'static str = "<p>{{>@partial-block}}</p>";
+#[allow(clippy::let_unit_value)]
 pub fn partial_block() -> impl ::futures_async_stream::__private::stream::Stream<
     Item = alloc::borrow::Cow<'static, str>,
 > {
