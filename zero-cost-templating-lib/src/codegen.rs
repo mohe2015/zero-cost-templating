@@ -209,12 +209,18 @@ impl VisitMut for InnerReplace {
                     };
                 }
             }
-            Expr::Call(ExprCall {
-                func: box Expr::Path(ExprPath { path, .. }),
-                ..
-            }) => {
-                if let Some(ident) = path.get_ident() {
-                    let res = self.0.iter().find_map(|template_codegen| {
+            Expr::Call(
+                expr_call @ ExprCall {
+                    //func: box Expr::Path(ExprPath { path, .. }),
+                    ..
+                },
+            ) => {
+                let ident = match &expr_call.func {
+                    box Expr::Path(ExprPath { path, .. }) => path.get_ident(),
+                    _ => None
+                };
+                if let Some(ident) = ident {
+                    let result = self.0.iter().find_map(|template_codegen| {
                         let first_index = template_codegen.first.index();
                         let initial_ident = format_ident!(
                             "{}_initial{}",
@@ -222,11 +228,6 @@ impl VisitMut for InnerReplace {
                             first_index,
                         );
                         if &initial_ident == ident {
-                            if !first_parameter.is_empty() {
-                                // one parameter
-                                // fall back to compiler error
-                                return None;
-                            }
                             let template_struct = node_type(
                                 template_codegen.template_name.as_str(),
                                 &template_codegen.graph,
@@ -237,15 +238,24 @@ impl VisitMut for InnerReplace {
                                 &quote! { _ },
                                 true,
                             );
-                            return Some(Expr::Verbatim(quote! {
+                            Some(Expr::Verbatim(quote! {
                                 {
                                     #template_struct
-                                } #semicolon
-                            }));
+                                }
+                            }))
                         } else {
                             None
                         }
                     });
+                    if let Some(result) = result {
+                        *node = parse_quote! {
+                            if false {
+                                #expr_call
+                            } else {
+                                #result
+                            }
+                        };
+                    }
                 }
             }
             _ => {
