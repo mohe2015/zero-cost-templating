@@ -6,31 +6,23 @@ use petgraph::prelude::NodeIndex;
 use petgraph::stable_graph::StableGraph;
 use petgraph::visit::{EdgeRef, IntoEdgeReferences, IntoNodeReferences};
 use petgraph::Direction;
-use proc_macro2::{Ident, Span, TokenStream, TokenTree};
-use quote::{format_ident, quote, quote_spanned};
-use syn::spanned::Spanned;
+use proc_macro2::{Ident, TokenStream, TokenTree};
+use quote::{format_ident, quote, ToTokens};
 use syn::visit_mut::VisitMut;
-use syn::{visit_mut, Expr, Macro, Stmt, Token};
+use syn::{parse_quote, visit_mut, Expr, ExprMethodCall, Macro, Stmt, Token};
 
 use crate::intermediate_graph::{EscapingFunction, IntermediateAstElement, NodeType};
 
 pub struct InnerMacroReplace(pub Vec<TemplateCodegen>);
 
 fn handle_macro_call_zero_or_one_parameter(
-    input: &Macro,
     ident: &Ident,
-    span: Span,
     first_parameter: &TokenStream,
     semicolon: Option<Token![;]>,
     template_codegen: &TemplateCodegen,
 ) -> Option<Expr> {
     let first_index = template_codegen.first.index();
-    let initial_ident = format_ident!(
-        "{}_initial{}",
-        template_codegen.template_name,
-        first_index,
-        span = span
-    );
+    let initial_ident = format_ident!("{}_initial{}", template_codegen.template_name, first_index,);
     if &initial_ident == ident {
         if !first_parameter.is_empty() {
             // one parameter
@@ -41,14 +33,13 @@ fn handle_macro_call_zero_or_one_parameter(
             template_codegen.template_name.as_str(),
             &template_codegen.graph,
             template_codegen.first,
-            Span::call_site(),
-            &quote_spanned! {span=> () },
-            &quote_spanned! {span=> () },
-            &quote_spanned! {span=> _ },
-            &quote_spanned! {span=> _ },
+            &quote! { () },
+            &quote! { () },
+            &quote! { _ },
+            &quote! { _ },
             true,
         );
-        return Some(Expr::Verbatim(quote_spanned! {span=>
+        return Some(Expr::Verbatim(quote! {
             {
                 #template_struct
             } #semicolon
@@ -60,7 +51,6 @@ fn handle_macro_call_zero_or_one_parameter(
             "{}_template{}",
             template_codegen.template_name,
             edge.id().index(),
-            span = span
         );
         ident == &expected_ident
     });
@@ -76,11 +66,10 @@ fn handle_macro_call_zero_or_one_parameter(
             template_codegen.template_name.as_str(),
             &template_codegen.graph,
             edge.source(),
-            input.path.span(),
-            &quote_spanned! {span=> () },
-            &quote_spanned! {span=> () },
-            &quote_spanned! {span=> _ },
-            &quote_spanned! {span=> _ },
+            &quote! { () },
+            &quote! { () },
+            &quote! { _ },
+            &quote! { _ },
             false,
         ); // good span for mismatched type error
         let last_node = template_codegen
@@ -89,22 +78,21 @@ fn handle_macro_call_zero_or_one_parameter(
             .next()
             .is_none();
         let next_template_struct = if last_node {
-            quote_spanned! {span=> _magic_expression_result.after }
+            quote! { _magic_expression_result.after }
         } else {
             node_type(
                 template_codegen.template_name.as_str(),
                 &template_codegen.graph,
                 edge.target(),
-                span,
-                &quote_spanned! {span=> _magic_expression_result.partial },
-                &quote_spanned! {span=> _magic_expression_result.after },
-                &quote_spanned! {span=> _ },
-                &quote_spanned! {span=> _ },
+                &quote! { _magic_expression_result.partial },
+                &quote! { _magic_expression_result.after },
+                &quote! { _ },
+                &quote! { _ },
                 true,
             )
         };
 
-        Some(Expr::Verbatim(quote_spanned! {span=>
+        Some(Expr::Verbatim(quote! {
             {
                 let _magic_expression_result: #template_struct = #first_parameter;
                 yield ::alloc::borrow::Cow::from(#text);
@@ -115,9 +103,7 @@ fn handle_macro_call_zero_or_one_parameter(
 }
 
 fn handle_macro_call_two_parameters(
-    input: &Macro,
     ident: &Ident,
-    span: Span,
     first_parameter: &TokenStream,
     second_parameter: &TokenStream,
     semicolon: Option<Token![;]>,
@@ -131,7 +117,6 @@ fn handle_macro_call_two_parameters(
                 template_codegen.template_name,
                 variable,
                 edge.id().index(),
-                span = span
             );
             ident == &expected_ident
         })
@@ -149,11 +134,10 @@ fn handle_macro_call_two_parameters(
             template_codegen.template_name.as_str(),
             &template_codegen.graph,
             edge.source(),
-            input.path.span(),
-            &quote_spanned! {span=> () },
-            &quote_spanned! {span=> () },
-            &quote_spanned! {span=> _ },
-            &quote_spanned! {span=> _ },
+            &quote! { () },
+            &quote! { () },
+            &quote! { _ },
+            &quote! { _ },
             false,
         ); // good span for mismatched type error
         let last_node = template_codegen
@@ -162,37 +146,36 @@ fn handle_macro_call_two_parameters(
             .next()
             .is_none();
         let next_template_struct = if last_node {
-            quote_spanned! {span=> _magic_expression_result.after }
+            quote! { _magic_expression_result.after }
         } else {
             node_type(
                 template_codegen.template_name.as_str(),
                 &template_codegen.graph,
                 edge.target(),
-                span,
-                &quote_spanned! {span=> _magic_expression_result.partial },
-                &quote_spanned! {span=> _magic_expression_result.after },
-                &quote_spanned! {span=> _ },
-                &quote_spanned! {span=> _ },
+                &quote! { _magic_expression_result.partial },
+                &quote! { _magic_expression_result.after },
+                &quote! { _ },
+                &quote! { _ },
                 true,
             )
         };
 
         let escaped_value = match edge.weight().escaping_fun {
-            EscapingFunction::NoVariableStart => quote_spanned! {span=>
+            EscapingFunction::NoVariableStart => quote! {
                 unreachable();
             },
             EscapingFunction::HtmlAttribute => {
-                quote_spanned! {span=>
+                quote! {
                     yield zero_cost_templating::encode_double_quoted_attribute(#second_parameter);
                 }
             }
             EscapingFunction::HtmlElementInner => {
-                quote_spanned! {span=>
+                quote! {
                     yield zero_cost_templating::encode_element_text(#second_parameter);
                 }
             }
         };
-        Some(Expr::Verbatim(quote_spanned! {span=>
+        Some(Expr::Verbatim(quote! {
             {
                 let _magic_expression_result: #template_struct = #first_parameter;
                 #escaped_value
@@ -204,7 +187,7 @@ fn handle_macro_call_two_parameters(
 }
 
 impl InnerMacroReplace {
-    fn magic(&self, input: &Macro, semicolon: Option<Token![;]>) -> Option<syn::Expr> {
+    fn magic_macro(&self, input: &Macro, semicolon: Option<Token![;]>) -> Option<syn::Expr> {
         let ident = input.path.require_ident().unwrap();
         let template = input.tokens.clone();
         let mut template = template.into_iter();
@@ -213,15 +196,12 @@ impl InnerMacroReplace {
         );
         let first_parameter = first_parameter.collect::<proc_macro2::TokenStream>();
         let comma = template.next();
-        let span = input.span();
         comma.map_or_else(
             || {
                 // macro call without zero or one parameters
                 self.0.iter().find_map(|template_codegen| {
                     handle_macro_call_zero_or_one_parameter(
-                        input,
                         ident,
-                        span,
                         &first_parameter,
                         semicolon,
                         template_codegen,
@@ -233,9 +213,7 @@ impl InnerMacroReplace {
 
                 self.0.iter().find_map(|template_codegen| {
                     handle_macro_call_two_parameters(
-                        input,
                         ident,
-                        span,
                         &first_parameter,
                         &second_parameter,
                         semicolon,
@@ -245,26 +223,87 @@ impl InnerMacroReplace {
             },
         )
     }
+
+    fn magic_method_call(
+        &self,
+        input: &ExprMethodCall,
+        semicolon: Option<Token![;]>,
+    ) -> Option<syn::Expr> {
+        let ident = &input.method;
+        match input.args.len() {
+            0 => {
+                // macro call without zero or one parameters
+                self.0.iter().find_map(|template_codegen| {
+                    handle_macro_call_zero_or_one_parameter(
+                        ident,
+                        &input.receiver.to_token_stream(),
+                        semicolon,
+                        template_codegen,
+                    )
+                })
+            }
+            1 => self.0.iter().find_map(|template_codegen| {
+                handle_macro_call_two_parameters(
+                    ident,
+                    &input.receiver.to_token_stream(),
+                    &input.args.first().unwrap().into_token_stream(),
+                    semicolon,
+                    template_codegen,
+                )
+            }),
+            _ => panic!(),
+        }
+    }
 }
 
 impl VisitMut for InnerMacroReplace {
     fn visit_expr_mut(&mut self, node: &mut syn::Expr) {
-        if let Expr::Macro(expr_macro) = node {
-            if let Some(result) = self.magic(&expr_macro.mac, None) {
-                *node = result;
+        match node {
+            Expr::Macro(expr_macro) => {
+                if let Some(result) = self.magic_macro(&expr_macro.mac, None) {
+                    *node = parse_quote! {
+                        if false {
+                            #expr_macro
+                        } else {
+                            #result
+                        }
+                    };
+                }
             }
-        } else {
-            visit_mut::visit_expr_mut(self, node);
+            Expr::MethodCall(expr_method_call) => {
+                if let Some(result) = self.magic_method_call(expr_method_call, None) {
+                    *node = parse_quote! {
+                        if false {
+                            #expr_method_call
+                        } else {
+                            #result
+                        }
+                    };
+                }
+            }
+            _ => {
+                visit_mut::visit_expr_mut(self, node);
+            }
         }
     }
 
     fn visit_stmt_mut(&mut self, node: &mut syn::Stmt) {
-        if let Stmt::Macro(stmt_macro) = node {
-            if let Some(result) = self.magic(&stmt_macro.mac, stmt_macro.semi_token) {
-                *node = Stmt::Expr(result, None);
+        match node {
+            Stmt::Macro(stmt_macro) => {
+                if let Some(result) = self.magic_macro(&stmt_macro.mac, stmt_macro.semi_token) {
+                    let semi_colon = stmt_macro.semi_token;
+                    *node = parse_quote! {
+                        if false {
+                            #stmt_macro
+                        } else {
+                            #result
+                        } #semi_colon
+                    };
+                }
             }
-        } else {
-            visit_mut::visit_stmt_mut(self, node);
+            _ => {
+                visit_mut::visit_stmt_mut(self, node);
+            }
         }
     }
 }
@@ -273,7 +312,6 @@ fn node_type(
     template_name: &str,
     graph: &StableGraph<NodeType, IntermediateAstElement>,
     node_index: NodeIndex,
-    span: Span,
     partial: &TokenStream,
     after: &TokenStream,
     partial_type: &TokenStream,
@@ -282,9 +320,9 @@ fn node_type(
 ) -> TokenStream {
     match &graph[node_index] {
         NodeType::PartialBlock { after: inner_after } => {
-            let inner_after = format_ident!("{}", inner_after, span = span);
+            let inner_after = format_ident!("{}", inner_after);
             let create = create.then(|| {
-                Some(quote_spanned! {span=>
+                Some(quote! {
                     {
                         r#type: #partial.r#type,
                         partial: (),
@@ -292,7 +330,7 @@ fn node_type(
                     }
                 })
             });
-            quote_spanned! {span=>
+            quote! {
                 Template::<#partial_type, (), Template::<#inner_after, (), #after_type>> #create
             }
         }
@@ -301,11 +339,11 @@ fn node_type(
             partial: inner_partial,
             after: inner_after,
         } => {
-            let name = format_ident!("{}", name, span = span);
-            let inner_partial = format_ident!("{}", inner_partial, span = span);
-            let inner_after = format_ident!("{}", inner_after, span = span);
+            let name = format_ident!("{}", name);
+            let inner_partial = format_ident!("{}", inner_partial);
+            let inner_after = format_ident!("{}", inner_after);
             let create = create.then(|| {
-                Some(quote_spanned! {span=>
+                Some(quote! {
                     {
                         r#type: #name,
                         partial: Template::<#inner_partial, (), Template::<#inner_after, (), ()>> {
@@ -325,7 +363,7 @@ fn node_type(
                     }
                 })
             });
-            quote_spanned! {span=>
+            quote! {
                 Template::<
                     #name,
                     Template::<#inner_partial, (), Template::<#inner_after, (), ()>>,
@@ -338,14 +376,13 @@ fn node_type(
                 "{}Template{}",
                 template_name.to_upper_camel_case(),
                 node_index.index().to_string(),
-                span = span
             );
             let create = create.then(|| {
-                Some(quote_spanned! {span=>
+                Some(quote! {
                     { r#type: #ident, partial: #partial, after: #after }
                 })
             });
-            quote_spanned! {span=>
+            quote! {
                 Template::<#ident, #partial_type, #after_type> #create
             }
         }
@@ -394,21 +431,6 @@ pub fn calculate_edges(
             .edges_directed(edge.target(), Direction::Outgoing)
             .next()
             .is_none();
-        let next_template_struct = if last_node {
-            quote! { _magic_expression_result.after }
-        } else {
-            node_type(
-                &template_codegen.template_name,
-                &template_codegen.graph,
-                edge.target(),
-                Span::call_site(),
-                &quote! { $template.partial },
-                &quote! { $template.after },
-                &quote! { _ },
-                &quote! { _ },
-                true,
-            )
-        };
         let return_type = if last_node {
             quote! { After }
         } else {
@@ -416,7 +438,6 @@ pub fn calculate_edges(
                 &template_codegen.template_name,
                 &template_codegen.graph,
                 edge.target(),
-                Span::call_site(),
                 &quote! { $template.partial },
                 &quote! { $template.after },
                 //
@@ -448,8 +469,10 @@ pub fn calculate_edges(
             .as_ref()
             .map(|variable| format_ident!("{}", variable))
             .map(|variable| {
+                // TODO FIXME
+                // <'a, I: Into<Cow<'a, str>>>(input: I) -> Cow<'a, str>
                 quote! {
-                    , #variable: ::alloc::borrow::Cow<'static, str>
+                    , #variable: impl Into<::alloc::borrow::Cow<'static, str>>
                 }
             });
         let macro_parameter = edge.weight().variable.as_ref().map(|_| {
@@ -500,7 +523,7 @@ pub fn calculate_edges(
         quote! {
             #[allow(unused)]
             macro_rules! #variable_name {
-                ($template: expr #macro_parameter) => { unreachable!(); #next_template_struct }
+                ($template: expr #macro_parameter) => { unreachable!() }
             }
 
             #impl_func
@@ -510,7 +533,6 @@ pub fn calculate_edges(
 
 #[must_use]
 pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
-    // TODO FIXME spans
     let code = templates.iter().map(|template_codegen| {
         let instructions = calculate_nodes(template_codegen);
         let edges = calculate_edges(template_codegen);
@@ -519,21 +541,10 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
             template_codegen.template_name,
             template_codegen.first.index()
         );
-        let template_struct = node_type(
-            &template_codegen.template_name,
-            &template_codegen.graph,
-            template_codegen.first,
-            Span::call_site(),
-            &quote! { () },
-            &quote! { () },
-            &quote! { _ },
-            &quote! { _ },
-            true,
-        );
         let other = quote! {
             #[allow(unused)]
             macro_rules! #ident {
-                () => { unreachable!(); #template_struct }
+                () => { unreachable!() }
             }
         };
         let recompile_ident = format_ident!("_{}_FORCE_RECOMPILE", template_codegen.template_name);
