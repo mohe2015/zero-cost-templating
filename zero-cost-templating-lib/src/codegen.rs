@@ -7,9 +7,9 @@ use petgraph::visit::{EdgeRef, IntoEdgeReferences, IntoNodeReferences};
 use petgraph::Direction;
 use proc_macro2::{Ident, TokenStream};
 use quote::{format_ident, quote, ToTokens};
-use syn::punctuated::Punctuated;
+
 use syn::visit_mut::VisitMut;
-use syn::{parse_quote, visit_mut, Expr, ExprCall, ExprMethodCall, ExprPath, Path, Token};
+use syn::{parse_quote, visit_mut, Expr, ExprCall, ExprMethodCall, ExprPath, Token};
 
 use crate::intermediate_graph::{EscapingFunction, IntermediateAstElement, NodeType};
 
