@@ -59,6 +59,7 @@ pub enum NodeType {
 }
 
 #[must_use]
+#[expect(clippy::too_many_lines, reason = "tmp")]
 pub fn children_to_ast(
     template_name: &str,
     graph: &mut StableGraph<NodeType, IntermediateAstElement>,

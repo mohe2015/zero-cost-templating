@@ -102,6 +102,7 @@
     clippy::use_debug,
     reason = "development"
 )]
+#![feature(box_patterns)]
 #![feature(lint_reasons)]
 #![feature(coroutines, coroutine_trait)]
 

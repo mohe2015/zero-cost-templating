@@ -117,7 +117,7 @@ use quote::quote;
 use syn::punctuated::Punctuated;
 use syn::visit_mut::VisitMut;
 use syn::{parse_macro_input, Item, LitStr, Token};
-use zero_cost_templating_lib::codegen::{codegen, InnerMacroReplace, TemplateCodegen};
+use zero_cost_templating_lib::codegen::{codegen, InnerReplace, TemplateCodegen};
 use zero_cost_templating_lib::html_recursive_descent::parse_children;
 use zero_cost_templating_lib::intermediate_graph::{
     children_to_ast, EscapingFunction, IntermediateAstElement, NodeType,
@@ -219,7 +219,7 @@ pub fn template_stream(
 
     let mut item = parse_macro_input!(item as Item);
 
-    InnerMacroReplace(inputs).visit_item_mut(&mut item);
+    InnerReplace(inputs).visit_item_mut(&mut item);
 
     let expanded = quote! {
 
