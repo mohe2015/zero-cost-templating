@@ -1,21 +1,20 @@
 use std::path::PathBuf;
 
 use heck::ToUpperCamelCase;
-use itertools::Itertools;
 use petgraph::prelude::NodeIndex;
 use petgraph::stable_graph::StableGraph;
 use petgraph::visit::{EdgeRef, IntoEdgeReferences, IntoNodeReferences};
 use petgraph::Direction;
-use proc_macro2::{Ident, TokenStream, TokenTree};
+use proc_macro2::{Ident, TokenStream};
 use quote::{format_ident, quote, ToTokens};
 use syn::visit_mut::VisitMut;
-use syn::{parse_quote, visit_mut, Expr, ExprMethodCall, Macro, Stmt, Token};
+use syn::{parse_quote, visit_mut, Expr, ExprMethodCall, Token};
 
 use crate::intermediate_graph::{EscapingFunction, IntermediateAstElement, NodeType};
 
-pub struct InnerMacroReplace(pub Vec<TemplateCodegen>);
+pub struct InnerReplace(pub Vec<TemplateCodegen>);
 
-fn handle_macro_call_zero_or_one_parameter(
+fn handle_call_zero_or_one_parameter(
     ident: &Ident,
     first_parameter: &TokenStream,
     semicolon: Option<Token![;]>,
@@ -26,7 +25,7 @@ fn handle_macro_call_zero_or_one_parameter(
     if &initial_ident == ident {
         if !first_parameter.is_empty() {
             // one parameter
-            // fall back to compiler macro error
+            // fall back to compiler error
             return None;
         }
         let template_struct = node_type(
@@ -57,7 +56,7 @@ fn handle_macro_call_zero_or_one_parameter(
     edge.and_then(|edge| {
         if first_parameter.is_empty() {
             // no parameters
-            // fall back to compiler macro error
+            // fall back to compiler error
             return None;
         }
 
@@ -102,14 +101,14 @@ fn handle_macro_call_zero_or_one_parameter(
     })
 }
 
-fn handle_macro_call_two_parameters(
+fn handle_call_two_parameters(
     ident: &Ident,
     first_parameter: &TokenStream,
     second_parameter: &TokenStream,
     semicolon: Option<Token![;]>,
     template_codegen: &TemplateCodegen,
 ) -> Option<Expr> {
-    // macro call with two parameters
+    // call with two parameters
     let edge = template_codegen.graph.edge_references().find(|edge| {
         edge.weight().variable.as_ref().map_or(false, |variable| {
             let expected_ident = format_ident!(
@@ -124,7 +123,7 @@ fn handle_macro_call_two_parameters(
     edge.and_then(|edge| {
         if first_parameter.is_empty() || second_parameter.is_empty() {
             // one of the parameters is empty
-            // fall back to compiler macro error
+            // fall back to compiler error
             return None;
         }
 
@@ -186,44 +185,7 @@ fn handle_macro_call_two_parameters(
     })
 }
 
-impl InnerMacroReplace {
-    fn magic_macro(&self, input: &Macro, semicolon: Option<Token![;]>) -> Option<syn::Expr> {
-        let ident = input.path.require_ident().unwrap();
-        let template = input.tokens.clone();
-        let mut template = template.into_iter();
-        let first_parameter = template.take_while_ref(
-            |elem| !matches!(elem, TokenTree::Punct(punct) if punct.as_char() == ','),
-        );
-        let first_parameter = first_parameter.collect::<proc_macro2::TokenStream>();
-        let comma = template.next();
-        comma.map_or_else(
-            || {
-                // macro call without zero or one parameters
-                self.0.iter().find_map(|template_codegen| {
-                    handle_macro_call_zero_or_one_parameter(
-                        ident,
-                        &first_parameter,
-                        semicolon,
-                        template_codegen,
-                    )
-                })
-            },
-            |_comma| {
-                let second_parameter = template.collect::<proc_macro2::TokenStream>();
-
-                self.0.iter().find_map(|template_codegen| {
-                    handle_macro_call_two_parameters(
-                        ident,
-                        &first_parameter,
-                        &second_parameter,
-                        semicolon,
-                        template_codegen,
-                    )
-                })
-            },
-        )
-    }
-
+impl InnerReplace {
     fn magic_method_call(
         &self,
         input: &ExprMethodCall,
@@ -232,9 +194,9 @@ impl InnerMacroReplace {
         let ident = &input.method;
         match input.args.len() {
             0 => {
-                // macro call without zero or one parameters
+                // call without zero or one parameters
                 self.0.iter().find_map(|template_codegen| {
-                    handle_macro_call_zero_or_one_parameter(
+                    handle_call_zero_or_one_parameter(
                         ident,
                         &input.receiver.to_token_stream(),
                         semicolon,
@@ -243,7 +205,7 @@ impl InnerMacroReplace {
                 })
             }
             1 => self.0.iter().find_map(|template_codegen| {
-                handle_macro_call_two_parameters(
+                handle_call_two_parameters(
                     ident,
                     &input.receiver.to_token_stream(),
                     &input.args.first().unwrap().into_token_stream(),
@@ -256,20 +218,9 @@ impl InnerMacroReplace {
     }
 }
 
-impl VisitMut for InnerMacroReplace {
+impl VisitMut for InnerReplace {
     fn visit_expr_mut(&mut self, node: &mut syn::Expr) {
         match node {
-            Expr::Macro(expr_macro) => {
-                if let Some(result) = self.magic_macro(&expr_macro.mac, None) {
-                    *node = parse_quote! {
-                        if false {
-                            #expr_macro
-                        } else {
-                            #result
-                        }
-                    };
-                }
-            }
             Expr::MethodCall(expr_method_call) => {
                 if let Some(result) = self.magic_method_call(expr_method_call, None) {
                     *node = parse_quote! {
@@ -283,26 +234,6 @@ impl VisitMut for InnerMacroReplace {
             }
             _ => {
                 visit_mut::visit_expr_mut(self, node);
-            }
-        }
-    }
-
-    fn visit_stmt_mut(&mut self, node: &mut syn::Stmt) {
-        match node {
-            Stmt::Macro(stmt_macro) => {
-                if let Some(result) = self.magic_macro(&stmt_macro.mac, stmt_macro.semi_token) {
-                    let semi_colon = stmt_macro.semi_token;
-                    *node = parse_quote! {
-                        if false {
-                            #stmt_macro
-                        } else {
-                            #result
-                        } #semi_colon
-                    };
-                }
-            }
-            _ => {
-                visit_mut::visit_stmt_mut(self, node);
             }
         }
     }
@@ -475,11 +406,6 @@ pub fn calculate_edges(
                     , #variable: impl Into<::alloc::borrow::Cow<'static, str>>
                 }
             });
-        let macro_parameter = edge.weight().variable.as_ref().map(|_| {
-            quote! {
-                , $value: expr
-            }
-        });
         let impl_func = match &template_codegen.graph[edge.source()] {
             NodeType::InnerTemplate { .. } | NodeType::PartialBlock { .. } => None,
             NodeType::Other => Some({
@@ -521,11 +447,6 @@ pub fn calculate_edges(
             }),
         };
         quote! {
-            #[allow(unused)]
-            macro_rules! #variable_name {
-                ($template: expr #macro_parameter) => { unreachable!() }
-            }
-
             #impl_func
         }
     })
@@ -541,10 +462,20 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
             template_codegen.template_name,
             template_codegen.first.index()
         );
+        let template_struct = node_type(
+            template_codegen.template_name.as_str(),
+            &template_codegen.graph,
+            template_codegen.first,
+            &quote! { () },
+            &quote! { () },
+            &quote! { () },
+            &quote! { () },
+            false,
+        );
         let other = quote! {
             #[allow(unused)]
-            macro_rules! #ident {
-                () => { unreachable!() }
+            pub fn #ident() -> #template_struct {
+                unreachable!()
             }
         };
         let recompile_ident = format_ident!("_{}_FORCE_RECOMPILE", template_codegen.template_name);
