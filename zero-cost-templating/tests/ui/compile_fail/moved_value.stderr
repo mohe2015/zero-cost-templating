@@ -1,9 +1,9 @@
 error[E0382]: use of moved value: `template`
-  --> tests/ui/compile_fail/moved_value.rs:13:36
+  --> tests/ui/compile_fail/moved_value.rs:13:20
    |
-11 |     let template = test_initial0!();
+11 |     let template = test_initial0();
    |         -------- move occurs because `template` has type `Template<TestTemplate0, (), ()>`, which does not implement the `Copy` trait
-12 |     let _ = test_template0!(template);
-   |                             -------- value moved here
-13 |     let template = test_template0!(template);
-   |                                    ^^^^^^^^ value used here after move
+12 |     let _ = template.test_template0();
+   |             -------- value moved here
+13 |     let template = template.test_template0();
+   |                    ^^^^^^^^ value used here after move
