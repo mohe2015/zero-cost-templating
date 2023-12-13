@@ -209,15 +209,10 @@ impl VisitMut for InnerReplace {
                     };
                 }
             }
-            Expr::Call(
-                expr_call @ ExprCall {
-                    //func: box Expr::Path(ExprPath { path, .. }),
-                    ..
-                },
-            ) => {
+            Expr::Call(expr_call @ ExprCall { .. }) => {
                 let ident = match &expr_call.func {
                     box Expr::Path(ExprPath { path, .. }) => path.get_ident(),
-                    _ => None
+                    _ => None,
                 };
                 if let Some(ident) = ident {
                     let result = self.0.iter().find_map(|template_codegen| {
