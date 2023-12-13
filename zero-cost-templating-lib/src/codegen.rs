@@ -431,20 +431,6 @@ pub fn calculate_edges(
             .edges_directed(edge.target(), Direction::Outgoing)
             .next()
             .is_none();
-        let next_template_struct = if last_node {
-            quote! { _magic_expression_result.after }
-        } else {
-            node_type(
-                &template_codegen.template_name,
-                &template_codegen.graph,
-                edge.target(),
-                &quote! { $template.partial },
-                &quote! { $template.after },
-                &quote! { _ },
-                &quote! { _ },
-                true,
-            )
-        };
         let return_type = if last_node {
             quote! { After }
         } else {
@@ -554,16 +540,6 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
             "{}_initial{}",
             template_codegen.template_name,
             template_codegen.first.index()
-        );
-        let template_struct = node_type(
-            &template_codegen.template_name,
-            &template_codegen.graph,
-            template_codegen.first,
-            &quote! { () },
-            &quote! { () },
-            &quote! { _ },
-            &quote! { _ },
-            true,
         );
         let other = quote! {
             #[allow(unused)]
