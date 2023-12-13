@@ -537,7 +537,7 @@ pub fn calculate_edges(
         quote! {
             #[allow(unused)]
             macro_rules! #variable_name {
-                ($template: expr #macro_parameter) => { #next_template_struct }
+                ($template: expr #macro_parameter) => { unreachable!() }
             }
 
             #impl_func
@@ -568,7 +568,7 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
         let other = quote! {
             #[allow(unused)]
             macro_rules! #ident {
-                () => { #template_struct }
+                () => { unreachable!() }
             }
         };
         let recompile_ident = format_ident!("_{}_FORCE_RECOMPILE", template_codegen.template_name);
