@@ -200,14 +200,18 @@ pub fn partial_block() -> impl ::futures_async_stream::__private::stream::Stream
                 }
             };
             let template = {
-                let _magic_expression_result: Template<PartialBlockTemplate3, _, _> = template;
-                __task_context = (yield ::futures_async_stream::__private::Poll::Ready(
-                    zero_cost_templating::encode_element_text("Hi"),
-                ));
-                __task_context = (yield ::futures_async_stream::__private::Poll::Ready(
-                    ::alloc::borrow::Cow::from("childrenend"),
-                ));
-                _magic_expression_result.after
+                if false {
+                    template.partial_block_test2("Hi")
+                } else {
+                    let _magic_expression_result: Template<PartialBlockTemplate3, _, _> = template;
+                    __task_context = (yield ::futures_async_stream::__private::Poll::Ready(
+                        zero_cost_templating::encode_element_text("Hi"),
+                    ));
+                    __task_context = (yield ::futures_async_stream::__private::Poll::Ready(
+                        ::alloc::borrow::Cow::from("childrenend"),
+                    ));
+                    _magic_expression_result.after
+                }
             };
             let template = {
                 let _magic_expression_result: Template<
