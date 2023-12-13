@@ -17,12 +17,11 @@ pub async fn partial_block() {
     // xdot zero-cost-templating/partial_block.dot
     // xdot zero-cost-templating/partial_block_partial.dot
 
-    // TODO FIXME the test variable is not required
     let template = partial_block_initial0();
     let template = template.partial_block_template0();
     let template = template.partial_block_partial_template0();
     let template = template.partial_block_template1();
-    let template = template.partial_block_template2();
+    let template = template.partial_block_test2("hi");
     let template = template.partial_block_partial_template2();
     template.partial_block_template4()
 }

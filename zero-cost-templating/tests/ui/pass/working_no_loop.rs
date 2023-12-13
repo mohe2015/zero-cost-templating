@@ -30,5 +30,12 @@ pub async fn main() {
     while let Some(value) = stream.next().await {
         actual.push_str(&value);
     }
-    assert_eq!("", actual);
+    assert_eq!(
+        "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    \
+    <title>title</title>\n    <link rel=\"stylesheet\" href=\"style.css\">\n    \
+    <script src=\"script.js\"></script>\n  </head>\n  <body>\n    <h1>thetitle</h1>\n    \
+    <input type=\"hidden\" value=\"thetoken\">\n    <ul>\n    \n    </ul>\n    \
+    <span>2023</span>\n  </body>\n</html>",
+        actual
+    );
 }
