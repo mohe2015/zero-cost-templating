@@ -74,11 +74,9 @@ fn handle_call_zero_or_one_parameter(
         };
 
         Some(Expr::Verbatim(quote_spanned! {span=>
-            {
-                let _magic_expression_result: #template_struct = #first_parameter;
-                yield ::alloc::borrow::Cow::from(#text);
-                #next_template_struct
-            } #semicolon
+            let _magic_expression_result: #template_struct = #first_parameter;
+            yield ::alloc::borrow::Cow::from(#text);
+            #next_template_struct #semicolon
         }))
     })
 }
@@ -161,12 +159,10 @@ fn handle_call_two_parameters(
             }
         };
         Some(Expr::Verbatim(quote_spanned! {span=>
-            {
-                let _magic_expression_result: #template_struct = #first_parameter;
-                #escaped_value
-                yield ::alloc::borrow::Cow::from(#text);
-                #next_template_struct
-            } #semicolon
+            let _magic_expression_result: #template_struct = #first_parameter;
+            #escaped_value
+            yield ::alloc::borrow::Cow::from(#text);
+            #next_template_struct #semicolon
         }))
     })
 }
@@ -248,9 +244,7 @@ impl VisitMut for InnerReplace {
                                 span,
                             );
                             Expr::Verbatim(quote_spanned! {span=>
-                                {
-                                    #template_struct
-                                }
+                                #template_struct
                             })
                         })
                     });
