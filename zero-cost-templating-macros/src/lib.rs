@@ -219,7 +219,6 @@ pub fn template_stream(
 
     let mut item = parse_macro_input!(item as Item);
 
-    //panic!("{:?}", std::env::var_os("ZERO_COST_TEMPLATING_NO_EXPAND"));
     if std::env::var_os("ZERO_COST_TEMPLATING_NO_EXPAND").is_none() {
         InnerReplace(inputs).visit_item_mut(&mut item);
     }

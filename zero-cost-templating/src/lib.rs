@@ -174,10 +174,12 @@ mod tests {
         );
 
         let test_cases = trybuild::TestCases::new();
-
         //test_cases.compile_fail("tests/ui/compile_fail/*.rs");
         test_cases.compile_fail("tests/ui/compile_fail_expand/*.rs");
         test_cases.pass("tests/ui/pass/*.rs");
+
+        // this is important to force execution and get the correct environment variables
+        drop(test_cases);
 
         std::env::set_var("ZERO_COST_TEMPLATING_NO_EXPAND", "no_expand");
 
@@ -185,5 +187,8 @@ mod tests {
         //test_cases.compile_fail("tests/ui/compile_fail/*.rs");
         test_cases.compile_fail("tests/ui/compile_fail_no_expand/*.rs");
         test_cases.pass("tests/ui/pass/*.rs");
+
+        // this is important to force execution and get the correct environment variables
+        drop(test_cases);
     }
 }
