@@ -180,7 +180,6 @@ mod tests {
 
         std::env::remove_var("ZERO_COST_TEMPLATING_NO_EXPAND");
 
-        let test_cases = trybuild::TestCases::new();
         //test_cases.compile_fail("tests/ui/compile_fail/*.rs");
         test_cases.compile_fail("tests/ui/compile_fail_expand/*.rs");
         test_cases.pass("tests/ui/pass/*.rs");
