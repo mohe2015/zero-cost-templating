@@ -171,6 +171,8 @@ mod tests {
             std::env::var_os("CARGO_MANIFEST_DIR").unwrap(),
         );
 
+        std::env::set_var("ZERO_COST_TEMPLATING_NO_EXPAND", "no_expand");
+
         let test_cases = trybuild::TestCases::new();
         test_cases.compile_fail("tests/ui/compile_fail/*.rs");
         test_cases.pass("tests/ui/pass/*.rs");
