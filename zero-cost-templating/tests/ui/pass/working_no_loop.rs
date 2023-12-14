@@ -24,7 +24,7 @@ pub async fn test() {
 
 #[tokio::main]
 pub async fn main() {
-    if std::env::var_os("ZERO_COST_TEMPLATING_NO_EXPAND").is_some() {
+    if option_env!("ZERO_COST_TEMPLATING_NO_EXPAND").is_some() {
         return;
     }
     let mut actual = String::new();

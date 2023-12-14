@@ -145,7 +145,7 @@ fn handle_call_two_parameters(
 
         let escaped_value = match edge.weight().escaping_fun {
             EscapingFunction::NoVariableStart => quote_spanned! {span=>
-                unreachable();
+                unreachable("NoVariableStart");
             },
             EscapingFunction::HtmlAttribute => {
                 quote_spanned! {span=>
@@ -508,7 +508,7 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
             #[allow(unused)]
             /// Start
             pub fn #ident() -> #template_struct {
-                unreachable!()
+                unreachable!("Start")
             }
         };
         let recompile_ident = format_ident!("_{}_FORCE_RECOMPILE", template_codegen.template_name);
