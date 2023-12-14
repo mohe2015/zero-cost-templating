@@ -166,7 +166,7 @@ pub fn encode_double_quoted_attribute<'a, I: Into<Cow<'a, str>>>(input: I) -> Co
 mod tests {
     #[test]
     fn ui() {
-        std::env::set_var("ZERO_COST_TEMPLATING_NO_EXPAND", "no_expand");
+        std::env::remove_var("ZERO_COST_TEMPLATING_NO_EXPAND");
 
         std::env::set_var(
             "CARGO_MANIFEST_DIR_OVERRIDE",
@@ -174,14 +174,16 @@ mod tests {
         );
 
         let test_cases = trybuild::TestCases::new();
-        //test_cases.compile_fail("tests/ui/compile_fail/*.rs");
-        test_cases.compile_fail("tests/ui/compile_fail_no_expand/*.rs");
-        test_cases.pass("tests/ui/pass/*.rs");
-
-        std::env::remove_var("ZERO_COST_TEMPLATING_NO_EXPAND");
 
         //test_cases.compile_fail("tests/ui/compile_fail/*.rs");
         test_cases.compile_fail("tests/ui/compile_fail_expand/*.rs");
+        test_cases.pass("tests/ui/pass/*.rs");
+
+        std::env::set_var("ZERO_COST_TEMPLATING_NO_EXPAND", "no_expand");
+
+        let test_cases = trybuild::TestCases::new();
+        //test_cases.compile_fail("tests/ui/compile_fail/*.rs");
+        test_cases.compile_fail("tests/ui/compile_fail_no_expand/*.rs");
         test_cases.pass("tests/ui/pass/*.rs");
     }
 }
