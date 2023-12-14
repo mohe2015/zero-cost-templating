@@ -8,10 +8,9 @@ use petgraph::Direction;
 use proc_macro2::{Ident, Span, TokenStream};
 use quote::{format_ident, quote, quote_spanned, ToTokens};
 
+use syn::spanned::Spanned;
 use syn::visit_mut::VisitMut;
-use syn::{
-    parse_quote, parse_quote_spanned, visit_mut, Expr, ExprCall, ExprMethodCall, ExprPath, Token,
-};
+use syn::{parse_quote_spanned, visit_mut, Expr, ExprCall, ExprMethodCall, ExprPath, Token};
 
 use crate::intermediate_graph::{EscapingFunction, IntermediateAstElement, NodeType};
 
@@ -23,9 +22,8 @@ fn handle_call_zero_or_one_parameter(
     first_parameter: &TokenStream,
     semicolon: Option<Token![;]>,
     template_codegen: &TemplateCodegen,
+    span: Span,
 ) -> Option<Expr> {
-    let span = ident.span();
-
     let edge = template_codegen.graph.edge_references().find(|edge| {
         let expected_ident = format_ident!(
             "{}_template{}",
@@ -91,9 +89,8 @@ fn handle_call_two_parameters(
     second_parameter: &TokenStream,
     semicolon: Option<Token![;]>,
     template_codegen: &TemplateCodegen,
+    span: Span,
 ) -> Option<Expr> {
-    let span = ident.span();
-
     // call with two parameters
     let edge = template_codegen.graph.edge_references().find(|edge| {
         edge.weight().variable.as_ref().map_or(false, |variable| {
@@ -190,6 +187,7 @@ impl InnerReplace {
                         &input.receiver.to_token_stream(),
                         semicolon,
                         template_codegen,
+                        input.span(),
                     )
                 })
             }
@@ -200,6 +198,7 @@ impl InnerReplace {
                     &input.args.first().unwrap().into_token_stream(),
                     semicolon,
                     template_codegen,
+                    input.span(),
                 )
             }),
             _ => panic!(),
@@ -209,11 +208,10 @@ impl InnerReplace {
 
 impl VisitMut for InnerReplace {
     fn visit_expr_mut(&mut self, node: &mut syn::Expr) {
+        let span = node.span();
         match node {
             Expr::MethodCall(expr_method_call) => {
                 if let Some(result) = self.magic_method_call(expr_method_call, None) {
-                    let span = expr_method_call.method.span();
-
                     *node = parse_quote_spanned! {span=>
                         if false {
                             #expr_method_call
@@ -229,7 +227,6 @@ impl VisitMut for InnerReplace {
                     _ => None,
                 };
                 if let Some(ident) = ident {
-                    let span = ident.span();
                     let result = self.0.iter().find_map(|template_codegen| {
                         let first_index = template_codegen.first.index();
                         let initial_ident = format_ident!(
