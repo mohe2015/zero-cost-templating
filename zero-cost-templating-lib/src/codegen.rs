@@ -10,7 +10,7 @@ use quote::{format_ident, quote, quote_spanned};
 
 use syn::spanned::Spanned;
 use syn::visit_mut::VisitMut;
-use syn::{visit_mut, Expr, ExprMethodCall, ExprPath, Token};
+use syn::{visit_mut, Expr, ExprMethodCall, ExprPath};
 
 use crate::intermediate_graph::{EscapingFunction, IntermediateAstElement, NodeType};
 
@@ -20,7 +20,6 @@ fn handle_call(
     ident: &Ident,
     template_variable: &syn::Expr,
     parameter: Option<&syn::Expr>,
-    semicolon: Option<Token![;]>,
     template_codegen: &TemplateCodegen,
     span: Span,
 ) -> Option<Expr> {
@@ -92,18 +91,14 @@ fn handle_call(
                 let _magic_expression_result: #template_struct = #template_variable;
                 #escaped_value
                 yield ::alloc::borrow::Cow::from(#text);
-                #next_template_struct #semicolon
+                #next_template_struct
             }
         })
     })
 }
 
 impl InnerReplace {
-    fn magic_method_call(
-        &self,
-        input: &ExprMethodCall,
-        semicolon: Option<Token![;]>,
-    ) -> Option<syn::Expr> {
+    fn magic_method_call(&self, input: &ExprMethodCall) -> Option<syn::Expr> {
         let ident = &input.method;
         match input.args.len() {
             0 | 1 => self.0.iter().find_map(|template_codegen| {
@@ -111,7 +106,6 @@ impl InnerReplace {
                     ident,
                     &input.receiver,
                     input.args.first(),
-                    semicolon,
                     template_codegen,
                     input.span(),
                 )
@@ -126,7 +120,7 @@ impl VisitMut for InnerReplace {
         let span = node.span();
         match node {
             Expr::MethodCall(expr_method_call) => {
-                if let Some(result) = self.magic_method_call(expr_method_call, None) {
+                if let Some(result) = self.magic_method_call(expr_method_call) {
                     *node = result;
                 }
             }
