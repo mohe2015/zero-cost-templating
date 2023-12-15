@@ -466,7 +466,7 @@ mod tests {
         AttributeValuePart, Child, Element,
     };
 
-    fn test<T, F: for<'a> Fn(&'a mut PeekNth<Chars<'_>>) -> T>(func: F, input: &str) -> T {
+    fn test<T, F: for<'a> Fn(&'a mut PeekNth<Chars<'static>>) -> T>(func: F, input: &'static str) -> T {
         let iterator = &mut peek_nth(input.chars());
         let result = func(iterator);
         assert_eq!(None, iterator.next());
