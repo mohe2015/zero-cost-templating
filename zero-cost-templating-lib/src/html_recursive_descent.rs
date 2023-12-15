@@ -456,7 +456,7 @@ pub fn parse_element<I: Iterator<Item = char>>(input: &mut PeekNth<I>) -> Result
 
 #[cfg(test)]
 mod tests {
-    use std::str::Chars;
+    use core::str::Chars;
 
     use itertools::{peek_nth, PeekNth};
 
@@ -466,10 +466,10 @@ mod tests {
         AttributeValuePart, Child, Element,
     };
 
-    fn test<T, F: for<'a> Fn(&'a mut PeekNth<Chars<'static>>) -> T>(func: F, input: &'static str) -> T {
+    fn fully_parsed<T, F: for<'a> Fn(&'a mut PeekNth<Chars<'static>>) -> T>(func: F, input: &'static str) -> T {
         let iterator = &mut peek_nth(input.chars());
         let result = func(iterator);
-        assert_eq!(None, iterator.next());
+        assert_eq!(None, iterator.next(), "Input not fully parsed");
         result
     }
 
@@ -478,7 +478,7 @@ mod tests {
         // TODO FIXME check no input left
         assert_eq!(
             Ok("test".to_owned()),
-            test(parse_variable, "{{test}}")
+            fully_parsed(parse_variable, "{{test}}")
         );
     }
 
@@ -486,7 +486,7 @@ mod tests {
     fn variable_2() {
         assert_eq!(
             Err("expected } but found end of input\nwhile parsing variable".to_owned()),
-            parse_variable(&mut peek_nth("{{}}".chars()))
+            fully_parsed(parse_variable, "{{}}")
         );
     }
 
@@ -494,7 +494,7 @@ mod tests {
     fn variable_3() {
         assert_eq!(
             Err("expected } but found end of input\nwhile parsing variable".to_owned()),
-            parse_variable(&mut peek_nth("{{test}".chars()))
+            fully_parsed(parse_variable, "{{test}")
         );
     }
 
@@ -502,7 +502,7 @@ mod tests {
     fn variable_4() {
         assert_eq!(
             Err("expected }} but found end of input\nwhile parsing variable".to_owned()),
-            parse_variable(&mut peek_nth("{{test".chars()))
+            fully_parsed(parse_variable, "{{test")
         );
     }
 
@@ -513,7 +513,7 @@ mod tests {
                 "expected variable identifier but found end of input\nwhile parsing variable"
                     .to_owned()
             ),
-            parse_variable(&mut peek_nth("{{".chars()))
+            fully_parsed(parse_variable, "{{")
         );
     }
 
@@ -521,7 +521,7 @@ mod tests {
     fn variable_6() {
         assert_eq!(
             Err("expected {\nwhile parsing variable".to_owned()),
-            parse_variable(&mut peek_nth("{".chars()))
+            fully_parsed(parse_variable, "{")
         );
     }
 
@@ -529,7 +529,7 @@ mod tests {
     fn variable_7() {
         assert_eq!(
             Err("expected {\nwhile parsing variable".to_owned()),
-            parse_variable(&mut peek_nth("".chars()))
+            fully_parsed(parse_variable, "")
         );
     }
 
@@ -537,20 +537,20 @@ mod tests {
     fn variable_8() {
         assert_eq!(
             Err("expected variable identifier but found keyword else\nwhile parsing variable".to_owned()),
-            parse_variable(&mut peek_nth("{{else}}".chars()))
+            fully_parsed(parse_variable, "{{else}}")
         );
     }
 
     #[test]
     fn attribute_value_1() {
-        assert_eq!(Ok(vec![]), parse_attribute_value(&mut peek_nth("".chars())));
+        assert_eq!(Ok(vec![]), fully_parsed(parse_attribute_value, ""));
     }
 
     #[test]
     fn attribute_value_2() {
         assert_eq!(
             Ok(vec![AttributeValuePart::Literal("test".to_owned())]),
-            parse_attribute_value(&mut peek_nth("test".chars()))
+            fully_parsed(parse_attribute_value, "test")
         );
     }
 
@@ -561,7 +561,7 @@ mod tests {
                 AttributeValuePart::Variable("a".to_owned()),
                 AttributeValuePart::Literal("test".to_owned())
             ]),
-            parse_attribute_value(&mut peek_nth("{{a}}test".chars()))
+            fully_parsed(parse_attribute_value, "{{a}}test")
         );
     }
 
@@ -572,7 +572,7 @@ mod tests {
                 AttributeValuePart::Literal("test".to_owned()),
                 AttributeValuePart::Variable("a".to_owned()),
             ]),
-            parse_attribute_value(&mut peek_nth("test{{a}}".chars()))
+            fully_parsed(parse_attribute_value, "test{{a}}")
         );
     }
 
@@ -584,7 +584,7 @@ mod tests {
                 AttributeValuePart::Literal("test".to_owned()),
                 AttributeValuePart::Variable("b".to_owned()),
             ]),
-            parse_attribute_value(&mut peek_nth("{{a}}test{{b}}".chars()))
+            fully_parsed(parse_attribute_value, "{{a}}test{{b}}")
         );
     }
 
@@ -595,7 +595,7 @@ mod tests {
                 AttributeValuePart::Literal("a".to_owned()),
                 AttributeValuePart::Variable("test".to_owned()),
             ]),
-            parse_attribute_value(&mut peek_nth("a{{test}}".chars()))
+            fully_parsed(parse_attribute_value, "a{{test}}")
         );
     }
 
@@ -606,7 +606,7 @@ mod tests {
                 AttributeValuePart::Variable("test".to_owned()),
                 AttributeValuePart::Literal("a".to_owned()),
             ]),
-            parse_attribute_value(&mut peek_nth("{{test}}a".chars()))
+            fully_parsed(parse_attribute_value, "{{test}}a")
         );
     }
 
@@ -618,7 +618,7 @@ mod tests {
                 AttributeValuePart::Variable("test".to_owned()),
                 AttributeValuePart::Literal("b".to_owned()),
             ]),
-            parse_attribute_value(&mut peek_nth("a{{test}}b".chars()))
+            fully_parsed(parse_attribute_value, "a{{test}}b")
         );
     }
 
@@ -626,7 +626,7 @@ mod tests {
     fn attribute_value_9() {
         assert_eq!(
             Ok(vec![AttributeValuePart::Variable("test".to_owned()),]),
-            parse_attribute_value(&mut peek_nth("{{test}}".chars()))
+            fully_parsed(parse_attribute_value, "{{test}}")
         );
     }
 
@@ -638,7 +638,7 @@ mod tests {
                 key: String::new(),
                 value: Some(vec![])
             }),
-            parse_attribute(&mut peek_nth(peek_nth(r#"="""#.chars())))
+            fully_parsed(parse_attribute, r#"="""#)
         );
     }
 
@@ -649,7 +649,7 @@ mod tests {
                 key: "a".to_owned(),
                 value: Some(vec![])
             }),
-            parse_attribute(&mut peek_nth(r#"a="""#.chars()))
+            fully_parsed(parse_attribute, r#"a="""#)
         );
     }
 
@@ -660,13 +660,13 @@ mod tests {
                 key: "a".to_owned(),
                 value: Some(vec![AttributeValuePart::Literal("test".to_owned()),])
             }),
-            parse_attribute(&mut peek_nth(r#"a="test""#.chars()))
+            fully_parsed(parse_attribute, r#"a="test""#)
         );
     }
 
     #[test]
     fn attributes_1() {
-        assert_eq!(Ok(vec![]), parse_attributes(&mut peek_nth("".chars())));
+        assert_eq!(Ok(vec![]), fully_parsed(parse_attributes, ""));
     }
 
     #[test]
@@ -676,7 +676,7 @@ mod tests {
                 key: "a".to_owned(),
                 value: Some(vec![AttributeValuePart::Literal("test".to_owned()),])
             }]),
-            parse_attributes(&mut peek_nth(r#"a="test""#.chars()))
+            fully_parsed(parse_attributes, r#"a="test""#)
         );
     }
 
@@ -693,20 +693,20 @@ mod tests {
                     value: Some(vec![AttributeValuePart::Literal("jo".to_owned()),])
                 }
             ]),
-            parse_attributes(&mut peek_nth("a=\"test\" \n\tb=\"jo\"".chars()))
+            fully_parsed(parse_attributes, "a=\"test\" \n\tb=\"jo\"")
         );
     }
 
     #[test]
     fn children_1() {
-        assert_eq!(Ok(vec![]), parse_children(&mut peek_nth("".chars())));
+        assert_eq!(Ok(vec![]), fully_parsed(parse_children, ""));
     }
 
     #[test]
     fn children_2() {
         assert_eq!(
             Ok(vec![Child::Literal("abc".to_owned())]),
-            parse_children(&mut peek_nth("abc".chars()))
+            fully_parsed(parse_children, "abc")
         );
     }
 
@@ -717,7 +717,7 @@ mod tests {
                 Child::Literal("abc".to_owned()),
                 Child::Variable("def".to_owned())
             ]),
-            parse_children(&mut peek_nth("abc{{def}}".chars()))
+            fully_parsed(parse_children, "abc{{def}}")
         );
     }
 
@@ -733,7 +733,7 @@ mod tests {
                     children: Vec::new(),
                 })
             ]),
-            parse_children(&mut peek_nth("abc{{def}}<a></a>".chars()))
+            fully_parsed(parse_children, "abc{{def}}<a></a>")
         );
     }
 
@@ -748,7 +748,7 @@ mod tests {
                     Child::Variable("def".to_owned()),
                 ],
             })]),
-            parse_children(&mut peek_nth("<a>abc{{def}}</a>".chars()))
+            fully_parsed(parse_children, "<a>abc{{def}}</a>")
         );
     }
 
@@ -763,7 +763,7 @@ mod tests {
                     Child::Variable("def".to_owned()),
                 ],
             }),
-            parse_element(&mut peek_nth("<a>abc{{def}}</a>".chars()))
+            fully_parsed(parse_element, "<a>abc{{def}}</a>")
         );
     }
 
@@ -778,7 +778,7 @@ mod tests {
                     Child::Variable("def".to_owned()),
                 ],
             }),
-            parse_element(&mut peek_nth("<a >abc{{def}}</a>".chars()))
+            fully_parsed(parse_element, "<a >abc{{def}}</a>")
         );
     }
 
@@ -793,7 +793,7 @@ mod tests {
                 }],
                 children: vec![],
             }),
-            parse_element(&mut peek_nth(r#"<a a="hi"></a>"#.chars()))
+            fully_parsed(parse_element, r#"<a a="hi"></a>"#)
         );
     }
 
@@ -804,9 +804,9 @@ mod tests {
                 "partial_name".to_owned(),
                 vec![Child::Literal("children".to_owned())]
             )),
-            parse_partial_block(&mut peek_nth(
-                "{{#>partial_name}}children{{/partial_name}}".chars()
-            ))
+            fully_parsed(parse_partial_block, 
+                "{{#>partial_name}}children{{/partial_name}}"
+            )
         );
     }
 
@@ -821,9 +821,9 @@ mod tests {
                 ),
                 Child::Literal("b".to_owned()),
             ]),
-            parse_children(&mut peek_nth(
-                "a{{#>partial_name}}children{{/partial_name}}b".chars()
-            ))
+            fully_parsed(parse_children, 
+                "a{{#>partial_name}}children{{/partial_name}}b"
+            )
         );
     }
 
@@ -831,7 +831,7 @@ mod tests {
     fn partial_block_partial_1() {
         assert_eq!(
             Ok(()),
-            parse_partial_block_partial(&mut peek_nth("{{>@partial-block}}".chars()))
+            fully_parsed(parse_partial_block_partial, "{{>@partial-block}}")
         );
     }
 
@@ -843,7 +843,7 @@ mod tests {
                 Child::PartialBlockPartial,
                 Child::Literal("b".to_owned()),
             ]),
-            parse_children(&mut peek_nth("a{{>@partial-block}}b".chars()))
+            fully_parsed(parse_children, "a{{>@partial-block}}b")
         );
     }
 
@@ -855,7 +855,7 @@ mod tests {
                 vec![Child::Literal("true".to_owned()),],
                 vec![]
             )),
-            parse_if_else(&mut peek_nth("{{#if author}}true{{/if}}".chars()))
+            fully_parsed(parse_if_else, "{{#if author}}true{{/if}}")
         );
     }
 
@@ -867,9 +867,8 @@ mod tests {
                 vec![Child::Literal("true".to_owned()),],
                 vec![Child::Literal("false".to_owned()),]
             )),
-            parse_if_else(&mut peek_nth(
-                "{{#if author}}true{{else}}false{{/if}}".chars()
-            ))
+            fully_parsed(parse_if_else, 
+                "{{#if author}}true{{else}}false{{/if}}")
         );
     }
 
@@ -881,7 +880,7 @@ mod tests {
                 vec![Child::Literal("true".to_owned()),],
                 vec![]
             )]),
-            parse_children(&mut peek_nth("{{#if author}}true{{/if}}".chars()))
+            fully_parsed(parse_children, "{{#if author}}true{{/if}}")
         );
     }
 
@@ -893,9 +892,8 @@ mod tests {
                 vec![Child::Literal("true".to_owned()),],
                 vec![Child::Literal("false".to_owned()),]
             )]),
-            parse_children(&mut peek_nth(
-                "{{#if author}}true{{else}}false{{/if}}".chars()
-            ))
+            fully_parsed(parse_children, 
+                "{{#if author}}true{{else}}false{{/if}}")
         );
     }
 }
