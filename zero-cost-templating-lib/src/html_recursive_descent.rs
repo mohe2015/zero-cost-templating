@@ -348,6 +348,29 @@ pub fn parse_children<I: Iterator<Item = char>>(
                                 }
                             }
                         }
+                        Some('e') => {
+                            match input.peek_nth(3) {
+                                Some('l') => {
+                                    match input.peek_nth(4) {
+                                        Some('s') => {
+                                            match input.peek_nth(5) {
+                                                Some('e') => {
+                                                    match input.peek_nth(6) {
+                                                        Some('}') => {
+                                                            return Ok(result)
+                                                        }
+                                                        _ => result.push(Child::Variable(parse_variable(input)?)),
+                                                    }
+                                                }
+                                                _ => result.push(Child::Variable(parse_variable(input)?)),
+                                            }
+                                        }
+                                        _ => result.push(Child::Variable(parse_variable(input)?)),
+                                    }
+                                }
+                                _ => result.push(Child::Variable(parse_variable(input)?)),
+                            }
+                        }
                         Some(_) => result.push(Child::Variable(parse_variable(input)?)),
                         None => {
                             return Err("expected # as part of each directive or start of \
