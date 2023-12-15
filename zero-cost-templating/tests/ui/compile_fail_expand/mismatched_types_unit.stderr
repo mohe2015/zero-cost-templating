@@ -1,0 +1,8 @@
+error[E0308]: mismatched types
+  --> tests/ui/compile_fail_expand/mismatched_types_unit.rs:18:5
+   |
+18 |     template.test_template6()
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^ expected `()`, found `Template<TestTemplate6, (), ()>`
+   |
+   = note: expected unit type `()`
+                 found struct `Template<TestTemplate6, (), ()>`
