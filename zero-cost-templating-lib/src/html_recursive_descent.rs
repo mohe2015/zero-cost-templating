@@ -17,11 +17,20 @@ pub fn expect<I: Iterator<Item = char>>(
     )
 }
 
+pub fn expect_str<I: Iterator<Item = char>>(
+    input: &mut PeekNth<I>,
+    expected_str: &str,
+) -> Result<(), String> {
+    for character in expected_str.chars() {
+        expect(input, character)?;
+    }
+    Ok(())
+}
+
 pub fn parse_variable<I: Iterator<Item = char>>(input: &mut PeekNth<I>) -> Result<String, String> {
     // TODO FIXME more lenient parsing, e.g. allow spaces between {{ and name
     let mut inner = || {
-        expect(input, '{')?;
-        expect(input, '{')?;
+        expect_str(input, "{{")?;
         let mut identifier = String::new();
         match input.next() {
             Some('#') => {
@@ -76,14 +85,7 @@ pub fn parse_each<I: Iterator<Item = char>>(
     input: &mut PeekNth<I>,
 ) -> Result<(String, Vec<Child>), String> {
     let mut inner = || {
-        expect(input, '{')?;
-        expect(input, '{')?;
-        expect(input, '#')?;
-        expect(input, 'e')?;
-        expect(input, 'a')?;
-        expect(input, 'c')?;
-        expect(input, 'h')?;
-        expect(input, ' ')?;
+        expect_str(input, "{{#each ")?;
         let mut identifier = String::new();
         loop {
             match input.next() {
@@ -98,15 +100,7 @@ pub fn parse_each<I: Iterator<Item = char>>(
         }
         expect(input, '}')?;
         let children = parse_children(input)?;
-        expect(input, '{')?;
-        expect(input, '{')?;
-        expect(input, '/')?;
-        expect(input, 'e')?;
-        expect(input, 'a')?;
-        expect(input, 'c')?;
-        expect(input, 'h')?;
-        expect(input, '}')?;
-        expect(input, '}')?;
+        expect_str(input, "{{/each}}")?;
         Ok((identifier, children))
     };
     inner().map_err(|err| format!("{err}\nwhile parsing each"))
@@ -117,10 +111,7 @@ pub fn parse_partial_block<I: Iterator<Item = char>>(
 ) -> Result<(String, Vec<Child>), String> {
     // https://handlebarsjs.com/guide/partials.html#partial-blocks
     let mut inner = || {
-        expect(input, '{')?;
-        expect(input, '{')?;
-        expect(input, '#')?;
-        expect(input, '>')?;
+        expect_str(input, "{{#>")?;
         let mut partial_name = String::new();
         loop {
             match input.next() {
@@ -135,14 +126,9 @@ pub fn parse_partial_block<I: Iterator<Item = char>>(
         }
         expect(input, '}')?;
         let children = parse_children(input)?;
-        expect(input, '{')?;
-        expect(input, '{')?;
-        expect(input, '/')?;
-        for character in partial_name.chars() {
-            expect(input, character)?;
-        }
-        expect(input, '}')?;
-        expect(input, '}')?;
+        expect_str(input, "{{/")?;
+        expect_str(input, &partial_name)?;
+        expect_str(input, "}}")?;
         Ok((partial_name, children))
     };
     inner().map_err(|err| format!("{err}\nwhile parsing partial"))
