@@ -466,10 +466,12 @@ mod tests {
         AttributeValuePart, Child, Element,
     };
 
-    fn fully_parsed<T, F: for<'a> Fn(&'a mut PeekNth<Chars<'static>>) -> T>(func: F, input: &'static str) -> T {
+    fn fully_parsed<T, F: for<'a> Fn(&'a mut PeekNth<Chars<'static>>) -> Result<T, String>>(func: F, input: &'static str) -> Result<T, String> {
         let iterator = &mut peek_nth(input.chars());
         let result = func(iterator);
-        assert_eq!(None, iterator.next(), "Input not fully parsed");
+        if result.is_ok() {
+            assert_eq!(None, iterator.next(), "Input not fully parsed");
+        }
         result
     }
 
