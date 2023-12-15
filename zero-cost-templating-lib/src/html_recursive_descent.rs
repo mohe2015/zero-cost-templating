@@ -28,15 +28,22 @@ pub fn expect_str<I: Iterator<Item = char>>(
 }
 
 pub fn parse_variable<I: Iterator<Item = char>>(input: &mut PeekNth<I>) -> Result<String, String> {
-    // TODO FIXME more lenient parsing, e.g. allow spaces between {{ and name
     let mut inner = || {
-        expect_str(input, "{{")?;
+        match input.peek_nth(0) {
+            Some('{') => {}
+            _ => return Err("expected {".to_owned()),
+        }
+        match input.peek_nth(1) {
+            Some('{') => {}
+            _ => return Err("expected {".to_owned()),
+        }
         let mut identifier = String::new();
-        match input.next() {
+        let mut index = 2;
+        match input.peek_nth(index) {
             Some('#') => {
                 return Err(
                     "expected first character of variable identifier but found # indicating start \
-                     of each directive"
+                     of each or if directive"
                         .to_owned(),
                 );
             }
@@ -47,23 +54,31 @@ pub fn parse_variable<I: Iterator<Item = char>>(input: &mut PeekNth<I>) -> Resul
                         .to_owned(),
                 );
             }
-            Some(byte) => identifier.push(byte),
+            Some(byte) => identifier.push(*byte),
             None => {
                 return Err("expected variable identifier but found end of input".to_owned());
             }
         }
+        index += 1;
         loop {
-            match input.next() {
+            match input.peek_nth(index) {
                 Some('}') => break,
                 Some(byte) => {
-                    identifier.push(byte);
+                    identifier.push(*byte);
                 }
                 None => {
                     return Err("expected }} but found end of input".to_owned());
                 }
             }
+            index += 1;
+            if identifier == "else" {
+                // TODO FIXME we could stop peeking from here on as we know that this is a variable now
+                return Err("expected variable identifier but found keyword else".to_owned());
+            }
         }
-        expect(input, '}')?;
+        expect_str(input, "{{")?;
+        expect_str(input, &identifier)?;
+        expect_str(input, "}}")?;
         Ok(identifier)
     };
     inner().map_err(|err| format!("{err}\nwhile parsing variable"))
@@ -428,6 +443,7 @@ mod tests {
 
     #[test]
     fn variable_1() {
+        // TODO FIXME check no input left
         assert_eq!(
             Ok("test".to_owned()),
             parse_variable(&mut peek_nth("{{test}}".chars()))
@@ -472,7 +488,7 @@ mod tests {
     #[test]
     fn variable_6() {
         assert_eq!(
-            Err("expected { but found end of input\nwhile parsing variable".to_owned()),
+            Err("expected {\nwhile parsing variable".to_owned()),
             parse_variable(&mut peek_nth("{".chars()))
         );
     }
@@ -480,7 +496,7 @@ mod tests {
     #[test]
     fn variable_7() {
         assert_eq!(
-            Err("expected { but found end of input\nwhile parsing variable".to_owned()),
+            Err("expected {\nwhile parsing variable".to_owned()),
             parse_variable(&mut peek_nth("".chars()))
         );
     }
