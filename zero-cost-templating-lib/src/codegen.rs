@@ -10,7 +10,7 @@ use quote::{format_ident, quote, quote_spanned};
 
 use syn::spanned::Spanned;
 use syn::visit_mut::VisitMut;
-use syn::{parse_quote_spanned, visit_mut, Expr, ExprCall, ExprMethodCall, ExprPath, Token};
+use syn::{visit_mut, Expr, ExprMethodCall, ExprPath, Token};
 
 use crate::intermediate_graph::{EscapingFunction, IntermediateAstElement, NodeType};
 
@@ -88,10 +88,12 @@ fn handle_call(
             }
         });
         Expr::Verbatim(quote_spanned! {span=>
-            let _magic_expression_result: #template_struct = #template_variable;
-            #escaped_value
-            yield ::alloc::borrow::Cow::from(#text);
-            #next_template_struct #semicolon
+            {
+                let _magic_expression_result: #template_struct = #template_variable;
+                #escaped_value
+                yield ::alloc::borrow::Cow::from(#text);
+                #next_template_struct #semicolon
+            }
         })
     })
 }
@@ -125,18 +127,14 @@ impl VisitMut for InnerReplace {
         match node {
             Expr::MethodCall(expr_method_call) => {
                 if let Some(result) = self.magic_method_call(expr_method_call, None) {
-                    *node = parse_quote_spanned! {span=>
-                        if false {
-                            #expr_method_call
-                        } else {
-                            #result
-                        }
-                    };
+                    *node = result;
                 }
             }
-            Expr::Call(expr_call @ ExprCall { .. }) => {
+            Expr::Call(expr_call) => {
                 let ident = match &expr_call.func {
-                    box Expr::Path(ExprPath { path, .. }) => path.get_ident(),
+                    box Expr::Path(ExprPath { path, .. }) if expr_call.args.is_empty() => {
+                        path.get_ident()
+                    }
                     _ => None,
                 };
                 if let Some(ident) = ident {
@@ -166,13 +164,7 @@ impl VisitMut for InnerReplace {
                         })
                     });
                     if let Some(result) = result {
-                        *node = parse_quote_spanned! {span=>
-                            if false {
-                                #expr_call
-                            } else {
-                                #result
-                            }
-                        };
+                        *node = result;
                     }
                 }
             }
@@ -318,7 +310,6 @@ pub fn calculate_edges(
                 edge.target(),
                 &quote! { $template.partial },
                 &quote! { $template.after },
-                //
                 &quote! { Partial },
                 &quote! { After },
                 false,
