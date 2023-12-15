@@ -6,7 +6,7 @@ use petgraph::stable_graph::StableGraph;
 use petgraph::visit::{EdgeRef, IntoEdgeReferences, IntoNodeReferences};
 use petgraph::Direction;
 use proc_macro2::{Ident, Span, TokenStream};
-use quote::{format_ident, quote, quote_spanned, ToTokens};
+use quote::{format_ident, quote, quote_spanned};
 
 use syn::spanned::Spanned;
 use syn::visit_mut::VisitMut;
@@ -16,99 +16,28 @@ use crate::intermediate_graph::{EscapingFunction, IntermediateAstElement, NodeTy
 
 pub struct InnerReplace(pub Vec<TemplateCodegen>);
 
-// TODO FIXME merge these two methods
-fn handle_call_zero_or_one_parameter(
+fn handle_call_two_parameters(
     ident: &Ident,
-    first_parameter: &TokenStream,
+    template_variable: &syn::Expr,
+    parameter: Option<&syn::Expr>,
     semicolon: Option<Token![;]>,
     template_codegen: &TemplateCodegen,
     span: Span,
 ) -> Option<Expr> {
     let edge = template_codegen.graph.edge_references().find(|edge| {
         let expected_ident = format_ident!(
-            "{}_template{}",
+            "{}_{}{}",
             template_codegen.template_name,
+            edge.weight()
+                .variable
+                .as_ref()
+                .unwrap_or(&"template".to_owned()),
             edge.id().index(),
             span = span
         );
-        ident == &expected_ident
+        edge.weight().variable.is_some() == parameter.is_some() && ident == &expected_ident
     });
-    edge.and_then(|edge| {
-        if first_parameter.is_empty() {
-            // no parameters
-            // fall back to compiler error
-            return None;
-        }
-
-        let text = &edge.weight().text;
-        let template_struct = node_type(
-            template_codegen.template_name.as_str(),
-            &template_codegen.graph,
-            edge.source(),
-            &quote_spanned! {span=> () },
-            &quote_spanned! {span=> () },
-            &quote_spanned! {span=> _ },
-            &quote_spanned! {span=> _ },
-            false,
-            span,
-        ); // good span for mismatched type error
-        let last_node = template_codegen
-            .graph
-            .edges_directed(edge.target(), Direction::Outgoing)
-            .next()
-            .is_none();
-        let next_template_struct = if last_node {
-            quote_spanned! {span=> _magic_expression_result.after }
-        } else {
-            node_type(
-                template_codegen.template_name.as_str(),
-                &template_codegen.graph,
-                edge.target(),
-                &quote_spanned! {span=> _magic_expression_result.partial },
-                &quote_spanned! {span=> _magic_expression_result.after },
-                &quote_spanned! {span=> _ },
-                &quote_spanned! {span=> _ },
-                true,
-                span,
-            )
-        };
-
-        Some(Expr::Verbatim(quote_spanned! {span=>
-            let _magic_expression_result: #template_struct = #first_parameter;
-            yield ::alloc::borrow::Cow::from(#text);
-            #next_template_struct #semicolon
-        }))
-    })
-}
-
-fn handle_call_two_parameters(
-    ident: &Ident,
-    first_parameter: &TokenStream,
-    second_parameter: &TokenStream,
-    semicolon: Option<Token![;]>,
-    template_codegen: &TemplateCodegen,
-    span: Span,
-) -> Option<Expr> {
-    // call with two parameters
-    let edge = template_codegen.graph.edge_references().find(|edge| {
-        edge.weight().variable.as_ref().map_or(false, |variable| {
-            let expected_ident = format_ident!(
-                "{}_{}{}",
-                template_codegen.template_name,
-                variable,
-                edge.id().index(),
-                span = span
-            );
-            ident == &expected_ident
-        })
-    });
-    edge.and_then(|edge| {
-        if first_parameter.is_empty() || second_parameter.is_empty() {
-            // one of the parameters is empty
-            // fall back to compiler error
-            return None;
-        }
-
+    edge.map(|edge| {
         let text = &edge.weight().text;
 
         let template_struct = node_type(
@@ -143,27 +72,27 @@ fn handle_call_two_parameters(
             )
         };
 
-        let escaped_value = match edge.weight().escaping_fun {
+        let escaped_value = parameter.map(|parameter| match edge.weight().escaping_fun {
             EscapingFunction::NoVariableStart => quote_spanned! {span=>
                 unreachable("NoVariableStart");
             },
             EscapingFunction::HtmlAttribute => {
                 quote_spanned! {span=>
-                    yield zero_cost_templating::encode_double_quoted_attribute(#second_parameter);
+                    yield zero_cost_templating::encode_double_quoted_attribute(#parameter);
                 }
             }
             EscapingFunction::HtmlElementInner => {
                 quote_spanned! {span=>
-                    yield zero_cost_templating::encode_element_text(#second_parameter);
+                    yield zero_cost_templating::encode_element_text(#parameter);
                 }
             }
-        };
-        Some(Expr::Verbatim(quote_spanned! {span=>
-            let _magic_expression_result: #template_struct = #first_parameter;
+        });
+        Expr::Verbatim(quote_spanned! {span=>
+            let _magic_expression_result: #template_struct = #template_variable;
             #escaped_value
             yield ::alloc::borrow::Cow::from(#text);
             #next_template_struct #semicolon
-        }))
+        })
     })
 }
 
@@ -175,29 +104,17 @@ impl InnerReplace {
     ) -> Option<syn::Expr> {
         let ident = &input.method;
         match input.args.len() {
-            0 => {
-                // call without zero or one parameters
-                self.0.iter().find_map(|template_codegen| {
-                    handle_call_zero_or_one_parameter(
-                        ident,
-                        &input.receiver.to_token_stream(),
-                        semicolon,
-                        template_codegen,
-                        input.span(),
-                    )
-                })
-            }
-            1 => self.0.iter().find_map(|template_codegen| {
+            0 | 1 => self.0.iter().find_map(|template_codegen| {
                 handle_call_two_parameters(
                     ident,
-                    &input.receiver.to_token_stream(),
-                    &input.args.first().unwrap().into_token_stream(),
+                    &input.receiver,
+                    input.args.first(),
                     semicolon,
                     template_codegen,
                     input.span(),
                 )
             }),
-            _ => panic!(),
+            _ => None,
         }
     }
 }
