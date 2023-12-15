@@ -1,5 +1,5 @@
 error[E0382]: use of moved value: `template`
-  --> tests/ui/compile_fail/moved_value.rs:13:20
+  --> tests/ui/compile_fail_expand/moved_value.rs:13:20
    |
 11 |     let template = test_initial0();
    |         -------- move occurs because `template` has type `Template<TestTemplate0, (), ()>`, which does not implement the `Copy` trait

@@ -15,8 +15,7 @@ pub async fn test() {
     let template = template.test_page_title1(page_title);
     let csrf_token = Cow::from("thetoken");
     let template = template.test_csrf_token2(csrf_token);
-    let template = template.test_template6();
-    let test: String = { template.test_copyright_year7(Cow::from("2023".to_string())) };
+    template.test_template6();
 }
 
 pub fn main() {}

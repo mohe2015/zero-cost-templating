@@ -2,10 +2,6 @@
 
 extern crate alloc;
 
-use std::pin::pin;
-
-use futures::StreamExt;
-use tokio::io::{stdout, AsyncWriteExt};
 use zero_cost_templating::template_stream;
 
 // https://github.com/dtolnay/cargo-expand
@@ -19,27 +15,7 @@ use zero_cost_templating::template_stream;
 // search for
 // `{static coroutine@
 
-#[template_stream("partial_block.html.hbs", "partial_block_partial.html.hbs")]
-pub async fn partial_block() {
-    // is it important that this possibly stays composable?
-    let template = partial_block_initial0();
-    let template = template.partial_block_template0();
-    let template = template.partial_block_partial_template0();
-    let template = template.partial_block_template1();
-    let template = template.partial_block_test2("Hi");
-    let template = template.partial_block_partial_template2();
-    template.partial_block_template4();
-}
+#[template_stream("test.html.hbs")]
+pub async fn test() {}
 
-#[tokio::main]
-pub async fn main() -> Result<(), std::io::Error> {
-    let mut stdout = stdout();
-    let stream = partial_block();
-    let mut stream = pin!(stream);
-    while let Some(value) = stream.next().await {
-        stdout.write_all(value.as_bytes()).await?;
-    }
-    stdout.write_all(b"\n").await?;
-    stdout.flush().await?;
-    Ok(())
-}
+pub fn main() {}

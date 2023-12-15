@@ -1,0 +1,11 @@
+error[E0599]: no method named `test_page_title1` found for struct `Template<TestTemplate0, (), ()>` in the current scope
+  --> tests/ui/compile_fail_no_expand/type_mismatch_because_missing_call.rs:14:29
+   |
+9  | #[template_stream("test.html.hbs")]
+   | ----------------------------------- method `test_page_title1` not found for this struct
+...
+14 |     let template = template.test_page_title1(page_title);
+   |                             ^^^^^^^^^^^^^^^^ method not found in `Template<TestTemplate0, (), ()>`
+   |
+   = note: the method was found for
+           - `Template<TestTemplate1, Partial, After>`

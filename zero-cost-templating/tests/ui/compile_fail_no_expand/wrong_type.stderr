@@ -1,0 +1,7 @@
+error[E0308]: mismatched types
+  --> tests/ui/compile_fail_no_expand/wrong_type.rs:19:24
+   |
+19 |     let test: String = template.test_copyright_year7(Cow::from("2023".to_string()));
+   |               ------   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `()`
+   |               |
+   |               expected due to this

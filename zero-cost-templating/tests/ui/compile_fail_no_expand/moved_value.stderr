@@ -1,0 +1,16 @@
+error[E0382]: use of moved value: `template`
+  --> tests/ui/compile_fail_no_expand/moved_value.rs:13:20
+   |
+11 |     let template = test_initial0();
+   |         -------- move occurs because `template` has type `Template<TestTemplate0, (), ()>`, which does not implement the `Copy` trait
+12 |     let _ = template.test_template0();
+   |                      ---------------- `template` moved due to this method call
+13 |     let template = template.test_template0();
+   |                    ^^^^^^^^ value used here after move
+   |
+note: `Template::<TestTemplate0, Partial, After>::test_template0` takes ownership of the receiver `self`, which moves `template`
+  --> tests/ui/compile_fail_no_expand/moved_value.rs:9:1
+   |
+9  | #[template_stream("test.html.hbs")]
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = note: this error originates in the attribute macro `template_stream` (in Nightly builds, run with -Z macro-backtrace for more info)

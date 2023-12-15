@@ -219,7 +219,9 @@ pub fn template_stream(
 
     let mut item = parse_macro_input!(item as Item);
 
-    InnerReplace(inputs).visit_item_mut(&mut item);
+    if std::env::var_os("ZERO_COST_TEMPLATING_NO_EXPAND").is_none() {
+        InnerReplace(inputs).visit_item_mut(&mut item);
+    }
 
     let expanded = quote! {
 
