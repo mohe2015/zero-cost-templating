@@ -272,6 +272,7 @@ pub enum Child {
     Each(String, Vec<Child>),
     PartialBlock(String, Vec<Child>),
     PartialBlockPartial,
+    If(String, Vec<Child>, Vec<Child>),
 }
 
 #[derive(PartialEq, Eq, Debug)]
@@ -312,13 +313,24 @@ pub fn parse_children<I: Iterator<Item = char>>(
                             }
                         },
                         Some('#') => {
-                            if input.peek_nth(3) == Some(&'>') {
-                                // partial block (which may contain inner elements)
-                                let (partial_name, children) = parse_partial_block(input)?;
-                                result.push(Child::PartialBlock(partial_name, children));
-                            } else {
-                                let (identifier, children) = parse_each(input)?;
-                                result.push(Child::Each(identifier, children));
+                            match input.peek_nth(3) {
+                                Some(&'>') => {
+                                    // partial block (which may contain inner elements)
+                                    let (partial_name, children) = parse_partial_block(input)?;
+                                    result.push(Child::PartialBlock(partial_name, children));
+                                }
+                                Some(&'e') => {
+                                    let (identifier, children) = parse_each(input)?;
+                                    result.push(Child::Each(identifier, children));
+                                }
+                                Some(&'i') => {
+                                    let (identifier, if_children, else_children) =
+                                        parse_if_else(input)?;
+                                    result.push(Child::If(identifier, if_children, else_children));
+                                }
+                                _ => {
+                                    return Err("expected partial block, each or if.".to_owned());
+                                }
                             }
                         }
                         Some(_) => result.push(Child::Variable(parse_variable(input)?)),
@@ -800,6 +812,32 @@ mod tests {
                 vec![Child::Literal("false".to_owned()),]
             )),
             parse_if_else(&mut peek_nth(
+                "{{#if author}}true{{else}}false{{/if}}".chars()
+            ))
+        );
+    }
+
+    #[test]
+    fn if_else_3() {
+        assert_eq!(
+            Ok(vec![Child::If(
+                "author".to_owned(),
+                vec![Child::Literal("true".to_owned()),],
+                vec![]
+            )]),
+            parse_children(&mut peek_nth("{{#if author}}true{{/if}}".chars()))
+        );
+    }
+
+    #[test]
+    fn if_else_4() {
+        assert_eq!(
+            Ok(vec![Child::If(
+                "author".to_owned(),
+                vec![Child::Literal("true".to_owned()),],
+                vec![Child::Literal("false".to_owned()),]
+            )]),
+            parse_children(&mut peek_nth(
                 "{{#if author}}true{{else}}false{{/if}}".chars()
             ))
         );

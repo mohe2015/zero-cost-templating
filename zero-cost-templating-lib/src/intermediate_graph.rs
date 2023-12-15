@@ -206,6 +206,7 @@ pub fn children_to_ast(
                     ),
                 };
             }
+            Child::If(_, _, _) => todo!(),
         }
     }
     (last, current)
