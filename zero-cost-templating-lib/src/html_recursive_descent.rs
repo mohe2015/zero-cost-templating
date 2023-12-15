@@ -456,7 +456,9 @@ pub fn parse_element<I: Iterator<Item = char>>(input: &mut PeekNth<I>) -> Result
 
 #[cfg(test)]
 mod tests {
-    use itertools::peek_nth;
+    use std::str::Chars;
+
+    use itertools::{peek_nth, PeekNth};
 
     use crate::html_recursive_descent::{
         parse_attribute, parse_attribute_value, parse_attributes, parse_children, parse_element,
@@ -464,12 +466,19 @@ mod tests {
         AttributeValuePart, Child, Element,
     };
 
+    fn test<T, F: for<'a> Fn(&'a mut PeekNth<Chars<'_>>) -> T>(func: F, input: &str) -> T {
+        let iterator = &mut peek_nth(input.chars());
+        let result = func(iterator);
+        assert_eq!(None, iterator.next());
+        result
+    }
+
     #[test]
     fn variable_1() {
         // TODO FIXME check no input left
         assert_eq!(
             Ok("test".to_owned()),
-            parse_variable(&mut peek_nth("{{test}}".chars()))
+            test(parse_variable, "{{test}}")
         );
     }
 
@@ -521,6 +530,14 @@ mod tests {
         assert_eq!(
             Err("expected {\nwhile parsing variable".to_owned()),
             parse_variable(&mut peek_nth("".chars()))
+        );
+    }
+
+    #[test]
+    fn variable_8() {
+        assert_eq!(
+            Err("expected variable identifier but found keyword else\nwhile parsing variable".to_owned()),
+            parse_variable(&mut peek_nth("{{else}}".chars()))
         );
     }
 
