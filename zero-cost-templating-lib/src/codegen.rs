@@ -16,7 +16,7 @@ use crate::intermediate_graph::{EscapingFunction, IntermediateAstElement, NodeTy
 
 pub struct InnerReplace(pub Vec<TemplateCodegen>);
 
-fn handle_call_two_parameters(
+fn handle_call(
     ident: &Ident,
     template_variable: &syn::Expr,
     parameter: Option<&syn::Expr>,
@@ -105,7 +105,7 @@ impl InnerReplace {
         let ident = &input.method;
         match input.args.len() {
             0 | 1 => self.0.iter().find_map(|template_codegen| {
-                handle_call_two_parameters(
+                handle_call(
                     ident,
                     &input.receiver,
                     input.args.first(),
