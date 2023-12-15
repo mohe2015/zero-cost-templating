@@ -106,6 +106,43 @@ pub fn parse_each<I: Iterator<Item = char>>(
     inner().map_err(|err| format!("{err}\nwhile parsing each"))
 }
 
+pub fn parse_if_else<I: Iterator<Item = char>>(
+    input: &mut PeekNth<I>,
+) -> Result<(String, Vec<Child>, Vec<Child>), String> {
+    let mut inner = || {
+        expect_str(input, "{{#if ")?;
+        let mut identifier = String::new();
+        loop {
+            match input.next() {
+                Some('}') => break,
+                Some(byte) => {
+                    identifier.push(byte);
+                }
+                None => {
+                    return Err("expected }} but found end of input".to_owned());
+                }
+            }
+        }
+        expect(input, '}')?;
+        let if_children = parse_children(input)?;
+        expect_str(input, "{{")?;
+        match input.next() {
+            Some('/') => {
+                expect_str(input, "if}}")?;
+                Ok((identifier, if_children, Vec::new()))
+            }
+            Some('e') => {
+                expect_str(input, "lse}}")?;
+                let else_children = parse_children(input)?;
+                expect_str(input, "{{/if}}")?;
+                Ok((identifier, if_children, else_children))
+            }
+            _ => Err("expected }} but found end of input".to_owned()),
+        }
+    };
+    inner().map_err(|err| format!("{err}\nwhile parsing each"))
+}
+
 pub fn parse_partial_block<I: Iterator<Item = char>>(
     input: &mut PeekNth<I>,
 ) -> Result<(String, Vec<Child>), String> {
@@ -373,7 +410,7 @@ mod tests {
 
     use crate::html_recursive_descent::{
         parse_attribute, parse_attribute_value, parse_attributes, parse_children, parse_element,
-        parse_partial_block, parse_partial_block_partial, parse_variable, Attribute,
+        parse_if_else, parse_partial_block, parse_partial_block_partial, parse_variable, Attribute,
         AttributeValuePart, Child, Element,
     };
 
@@ -739,6 +776,32 @@ mod tests {
                 Child::Literal("b".to_owned()),
             ]),
             parse_children(&mut peek_nth("a{{>@partial-block}}b".chars()))
+        );
+    }
+
+    #[test]
+    fn if_else_1() {
+        assert_eq!(
+            Ok((
+                "author".to_owned(),
+                vec![Child::Literal("true".to_owned()),],
+                vec![]
+            )),
+            parse_if_else(&mut peek_nth("{{#if author}}true{{/if}}".chars()))
+        );
+    }
+
+    #[test]
+    fn if_else_2() {
+        assert_eq!(
+            Ok((
+                "author".to_owned(),
+                vec![Child::Literal("true".to_owned()),],
+                vec![Child::Literal("false".to_owned()),]
+            )),
+            parse_if_else(&mut peek_nth(
+                "{{#if author}}true{{else}}false{{/if}}".chars()
+            ))
         );
     }
 }
