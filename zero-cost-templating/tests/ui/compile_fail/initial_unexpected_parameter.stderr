@@ -1,5 +1,5 @@
 error[E0061]: this function takes 0 arguments but 1 argument was supplied
-  --> tests/ui/compile_fail/initial_macro_unexpected_parameter.rs:11:20
+  --> tests/ui/compile_fail/initial_unexpected_parameter.rs:11:20
    |
 11 |     let template = test_initial0("unexpected");
    |                    ^^^^^^^^^^^^^ ------------
@@ -8,7 +8,7 @@ error[E0061]: this function takes 0 arguments but 1 argument was supplied
    |                                  help: remove the extra argument
    |
 note: function defined here
-  --> tests/ui/compile_fail/initial_macro_unexpected_parameter.rs:9:1
+  --> tests/ui/compile_fail/initial_unexpected_parameter.rs:9:1
    |
 9  | #[template_stream("test.html.hbs")]
    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
