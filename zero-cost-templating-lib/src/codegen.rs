@@ -175,16 +175,14 @@ impl<'a> VisitMut for InnerReplace<'a> {
 
 #[expect(clippy::too_many_lines, reason = "tmp")]
 #[expect(clippy::too_many_arguments, reason = "tmp")]
+/// return.0 is type and return.1 is create expression
 fn node_type(
     graph: &StableGraph<TemplateNode, IntermediateAstElement>,
     node_index: NodeIndex,
-    partial: &TokenStream,
-    after: &TokenStream,
-    partial_type: &TokenStream,
-    after_type: &TokenStream,
-    create: bool,
+    partial: (&TokenStream, &TokenStream),
+    after: (&TokenStream, &TokenStream),
     span: Span,
-) -> TokenStream {
+) -> (TokenStream, TokenStream) {
     // TODO FIXME depending on create parameter not all other parameters are needed?
     let node = &graph[node_index];
     match node.node_type {
@@ -196,25 +194,33 @@ fn node_type(
             let inner_after = node_type(
                 graph,
                 inner_after.target(),
-                &quote_spanned! {span=> () },
-                &quote_spanned! {span=> () },
-                &quote_spanned! {span=> _ },
-                &quote_spanned! {span=> _ },
-                false,
+                (&quote_spanned! {span=> () }, &quote_spanned! {span=> _ }),
+                (&quote_spanned! {span=> () }, &quote_spanned! {span=> _ }),
                 span,
             );
-            let create = create.then(|| {
-                Some(quote_spanned! {span=>
-                    {
-                        r#type: #partial.r#type,
-                        partial: (),
-                        after: Template { r#type: #inner_after, partial: (), after: #after }
-                    }
-                })
-            });
-            quote_spanned! {span=>
-                Template::<#partial_type, (), Template::<#inner_after, (), #after_type>> #create
-            }
+            let inner_after_type = inner_after.0;
+            let inner_after_create = inner_after.1;
+
+            let partial_type = partial.0;
+            let partial_create = partial.1;
+
+            let after_type = after.0;
+            let after_create = after.1;
+
+            let common = quote_spanned! {span=>
+                Template::<#partial_type, (), Template::<#inner_after_type, (), #after_type>>
+            };
+            let create = quote_spanned! {span=>
+                {
+                    r#type: #partial_create.r#type,
+                    partial: (),
+                    after: Template { r#type: #inner_after_create, partial: (), after: #after_create }
+                }
+            };
+
+            (common, quote_spanned! {span=>
+                #common #create
+            })
         }
         NodeType::InnerTemplate => {
             let inner_after = graph
