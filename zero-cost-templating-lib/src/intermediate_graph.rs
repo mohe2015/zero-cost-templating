@@ -210,9 +210,6 @@ pub fn children_to_ast(
                 };
             }
             Child::If(variable, if_children, else_children) => {
-                let before = graph.add_node(NodeType::Other);
-                last = before;
-
                 let (if_last, if_current) = children_to_ast(
                     template_name,
                     graph,
@@ -225,10 +222,33 @@ pub fn children_to_ast(
                 let (else_last, else_current) =
                     children_to_ast(template_name, graph, last, current, else_children, parent);
 
-                let after = graph.add_node(NodeType::Other);
+                // TODO FIXME generalize this flush of pending current node
+                let if_flush = graph.add_node(NodeType::Other);
+                let else_flush = graph.add_node(NodeType::Other);
 
-                graph.add_edge(if_last, after, if_current);
-                graph.add_edge(else_last, after, else_current);
+                graph.add_edge(if_last, if_flush, if_current);
+                graph.add_edge(else_last, else_flush, else_current);
+
+                let after: NodeIndex = graph.add_node(NodeType::Other);
+
+                graph.add_edge(
+                    if_flush,
+                    after,
+                    IntermediateAstElement {
+                        variable: None,
+                        escaping_fun: EscapingFunction::NoVariableStart,
+                        text: String::new(),
+                    },
+                );
+                graph.add_edge(
+                    else_flush,
+                    after,
+                    IntermediateAstElement {
+                        variable: None,
+                        escaping_fun: EscapingFunction::NoVariableStart,
+                        text: String::new(),
+                    },
+                );
 
                 last = after;
                 current = IntermediateAstElement {
