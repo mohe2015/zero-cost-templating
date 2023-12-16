@@ -93,6 +93,12 @@ pub struct TemplateNode {
     pub node_type: NodeType,
 }
 
+impl Display for TemplateNode {
+    fn fmt(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        write!(formatter, "{}: {:?}", self.template_name, self.node_type)
+    }
+}
+
 pub fn add_node_with_edge(
     graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
     last: NodeIndex,

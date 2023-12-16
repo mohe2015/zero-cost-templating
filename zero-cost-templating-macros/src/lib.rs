@@ -232,7 +232,7 @@ pub fn template_stream(
         format!(
             "{}",
             Dot::new(&graph.map(
-                |node_idx, node| format!("{}: {:?}", node_idx.index(), node),
+                |node_idx, node| format!("{}: {}", node_idx.index(), node),
                 |edge_idx, edge| format!("{}: {}", edge_idx.index(), edge)
             ))
         )
