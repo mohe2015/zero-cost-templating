@@ -157,7 +157,7 @@ pub fn template_stream(
         .collect();
 
     let mut graph = StableGraph::new();
-    let graph = &mut graph;
+    let mut graph = &mut graph;
     let first_nodes: HashMap<_, _> = inputs
         .iter()
         .map(|(path, template_name)| {
@@ -213,7 +213,6 @@ pub fn template_stream(
             TemplateCodegen {
                 template_name: template_name.to_owned(),
                 path: path.to_owned(),
-                graph,
                 first: *first,
                 last,
             }
@@ -241,12 +240,12 @@ pub fn template_stream(
     )
     .unwrap();
 
-    let code = codegen(&inputs);
+    let code = codegen(graph, &inputs);
 
     let mut item = parse_macro_input!(item as Item);
 
     if std::env::var_os("ZERO_COST_TEMPLATING_NO_EXPAND").is_none() {
-        InnerReplace(inputs).visit_item_mut(&mut item);
+        InnerReplace(inputs, graph).visit_item_mut(&mut item);
     }
 
     let expanded = quote! {

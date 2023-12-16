@@ -15,16 +15,20 @@ use syn::{visit_mut, Expr, ExprMethodCall, ExprPath};
 
 use crate::intermediate_graph::{EscapingFunction, IntermediateAstElement, NodeType, TemplateNode};
 
-pub struct InnerReplace(pub Vec<TemplateCodegen>);
+pub struct InnerReplace<'a>(
+    pub Vec<TemplateCodegen>,
+    pub &'a StableGraph<TemplateNode, IntermediateAstElement>,
+);
 
 fn handle_call(
+    graph: &StableGraph<TemplateNode, IntermediateAstElement>,
     ident: &Ident,
     template_variable: &syn::Expr,
     parameter: Option<&syn::Expr>,
     template_codegen: &TemplateCodegen,
     span: Span,
 ) -> Option<Expr> {
-    let edge = template_codegen.graph.edge_references().find(|edge| {
+    let edge = graph.edge_references().find(|edge| {
         let expected_ident = format_ident!(
             "{}_{}{}",
             template_codegen.template_name,
@@ -38,7 +42,7 @@ fn handle_call(
     });
     edge.map(|edge| {
         let template_struct = node_type(
-            &template_codegen.graph,
+            &graph,
             edge.source(),
             &quote_spanned! {span=> () },
             &quote_spanned! {span=> () },
@@ -47,8 +51,7 @@ fn handle_call(
             false,
             span,
         ); // good span for mismatched type error
-        let last_node = template_codegen
-            .graph
+        let last_node = graph
             .edges_directed(edge.target(), Direction::Outgoing)
             .next()
             .is_none();
@@ -56,7 +59,7 @@ fn handle_call(
             quote_spanned! {span=> _magic_expression_result.after }
         } else {
             node_type(
-                &template_codegen.graph,
+                &graph,
                 edge.target(),
                 &quote_spanned! {span=> _magic_expression_result.partial },
                 &quote_spanned! {span=> _magic_expression_result.after },
@@ -98,12 +101,13 @@ fn handle_call(
     })
 }
 
-impl InnerReplace {
+impl<'a> InnerReplace<'a> {
     fn magic_method_call(&self, input: &ExprMethodCall) -> Option<syn::Expr> {
         let ident = &input.method;
         match input.args.len() {
             0 | 1 => self.0.iter().find_map(|template_codegen| {
                 handle_call(
+                    self.1,
                     ident,
                     &input.receiver,
                     input.args.first(),
@@ -116,7 +120,7 @@ impl InnerReplace {
     }
 }
 
-impl VisitMut for InnerReplace {
+impl<'a> VisitMut for InnerReplace<'a> {
     fn visit_expr_mut(&mut self, node: &mut syn::Expr) {
         let span = node.span();
         match node {
@@ -143,7 +147,7 @@ impl VisitMut for InnerReplace {
                         );
                         (&initial_ident == ident).then(|| {
                             let template_struct = node_type(
-                                &template_codegen.graph,
+                                &self.1,
                                 template_codegen.first,
                                 &quote_spanned! {span=> () },
                                 &quote_spanned! {span=> () },
@@ -310,16 +314,15 @@ fn node_type(
 pub struct TemplateCodegen {
     pub path: PathBuf,
     pub template_name: String,
-    pub graph: StableGraph<TemplateNode, IntermediateAstElement>,
     pub first: NodeIndex,
     pub last: NodeIndex,
 }
 
-pub fn calculate_nodes(
-    template_codegen: &'_ TemplateCodegen,
-) -> impl Iterator<Item = proc_macro2::TokenStream> + '_ {
-    template_codegen
-        .graph
+pub fn calculate_nodes<'a>(
+    graph: &'a StableGraph<TemplateNode, IntermediateAstElement>,
+    template_codegen: &'a TemplateCodegen,
+) -> impl Iterator<Item = proc_macro2::TokenStream> + 'a {
+    graph
         .node_references()
         .filter_map(|(node_index, node)| match node.node_type {
             NodeType::InnerTemplate | NodeType::PartialBlock => None,
@@ -339,12 +342,12 @@ pub fn calculate_nodes(
         })
 }
 
-pub fn calculate_edges(
-    template_codegen: &'_ TemplateCodegen,
-) -> impl Iterator<Item = proc_macro2::TokenStream> + '_ {
-    template_codegen.graph.edge_references().map(|edge| {
-        let last_node = template_codegen
-            .graph
+pub fn calculate_edges<'a>(
+    graph: &'a StableGraph<TemplateNode, IntermediateAstElement>,
+    template_codegen: &'a TemplateCodegen,
+) -> impl Iterator<Item = proc_macro2::TokenStream> + 'a {
+    graph.edge_references().map(|edge| {
+        let last_node = graph
             .edges_directed(edge.target(), Direction::Outgoing)
             .next()
             .is_none();
@@ -352,7 +355,7 @@ pub fn calculate_edges(
             quote! { After }
         } else {
             node_type(
-                &template_codegen.graph,
+                graph,
                 edge.target(),
                 &quote! { $template.partial },
                 &quote! { $template.after },
@@ -389,7 +392,7 @@ pub fn calculate_edges(
                     , #variable: impl Into<::alloc::borrow::Cow<'static, str>>
                 }
             });
-        let impl_func = match &template_codegen.graph[edge.source()].node_type {
+        let impl_func = match &graph[edge.source()].node_type {
             NodeType::InnerTemplate | NodeType::PartialBlock => None,
             NodeType::Other => Some({
                 let impl_template_name = format_ident!(
@@ -397,7 +400,7 @@ pub fn calculate_edges(
                     template_codegen.template_name.to_upper_camel_case(),
                     edge.source().index().to_string(),
                 );
-                match &template_codegen.graph[edge.target()].node_type {
+                match &graph[edge.target()].node_type {
                     NodeType::PartialBlock => {
                         quote! {
                             impl<Partial: TemplateTypy,
@@ -436,17 +439,20 @@ pub fn calculate_edges(
 }
 
 #[must_use]
-pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
+pub fn codegen(
+    graph: &StableGraph<TemplateNode, IntermediateAstElement>,
+    templates: &[TemplateCodegen],
+) -> proc_macro2::TokenStream {
     let code = templates.iter().map(|template_codegen| {
-        let instructions = calculate_nodes(template_codegen);
-        let edges = calculate_edges(template_codegen);
+        let instructions = calculate_nodes(graph, template_codegen);
+        let edges = calculate_edges(graph, template_codegen);
         let ident = format_ident!(
             "{}_initial{}",
             template_codegen.template_name,
             template_codegen.first.index()
         );
         let template_struct = node_type(
-            &template_codegen.graph,
+            graph,
             template_codegen.first,
             &quote! { () },
             &quote! { () },
