@@ -76,7 +76,7 @@ impl Display for IntermediateAstElement {
 
 #[derive(Debug, Clone)]
 pub enum NodeType {
-    PartialBlock { after: String },
+    PartialBlock,
     InnerTemplate { name: String, partial: String },
     Other,
 }
@@ -161,20 +161,22 @@ pub fn children_to_ast(
                     },
                     IntermediateAstElement::Noop,
                 );
+
+                // This is needed so e.g. branching doesn't break the guarantee that there is exactly one successor node after InnerTemplate
+                last =
+                    add_node_with_edge(graph, last, NodeType::Other, IntermediateAstElement::Noop);
             }
             Child::PartialBlockPartial => {
                 last = add_node_with_edge(
                     graph,
                     last,
-                    NodeType::PartialBlock {
-                        after: format!(
-                            "{}Template{}",
-                            template_name.to_upper_camel_case(),
-                            last.index()
-                        ),
-                    },
+                    NodeType::PartialBlock,
                     IntermediateAstElement::Noop,
                 );
+
+                // This is needed so e.g. branching doesn't break the guarantee that there is exactly one successor node after PartialBlock
+                last =
+                    add_node_with_edge(graph, last, NodeType::Other, IntermediateAstElement::Noop);
             }
             Child::If(_variable, if_children, else_children) => {
                 let if_last = children_to_ast(template_name, graph, last, if_children, parent);
