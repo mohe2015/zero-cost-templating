@@ -251,6 +251,10 @@ fn node_type(
 
             let inner_after = graph
                 .edges_directed(node_index, Direction::Outgoing)
+                .filter(|edge| {
+                    *edge.weight() != IntermediateAstElement::InnerTemplate
+                        && *edge.weight() != IntermediateAstElement::PartialBlockPartial
+                })
                 .exactly_one()
                 .unwrap();
             let inner_after = node_type(
