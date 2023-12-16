@@ -137,86 +137,28 @@ pub fn children_to_ast(
                 );
             }
             Child::PartialBlockPartial => {
-                let previous = last;
-                let partial_block = graph.add_node(NodeType::Other);
-                last = partial_block;
-
-                graph.add_edge(previous, last, current);
-                current = IntermediateAstElement {
-                    variable: None,
-                    escaping_fun: EscapingFunction::NoVariableStart,
-                    text: String::new(),
-                };
-
-                let previous = last;
-                let after_partial_block = graph.add_node(NodeType::Other);
-                last = after_partial_block;
-
-                graph.add_edge(
-                    previous,
-                    last,
-                    IntermediateAstElement {
-                        variable: None,
-                        escaping_fun: EscapingFunction::NoVariableStart,
-                        text: String::new(),
-                    },
-                );
-
-                graph[partial_block] = NodeType::PartialBlock {
-                    after: format!(
-                        "{}Template{}",
-                        template_name.to_upper_camel_case(),
-                        after_partial_block.index()
-                    ),
-                };
-            }
-            Child::If(_variable, if_children, else_children) => {
-                let (if_last, if_current) = children_to_ast(
-                    template_name,
+                last = add_node_with_edge(
                     graph,
                     last,
-                    current.clone(),
-                    if_children,
-                    parent,
-                );
-
-                let (else_last, else_current) =
-                    children_to_ast(template_name, graph, last, current, else_children, parent);
-
-                // TODO FIXME generalize this flush of pending current node
-                let if_flush = graph.add_node(NodeType::Other);
-                let else_flush = graph.add_node(NodeType::Other);
-
-                graph.add_edge(if_last, if_flush, if_current);
-                graph.add_edge(else_last, else_flush, else_current);
-
-                let after: NodeIndex = graph.add_node(NodeType::Other);
-
-                graph.add_edge(
-                    if_flush,
-                    after,
-                    IntermediateAstElement {
-                        variable: None,
-                        escaping_fun: EscapingFunction::NoVariableStart,
-                        text: String::new(),
+                    NodeType::PartialBlock {
+                        after: format!(
+                            "{}Template{}",
+                            template_name.to_upper_camel_case(),
+                            last.index()
+                        ),
                     },
+                    IntermediateAstElement::Noop,
                 );
-                graph.add_edge(
-                    else_flush,
-                    after,
-                    IntermediateAstElement {
-                        variable: None,
-                        escaping_fun: EscapingFunction::NoVariableStart,
-                        text: String::new(),
-                    },
-                );
+            }
+            Child::If(_variable, if_children, else_children) => {
+                let if_last = children_to_ast(template_name, graph, last, if_children, parent);
 
-                last = after;
-                current = IntermediateAstElement {
-                    variable: None,
-                    escaping_fun: EscapingFunction::NoVariableStart,
-                    text: String::new(),
-                };
+                let else_last = children_to_ast(template_name, graph, last, else_children, parent);
+
+                last = graph.add_node(NodeType::Other);
+
+                graph.add_edge(if_last, last, IntermediateAstElement::Noop);
+                graph.add_edge(else_last, last, IntermediateAstElement::Noop);
             }
         }
     }
@@ -231,11 +173,20 @@ pub fn element_to_ast(
     input: Element,
 ) -> NodeIndex {
     let name = input.name;
-    write!(&mut current.text, "<{name}").unwrap();
+    last = add_node_with_edge(
+        graph,
+        last,
+        NodeType::Other,
+        IntermediateAstElement::Text("<{name}".to_owned()),
+    );
     for attribute in input.attributes {
-        write!(&mut current.text, r#" {}"#, attribute.key).unwrap();
         if let Some(value) = attribute.value {
-            write!(&mut current.text, r#"=""#).unwrap();
+            last = add_node_with_edge(
+                graph,
+                last,
+                NodeType::Other,
+                IntermediateAstElement::Text(format!(r#" {}=""#, attribute.key)),
+            );
             for value_part in value {
                 match value_part {
                     AttributeValuePart::Variable(next_variable) => {
@@ -248,31 +199,56 @@ pub fn element_to_ast(
                                  {attr}"
                             ),
                         };
-                        let previous = last;
-                        last = graph.add_node(NodeType::Other);
-                        graph.add_edge(previous, last, current);
-                        current = IntermediateAstElement {
-                            variable: Some(next_variable),
-                            escaping_fun,
-                            text: String::new(),
-                        };
+                        last = add_node_with_edge(
+                            graph,
+                            last,
+                            NodeType::Other,
+                            IntermediateAstElement::Variable(next_variable, escaping_fun),
+                        );
                     }
                     AttributeValuePart::Literal(string) => {
-                        write!(&mut current.text, "{string}").unwrap();
+                        last = add_node_with_edge(
+                            graph,
+                            last,
+                            NodeType::Other,
+                            IntermediateAstElement::Text(string),
+                        );
                     }
                 }
             }
-            write!(&mut current.text, r#"""#).unwrap();
+            last = add_node_with_edge(
+                graph,
+                last,
+                NodeType::Other,
+                IntermediateAstElement::Text(r#"""#.to_owned()),
+            );
+        } else {
+            last = add_node_with_edge(
+                graph,
+                last,
+                NodeType::Other,
+                IntermediateAstElement::Text(format!(r#" {}"#, attribute.key)),
+            );
         }
     }
-    write!(&mut current.text, ">").unwrap();
-    (last, current) = children_to_ast(template_name, graph, last, current, input.children, &name);
+    last = add_node_with_edge(
+        graph,
+        last,
+        NodeType::Other,
+        IntermediateAstElement::Text(">".to_owned()),
+    );
+    last = children_to_ast(template_name, graph, last, input.children, &name);
     // https://html.spec.whatwg.org/dev/syntax.html#void-elements
     match name.to_ascii_lowercase().as_str() {
         "!doctype" | "area" | "base" | "br" | "col" | "embed" | "hr" | "img" | "input" | "link"
         | "meta" | "source" | "track" | "wbr" => {}
         _ => {
-            write!(&mut current.text, "</{name}>").unwrap();
+            last = add_node_with_edge(
+                graph,
+                last,
+                NodeType::Other,
+                IntermediateAstElement::Text(format!("</{name}>")),
+            );
         }
     }
     last
