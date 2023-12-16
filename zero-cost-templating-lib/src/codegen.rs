@@ -179,11 +179,16 @@ impl<'a> VisitMut for InnerReplace<'a> {
 fn node_type(
     graph: &StableGraph<TemplateNode, IntermediateAstElement>,
     node_index: NodeIndex,
-    partial: (&TokenStream, &TokenStream),
-    after: (&TokenStream, &TokenStream),
+    partial: &(TokenStream, TokenStream),
+    after: &(TokenStream, TokenStream),
     span: Span,
 ) -> (TokenStream, TokenStream) {
-    // TODO FIXME depending on create parameter not all other parameters are needed?
+    let partial_type = partial.0;
+    let partial_create = partial.1;
+
+    let after_type = after.0;
+    let after_create = after.1;
+
     let node = &graph[node_index];
     match node.node_type {
         NodeType::PartialBlock => {
@@ -194,19 +199,13 @@ fn node_type(
             let inner_after = node_type(
                 graph,
                 inner_after.target(),
-                (&quote_spanned! {span=> () }, &quote_spanned! {span=> _ }),
-                (&quote_spanned! {span=> () }, &quote_spanned! {span=> _ }),
+                &(quote_spanned! {span=> () }, quote_spanned! {span=> _ }),
+                &(quote_spanned! {span=> () }, quote_spanned! {span=> _ }),
                 span,
             );
             let inner_after_type = inner_after.0;
             let inner_after_create = inner_after.1;
-
-            let partial_type = partial.0;
-            let partial_create = partial.1;
-
-            let after_type = after.0;
-            let after_create = after.1;
-
+          
             let common = quote_spanned! {span=>
                 Template::<#partial_type, (), Template::<#inner_after_type, (), #after_type>>
             };
@@ -234,13 +233,12 @@ fn node_type(
             let inner_after = node_type(
                 graph,
                 inner_after.target(),
-                &quote_spanned! {span=> () },
-                &quote_spanned! {span=> () },
-                &quote_spanned! {span=> _ },
-                &quote_spanned! {span=> _ },
-                false,
+                &(quote_spanned! {span=> () }, quote_spanned! {span=> _ }),
+                &(quote_spanned! {span=> () }, quote_spanned! {span=> _ }),
                 span,
             );
+            let inner_after_type = inner_after.0;
+            let inner_after_create = inner_after.1;
 
             let inner_partial = graph
                 .edges_directed(node_index, Direction::Outgoing)
@@ -250,59 +248,25 @@ fn node_type(
             let inner_partial = node_type(
                 graph,
                 inner_partial.target(),
-                &quote_spanned! {span=> () },
-                &quote_spanned! {span=> () },
-                &quote_spanned! {span=> _ },
-                &quote_spanned! {span=> _ },
-                create,
+                &(quote_spanned! {span=> () }, quote_spanned! {span=> _ }),
+                &inner_after,
                 span,
             );
+            let inner_partial_type = inner_partial.0;
+            let inner_partial_create = inner_partial.1;
 
             let inner_template = graph
                 .edges_directed(node_index, Direction::Outgoing)
                 .filter(|edge| *edge.weight() == IntermediateAstElement::InnerTemplate)
                 .exactly_one()
                 .unwrap();
-            let inner_template = node_type(
+            node_type(
                 graph,
                 inner_template.target(),
-                &quote_spanned! {span=> () },
-                &quote_spanned! {span=> () },
-                &quote_spanned! {span=> _ },
-                &quote_spanned! {span=> _ },
-                create,
+                &inner_partial,
+                &inner_after,
                 span,
-            );
-
-            // TODO FIXME this needs to properly use the others
-            let create = create.then(|| {
-                Some(quote_spanned! {span=>
-                    {
-                        r#type: #inner_template,
-                        partial: Template::<#inner_partial, (), Template::<#inner_after, (), ()>> {
-                            r#type: #inner_partial,
-                            partial: (),
-                            after: Template::<#inner_after, (), ()> {
-                                r#type: #inner_after,
-                                partial: (),
-                                after: ()
-                            }
-                        },
-                        after: Template::<#inner_after, (), ()> {
-                            r#type: #inner_after,
-                            partial: (),
-                            after: ()
-                        }
-                    }
-                })
-            });
-            quote_spanned! {span=>
-                Template::<
-                    #inner_template,
-                    Template::<#inner_partial, (), Template::<#inner_after, (), ()>>,
-                    Template::<#inner_after, (), ()>
-                > #create
-            }
+            )
         }
         NodeType::Other => {
             let ident = format_ident!(
@@ -311,14 +275,15 @@ fn node_type(
                 node_index.index().to_string(),
                 span = span
             );
-            let create = create.then(|| {
-                Some(quote_spanned! {span=>
-                    { r#type: #ident, partial: #partial, after: #after }
-                })
-            });
-            quote_spanned! {span=>
-                Template::<#ident, #partial_type, #after_type> #create
-            }
+            let common =  quote_spanned! {span=>
+                Template::<#ident, #partial_type, #after_type>
+            };
+            let create = quote_spanned! {span=>
+                { r#type: #ident, partial: #partial_create, after: #after_create }
+            };
+            (common, quote_spanned! {span=>
+                #common #create
+            })
         }
     }
 }
