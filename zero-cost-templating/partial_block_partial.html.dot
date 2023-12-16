@@ -5,7 +5,7 @@ digraph {
     3 [ label = "3: PartialBlock" ]
     4 [ label = "4: Other" ]
     5 [ label = "5: Other" ]
-    0 -> 1 [ label = "0: <p" ]
+    0 -> 1 [ label = "0: <{name}" ]
     1 -> 2 [ label = "1: >" ]
     2 -> 3 [ label = "2: noop" ]
     3 -> 4 [ label = "3: noop" ]

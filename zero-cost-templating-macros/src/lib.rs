@@ -106,6 +106,7 @@
 #![feature(lint_reasons)]
 #![feature(proc_macro_span)]
 
+use std::collections::HashMap;
 use std::fs::File;
 use std::io::Write;
 use std::path::PathBuf;
@@ -147,10 +148,28 @@ pub fn template_stream(
         .map(|file| {
             let path = root.join(file.value());
 
-            let file_name = path.file_name().unwrap().to_string_lossy();
+            let file_name = path.file_name().unwrap().to_string_lossy().to_string();
 
-            // TODO FIXME error if end doesn't match
             let template_name = file_name.trim_end_matches(".html.hbs");
+
+            (path, template_name.to_owned())
+        })
+        .collect();
+
+    let mut graph = StableGraph::new();
+    let first_nodes: HashMap<_, _> = inputs
+        .iter()
+        .map(|(path, template_name)| {
+            let first = graph.add_node(NodeType::Other);
+
+            (template_name, first)
+        })
+        .collect();
+
+    let inputs: Vec<_> = inputs
+        .iter()
+        .map(|(path, template_name)| {
+            // TODO FIXME error if end doesn't match
 
             let input = std::fs::read_to_string(&path).unwrap_or_else(|err| {
                 // TODO FIXME don't panic
@@ -177,9 +196,7 @@ pub fn template_stream(
                     );
                 }
             };
-
-            let mut graph = StableGraph::new();
-            let first = graph.add_node(NodeType::Other);
+            let first = first_nodes.get(template_name).unwrap();
             let last = children_to_ast(template_name, &mut graph, first, dom, "root");
 
             let mut file = File::create(path.with_extension("dot")).unwrap();

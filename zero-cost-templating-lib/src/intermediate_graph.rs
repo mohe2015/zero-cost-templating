@@ -77,7 +77,7 @@ impl Display for IntermediateAstElement {
 #[derive(Debug, Clone)]
 pub enum NodeType {
     PartialBlock,
-    InnerTemplate { name: String, partial: String },
+    InnerTemplate,
     Other,
 }
 
