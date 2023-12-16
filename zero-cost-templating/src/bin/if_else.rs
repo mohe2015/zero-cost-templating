@@ -5,14 +5,20 @@ extern crate alloc;
 
 use std::pin::pin;
 
-use alloc::borrow::Cow;
-
 use futures::StreamExt;
 use zero_cost_templating_macros::template_stream;
 
 #[template_stream("if_else.html.hbs")]
 pub async fn test() {
     let template = if_else_initial0();
+    let template = if 1 == 5 {
+        let template = template.if_else_template0();
+        template.if_else_template2()
+    } else {
+        let template = template.if_else_template1();
+        template.if_else_template3()
+    };
+    template.if_else_template4();
 }
 
 #[tokio::main]
