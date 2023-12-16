@@ -162,7 +162,7 @@ pub fn template_stream(
         .map(|(path, template_name)| {
             let first = graph.add_node(NodeType::Other);
 
-            (template_name, first)
+            (template_name.clone(), first)
         })
         .collect();
 
@@ -197,20 +197,8 @@ pub fn template_stream(
                 }
             };
             let first = first_nodes.get(template_name).unwrap();
-            let last = children_to_ast(template_name, &mut graph, first, dom, "root");
+            let last = children_to_ast(&first_nodes, template_name, &mut graph, first, dom, "root");
 
-            let mut file = File::create(path.with_extension("dot")).unwrap();
-            file.write_all(
-                format!(
-                    "{}",
-                    Dot::new(&graph.map(
-                        |node_idx, node| format!("{}: {:?}", node_idx.index(), node),
-                        |edge_idx, edge| format!("{}: {}", edge_idx.index(), edge)
-                    ))
-                )
-                .as_bytes(),
-            )
-            .unwrap();
             TemplateCodegen {
                 template_name: template_name.to_owned(),
                 path,
@@ -220,6 +208,19 @@ pub fn template_stream(
             }
         })
         .collect();
+
+    let mut file = File::create(path.with_extension("dot")).unwrap();
+    file.write_all(
+        format!(
+            "{}",
+            Dot::new(&graph.map(
+                |node_idx, node| format!("{}: {:?}", node_idx.index(), node),
+                |edge_idx, edge| format!("{}: {}", edge_idx.index(), edge)
+            ))
+        )
+        .as_bytes(),
+    )
+    .unwrap();
 
     let code = codegen(&inputs);
 

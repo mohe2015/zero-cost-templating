@@ -13,7 +13,7 @@ use syn::spanned::Spanned;
 use syn::visit_mut::VisitMut;
 use syn::{visit_mut, Expr, ExprMethodCall, ExprPath};
 
-use crate::intermediate_graph::{EscapingFunction, IntermediateAstElement, NodeType};
+use crate::intermediate_graph::{EscapingFunction, IntermediateAstElement, NodeType, TemplateNode};
 
 pub struct InnerReplace(pub Vec<TemplateCodegen>);
 
@@ -174,8 +174,7 @@ impl VisitMut for InnerReplace {
 
 #[expect(clippy::too_many_arguments, reason = "tmp")]
 fn node_type(
-    template_name: &str,
-    graph: &StableGraph<NodeType, IntermediateAstElement>,
+    graph: &StableGraph<TemplateNode, IntermediateAstElement>,
     node_index: NodeIndex,
     partial: &TokenStream,
     after: &TokenStream,
@@ -192,7 +191,6 @@ fn node_type(
                 .exactly_one()
                 .unwrap();
             let inner_after = node_type(
-                template_name,
                 graph,
                 inner_after.target(),
                 &quote_spanned! {span=> () },
@@ -215,18 +213,28 @@ fn node_type(
                 Template::<#partial_type, (), Template::<#inner_after, (), #after_type>> #create
             }
         }
-        NodeType::InnerTemplate {
-            name,
-            partial: inner_partial,
-        } => {
-            let name = format_ident!("{}", name, span = span);
+        NodeType::InnerTemplate => {
+            let inner_template = graph
+                .edges_directed(node_index, Direction::Outgoing)
+                .exactly_one()
+                .unwrap();
+            let inner_template = node_type(
+                graph,
+                inner_template.target(),
+                &quote_spanned! {span=> () },
+                &quote_spanned! {span=> () },
+                &quote_spanned! {span=> _ },
+                &quote_spanned! {span=> _ },
+                create,
+                span,
+            );
+
             let inner_partial = format_ident!("{}", inner_partial, span = span);
             let inner_after = graph
                 .edges_directed(node_index, Direction::Outgoing)
                 .exactly_one()
                 .unwrap();
             let inner_after = node_type(
-                template_name,
                 graph,
                 inner_after.target(),
                 &quote_spanned! {span=> () },
@@ -239,7 +247,7 @@ fn node_type(
             let create = create.then(|| {
                 Some(quote_spanned! {span=>
                     {
-                        r#type: #name,
+                        r#type: #inner_template,
                         partial: Template::<#inner_partial, (), Template::<#inner_after, (), ()>> {
                             r#type: #inner_partial,
                             partial: (),
@@ -259,7 +267,7 @@ fn node_type(
             });
             quote_spanned! {span=>
                 Template::<
-                    #name,
+                    #inner_template,
                     Template::<#inner_partial, (), Template::<#inner_after, (), ()>>,
                     Template::<#inner_after, (), ()>
                 > #create
@@ -300,7 +308,7 @@ pub fn calculate_nodes(
         .graph
         .node_references()
         .filter_map(|(node_index, node)| match node {
-            NodeType::InnerTemplate { .. } | NodeType::PartialBlock => None,
+            NodeType::InnerTemplate | NodeType::PartialBlock => None,
             NodeType::Other => Some(format_ident!(
                 "{}Template{}",
                 template_codegen.template_name.to_upper_camel_case(),
@@ -369,7 +377,7 @@ pub fn calculate_edges(
                 }
             });
         let impl_func = match &template_codegen.graph[edge.source()] {
-            NodeType::InnerTemplate { .. } | NodeType::PartialBlock => None,
+            NodeType::InnerTemplate | NodeType::PartialBlock => None,
             NodeType::Other => Some({
                 let impl_template_name = format_ident!(
                     "{}Template{}",
@@ -395,7 +403,7 @@ pub fn calculate_edges(
                             }
                         }
                     }
-                    NodeType::InnerTemplate { .. } | NodeType::Other => {
+                    NodeType::InnerTemplate | NodeType::Other => {
                         quote! {
                             impl<Partial: Templaty, After: Templaty>
                                 Template<#impl_template_name, Partial, After> {
