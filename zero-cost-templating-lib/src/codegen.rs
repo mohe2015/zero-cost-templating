@@ -44,13 +44,10 @@ fn handle_call(
         let template_struct = node_type(
             graph,
             edge.source(),
-            &quote_spanned! {span=> () },
-            &quote_spanned! {span=> () },
-            &quote_spanned! {span=> _ },
-            &quote_spanned! {span=> _ },
-            false,
+            &(quote_spanned! {span=> () }, quote_spanned! {span=> _ }),
+            &(quote_spanned! {span=> () }, quote_spanned! {span=> _ }),
             span,
-        ); // good span for mismatched type error
+        ).0; // good span for mismatched type error
         let last_node = graph
             .edges_directed(edge.target(), Direction::Outgoing)
             .next()
@@ -61,13 +58,10 @@ fn handle_call(
             node_type(
                 graph,
                 edge.target(),
-                &quote_spanned! {span=> _magic_expression_result.partial },
-                &quote_spanned! {span=> _magic_expression_result.after },
-                &quote_spanned! {span=> _ },
-                &quote_spanned! {span=> _ },
-                true,
+                &(quote_spanned! {span=> _magic_expression_result.partial }, quote_spanned! {span=> _ }),
+                &(quote_spanned! {span=> _magic_expression_result.after }, quote_spanned! {span=> _ }),
                 span,
-            )
+            ).1
         };
 
         // TODO FIXME fix unwrap by better matching here in general
@@ -149,13 +143,10 @@ impl<'a> VisitMut for InnerReplace<'a> {
                             let template_struct = node_type(
                                 self.1,
                                 template_codegen.first,
-                                &quote_spanned! {span=> () },
-                                &quote_spanned! {span=> () },
-                                &quote_spanned! {span=> _ },
-                                &quote_spanned! {span=> _ },
-                                true,
+                                &(quote_spanned! {span=> () }, quote_spanned! {span=> _ }),
+                                &(quote_spanned! {span=> () }, quote_spanned! {span=> _ }),
                                 span,
-                            );
+                            ).1;
                             Expr::Verbatim(quote_spanned! {span=>
                                 #template_struct
                             })
@@ -183,11 +174,11 @@ fn node_type(
     after: &(TokenStream, TokenStream),
     span: Span,
 ) -> (TokenStream, TokenStream) {
-    let partial_type = partial.0;
-    let partial_create = partial.1;
+    let partial_type = &partial.0;
+    let partial_create = &partial.1;
 
-    let after_type = after.0;
-    let after_create = after.1;
+    let after_type = &after.0;
+    let after_create = &after.1;
 
     let node = &graph[node_index];
     match node.node_type {
@@ -217,7 +208,7 @@ fn node_type(
                 }
             };
 
-            (common, quote_spanned! {span=>
+            (common.clone(), quote_spanned! {span=>
                 #common #create
             })
         }
@@ -237,8 +228,6 @@ fn node_type(
                 &(quote_spanned! {span=> () }, quote_spanned! {span=> _ }),
                 span,
             );
-            let inner_after_type = inner_after.0;
-            let inner_after_create = inner_after.1;
 
             let inner_partial = graph
                 .edges_directed(node_index, Direction::Outgoing)
@@ -252,8 +241,6 @@ fn node_type(
                 &inner_after,
                 span,
             );
-            let inner_partial_type = inner_partial.0;
-            let inner_partial_create = inner_partial.1;
 
             let inner_template = graph
                 .edges_directed(node_index, Direction::Outgoing)
@@ -281,7 +268,7 @@ fn node_type(
             let create = quote_spanned! {span=>
                 { r#type: #ident, partial: #partial_create, after: #after_create }
             };
-            (common, quote_spanned! {span=>
+            (common.clone(), quote_spanned! {span=>
                 #common #create
             })
         }
@@ -333,13 +320,10 @@ pub fn calculate_edges<'a>(
             node_type(
                 graph,
                 edge.target(),
-                &quote! { $template.partial },
-                &quote! { $template.after },
-                &quote! { Partial },
-                &quote! { After },
-                false,
+                &(quote! { $template.partial }, quote! { Partial }),
+                &(quote! { $template.after }, quote! { After }),
                 Span::call_site(),
-            )
+            ).0
         };
         let variable_name = edge.weight().variable_name().as_ref().map_or_else(
             || {
@@ -430,13 +414,10 @@ pub fn codegen(
         let template_struct = node_type(
             graph,
             template_codegen.first,
-            &quote! { () },
-            &quote! { () },
-            &quote! { () },
-            &quote! { () },
-            false,
+            &(quote! { () }, quote! { () }),
+            &(quote! { () }, quote! { () }),
             Span::call_site(),
-        );
+        ).0;
         let other = quote! {
             #[allow(unused)]
             /// Start
