@@ -1,7 +1,6 @@
 use core::fmt::Display;
 use std::collections::HashMap;
 
-use heck::ToUpperCamelCase;
 use petgraph::stable_graph::{NodeIndex, StableGraph};
 
 use crate::html_recursive_descent::{AttributeValuePart, Child, Element};
@@ -88,9 +87,10 @@ pub enum NodeType {
     Other,
 }
 
+#[derive(Debug, Clone)]
 pub struct TemplateNode {
-    template_name: String,
-    node_type: NodeType,
+    pub template_name: String,
+    pub node_type: NodeType,
 }
 
 pub fn add_node_with_edge(

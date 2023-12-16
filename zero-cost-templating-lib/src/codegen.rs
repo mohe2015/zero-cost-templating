@@ -38,7 +38,6 @@ fn handle_call(
     });
     edge.map(|edge| {
         let template_struct = node_type(
-            template_codegen.template_name.as_str(),
             &template_codegen.graph,
             edge.source(),
             &quote_spanned! {span=> () },
@@ -57,7 +56,6 @@ fn handle_call(
             quote_spanned! {span=> _magic_expression_result.after }
         } else {
             node_type(
-                template_codegen.template_name.as_str(),
                 &template_codegen.graph,
                 edge.target(),
                 &quote_spanned! {span=> _magic_expression_result.partial },
@@ -145,7 +143,6 @@ impl VisitMut for InnerReplace {
                         );
                         (&initial_ident == ident).then(|| {
                             let template_struct = node_type(
-                                template_codegen.template_name.as_str(),
                                 &template_codegen.graph,
                                 template_codegen.first,
                                 &quote_spanned! {span=> () },
@@ -184,7 +181,8 @@ fn node_type(
     span: Span,
 ) -> TokenStream {
     // TODO FIXME depending on create parameter not all other parameters are needed?
-    match &graph[node_index] {
+    let node = graph[node_index];
+    match node.node_type {
         NodeType::PartialBlock => {
             let inner_after = graph
                 .edges_directed(node_index, Direction::Outgoing)
@@ -276,7 +274,7 @@ fn node_type(
         NodeType::Other => {
             let ident = format_ident!(
                 "{}Template{}",
-                template_name.to_upper_camel_case(),
+                node.template_name.to_upper_camel_case(),
                 node_index.index().to_string(),
                 span = span
             );
@@ -296,7 +294,7 @@ fn node_type(
 pub struct TemplateCodegen {
     pub path: PathBuf,
     pub template_name: String,
-    pub graph: StableGraph<NodeType, IntermediateAstElement>,
+    pub graph: StableGraph<TemplateNode, IntermediateAstElement>,
     pub first: NodeIndex,
     pub last: NodeIndex,
 }
@@ -307,7 +305,7 @@ pub fn calculate_nodes(
     template_codegen
         .graph
         .node_references()
-        .filter_map(|(node_index, node)| match node {
+        .filter_map(|(node_index, node)| match node.node_type {
             NodeType::InnerTemplate | NodeType::PartialBlock => None,
             NodeType::Other => Some(format_ident!(
                 "{}Template{}",
@@ -338,7 +336,6 @@ pub fn calculate_edges(
             quote! { After }
         } else {
             node_type(
-                &template_codegen.template_name,
                 &template_codegen.graph,
                 edge.target(),
                 &quote! { $template.partial },
@@ -376,7 +373,7 @@ pub fn calculate_edges(
                     , #variable: impl Into<::alloc::borrow::Cow<'static, str>>
                 }
             });
-        let impl_func = match &template_codegen.graph[edge.source()] {
+        let impl_func = match &template_codegen.graph[edge.source()].node_type {
             NodeType::InnerTemplate | NodeType::PartialBlock => None,
             NodeType::Other => Some({
                 let impl_template_name = format_ident!(
@@ -384,7 +381,7 @@ pub fn calculate_edges(
                     template_codegen.template_name.to_upper_camel_case(),
                     edge.source().index().to_string(),
                 );
-                match &template_codegen.graph[edge.target()] {
+                match &template_codegen.graph[edge.target()].node_type {
                     NodeType::PartialBlock => {
                         quote! {
                             impl<Partial: TemplateTypy,
@@ -433,7 +430,6 @@ pub fn codegen(templates: &[TemplateCodegen]) -> proc_macro2::TokenStream {
             template_codegen.first.index()
         );
         let template_struct = node_type(
-            template_codegen.template_name.as_str(),
             &template_codegen.graph,
             template_codegen.first,
             &quote! { () },
