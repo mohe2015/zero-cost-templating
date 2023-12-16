@@ -111,7 +111,7 @@ use std::fs::File;
 use std::io::Write;
 use std::path::PathBuf;
 
-use itertools::peek_nth;
+use itertools::{peek_nth, Itertools};
 use petgraph::dot::Dot;
 use petgraph::stable_graph::StableGraph;
 use quote::quote;
@@ -120,7 +120,7 @@ use syn::visit_mut::VisitMut;
 use syn::{parse_macro_input, Item, LitStr, Token};
 use zero_cost_templating_lib::codegen::{codegen, InnerReplace, TemplateCodegen};
 use zero_cost_templating_lib::html_recursive_descent::parse_children;
-use zero_cost_templating_lib::intermediate_graph::{children_to_ast, NodeType};
+use zero_cost_templating_lib::intermediate_graph::{children_to_ast, NodeType, TemplateNode};
 
 // https://veykril.github.io/posts/ide-proc-macros/
 // https://github.com/rust-lang/rust-analyzer/pull/11444
@@ -157,10 +157,14 @@ pub fn template_stream(
         .collect();
 
     let mut graph = StableGraph::new();
+    let graph = &mut graph;
     let first_nodes: HashMap<_, _> = inputs
         .iter()
         .map(|(path, template_name)| {
-            let first = graph.add_node(NodeType::Other);
+            let first = graph.add_node(TemplateNode {
+                template_name: template_name.to_owned(),
+                node_type: NodeType::Other,
+            });
 
             (template_name.clone(), first)
         })
@@ -184,7 +188,7 @@ pub fn template_stream(
                         remaining_input,
                         "",
                         "File: {}\n{element:?}\nremaining input: {remaining_input}",
-                        file.value()
+                        path.display()
                     );
                     element
                 }
@@ -192,24 +196,39 @@ pub fn template_stream(
                     let remaining_input: String = input.collect();
                     panic!(
                         "File: {}\n{error}\nremaining input: {remaining_input}",
-                        file.value()
+                        path.display()
                     );
                 }
             };
             let first = first_nodes.get(template_name).unwrap();
-            let last = children_to_ast(&first_nodes, template_name, &mut graph, first, dom, "root");
+            let last = children_to_ast(
+                &first_nodes,
+                &template_name,
+                &mut graph,
+                *first,
+                dom,
+                "root",
+            );
 
             TemplateCodegen {
                 template_name: template_name.to_owned(),
-                path,
+                path: path.to_owned(),
                 graph,
-                first,
+                first: *first,
                 last,
             }
         })
         .collect();
 
-    let mut file = File::create(path.with_extension("dot")).unwrap();
+    let mut file = File::create(
+        inputs
+            .first()
+            .unwrap()
+            .path
+            .with_file_name(inputs.iter().map(|f| f.template_name.clone()).join(","))
+            .with_extension("dot"),
+    )
+    .unwrap();
     file.write_all(
         format!(
             "{}",

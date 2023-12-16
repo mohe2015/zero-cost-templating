@@ -181,7 +181,7 @@ fn node_type(
     span: Span,
 ) -> TokenStream {
     // TODO FIXME depending on create parameter not all other parameters are needed?
-    let node = graph[node_index];
+    let node = &graph[node_index];
     match node.node_type {
         NodeType::PartialBlock => {
             let inner_after = graph
@@ -214,6 +214,7 @@ fn node_type(
         NodeType::InnerTemplate => {
             let inner_template = graph
                 .edges_directed(node_index, Direction::Outgoing)
+                .filter(|edge| *edge.weight() == IntermediateAstElement::InnerTemplate)
                 .exactly_one()
                 .unwrap();
             let inner_template = node_type(
@@ -227,7 +228,22 @@ fn node_type(
                 span,
             );
 
-            let inner_partial = format_ident!("{}", inner_partial, span = span);
+            let inner_partial = graph
+                .edges_directed(node_index, Direction::Outgoing)
+                .filter(|edge| *edge.weight() == IntermediateAstElement::PartialBlockPartial)
+                .exactly_one()
+                .unwrap();
+            let inner_partial = node_type(
+                graph,
+                inner_partial.target(),
+                &quote_spanned! {span=> () },
+                &quote_spanned! {span=> () },
+                &quote_spanned! {span=> _ },
+                &quote_spanned! {span=> _ },
+                create,
+                span,
+            );
+
             let inner_after = graph
                 .edges_directed(node_index, Direction::Outgoing)
                 .exactly_one()

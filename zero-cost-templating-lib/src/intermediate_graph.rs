@@ -105,9 +105,10 @@ pub fn add_node_with_edge(
 }
 
 #[must_use]
+#[expect(clippy::too_many_lines, reason = "tmp")]
 pub fn children_to_ast(
     first_nodes: &HashMap<String, NodeIndex>,
-    template_name: String,
+    template_name: &str,
     graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
     mut last: NodeIndex,
     input: Vec<Child>,
@@ -126,7 +127,7 @@ pub fn children_to_ast(
                     graph,
                     last,
                     TemplateNode {
-                        template_name,
+                        template_name: template_name.to_owned(),
                         node_type: NodeType::Other,
                     },
                     IntermediateAstElement::Variable(next_variable, escaping_fun),
@@ -137,7 +138,7 @@ pub fn children_to_ast(
                     graph,
                     last,
                     TemplateNode {
-                        template_name,
+                        template_name: template_name.to_owned(),
                         node_type: NodeType::Other,
                     },
                     IntermediateAstElement::Text(string),
@@ -148,7 +149,7 @@ pub fn children_to_ast(
                     !(parent == "script" || parent == "style"),
                     "children are unsafe in <script> and <style>"
                 );
-                last = element_to_ast(first_nodes, template_name, graph, last, element);
+                last = element_to_ast(first_nodes, &template_name, graph, last, element);
             }
             Child::Each(_identifier, children) => {
                 let loop_start = last;
@@ -158,12 +159,12 @@ pub fn children_to_ast(
             }
             Child::PartialBlock(name, children) => {
                 let partial_block_partial = graph.add_node(TemplateNode {
-                    template_name,
+                    template_name: template_name.to_owned(),
                     node_type: NodeType::Other,
                 });
                 let _partial_block_partial_end = children_to_ast(
                     first_nodes,
-                    template_name,
+                    template_name.clone(),
                     graph,
                     partial_block_partial,
                     children,
@@ -171,7 +172,7 @@ pub fn children_to_ast(
                 );
 
                 let inner_template = graph.add_node(TemplateNode {
-                    template_name,
+                    template_name: template_name.to_owned(),
                     node_type: NodeType::InnerTemplate,
                 });
 
@@ -199,7 +200,7 @@ pub fn children_to_ast(
                     graph,
                     last,
                     TemplateNode {
-                        template_name,
+                        template_name: template_name.to_owned(),
                         node_type: NodeType::Other,
                     },
                     IntermediateAstElement::Noop,
@@ -210,7 +211,7 @@ pub fn children_to_ast(
                     graph,
                     last,
                     TemplateNode {
-                        template_name,
+                        template_name: template_name.to_owned(),
                         node_type: NodeType::PartialBlock,
                     },
                     IntermediateAstElement::Noop,
@@ -222,19 +223,25 @@ pub fn children_to_ast(
                     graph,
                     last,
                     TemplateNode {
-                        template_name,
+                        template_name: template_name.to_owned(),
                         node_type: NodeType::Other,
                     },
                     IntermediateAstElement::Noop,
                 );
             }
             Child::If(_variable, if_children, else_children) => {
-                let if_last =
-                    children_to_ast(first_nodes, template_name, graph, last, if_children, parent);
+                let if_last = children_to_ast(
+                    first_nodes,
+                    template_name.clone(),
+                    graph,
+                    last,
+                    if_children,
+                    parent,
+                );
 
                 let else_last = children_to_ast(
                     first_nodes,
-                    template_name,
+                    template_name.clone(),
                     graph,
                     last,
                     else_children,
@@ -242,7 +249,7 @@ pub fn children_to_ast(
                 );
 
                 last = graph.add_node(TemplateNode {
-                    template_name,
+                    template_name: template_name.to_owned(),
                     node_type: NodeType::Other,
                 });
 
@@ -255,9 +262,10 @@ pub fn children_to_ast(
 }
 
 #[must_use]
+#[expect(clippy::too_many_lines, reason = "tmp")]
 pub fn element_to_ast(
     first_nodes: &HashMap<String, NodeIndex>,
-    template_name: String,
+    template_name: &str,
     graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
     mut last: NodeIndex,
     input: Element,
@@ -267,7 +275,7 @@ pub fn element_to_ast(
         graph,
         last,
         TemplateNode {
-            template_name,
+            template_name: template_name.to_owned(),
             node_type: NodeType::Other,
         },
         IntermediateAstElement::Text(format!("<{name}")),
@@ -278,7 +286,7 @@ pub fn element_to_ast(
                 graph,
                 last,
                 TemplateNode {
-                    template_name,
+                    template_name: template_name.to_owned(),
                     node_type: NodeType::Other,
                 },
                 IntermediateAstElement::Text(format!(r#" {}=""#, attribute.key)),
@@ -299,7 +307,7 @@ pub fn element_to_ast(
                             graph,
                             last,
                             TemplateNode {
-                                template_name,
+                                template_name: template_name.to_owned(),
                                 node_type: NodeType::Other,
                             },
                             IntermediateAstElement::Variable(next_variable, escaping_fun),
@@ -310,7 +318,7 @@ pub fn element_to_ast(
                             graph,
                             last,
                             TemplateNode {
-                                template_name,
+                                template_name: template_name.to_owned(),
                                 node_type: NodeType::Other,
                             },
                             IntermediateAstElement::Text(string),
@@ -322,7 +330,7 @@ pub fn element_to_ast(
                 graph,
                 last,
                 TemplateNode {
-                    template_name,
+                    template_name: template_name.to_owned(),
                     node_type: NodeType::Other,
                 },
                 IntermediateAstElement::Text(r#"""#.to_owned()),
@@ -332,7 +340,7 @@ pub fn element_to_ast(
                 graph,
                 last,
                 TemplateNode {
-                    template_name,
+                    template_name: template_name.to_owned(),
                     node_type: NodeType::Other,
                 },
                 IntermediateAstElement::Text(format!(r#" {}"#, attribute.key)),
@@ -343,7 +351,7 @@ pub fn element_to_ast(
         graph,
         last,
         TemplateNode {
-            template_name,
+            template_name: template_name.to_owned(),
             node_type: NodeType::Other,
         },
         IntermediateAstElement::Text(">".to_owned()),
@@ -365,7 +373,7 @@ pub fn element_to_ast(
                 graph,
                 last,
                 TemplateNode {
-                    template_name,
+                    template_name: template_name.to_owned(),
                     node_type: NodeType::Other,
                 },
                 IntermediateAstElement::Text(format!("</{name}>")),
