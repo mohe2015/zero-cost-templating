@@ -206,7 +206,7 @@ pub fn element_to_ast(
         graph,
         last,
         NodeType::Other,
-        IntermediateAstElement::Text("<{name}".to_owned()),
+        IntermediateAstElement::Text(format!("<{name}")),
     );
     for attribute in input.attributes {
         if let Some(value) = attribute.value {

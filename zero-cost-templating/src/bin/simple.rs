@@ -15,7 +15,11 @@ use zero_cost_templating::template_stream;
 // search for
 // `{static coroutine@
 
-#[template_stream("test.html.hbs")]
+#[template_stream(
+    "test.html.hbs",
+    "partial_block.html.hbs",
+    "partial_block_partial.html.hbs"
+)]
 pub async fn test() {}
 
 pub fn main() {}

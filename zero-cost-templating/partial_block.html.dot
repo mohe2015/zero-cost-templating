@@ -11,7 +11,7 @@ digraph {
     9 [ label = "9: Other" ]
     10 [ label = "10: Other" ]
     11 [ label = "11: Other" ]
-    0 -> 1 [ label = "0: <{name}" ]
+    0 -> 1 [ label = "0: <span" ]
     1 -> 2 [ label = "1: >" ]
     2 -> 3 [ label = "2: hello" ]
     4 -> 5 [ label = "3: childrenstart" ]
