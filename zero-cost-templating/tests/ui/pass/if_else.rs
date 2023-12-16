@@ -40,7 +40,6 @@ pub async fn test_false() {
     template.if_else_template4();
 }
 
-#[tokio::test]
 async fn if_else_true_output() {
     use crate::if_else_true::test_true;
 
@@ -53,7 +52,6 @@ async fn if_else_true_output() {
     assert_eq!("true", actual);
 }
 
-#[tokio::test]
 async fn if_else_false_output() {
     let mut actual = String::new();
     let stream = test_false();
@@ -62,4 +60,13 @@ async fn if_else_false_output() {
         actual.push_str(&value);
     }
     assert_eq!("false", actual);
+}
+
+#[tokio::main]
+pub async fn main() {
+    if option_env!("ZERO_COST_TEMPLATING_NO_EXPAND").is_some() {
+        return;
+    }
+    if_else_true_output().await;
+    if_else_false_output().await;
 }
