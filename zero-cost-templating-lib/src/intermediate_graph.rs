@@ -1,10 +1,7 @@
 use core::fmt::{Display, Write};
 
 use heck::ToUpperCamelCase;
-use petgraph::{
-    data::Build,
-    stable_graph::{NodeIndex, StableGraph},
-};
+use petgraph::stable_graph::{NodeIndex, StableGraph};
 
 use crate::html_recursive_descent::{AttributeValuePart, Child, Element};
 
@@ -209,7 +206,7 @@ pub fn children_to_ast(
                     ),
                 };
             }
-            Child::If(variable, if_children, else_children) => {
+            Child::If(_variable, if_children, else_children) => {
                 let (if_last, if_current) = children_to_ast(
                     template_name,
                     graph,
