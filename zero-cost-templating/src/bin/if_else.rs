@@ -12,7 +12,7 @@ use zero_cost_templating_macros::template_stream;
 
 #[template_stream("if_else.html.hbs")]
 pub async fn test() {
-    let template = test_initial0();
+    let template = if_else_initial0();
 }
 
 #[tokio::main]

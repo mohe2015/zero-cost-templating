@@ -1,7 +1,10 @@
 use core::fmt::{Display, Write};
 
 use heck::ToUpperCamelCase;
-use petgraph::stable_graph::{NodeIndex, StableGraph};
+use petgraph::{
+    data::Build,
+    stable_graph::{NodeIndex, StableGraph},
+};
 
 use crate::html_recursive_descent::{AttributeValuePart, Child, Element};
 
@@ -206,7 +209,34 @@ pub fn children_to_ast(
                     ),
                 };
             }
-            Child::If(_, _, _) => todo!(),
+            Child::If(variable, if_children, else_children) => {
+                let before = graph.add_node(NodeType::Other);
+                last = before;
+
+                let (if_last, if_current) = children_to_ast(
+                    template_name,
+                    graph,
+                    last,
+                    current.clone(),
+                    if_children,
+                    parent,
+                );
+
+                let (else_last, else_current) =
+                    children_to_ast(template_name, graph, last, current, else_children, parent);
+
+                let after = graph.add_node(NodeType::Other);
+
+                graph.add_edge(if_last, after, if_current);
+                graph.add_edge(else_last, after, else_current);
+
+                last = after;
+                current = IntermediateAstElement {
+                    variable: None,
+                    escaping_fun: EscapingFunction::NoVariableStart,
+                    text: String::new(),
+                };
+            }
         }
     }
     (last, current)
