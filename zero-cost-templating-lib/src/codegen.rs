@@ -320,8 +320,8 @@ pub fn calculate_edges<'a>(
             node_type(
                 graph,
                 edge.target(),
-                &(quote! { $template.partial }, quote! { Partial }),
-                &(quote! { $template.after }, quote! { After }),
+                &(quote! { Partial }, quote! { template.partial }),
+                &(quote! { After }, quote! { template.after }),
                 Span::call_site(),
             ).0
         };
