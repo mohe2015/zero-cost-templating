@@ -119,9 +119,7 @@ use syn::visit_mut::VisitMut;
 use syn::{parse_macro_input, Item, LitStr, Token};
 use zero_cost_templating_lib::codegen::{codegen, InnerReplace, TemplateCodegen};
 use zero_cost_templating_lib::html_recursive_descent::parse_children;
-use zero_cost_templating_lib::intermediate_graph::{
-    children_to_ast, NodeType,
-};
+use zero_cost_templating_lib::intermediate_graph::{children_to_ast, NodeType};
 
 // https://veykril.github.io/posts/ide-proc-macros/
 // https://github.com/rust-lang/rust-analyzer/pull/11444
@@ -135,7 +133,8 @@ pub fn template_stream(
     attributes: proc_macro::TokenStream,
     item: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
-    let input_paths = parse_macro_input!(attributes with Punctuated::<LitStr, Token![,]>::parse_separated_nonempty);
+    let input_paths = parse_macro_input!(attributes
+        with Punctuated::<LitStr, Token![,]>::parse_separated_nonempty);
     // https://github.com/dtolnay/trybuild/issues/202
     let cargo_manifest_dir = std::env::var_os("CARGO_MANIFEST_DIR_OVERRIDE")
         .or_else(|| std::env::var_os("CARGO_MANIFEST_DIR"))

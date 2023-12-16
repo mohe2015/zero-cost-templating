@@ -18,9 +18,9 @@ regex = "1"
 trybuild = "1"
 iai-callgrind = "0.8"
 
-[[bench]]
-name = "my_benchmark"
-harness = false
+#[[bench]]
+#name = "my_benchmark"
+#harness = false
 
 #[[bin]]
 #name = "initial_macro_unexpected_parameter"
@@ -58,6 +58,6 @@ harness = false
 #name = "wrong_type"
 #path = "tests/ui/compile_fail/wrong_type.rs"
 
-[[bin]]
-name = "working_no_loop"
-path = "tests/ui/pass/working_no_loop.rs"
+#[[bin]]
+#name = "working_no_loop"
+#path = "tests/ui/pass/working_no_loop.rs"

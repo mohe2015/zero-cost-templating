@@ -29,7 +29,8 @@ pub enum IntermediateAstElement {
 }
 
 impl IntermediateAstElement {
-    #[must_use] pub const fn variable(&self) -> Option<(&String, &EscapingFunction)> {
+    #[must_use]
+    pub const fn variable(&self) -> Option<(&String, &EscapingFunction)> {
         if let Self::Variable(name, escaping_fun) = self {
             Some((name, escaping_fun))
         } else {
@@ -37,7 +38,8 @@ impl IntermediateAstElement {
         }
     }
 
-    #[must_use] pub const fn variable_name(&self) -> Option<&String> {
+    #[must_use]
+    pub const fn variable_name(&self) -> Option<&String> {
         if let Self::Variable(name, _) = self {
             Some(name)
         } else {
@@ -45,7 +47,8 @@ impl IntermediateAstElement {
         }
     }
 
-    #[must_use] pub const fn text(&self) -> Option<&String> {
+    #[must_use]
+    pub const fn text(&self) -> Option<&String> {
         if let Self::Text(string) = self {
             Some(string)
         } else {
@@ -158,7 +161,8 @@ pub fn children_to_ast(
                     IntermediateAstElement::Noop,
                 );
 
-                // This is needed so e.g. branching doesn't break the guarantee that there is exactly one successor node after InnerTemplate
+                // This is needed so e.g. branching doesn't break the guarantee that
+                // there is exactly one successor node after InnerTemplate
                 last =
                     add_node_with_edge(graph, last, NodeType::Other, IntermediateAstElement::Noop);
             }
@@ -170,7 +174,8 @@ pub fn children_to_ast(
                     IntermediateAstElement::Noop,
                 );
 
-                // This is needed so e.g. branching doesn't break the guarantee that there is exactly one successor node after PartialBlock
+                // This is needed so e.g. branching doesn't break the guarantee that
+                // there is exactly one successor node after PartialBlock
                 last =
                     add_node_with_edge(graph, last, NodeType::Other, IntermediateAstElement::Noop);
             }

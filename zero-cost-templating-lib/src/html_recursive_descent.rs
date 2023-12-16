@@ -72,7 +72,8 @@ pub fn parse_variable<I: Iterator<Item = char>>(input: &mut PeekNth<I>) -> Resul
             }
             index += 1;
             if identifier == "else" {
-                // TODO FIXME we could stop peeking from here on as we know that this is a variable now
+                // TODO FIXME we could stop peeking from here on
+                // as we know that this is a variable now
                 return Err("expected variable identifier but found keyword else".to_owned());
             }
         }
