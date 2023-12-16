@@ -1,10 +1,7 @@
-use core::fmt::{Display, Write};
+use core::fmt::Display;
 
 use heck::ToUpperCamelCase;
-use petgraph::{
-    data::Build,
-    stable_graph::{NodeIndex, StableGraph},
-};
+use petgraph::stable_graph::{NodeIndex, StableGraph};
 
 use crate::html_recursive_descent::{AttributeValuePart, Child, Element};
 
@@ -32,7 +29,7 @@ pub enum IntermediateAstElement {
 }
 
 impl IntermediateAstElement {
-    pub fn variable(&self) -> Option<(&String, &EscapingFunction)> {
+    #[must_use] pub const fn variable(&self) -> Option<(&String, &EscapingFunction)> {
         if let Self::Variable(name, escaping_fun) = self {
             Some((name, escaping_fun))
         } else {
@@ -40,7 +37,7 @@ impl IntermediateAstElement {
         }
     }
 
-    pub fn variable_name(&self) -> Option<&String> {
+    #[must_use] pub const fn variable_name(&self) -> Option<&String> {
         if let Self::Variable(name, _) = self {
             Some(name)
         } else {
@@ -48,7 +45,7 @@ impl IntermediateAstElement {
         }
     }
 
-    pub fn text(&self) -> Option<&String> {
+    #[must_use] pub const fn text(&self) -> Option<&String> {
         if let Self::Text(string) = self {
             Some(string)
         } else {
@@ -61,10 +58,10 @@ impl Display for IntermediateAstElement {
     fn fmt(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         match self {
             Self::Variable(variable, escaping_fun) => {
-                write!(formatter, "{{{{{variable}:{}}}}}", escaping_fun)?;
+                write!(formatter, "{{{{{variable}:{escaping_fun}}}}}")?;
             }
             Self::Text(text) => {
-                write!(formatter, "{}", text)?;
+                write!(formatter, "{text}")?;
             }
             Self::Noop => {
                 write!(formatter, "noop")?;
@@ -93,7 +90,6 @@ pub fn add_node_with_edge(
 }
 
 #[must_use]
-#[expect(clippy::too_many_lines, reason = "tmp")]
 pub fn children_to_ast(
     template_name: &str,
     graph: &mut StableGraph<NodeType, IntermediateAstElement>,
@@ -140,7 +136,7 @@ pub fn children_to_ast(
             }
             Child::PartialBlock(name, children) => {
                 let partial_block_partial = graph.add_node(NodeType::Other);
-                let partial_block_partial_end = children_to_ast(
+                let _partial_block_partial_end = children_to_ast(
                     template_name,
                     graph,
                     partial_block_partial,
