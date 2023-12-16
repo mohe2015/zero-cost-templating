@@ -217,19 +217,22 @@ fn node_type(
             }
         }
         NodeType::InnerTemplate => {
-            let inner_template = graph
+            let inner_after = graph
                 .edges_directed(node_index, Direction::Outgoing)
-                .filter(|edge| *edge.weight() == IntermediateAstElement::InnerTemplate)
+                .filter(|edge| {
+                    *edge.weight() != IntermediateAstElement::InnerTemplate
+                        && *edge.weight() != IntermediateAstElement::PartialBlockPartial
+                })
                 .exactly_one()
                 .unwrap();
-            let inner_template = node_type(
+            let inner_after = node_type(
                 graph,
-                inner_template.target(),
+                inner_after.target(),
                 &quote_spanned! {span=> () },
                 &quote_spanned! {span=> () },
                 &quote_spanned! {span=> _ },
                 &quote_spanned! {span=> _ },
-                create,
+                false,
                 span,
             );
 
@@ -249,22 +252,19 @@ fn node_type(
                 span,
             );
 
-            let inner_after = graph
+            let inner_template = graph
                 .edges_directed(node_index, Direction::Outgoing)
-                .filter(|edge| {
-                    *edge.weight() != IntermediateAstElement::InnerTemplate
-                        && *edge.weight() != IntermediateAstElement::PartialBlockPartial
-                })
+                .filter(|edge| *edge.weight() == IntermediateAstElement::InnerTemplate)
                 .exactly_one()
                 .unwrap();
-            let inner_after = node_type(
+            let inner_template = node_type(
                 graph,
-                inner_after.target(),
+                inner_template.target(),
                 &quote_spanned! {span=> () },
                 &quote_spanned! {span=> () },
                 &quote_spanned! {span=> _ },
                 &quote_spanned! {span=> _ },
-                false,
+                create,
                 span,
             );
 
