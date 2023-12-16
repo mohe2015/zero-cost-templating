@@ -28,17 +28,15 @@ fn handle_call(
             "{}_{}{}",
             template_codegen.template_name,
             edge.weight()
-                .variable
+                .variable_name()
                 .as_ref()
                 .unwrap_or(&"template".to_owned()),
             edge.id().index(),
             span = span
         );
-        edge.weight().variable.is_some() == parameter.is_some() && ident == &expected_ident
+        edge.weight().variable_name().is_some() == parameter.is_some() && ident == &expected_ident
     });
     edge.map(|edge| {
-        let text = &edge.weight().text;
-
         let template_struct = node_type(
             template_codegen.template_name.as_str(),
             &template_codegen.graph,
@@ -71,10 +69,8 @@ fn handle_call(
             )
         };
 
-        let escaped_value = parameter.map(|parameter| match edge.weight().escaping_fun {
-            EscapingFunction::NoVariableStart => quote_spanned! {span=>
-                unreachable("NoVariableStart");
-            },
+        // TODO FIXME fix unwrap by better matching here in general
+        let escaped_value = parameter.map(|parameter| match edge.weight().variable().unwrap().1 {
             EscapingFunction::HtmlAttribute => {
                 quote_spanned! {span=>
                     yield zero_cost_templating::encode_double_quoted_attribute(#parameter);
@@ -86,11 +82,18 @@ fn handle_call(
                 }
             }
         });
+
+        let text = &edge.weight().text().map(|text| {
+            quote_spanned! {span=>
+                yield ::alloc::borrow::Cow::from(#text);
+            }
+        });
+
         Expr::Verbatim(quote_spanned! {span=>
             {
                 let _magic_expression_result: #template_struct = #template_variable;
                 #escaped_value
-                yield ::alloc::borrow::Cow::from(#text);
+                #text
                 #next_template_struct
             }
         })
@@ -200,11 +203,9 @@ fn node_type(
         NodeType::InnerTemplate {
             name,
             partial: inner_partial,
-            after: inner_after,
         } => {
             let name = format_ident!("{}", name, span = span);
             let inner_partial = format_ident!("{}", inner_partial, span = span);
-            let inner_after = format_ident!("{}", inner_after, span = span);
             let create = create.then(|| {
                 Some(quote_spanned! {span=>
                     {
@@ -310,7 +311,7 @@ pub fn calculate_edges(
                 Span::call_site(),
             )
         };
-        let variable_name = edge.weight().variable.as_ref().map_or_else(
+        let variable_name = edge.weight().variable_name().as_ref().map_or_else(
             || {
                 format_ident!(
                     "{}_template{}",
@@ -329,12 +330,10 @@ pub fn calculate_edges(
         );
         let parameter = edge
             .weight()
-            .variable
+            .variable_name()
             .as_ref()
             .map(|variable| format_ident!("{}", variable))
             .map(|variable| {
-                // TODO FIXME
-                // <'a, I: Into<Cow<'a, str>>>(input: I) -> Cow<'a, str>
                 quote! {
                     , #variable: impl Into<::alloc::borrow::Cow<'static, str>>
                 }
