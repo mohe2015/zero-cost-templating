@@ -1,6 +1,7 @@
 use std::path::PathBuf;
 
 use heck::ToUpperCamelCase;
+use itertools::Itertools;
 use petgraph::prelude::NodeIndex;
 use petgraph::stable_graph::StableGraph;
 use petgraph::visit::{EdgeRef, IntoEdgeReferences, IntoNodeReferences};
@@ -29,7 +30,6 @@ fn handle_call(
             template_codegen.template_name,
             edge.weight()
                 .variable_name()
-                .as_ref()
                 .unwrap_or(&"template".to_owned()),
             edge.id().index(),
             span = span
@@ -185,8 +185,22 @@ fn node_type(
     span: Span,
 ) -> TokenStream {
     match &graph[node_index] {
-        NodeType::PartialBlock { after: inner_after } => {
-            let inner_after = format_ident!("{}", inner_after, span = span);
+        NodeType::PartialBlock => {
+            let inner_after = graph
+                .edges_directed(node_index, Direction::Outgoing)
+                .exactly_one()
+                .unwrap();
+            let inner_after = node_type(
+                template_name,
+                graph,
+                inner_after.target(),
+                &quote_spanned! {span=> () },
+                &quote_spanned! {span=> () },
+                &quote_spanned! {span=> _ },
+                &quote_spanned! {span=> _ },
+                true,
+                span,
+            );
             let create = create.then(|| {
                 Some(quote_spanned! {span=>
                     {
@@ -206,6 +220,21 @@ fn node_type(
         } => {
             let name = format_ident!("{}", name, span = span);
             let inner_partial = format_ident!("{}", inner_partial, span = span);
+            let inner_after = graph
+                .edges_directed(node_index, Direction::Outgoing)
+                .exactly_one()
+                .unwrap();
+            let inner_after = node_type(
+                template_name,
+                graph,
+                inner_after.target(),
+                &quote_spanned! {span=> () },
+                &quote_spanned! {span=> () },
+                &quote_spanned! {span=> _ },
+                &quote_spanned! {span=> _ },
+                true,
+                span,
+            );
             let create = create.then(|| {
                 Some(quote_spanned! {span=>
                     {
@@ -270,7 +299,7 @@ pub fn calculate_nodes(
         .graph
         .node_references()
         .filter_map(|(node_index, node)| match node {
-            NodeType::InnerTemplate { .. } | NodeType::PartialBlock { .. } => None,
+            NodeType::InnerTemplate { .. } | NodeType::PartialBlock => None,
             NodeType::Other => Some(format_ident!(
                 "{}Template{}",
                 template_codegen.template_name.to_upper_camel_case(),
@@ -339,7 +368,7 @@ pub fn calculate_edges(
                 }
             });
         let impl_func = match &template_codegen.graph[edge.source()] {
-            NodeType::InnerTemplate { .. } | NodeType::PartialBlock { .. } => None,
+            NodeType::InnerTemplate { .. } | NodeType::PartialBlock => None,
             NodeType::Other => Some({
                 let impl_template_name = format_ident!(
                     "{}Template{}",
@@ -347,7 +376,7 @@ pub fn calculate_edges(
                     edge.source().index().to_string(),
                 );
                 match &template_codegen.graph[edge.target()] {
-                    NodeType::PartialBlock { .. } => {
+                    NodeType::PartialBlock => {
                         quote! {
                             impl<Partial: TemplateTypy,
                                 PartialPartial: Templaty,

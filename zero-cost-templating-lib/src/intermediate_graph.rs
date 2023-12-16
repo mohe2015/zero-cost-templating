@@ -32,25 +32,25 @@ pub enum IntermediateAstElement {
 }
 
 impl IntermediateAstElement {
-    pub fn variable(&self) -> Option<(String, EscapingFunction)> {
+    pub fn variable(&self) -> Option<(&String, &EscapingFunction)> {
         if let Self::Variable(name, escaping_fun) = self {
-            Some((*name, *escaping_fun))
+            Some((name, escaping_fun))
         } else {
             None
         }
     }
 
-    pub fn variable_name(&self) -> Option<String> {
+    pub fn variable_name(&self) -> Option<&String> {
         if let Self::Variable(name, _) = self {
-            Some(*name)
+            Some(name)
         } else {
             None
         }
     }
 
-    pub fn text(&self) -> Option<String> {
+    pub fn text(&self) -> Option<&String> {
         if let Self::Text(string) = self {
-            Some(*string)
+            Some(string)
         } else {
             None
         }
