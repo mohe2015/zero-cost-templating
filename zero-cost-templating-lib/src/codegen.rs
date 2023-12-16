@@ -42,7 +42,7 @@ fn handle_call(
     });
     edge.map(|edge| {
         let template_struct = node_type(
-            &graph,
+            graph,
             edge.source(),
             &quote_spanned! {span=> () },
             &quote_spanned! {span=> () },
@@ -59,7 +59,7 @@ fn handle_call(
             quote_spanned! {span=> _magic_expression_result.after }
         } else {
             node_type(
-                &graph,
+                graph,
                 edge.target(),
                 &quote_spanned! {span=> _magic_expression_result.partial },
                 &quote_spanned! {span=> _magic_expression_result.after },
@@ -147,7 +147,7 @@ impl<'a> VisitMut for InnerReplace<'a> {
                         );
                         (&initial_ident == ident).then(|| {
                             let template_struct = node_type(
-                                &self.1,
+                                self.1,
                                 template_codegen.first,
                                 &quote_spanned! {span=> () },
                                 &quote_spanned! {span=> () },
@@ -173,6 +173,7 @@ impl<'a> VisitMut for InnerReplace<'a> {
     }
 }
 
+#[expect(clippy::too_many_lines, reason = "tmp")]
 #[expect(clippy::too_many_arguments, reason = "tmp")]
 fn node_type(
     graph: &StableGraph<TemplateNode, IntermediateAstElement>,
@@ -262,6 +263,8 @@ fn node_type(
                 false,
                 span,
             );
+
+            // TODO FIXME this needs to properly use the others
             let create = create.then(|| {
                 Some(quote_spanned! {span=>
                     {

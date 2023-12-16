@@ -64,17 +64,17 @@ impl IntermediateAstElement {
 impl Display for IntermediateAstElement {
     fn fmt(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         match self {
-            IntermediateAstElement::Variable(variable, escaping_fun) => {
+            Self::Variable(variable, escaping_fun) => {
                 write!(formatter, "{{{{{variable}:{escaping_fun}}}}}")?;
             }
-            IntermediateAstElement::Text(text) => {
+            Self::Text(text) => {
                 write!(formatter, "{text}")?;
             }
-            IntermediateAstElement::Noop => {
+            Self::Noop => {
                 write!(formatter, "noop")?;
             }
-            IntermediateAstElement::PartialBlockPartial => write!(formatter, "partial")?,
-            IntermediateAstElement::InnerTemplate => write!(formatter, "inner_template")?,
+            Self::PartialBlockPartial => write!(formatter, "partial")?,
+            Self::InnerTemplate => write!(formatter, "inner_template")?,
         }
         Ok(())
     }
@@ -155,7 +155,7 @@ pub fn children_to_ast(
                     !(parent == "script" || parent == "style"),
                     "children are unsafe in <script> and <style>"
                 );
-                last = element_to_ast(first_nodes, &template_name, graph, last, element);
+                last = element_to_ast(first_nodes, template_name, graph, last, element);
             }
             Child::Each(_identifier, children) => {
                 let loop_start = last;
@@ -170,7 +170,7 @@ pub fn children_to_ast(
                 });
                 let _partial_block_partial_end = children_to_ast(
                     first_nodes,
-                    template_name.clone(),
+                    template_name,
                     graph,
                     partial_block_partial,
                     children,
@@ -236,18 +236,12 @@ pub fn children_to_ast(
                 );
             }
             Child::If(_variable, if_children, else_children) => {
-                let if_last = children_to_ast(
-                    first_nodes,
-                    template_name.clone(),
-                    graph,
-                    last,
-                    if_children,
-                    parent,
-                );
+                let if_last =
+                    children_to_ast(first_nodes, template_name, graph, last, if_children, parent);
 
                 let else_last = children_to_ast(
                     first_nodes,
-                    template_name.clone(),
+                    template_name,
                     graph,
                     last,
                     else_children,

@@ -157,10 +157,10 @@ pub fn template_stream(
         .collect();
 
     let mut graph = StableGraph::new();
-    let mut graph = &mut graph;
+    let graph = &mut graph;
     let first_nodes: HashMap<_, _> = inputs
         .iter()
-        .map(|(path, template_name)| {
+        .map(|(_path, template_name)| {
             let first = graph.add_node(TemplateNode {
                 template_name: template_name.to_owned(),
                 node_type: NodeType::Other,
@@ -175,7 +175,7 @@ pub fn template_stream(
         .map(|(path, template_name)| {
             // TODO FIXME error if end doesn't match
 
-            let input = std::fs::read_to_string(&path).unwrap_or_else(|err| {
+            let input = std::fs::read_to_string(path).unwrap_or_else(|err| {
                 // TODO FIXME don't panic
                 panic!("failed to read file at path: {} {}", path.display(), err)
             });
@@ -201,14 +201,7 @@ pub fn template_stream(
                 }
             };
             let first = first_nodes.get(template_name).unwrap();
-            let last = children_to_ast(
-                &first_nodes,
-                &template_name,
-                &mut graph,
-                *first,
-                dom,
-                "root",
-            );
+            let last = children_to_ast(&first_nodes, template_name, graph, *first, dom, "root");
 
             TemplateCodegen {
                 template_name: template_name.to_owned(),
@@ -224,7 +217,7 @@ pub fn template_stream(
             .first()
             .unwrap()
             .path
-            .with_file_name(inputs.iter().map(|f| f.template_name.clone()).join(","))
+            .with_file_name(inputs.iter().map(|tc| tc.template_name.clone()).join(","))
             .with_extension("dot"),
     )
     .unwrap();
