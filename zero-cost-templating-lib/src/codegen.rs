@@ -343,8 +343,6 @@ pub fn calculate_nodes<'a>(
             quote! {
                 #[must_use]
                 pub struct #template_struct;
-
-                impl TemplateTypy for #template_struct {}
             }
         })
 }
@@ -410,10 +408,10 @@ pub fn calculate_edges<'a>(
                 match &graph[edge.target()].node_type {
                     NodeType::PartialBlock => {
                         quote! {
-                            impl<Partial: TemplateTypy,
-                                PartialPartial: Templaty,
-                                PartialAfter: Templaty,
-                                After: Templaty
+                            impl<Partial,
+                                PartialPartial,
+                                PartialAfter,
+                                After
                                 >
                                 Template<
                                         #impl_template_name,
@@ -428,7 +426,7 @@ pub fn calculate_edges<'a>(
                     }
                     NodeType::InnerTemplate | NodeType::Other => {
                         quote! {
-                            impl<Partial: Templaty, After: Templaty>
+                            impl<Partial, After>
                                 Template<#impl_template_name, Partial, After> {
                                 pub fn #variable_name(self #parameter) -> #return_type {
                                     todo!()
@@ -490,20 +488,12 @@ pub fn codegen(
     });
 
     let result = quote! {
-        pub trait Templaty {}
-
-        pub trait TemplateTypy {}
-
         #[must_use]
-        pub struct Template<Type: TemplateTypy, Partial: Templaty, After: Templaty> {
+        pub struct Template<Type, Partial, After> {
             r#type: Type,
             partial: Partial,
             after: After,
         }
-
-        impl Templaty for () {}
-        impl<Type: TemplateTypy, Partial: Templaty, After: Templaty>
-            Templaty for Template<Type, Partial, After> {}
 
         #(#code)*
     };
