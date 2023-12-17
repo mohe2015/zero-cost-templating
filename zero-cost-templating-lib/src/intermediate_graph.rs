@@ -106,12 +106,21 @@ impl Display for TemplateNode {
 pub fn add_node_with_edge(
     graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
     last: NodeIndex,
+    current: IntermediateAstElement,
     node: TemplateNode,
     edge_type: IntermediateAstElement,
-) -> NodeIndex {
-    let current = graph.add_node(node);
-    graph.add_edge(last, current, edge_type);
-    current
+) -> (NodeIndex, IntermediateAstElement) {
+    match (current, edge_type) {
+        (IntermediateAstElement::Text(a), IntermediateAstElement::Text(b)) => {
+            (last, IntermediateAstElement::Text(a + &b))
+        }
+        (IntermediateAstElement::Noop, edge_type) => (last, edge_type),
+        (current, edge_type) => {
+            let current_node = graph.add_node(node);
+            graph.add_edge(last, current_node, current);
+            (current_node, edge_type)
+        }
+    }
 }
 
 #[must_use]
@@ -121,9 +130,10 @@ pub fn children_to_ast(
     template_name: &str,
     graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
     mut last: NodeIndex,
+    mut current: IntermediateAstElement,
     input: Vec<Child>,
     parent: &str,
-) -> NodeIndex {
+) -> (NodeIndex, IntermediateAstElement) {
     for child in input {
         match child {
             Child::Variable(next_variable) => {
@@ -133,9 +143,10 @@ pub fn children_to_ast(
                     "h1" | "li" | "span" | "title" | "main" => EscapingFunction::HtmlElementInner,
                     other => panic!("unknown escaping rules for element {other}"),
                 };
-                last = add_node_with_edge(
+                (last, current) = add_node_with_edge(
                     graph,
                     last,
+                    current,
                     TemplateNode {
                         template_name: template_name.to_owned(),
                         node_type: NodeType::Other,
@@ -159,11 +170,20 @@ pub fn children_to_ast(
                     !(parent == "script" || parent == "style"),
                     "children are unsafe in <script> and <style>"
                 );
-                last = element_to_ast(first_nodes, template_name, graph, last, element);
+                (last, current) =
+                    element_to_ast(first_nodes, template_name, graph, last, current, element);
             }
             Child::Each(_identifier, children) => {
                 let loop_start = last;
-                last = children_to_ast(first_nodes, template_name, graph, last, children, parent);
+                (last, current) = children_to_ast(
+                    first_nodes,
+                    template_name,
+                    graph,
+                    last,
+                    current,
+                    children,
+                    parent,
+                );
                 graph.add_edge(last, loop_start, IntermediateAstElement::Noop);
                 last = loop_start;
             }
@@ -172,11 +192,12 @@ pub fn children_to_ast(
                     template_name: template_name.to_owned(),
                     node_type: NodeType::Other,
                 });
-                let _partial_block_partial_end = children_to_ast(
+                (_, current) = children_to_ast(
                     first_nodes,
                     template_name,
                     graph,
                     partial_block_partial,
+                    current,
                     children,
                     parent,
                 );
@@ -240,14 +261,24 @@ pub fn children_to_ast(
                 );
             }
             Child::If(_variable, if_children, else_children) => {
-                let if_last =
-                    children_to_ast(first_nodes, template_name, graph, last, if_children, parent);
-
-                let else_last = children_to_ast(
+                let if_last;
+                (if_last, current) = children_to_ast(
                     first_nodes,
                     template_name,
                     graph,
                     last,
+                    current,
+                    if_children,
+                    parent,
+                );
+
+                let else_last;
+                (else_last, current) = children_to_ast(
+                    first_nodes,
+                    template_name,
+                    graph,
+                    last,
+                    current,
                     else_children,
                     parent,
                 );
@@ -262,7 +293,7 @@ pub fn children_to_ast(
             }
         }
     }
-    last
+    (last, current)
 }
 
 #[must_use]
@@ -272,8 +303,9 @@ pub fn element_to_ast(
     template_name: &str,
     graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
     mut last: NodeIndex,
+    mut current: IntermediateAstElement,
     input: Element,
-) -> NodeIndex {
+) -> (NodeIndex, IntermediateAstElement) {
     let name = input.name;
     last = add_node_with_edge(
         graph,
@@ -360,11 +392,12 @@ pub fn element_to_ast(
         },
         IntermediateAstElement::Text(">".to_owned()),
     );
-    last = children_to_ast(
+    (last, current) = children_to_ast(
         first_nodes,
         template_name,
         graph,
         last,
+        current,
         input.children,
         &name,
     );
@@ -384,5 +417,5 @@ pub fn element_to_ast(
             );
         }
     }
-    last
+    (last, current)
 }

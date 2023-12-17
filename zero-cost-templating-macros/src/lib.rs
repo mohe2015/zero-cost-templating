@@ -120,7 +120,9 @@ use syn::visit_mut::VisitMut;
 use syn::{parse_macro_input, Item, LitStr, Token};
 use zero_cost_templating_lib::codegen::{codegen, InnerReplace, TemplateCodegen};
 use zero_cost_templating_lib::html_recursive_descent::parse_children;
-use zero_cost_templating_lib::intermediate_graph::{children_to_ast, NodeType, TemplateNode};
+use zero_cost_templating_lib::intermediate_graph::{
+    children_to_ast, IntermediateAstElement, NodeType, TemplateNode,
+};
 
 // https://veykril.github.io/posts/ide-proc-macros/
 // https://github.com/rust-lang/rust-analyzer/pull/11444
@@ -130,6 +132,7 @@ use zero_cost_templating_lib::intermediate_graph::{children_to_ast, NodeType, Te
 
 // TODO FIXME allow passing whole directory?
 #[proc_macro_attribute]
+#[expect(clippy::too_many_lines, reason = "tmp")]
 pub fn template_stream(
     attributes: proc_macro::TokenStream,
     item: proc_macro::TokenStream,
@@ -201,7 +204,16 @@ pub fn template_stream(
                 }
             };
             let first = first_nodes.get(template_name).unwrap();
-            let last = children_to_ast(&first_nodes, template_name, graph, *first, dom, "root");
+            let (last, current) = children_to_ast(
+                &first_nodes,
+                template_name,
+                graph,
+                *first,
+                IntermediateAstElement::Noop,
+                dom,
+                "root",
+            );
+            // TODO FIXME current
 
             TemplateCodegen {
                 template_name: template_name.to_owned(),
