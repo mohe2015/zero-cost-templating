@@ -47,7 +47,8 @@ fn handle_call(
             &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
             &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
             span,
-        ).0; // good span for mismatched type error
+        )
+        .0; // good span for mismatched type error
         let last_node = graph
             .edges_directed(edge.target(), Direction::Outgoing)
             .next()
@@ -58,10 +59,17 @@ fn handle_call(
             node_type(
                 graph,
                 edge.target(),
-                &(quote_spanned! {span=> _ }, quote_spanned! {span=> _magic_expression_result.partial }),
-                &(quote_spanned! {span=> _ }, quote_spanned! {span=> _magic_expression_result.after }),
+                &(
+                    quote_spanned! {span=> _ },
+                    quote_spanned! {span=> _magic_expression_result.partial },
+                ),
+                &(
+                    quote_spanned! {span=> _ },
+                    quote_spanned! {span=> _magic_expression_result.after },
+                ),
                 span,
-            ).1
+            )
+            .1
         };
 
         // TODO FIXME fix unwrap by better matching here in general
@@ -146,7 +154,8 @@ impl<'a> VisitMut for InnerReplace<'a> {
                                 &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
                                 &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
                                 span,
-                            ).1;
+                            )
+                            .1;
                             Expr::Verbatim(quote_spanned! {span=>
                                 #template_struct
                             })
@@ -196,7 +205,7 @@ fn node_type(
             );
             let inner_after_type = inner_after.0;
             let inner_after_create = inner_after.1;
-          
+
             let common = quote_spanned! {span=>
                 Template::<#partial_type, (), Template::<#inner_after_type, (), #after_type>>
             };
@@ -204,13 +213,20 @@ fn node_type(
                 {
                     r#type: #partial_create.r#type,
                     partial: (),
-                    after: Template { r#type: #inner_after_create, partial: (), after: #after_create }
+                    after: Template {
+                        r#type: #inner_after_create,
+                        partial: (),
+                        after: #after_create
+                    }
                 }
             };
 
-            (common.clone(), quote_spanned! {span=>
-                #common #create
-            })
+            (
+                common.clone(),
+                quote_spanned! {span=>
+                    #common #create
+                },
+            )
         }
         NodeType::InnerTemplate => {
             let inner_after = graph
@@ -262,15 +278,18 @@ fn node_type(
                 node_index.index().to_string(),
                 span = span
             );
-            let common =  quote_spanned! {span=>
+            let common = quote_spanned! {span=>
                 Template::<#ident, #partial_type, #after_type>
             };
             let create = quote_spanned! {span=>
                 { r#type: #ident, partial: #partial_create, after: #after_create }
             };
-            (common.clone(), quote_spanned! {span=>
-                #common #create
-            })
+            (
+                common.clone(),
+                quote_spanned! {span=>
+                    #common #create
+                },
+            )
         }
     }
 }
@@ -323,7 +342,8 @@ pub fn calculate_edges<'a>(
                 &(quote! { Partial }, quote! { template.partial }),
                 &(quote! { After }, quote! { template.after }),
                 Span::call_site(),
-            ).0
+            )
+            .0
         };
         let variable_name = edge.weight().variable_name().as_ref().map_or_else(
             || {
@@ -417,7 +437,8 @@ pub fn codegen(
             &(quote! { () }, quote! { () }),
             &(quote! { () }, quote! { () }),
             Span::call_site(),
-        ).0;
+        )
+        .0;
         let other = quote! {
             #[allow(unused)]
             /// Start

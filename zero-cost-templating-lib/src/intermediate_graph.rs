@@ -284,7 +284,8 @@ pub fn children_to_ast(
                 // there is exactly one successor node after InnerTemplate
                 // that guarantee is needed to tell the template what the after node is
                 // TODO FIXME maybe add a special current == NoopForceFlush
-                // It should be a Vec<(last, current)> because then a simple if else could be optimized two two nodes with a double edge.
+                // It should be a Vec<(last, current)> because
+                // then a simple if else could be optimized too two nodes with a double edge.
                 (last, current) = add_node_with_edge(
                     graph,
                     last,
