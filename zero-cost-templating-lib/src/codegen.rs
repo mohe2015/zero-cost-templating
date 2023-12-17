@@ -246,6 +246,8 @@ fn node_type(
                 span,
             );
 
+            // TODO FIXME implement empty partial or prevent empty partial
+
             let inner_partial = graph
                 .edges_directed(node_index, Direction::Outgoing)
                 .filter(|edge| *edge.weight() == IntermediateAstElement::PartialBlockPartial)
