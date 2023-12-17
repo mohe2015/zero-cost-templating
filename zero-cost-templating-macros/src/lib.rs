@@ -253,21 +253,21 @@ pub fn template_stream(
                     IntermediateAstElement::InnerTemplate
                     | IntermediateAstElement::PartialBlockPartial => {
                         format!(
-                            "label = \"{}: {}\" style = dotted",
+                            "label = \"{} {}\" style = dotted",
                             er.id().index(),
                             er.weight().to_string().replace('\"', "\\\"")
                         )
                     }
                     _ => {
                         format!(
-                            "label = \"{}: {}\"",
+                            "label = \"{} {}\"",
                             er.id().index(),
                             er.weight().to_string().replace('\"', "\\\"")
                         )
                     }
                 },
                 &|_, nr| format!(
-                    "label = \"{}: {}\"",
+                    "label = \"{} {}\"",
                     nr.id().index(),
                     nr.weight().to_string().replace('\"', "\\\"")
                 ),

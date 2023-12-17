@@ -70,18 +70,17 @@ impl Display for IntermediateAstElement {
     fn fmt(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         match self {
             Self::Variable(variable, escaping_fun) => {
-                write!(formatter, "{{{{{variable}:{escaping_fun}}}}}")?;
+                write!(formatter, "{{{{{variable}:{escaping_fun}}}}}")
             }
             Self::Text(text) => {
-                write!(formatter, "{text}")?;
+                write!(formatter, "{text}")
             }
             Self::Noop => {
-                write!(formatter, "noop")?;
+                write!(formatter, "noop")
             }
-            Self::PartialBlockPartial => write!(formatter, "partial")?,
-            Self::InnerTemplate => write!(formatter, "inner_template")?,
+            Self::PartialBlockPartial => write!(formatter, "partial"),
+            Self::InnerTemplate => write!(formatter, "template"),
         }
-        Ok(())
     }
 }
 
@@ -92,6 +91,16 @@ pub enum NodeType {
     Other,
 }
 
+impl Display for NodeType {
+    fn fmt(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            Self::PartialBlock => write!(formatter, "partial"),
+            Self::InnerTemplate => write!(formatter, "inner"),
+            Self::Other => write!(formatter, "other"),
+        }
+    }
+}
+
 #[derive(Debug, Clone)]
 pub struct TemplateNode {
     pub template_name: String,
@@ -100,7 +109,7 @@ pub struct TemplateNode {
 
 impl Display for TemplateNode {
     fn fmt(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-        write!(formatter, "{}: {:?}", self.template_name, self.node_type)
+        write!(formatter, "{} {}", self.template_name, self.node_type)
     }
 }
 
