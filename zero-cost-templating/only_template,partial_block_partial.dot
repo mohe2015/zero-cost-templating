@@ -1,0 +1,15 @@
+digraph {
+    0 [ label = "0 only_template other"]
+    1 [ label = "1 partial_block_partial other"]
+    2 [ label = "2 only_template other"]
+    3 [ label = "3 only_template inner"]
+    4 [ label = "4 only_template other"]
+    5 [ label = "5 partial_block_partial partial"]
+    6 [ label = "6 partial_block_partial other"]
+    0 -> 3 [ label = "0 noop"]
+    3 -> 2 [ label = "1 partial" style = dotted]
+    3 -> 1 [ label = "2 template" style = dotted]
+    3 -> 4 [ label = "3 noop"]
+    1 -> 5 [ label = "4 <p>"]
+    5 -> 6 [ label = "5 </p>"]
+}

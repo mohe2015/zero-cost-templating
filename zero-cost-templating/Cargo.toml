@@ -65,3 +65,7 @@ path = "tests/ui/pass/working_no_loop.rs"
 [[bin]]
 name = "if_else"
 path = "tests/ui/pass/if_else.rs"
+
+[[bin]]
+name = "only_template"
+path = "tests/ui/pass/only_template.rs"

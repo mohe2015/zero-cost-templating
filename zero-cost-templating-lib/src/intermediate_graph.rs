@@ -270,7 +270,9 @@ pub fn children_to_ast(
                     IntermediateAstElement::PartialBlockPartial,
                 );
 
-                let inner_template_target = *first_nodes.get(&name).unwrap();
+                let inner_template_target = *first_nodes
+                    .get(&name)
+                    .unwrap_or_else(|| panic!("unknown inner template {name}"));
 
                 graph.add_edge(
                     inner_template,
@@ -286,16 +288,15 @@ pub fn children_to_ast(
                 // TODO FIXME maybe add a special current == NoopForceFlush
                 // It should be a Vec<(last, current)> because
                 // then a simple if else could be optimized too two nodes with a double edge.
-                (last, current) = add_node_with_edge(
-                    graph,
-                    last,
-                    current,
-                    TemplateNode {
-                        template_name: template_name.to_owned(),
-                        node_type: NodeType::Other,
-                    },
-                    IntermediateAstElement::Noop,
-                );
+
+                // we need to always add a node because our codgen requires an outgoing node and if this is the last node this is not guaranteed
+                let current_node = graph.add_node(TemplateNode {
+                    template_name: template_name.to_owned(),
+                    node_type: NodeType::Other,
+                });
+                graph.add_edge(last, current_node, current);
+                current = IntermediateAstElement::Noop;
+                last = current_node;
             }
             Child::PartialBlockPartial => {
                 (last, current) = add_node_with_edge(

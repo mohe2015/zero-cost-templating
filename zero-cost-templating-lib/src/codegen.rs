@@ -183,6 +183,8 @@ fn node_type(
     after: &(TokenStream, TokenStream),
     span: Span,
 ) -> (TokenStream, TokenStream) {
+    // maybe add the last node check in here?
+
     let partial_type = &partial.0;
     let partial_create = &partial.1;
 
