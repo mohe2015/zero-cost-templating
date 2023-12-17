@@ -3,6 +3,7 @@ use std::collections::HashMap;
 
 use itertools::Itertools;
 use petgraph::{
+    data::Build,
     stable_graph::{NodeIndex, StableGraph},
     visit::{EdgeRef, IntoEdgeReferences, IntoEdgesDirected},
 };
@@ -123,6 +124,22 @@ pub fn add_node_with_edge(
     }
 }
 
+pub fn flush_pending_edge(
+    graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
+    last: NodeIndex,
+    current: IntermediateAstElement,
+    node: TemplateNode,
+) -> (NodeIndex, IntermediateAstElement) {
+    match current {
+        IntermediateAstElement::Noop => (last, current),
+        current => {
+            let current_node = graph.add_node(node);
+            graph.add_edge(last, current_node, current);
+            (current_node, IntermediateAstElement::Noop)
+        }
+    }
+}
+
 #[must_use]
 #[expect(clippy::too_many_lines, reason = "tmp")]
 pub fn children_to_ast(
@@ -155,9 +172,10 @@ pub fn children_to_ast(
                 );
             }
             Child::Literal(string) => {
-                last = add_node_with_edge(
+                (last, current) = add_node_with_edge(
                     graph,
                     last,
+                    current,
                     TemplateNode {
                         template_name: template_name.to_owned(),
                         node_type: NodeType::Other,
@@ -227,9 +245,10 @@ pub fn children_to_ast(
 
                 // This is needed so e.g. branching doesn't break the guarantee that
                 // there is exactly one successor node after InnerTemplate
-                last = add_node_with_edge(
+                (last, current) = add_node_with_edge(
                     graph,
                     last,
+                    current,
                     TemplateNode {
                         template_name: template_name.to_owned(),
                         node_type: NodeType::Other,
@@ -238,9 +257,10 @@ pub fn children_to_ast(
                 );
             }
             Child::PartialBlockPartial => {
-                last = add_node_with_edge(
+                (last, current) = add_node_with_edge(
                     graph,
                     last,
+                    current,
                     TemplateNode {
                         template_name: template_name.to_owned(),
                         node_type: NodeType::PartialBlock,
@@ -250,9 +270,10 @@ pub fn children_to_ast(
 
                 // This is needed so e.g. branching doesn't break the guarantee that
                 // there is exactly one successor node after PartialBlock
-                last = add_node_with_edge(
+                (last, current) = add_node_with_edge(
                     graph,
                     last,
+                    current,
                     TemplateNode {
                         template_name: template_name.to_owned(),
                         node_type: NodeType::Other,
@@ -307,9 +328,10 @@ pub fn element_to_ast(
     input: Element,
 ) -> (NodeIndex, IntermediateAstElement) {
     let name = input.name;
-    last = add_node_with_edge(
+    (last, current) = add_node_with_edge(
         graph,
         last,
+        current,
         TemplateNode {
             template_name: template_name.to_owned(),
             node_type: NodeType::Other,
@@ -318,9 +340,10 @@ pub fn element_to_ast(
     );
     for attribute in input.attributes {
         if let Some(value) = attribute.value {
-            last = add_node_with_edge(
+            (last, current) = add_node_with_edge(
                 graph,
                 last,
+                current,
                 TemplateNode {
                     template_name: template_name.to_owned(),
                     node_type: NodeType::Other,
@@ -339,9 +362,10 @@ pub fn element_to_ast(
                                  {attr}"
                             ),
                         };
-                        last = add_node_with_edge(
+                        (last, current) = add_node_with_edge(
                             graph,
                             last,
+                            current,
                             TemplateNode {
                                 template_name: template_name.to_owned(),
                                 node_type: NodeType::Other,
@@ -350,9 +374,10 @@ pub fn element_to_ast(
                         );
                     }
                     AttributeValuePart::Literal(string) => {
-                        last = add_node_with_edge(
+                        (last, current) = add_node_with_edge(
                             graph,
                             last,
+                            current,
                             TemplateNode {
                                 template_name: template_name.to_owned(),
                                 node_type: NodeType::Other,
@@ -362,9 +387,10 @@ pub fn element_to_ast(
                     }
                 }
             }
-            last = add_node_with_edge(
+            (last, current) = add_node_with_edge(
                 graph,
                 last,
+                current,
                 TemplateNode {
                     template_name: template_name.to_owned(),
                     node_type: NodeType::Other,
@@ -372,9 +398,10 @@ pub fn element_to_ast(
                 IntermediateAstElement::Text(r#"""#.to_owned()),
             );
         } else {
-            last = add_node_with_edge(
+            (last, current) = add_node_with_edge(
                 graph,
                 last,
+                current,
                 TemplateNode {
                     template_name: template_name.to_owned(),
                     node_type: NodeType::Other,
@@ -383,9 +410,10 @@ pub fn element_to_ast(
             );
         }
     }
-    last = add_node_with_edge(
+    (last, current) = add_node_with_edge(
         graph,
         last,
+        current,
         TemplateNode {
             template_name: template_name.to_owned(),
             node_type: NodeType::Other,
@@ -406,9 +434,10 @@ pub fn element_to_ast(
         "!doctype" | "area" | "base" | "br" | "col" | "embed" | "hr" | "img" | "input" | "link"
         | "meta" | "source" | "track" | "wbr" => {}
         _ => {
-            last = add_node_with_edge(
+            (last, current) = add_node_with_edge(
                 graph,
                 last,
+                current,
                 TemplateNode {
                     template_name: template_name.to_owned(),
                     node_type: NodeType::Other,
