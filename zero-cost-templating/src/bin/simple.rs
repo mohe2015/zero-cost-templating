@@ -16,9 +16,10 @@ use zero_cost_templating::template_stream;
 // `{static coroutine@
 
 #[template_stream(
-    "test.html.hbs",
+    "if_else.html.hbs",
+    "partial_block_partial.html.hbs",
     "partial_block.html.hbs",
-    "partial_block_partial.html.hbs"
+    "test.html.hbs"
 )]
 pub async fn test() {}
 
