@@ -109,18 +109,6 @@ pub fn add_node_with_edge(
     node: TemplateNode,
     edge_type: IntermediateAstElement,
 ) -> NodeIndex {
-    if let Ok(edge) = graph
-        .edges_directed(last, petgraph::Direction::Incoming)
-        .exactly_one()
-    {
-        match (graph.edge_weight_mut(edge.id()).unwrap(), &edge_type) {
-            (IntermediateAstElement::Text(text1), IntermediateAstElement::Text(text2)) => {
-                text1.push_str(text2);
-                return last;
-            }
-            _ => {}
-        }
-    }
     let current = graph.add_node(node);
     graph.add_edge(last, current, edge_type);
     current
