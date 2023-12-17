@@ -10,6 +10,7 @@ digraph {
     8 [ label = "8: test: Other" ]
     9 [ label = "9: test: Other" ]
     10 [ label = "10: test: Other" ]
+    11 [ label = "11: test: Other" ]
     0 -> 1 [ label = "0: <!DOCTYPE html>\l<html lang=\"en\">\l  <head>\l    <meta charset=\"utf-8\">\l    <title>title</title>\l    <link rel=\"stylesheet\" href=\"style.css\">\l    <script src=\"script.js\"></script>\l  </head>\l  <body>\l    <h1>" ]
     1 -> 2 [ label = "1: {{page_title:element}}" ]
     2 -> 3 [ label = "2: </h1>\l    <input type=\"hidden\" value=\"" ]
@@ -21,4 +22,5 @@ digraph {
     8 -> 4 [ label = "8: noop" ]
     4 -> 9 [ label = "9: </li>\l    \l    </ul>\l    <span>" ]
     9 -> 10 [ label = "10: {{copyright_year:element}}" ]
+    10 -> 11 [ label = "11: </span>\l  </body>\l</html>" ]
 }

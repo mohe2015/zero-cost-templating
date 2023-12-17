@@ -121,7 +121,7 @@ use syn::{parse_macro_input, Item, LitStr, Token};
 use zero_cost_templating_lib::codegen::{codegen, InnerReplace, TemplateCodegen};
 use zero_cost_templating_lib::html_recursive_descent::parse_children;
 use zero_cost_templating_lib::intermediate_graph::{
-    children_to_ast, IntermediateAstElement, NodeType, TemplateNode,
+    children_to_ast, flush_pending_edge, IntermediateAstElement, NodeType, TemplateNode,
 };
 
 // https://veykril.github.io/posts/ide-proc-macros/
@@ -213,7 +213,15 @@ pub fn template_stream(
                 dom,
                 "root",
             );
-            // TODO FIXME current
+            flush_pending_edge(
+                graph,
+                last,
+                current,
+                TemplateNode {
+                    template_name: template_name.clone(),
+                    node_type: NodeType::Other,
+                },
+            );
 
             TemplateCodegen {
                 template_name: template_name.to_owned(),

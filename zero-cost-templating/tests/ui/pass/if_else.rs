@@ -1,4 +1,5 @@
 #![deny(warnings)]
+#![feature(lint_reasons)]
 #![feature(coroutines)]
 
 extern crate alloc;
@@ -16,26 +17,26 @@ mod if_else_true {
     #[template_stream("if_else.html.hbs")]
     pub async fn test_true() {
         let template = if_else_initial0();
-        if true {
-            let template = template.if_else_template0();
-            template.if_else_template2();
+        #[expect(clippy::if_same_then_else, reason = "tmp")]
+        let template = if true {
+            template.if_else_template0()
         } else {
-            let template = template.if_else_template1();
-            template.if_else_template3();
+            template.if_else_template1()
         };
+        template.if_else_template2();
     }
 }
 
 #[template_stream("if_else.html.hbs")]
 pub async fn test_false() {
     let template = if_else_initial0();
-    if false {
-        let template = template.if_else_template0();
-        template.if_else_template2();
+    #[expect(clippy::if_same_then_else, reason = "tmp")]
+    let template = if false {
+        template.if_else_template0()
     } else {
-        let template = template.if_else_template1();
-        template.if_else_template3();
+        template.if_else_template1()
     };
+    template.if_else_template2();
 }
 
 async fn if_else_true_output() {
