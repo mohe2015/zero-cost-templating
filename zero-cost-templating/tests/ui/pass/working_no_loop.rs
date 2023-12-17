@@ -19,9 +19,10 @@ pub async fn test() {
     let template = template.test_template2();
     let csrf_token = Cow::from("thetoken");
     let template = template.test_csrf_token3(csrf_token);
-    let template = template.test_template9();
-    let template = template.test_copyright_year10(Cow::from("2023".to_string()));
-    template.test_template11();
+    let template = template.test_template4();
+    let template = template.test_template10();
+    let template = template.test_copyright_year11(Cow::from("2023".to_string()));
+    template.test_template12();
 }
 
 #[tokio::main]
