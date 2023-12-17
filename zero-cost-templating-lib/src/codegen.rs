@@ -44,8 +44,8 @@ fn handle_call(
         let template_struct = node_type(
             graph,
             edge.source(),
-            &(quote_spanned! {span=> () }, quote_spanned! {span=> _ }),
-            &(quote_spanned! {span=> () }, quote_spanned! {span=> _ }),
+            &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
+            &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
             span,
         ).0; // good span for mismatched type error
         let last_node = graph
@@ -58,8 +58,8 @@ fn handle_call(
             node_type(
                 graph,
                 edge.target(),
-                &(quote_spanned! {span=> _magic_expression_result.partial }, quote_spanned! {span=> _ }),
-                &(quote_spanned! {span=> _magic_expression_result.after }, quote_spanned! {span=> _ }),
+                &(quote_spanned! {span=> _ }, quote_spanned! {span=> _magic_expression_result.partial }),
+                &(quote_spanned! {span=> _ }, quote_spanned! {span=> _magic_expression_result.after }),
                 span,
             ).1
         };
@@ -143,8 +143,8 @@ impl<'a> VisitMut for InnerReplace<'a> {
                             let template_struct = node_type(
                                 self.1,
                                 template_codegen.first,
-                                &(quote_spanned! {span=> () }, quote_spanned! {span=> _ }),
-                                &(quote_spanned! {span=> () }, quote_spanned! {span=> _ }),
+                                &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
+                                &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
                                 span,
                             ).1;
                             Expr::Verbatim(quote_spanned! {span=>
@@ -190,8 +190,8 @@ fn node_type(
             let inner_after = node_type(
                 graph,
                 inner_after.target(),
-                &(quote_spanned! {span=> () }, quote_spanned! {span=> _ }),
-                &(quote_spanned! {span=> () }, quote_spanned! {span=> _ }),
+                &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
+                &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
                 span,
             );
             let inner_after_type = inner_after.0;
@@ -224,8 +224,8 @@ fn node_type(
             let inner_after = node_type(
                 graph,
                 inner_after.target(),
-                &(quote_spanned! {span=> () }, quote_spanned! {span=> _ }),
-                &(quote_spanned! {span=> () }, quote_spanned! {span=> _ }),
+                &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
+                &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
                 span,
             );
 
@@ -237,7 +237,7 @@ fn node_type(
             let inner_partial = node_type(
                 graph,
                 inner_partial.target(),
-                &(quote_spanned! {span=> () }, quote_spanned! {span=> _ }),
+                &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
                 &inner_after,
                 span,
             );
