@@ -112,8 +112,9 @@ use std::io::Write;
 use std::path::PathBuf;
 
 use itertools::{peek_nth, Itertools};
-use petgraph::dot::Dot;
+use petgraph::dot::{Config, Dot};
 use petgraph::stable_graph::StableGraph;
+use petgraph::visit::{EdgeRef, NodeRef};
 use quote::quote;
 use syn::punctuated::Punctuated;
 use syn::visit_mut::VisitMut;
@@ -241,13 +242,36 @@ pub fn template_stream(
             .with_extension("dot"),
     )
     .unwrap();
+    let immut_graph = &*graph;
     file.write_all(
         format!(
-            "{}",
-            Dot::new(&graph.map(
-                |node_idx, node| format!("{}: {}", node_idx.index(), node),
-                |edge_idx, edge| format!("{}: {}", edge_idx.index(), edge)
-            ))
+            "{:?}",
+            Dot::with_attr_getters(
+                immut_graph,
+                &[Config::NodeNoLabel, Config::EdgeNoLabel],
+                &|_, er| match er.weight() {
+                    IntermediateAstElement::InnerTemplate
+                    | IntermediateAstElement::PartialBlockPartial => {
+                        format!(
+                            "label = \"{}: {}\" style = dotted",
+                            er.id().index(),
+                            er.weight().to_string().replace('\"', "\\\"")
+                        )
+                    }
+                    _ => {
+                        format!(
+                            "label = \"{}: {}\"",
+                            er.id().index(),
+                            er.weight().to_string().replace('\"', "\\\"")
+                        )
+                    }
+                },
+                &|_, nr| format!(
+                    "label = \"{}: {}\"",
+                    nr.id().index(),
+                    nr.weight().to_string().replace('\"', "\\\"")
+                ),
+            )
         )
         .as_bytes(),
     )

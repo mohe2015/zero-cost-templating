@@ -1,45 +1,64 @@
 digraph {
-    0 [ label = "0: test: Other" ]
-    1 [ label = "1: partial_block: Other" ]
-    2 [ label = "2: partial_block_partial: Other" ]
-    3 [ label = "3: test: Other" ]
-    4 [ label = "4: test: Other" ]
-    5 [ label = "5: test: Other" ]
-    6 [ label = "6: test: Other" ]
-    7 [ label = "7: test: Other" ]
-    8 [ label = "8: test: Other" ]
-    9 [ label = "9: test: Other" ]
-    10 [ label = "10: test: Other" ]
-    11 [ label = "11: test: Other" ]
-    12 [ label = "12: test: Other" ]
-    13 [ label = "13: test: Other" ]
-    14 [ label = "14: partial_block: Other" ]
-    15 [ label = "15: partial_block: Other" ]
-    16 [ label = "16: partial_block: Other" ]
-    17 [ label = "17: partial_block: InnerTemplate" ]
-    18 [ label = "18: partial_block: Other" ]
-    19 [ label = "19: partial_block: Other" ]
-    20 [ label = "20: partial_block_partial: PartialBlock" ]
-    21 [ label = "21: partial_block_partial: Other" ]
-    0 -> 3 [ label = "0: <!DOCTYPE html>\l<html lang=\"en\">\l  <head>\l    <meta charset=\"utf-8\">\l    <title>title</title>\l    <link rel=\"stylesheet\" href=\"style.css\">\l    <script src=\"script.js\"></script>\l  </head>\l  <body>\l    <h1>" ]
-    3 -> 4 [ label = "1: {{page_title:element}}" ]
-    4 -> 5 [ label = "2: </h1>\l    <input type=\"hidden\" value=\"" ]
-    5 -> 6 [ label = "3: {{csrf_token:attr}}" ]
-    6 -> 7 [ label = "4: \">\l    <ul>\l    \l      <li>" ]
-    7 -> 8 [ label = "5: {{title:element}}" ]
-    8 -> 9 [ label = "6: </li>\l      <li>" ]
-    9 -> 10 [ label = "7: {{text:element}}" ]
-    10 -> 6 [ label = "8: noop" ]
-    6 -> 11 [ label = "9: </li>\l    \l    </ul>\l    <span>" ]
-    11 -> 12 [ label = "10: {{copyright_year:element}}" ]
-    12 -> 13 [ label = "11: </span>\l  </body>\l</html>" ]
-    14 -> 15 [ label = "12: <span>hellochildrenstart" ]
-    15 -> 16 [ label = "13: {{test:element}}" ]
-    1 -> 17 [ label = "14: noop" ]
-    17 -> 14 [ label = "15: partial" ]
-    17 -> 2 [ label = "16: inner_template" ]
-    17 -> 18 [ label = "17: childrenend" ]
-    18 -> 19 [ label = "18: world</span>" ]
-    2 -> 20 [ label = "19: <p>" ]
-    20 -> 21 [ label = "20: </p>" ]
+    0 [ label = "0: test: Other"]
+    1 [ label = "1: partial_block: Other"]
+    2 [ label = "2: partial_block_partial: Other"]
+    3 [ label = "3: test: Other"]
+    4 [ label = "4: test: Other"]
+    5 [ label = "5: test: Other"]
+    6 [ label = "6: test: Other"]
+    7 [ label = "7: test: Other"]
+    8 [ label = "8: test: Other"]
+    9 [ label = "9: test: Other"]
+    10 [ label = "10: test: Other"]
+    11 [ label = "11: test: Other"]
+    12 [ label = "12: test: Other"]
+    13 [ label = "13: test: Other"]
+    14 [ label = "14: partial_block: Other"]
+    15 [ label = "15: partial_block: Other"]
+    16 [ label = "16: partial_block: Other"]
+    17 [ label = "17: partial_block: InnerTemplate"]
+    18 [ label = "18: partial_block: Other"]
+    19 [ label = "19: partial_block: Other"]
+    20 [ label = "20: partial_block_partial: PartialBlock"]
+    21 [ label = "21: partial_block_partial: Other"]
+    0 -> 3 [ label = "0: <!DOCTYPE html>
+<html lang=\"en\">
+  <head>
+    <meta charset=\"utf-8\">
+    <title>title</title>
+    <link rel=\"stylesheet\" href=\"style.css\">
+    <script src=\"script.js\"></script>
+  </head>
+  <body>
+    <h1>"]
+    3 -> 4 [ label = "1: {{page_title:element}}"]
+    4 -> 5 [ label = "2: </h1>
+    <input type=\"hidden\" value=\""]
+    5 -> 6 [ label = "3: {{csrf_token:attr}}"]
+    6 -> 7 [ label = "4: \">
+    <ul>
+    
+      <li>"]
+    7 -> 8 [ label = "5: {{title:element}}"]
+    8 -> 9 [ label = "6: </li>
+      <li>"]
+    9 -> 10 [ label = "7: {{text:element}}"]
+    10 -> 6 [ label = "8: noop"]
+    6 -> 11 [ label = "9: </li>
+    
+    </ul>
+    <span>"]
+    11 -> 12 [ label = "10: {{copyright_year:element}}"]
+    12 -> 13 [ label = "11: </span>
+  </body>
+</html>"]
+    14 -> 15 [ label = "12: <span>hellochildrenstart"]
+    15 -> 16 [ label = "13: {{test:element}}"]
+    1 -> 17 [ label = "14: noop"]
+    17 -> 14 [ label = "15: partial" style = dotted]
+    17 -> 2 [ label = "16: inner_template" style = dotted]
+    17 -> 18 [ label = "17: childrenend"]
+    18 -> 19 [ label = "18: world</span>"]
+    2 -> 20 [ label = "19: <p>"]
+    20 -> 21 [ label = "20: </p>"]
 }
