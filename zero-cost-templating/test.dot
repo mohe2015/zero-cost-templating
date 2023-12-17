@@ -11,6 +11,7 @@ digraph {
     9 [ label = "9 test other"]
     10 [ label = "10 test other"]
     11 [ label = "11 test other"]
+    12 [ label = "12 test other"]
     0 -> 1 [ label = "0 <!DOCTYPE html>
 <html lang=\"en\">
   <head>
@@ -27,19 +28,20 @@ digraph {
     3 -> 4 [ label = "3 {{csrf_token:attr}}"]
     4 -> 5 [ label = "4 \">
     <ul>
-    
+    "]
+    5 -> 6 [ label = "5 
       <li>"]
-    5 -> 6 [ label = "5 {{title:element}}"]
-    6 -> 7 [ label = "6 </li>
+    6 -> 7 [ label = "6 {{title:element}}"]
+    7 -> 8 [ label = "7 </li>
       <li>"]
-    7 -> 8 [ label = "7 {{text:element}}"]
-    8 -> 4 [ label = "8 noop"]
-    4 -> 9 [ label = "9 </li>
-    
+    8 -> 9 [ label = "8 {{text:element}}"]
+    9 -> 5 [ label = "9 </li>
+    "]
+    5 -> 10 [ label = "10 
     </ul>
     <span>"]
-    9 -> 10 [ label = "10 {{copyright_year:element}}"]
-    10 -> 11 [ label = "11 </span>
+    10 -> 11 [ label = "11 {{copyright_year:element}}"]
+    11 -> 12 [ label = "12 </span>
   </body>
 </html>"]
 }

@@ -1,12 +1,7 @@
 use core::fmt::Display;
 use std::collections::HashMap;
 
-use itertools::Itertools;
-use petgraph::{
-    data::Build,
-    stable_graph::{NodeIndex, StableGraph},
-    visit::{EdgeRef, IntoEdgeReferences, IntoEdgesDirected},
-};
+use petgraph::stable_graph::{NodeIndex, StableGraph};
 
 use crate::html_recursive_descent::{AttributeValuePart, Child, Element};
 
@@ -120,12 +115,12 @@ pub fn add_node_with_edge(
     node: TemplateNode,
     edge_type: IntermediateAstElement,
 ) -> (NodeIndex, IntermediateAstElement) {
-    match (current, edge_type) {
-        (IntermediateAstElement::Text(a), IntermediateAstElement::Text(b)) => {
-            (last, IntermediateAstElement::Text(a + &b))
+    match (node.node_type, current, edge_type) {
+        (NodeType::Other, IntermediateAstElement::Text(old), IntermediateAstElement::Text(new)) => {
+            (last, IntermediateAstElement::Text(old + &new))
         }
-        (IntermediateAstElement::Noop, edge_type) => (last, edge_type),
-        (current, edge_type) => {
+        (NodeType::Other, IntermediateAstElement::Noop, edge_type) => (last, edge_type),
+        (_, current, edge_type) => {
             let current_node = graph.add_node(node);
             graph.add_edge(last, current_node, current);
             (current_node, edge_type)
@@ -141,7 +136,10 @@ pub fn flush_pending_edge(
 ) -> (NodeIndex, IntermediateAstElement) {
     match current {
         IntermediateAstElement::Noop => (last, current),
-        current => {
+        current @ (IntermediateAstElement::Variable(..)
+        | IntermediateAstElement::Text(_)
+        | IntermediateAstElement::PartialBlockPartial
+        | IntermediateAstElement::InnerTemplate) => {
             let current_node = graph.add_node(node);
             graph.add_edge(last, current_node, current);
             (current_node, IntermediateAstElement::Noop)
@@ -201,6 +199,15 @@ pub fn children_to_ast(
                     element_to_ast(first_nodes, template_name, graph, last, current, element);
             }
             Child::Each(_identifier, children) => {
+                (last, current) = flush_pending_edge(
+                    graph,
+                    last,
+                    current,
+                    TemplateNode {
+                        template_name: template_name.to_owned(),
+                        node_type: NodeType::Other,
+                    },
+                );
                 let loop_start = last;
                 (last, current) = children_to_ast(
                     first_nodes,
@@ -211,30 +218,51 @@ pub fn children_to_ast(
                     children,
                     parent,
                 );
-                graph.add_edge(last, loop_start, IntermediateAstElement::Noop);
+
+                graph.add_edge(last, loop_start, current);
+                current = IntermediateAstElement::Noop;
+
                 last = loop_start;
             }
             Child::PartialBlock(name, children) => {
-                let partial_block_partial = graph.add_node(TemplateNode {
-                    template_name: template_name.to_owned(),
-                    node_type: NodeType::Other,
-                });
-                (_, current) = children_to_ast(
-                    first_nodes,
-                    template_name,
+                let partial_block_partial = {
+                    // this part needs to be fully disjunct from the rest
+                    let partial_block_partial = graph.add_node(TemplateNode {
+                        template_name: template_name.to_owned(),
+                        node_type: NodeType::Other,
+                    });
+                    let (inner_last, inner_current) = children_to_ast(
+                        first_nodes,
+                        template_name,
+                        graph,
+                        partial_block_partial,
+                        IntermediateAstElement::Noop,
+                        children,
+                        parent,
+                    );
+                    flush_pending_edge(
+                        graph,
+                        inner_last,
+                        inner_current,
+                        TemplateNode {
+                            template_name: template_name.to_owned(),
+                            node_type: NodeType::Other,
+                        },
+                    );
+                    partial_block_partial
+                };
+
+                let inner_template;
+                (inner_template, current) = add_node_with_edge(
                     graph,
-                    partial_block_partial,
+                    last,
                     current,
-                    children,
-                    parent,
+                    TemplateNode {
+                        template_name: template_name.to_owned(),
+                        node_type: NodeType::InnerTemplate,
+                    },
+                    IntermediateAstElement::Noop,
                 );
-
-                let inner_template = graph.add_node(TemplateNode {
-                    template_name: template_name.to_owned(),
-                    node_type: NodeType::InnerTemplate,
-                });
-
-                graph.add_edge(last, inner_template, IntermediateAstElement::Noop);
 
                 graph.add_edge(
                     inner_template,

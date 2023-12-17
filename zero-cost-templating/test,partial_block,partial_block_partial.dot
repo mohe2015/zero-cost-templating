@@ -13,14 +13,15 @@ digraph {
     11 [ label = "11 test other"]
     12 [ label = "12 test other"]
     13 [ label = "13 test other"]
-    14 [ label = "14 partial_block other"]
+    14 [ label = "14 test other"]
     15 [ label = "15 partial_block other"]
     16 [ label = "16 partial_block other"]
-    17 [ label = "17 partial_block inner"]
-    18 [ label = "18 partial_block other"]
+    17 [ label = "17 partial_block other"]
+    18 [ label = "18 partial_block inner"]
     19 [ label = "19 partial_block other"]
-    20 [ label = "20 partial_block_partial partial"]
-    21 [ label = "21 partial_block_partial other"]
+    20 [ label = "20 partial_block other"]
+    21 [ label = "21 partial_block_partial partial"]
+    22 [ label = "22 partial_block_partial other"]
     0 -> 3 [ label = "0 <!DOCTYPE html>
 <html lang=\"en\">
   <head>
@@ -37,28 +38,29 @@ digraph {
     5 -> 6 [ label = "3 {{csrf_token:attr}}"]
     6 -> 7 [ label = "4 \">
     <ul>
-    
+    "]
+    7 -> 8 [ label = "5 
       <li>"]
-    7 -> 8 [ label = "5 {{title:element}}"]
-    8 -> 9 [ label = "6 </li>
+    8 -> 9 [ label = "6 {{title:element}}"]
+    9 -> 10 [ label = "7 </li>
       <li>"]
-    9 -> 10 [ label = "7 {{text:element}}"]
-    10 -> 6 [ label = "8 noop"]
-    6 -> 11 [ label = "9 </li>
-    
+    10 -> 11 [ label = "8 {{text:element}}"]
+    11 -> 7 [ label = "9 </li>
+    "]
+    7 -> 12 [ label = "10 
     </ul>
     <span>"]
-    11 -> 12 [ label = "10 {{copyright_year:element}}"]
-    12 -> 13 [ label = "11 </span>
+    12 -> 13 [ label = "11 {{copyright_year:element}}"]
+    13 -> 14 [ label = "12 </span>
   </body>
 </html>"]
-    14 -> 15 [ label = "12 <span>hellochildrenstart"]
-    15 -> 16 [ label = "13 {{test:element}}"]
-    1 -> 17 [ label = "14 noop"]
-    17 -> 14 [ label = "15 partial" style = dotted]
-    17 -> 2 [ label = "16 template" style = dotted]
-    17 -> 18 [ label = "17 childrenend"]
-    18 -> 19 [ label = "18 world</span>"]
-    2 -> 20 [ label = "19 <p>"]
-    20 -> 21 [ label = "20 </p>"]
+    15 -> 16 [ label = "13 <span>hellochildrenstart"]
+    16 -> 17 [ label = "14 {{test:element}}"]
+    1 -> 18 [ label = "15 noop"]
+    18 -> 15 [ label = "16 partial" style = dotted]
+    18 -> 2 [ label = "17 template" style = dotted]
+    18 -> 19 [ label = "18 childrenend"]
+    19 -> 20 [ label = "19 world</span>"]
+    2 -> 21 [ label = "20 <p>"]
+    21 -> 22 [ label = "21 </p>"]
 }
