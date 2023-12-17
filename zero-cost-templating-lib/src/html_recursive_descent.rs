@@ -72,7 +72,8 @@ pub fn parse_variable<I: Iterator<Item = char>>(input: &mut PeekNth<I>) -> Resul
             }
             index += 1;
             if identifier == "else" {
-                // TODO FIXME we could stop peeking from here on as we know that this is a variable now
+                // TODO FIXME we could stop peeking from here on
+                // as we know that this is a variable now
                 return Err("expected variable identifier but found keyword else".to_owned());
             }
         }
@@ -348,29 +349,19 @@ pub fn parse_children<I: Iterator<Item = char>>(
                                 }
                             }
                         }
-                        Some('e') => {
-                            match input.peek_nth(3) {
-                                Some('l') => {
-                                    match input.peek_nth(4) {
-                                        Some('s') => {
-                                            match input.peek_nth(5) {
-                                                Some('e') => {
-                                                    match input.peek_nth(6) {
-                                                        Some('}') => {
-                                                            return Ok(result)
-                                                        }
-                                                        _ => result.push(Child::Variable(parse_variable(input)?)),
-                                                    }
-                                                }
-                                                _ => result.push(Child::Variable(parse_variable(input)?)),
-                                            }
-                                        }
+                        Some('e') => match input.peek_nth(3) {
+                            Some('l') => match input.peek_nth(4) {
+                                Some('s') => match input.peek_nth(5) {
+                                    Some('e') => match input.peek_nth(6) {
+                                        Some('}') => return Ok(result),
                                         _ => result.push(Child::Variable(parse_variable(input)?)),
-                                    }
-                                }
+                                    },
+                                    _ => result.push(Child::Variable(parse_variable(input)?)),
+                                },
                                 _ => result.push(Child::Variable(parse_variable(input)?)),
-                            }
-                        }
+                            },
+                            _ => result.push(Child::Variable(parse_variable(input)?)),
+                        },
                         Some(_) => result.push(Child::Variable(parse_variable(input)?)),
                         None => {
                             return Err("expected # as part of each directive or start of \
@@ -466,7 +457,10 @@ mod tests {
         AttributeValuePart, Child, Element,
     };
 
-    fn fully_parsed<T, F: for<'a> Fn(&'a mut PeekNth<Chars<'static>>) -> Result<T, String>>(func: F, input: &'static str) -> Result<T, String> {
+    fn fully_parsed<T, F: for<'a> Fn(&'a mut PeekNth<Chars<'static>>) -> Result<T, String>>(
+        func: F,
+        input: &'static str,
+    ) -> Result<T, String> {
         let iterator = &mut peek_nth(input.chars());
         let result = func(iterator);
         if result.is_ok() {
@@ -538,7 +532,10 @@ mod tests {
     #[test]
     fn variable_8() {
         assert_eq!(
-            Err("expected variable identifier but found keyword else\nwhile parsing variable".to_owned()),
+            Err(
+                "expected variable identifier but found keyword else\nwhile parsing variable"
+                    .to_owned()
+            ),
             fully_parsed(parse_variable, "{{else}}")
         );
     }
@@ -806,7 +803,8 @@ mod tests {
                 "partial_name".to_owned(),
                 vec![Child::Literal("children".to_owned())]
             )),
-            fully_parsed(parse_partial_block, 
+            fully_parsed(
+                parse_partial_block,
                 "{{#>partial_name}}children{{/partial_name}}"
             )
         );
@@ -823,7 +821,8 @@ mod tests {
                 ),
                 Child::Literal("b".to_owned()),
             ]),
-            fully_parsed(parse_children, 
+            fully_parsed(
+                parse_children,
                 "a{{#>partial_name}}children{{/partial_name}}b"
             )
         );
@@ -869,8 +868,7 @@ mod tests {
                 vec![Child::Literal("true".to_owned()),],
                 vec![Child::Literal("false".to_owned()),]
             )),
-            fully_parsed(parse_if_else, 
-                "{{#if author}}true{{else}}false{{/if}}")
+            fully_parsed(parse_if_else, "{{#if author}}true{{else}}false{{/if}}")
         );
     }
 
@@ -894,8 +892,7 @@ mod tests {
                 vec![Child::Literal("true".to_owned()),],
                 vec![Child::Literal("false".to_owned()),]
             )]),
-            fully_parsed(parse_children, 
-                "{{#if author}}true{{else}}false{{/if}}")
+            fully_parsed(parse_children, "{{#if author}}true{{else}}false{{/if}}")
         );
     }
 }

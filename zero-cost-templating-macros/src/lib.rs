@@ -106,13 +106,15 @@
 #![feature(lint_reasons)]
 #![feature(proc_macro_span)]
 
+use std::collections::HashMap;
 use std::fs::File;
 use std::io::Write;
 use std::path::PathBuf;
 
-use itertools::peek_nth;
-use petgraph::dot::Dot;
+use itertools::{peek_nth, Itertools};
+use petgraph::dot::{Config, Dot};
 use petgraph::stable_graph::StableGraph;
+use petgraph::visit::{EdgeRef, NodeRef};
 use quote::quote;
 use syn::punctuated::Punctuated;
 use syn::visit_mut::VisitMut;
@@ -120,7 +122,7 @@ use syn::{parse_macro_input, Item, LitStr, Token};
 use zero_cost_templating_lib::codegen::{codegen, InnerReplace, TemplateCodegen};
 use zero_cost_templating_lib::html_recursive_descent::parse_children;
 use zero_cost_templating_lib::intermediate_graph::{
-    children_to_ast, EscapingFunction, IntermediateAstElement, NodeType,
+    children_to_ast, flush_pending_edge, IntermediateAstElement, NodeType, TemplateNode,
 };
 
 // https://veykril.github.io/posts/ide-proc-macros/
@@ -131,11 +133,13 @@ use zero_cost_templating_lib::intermediate_graph::{
 
 // TODO FIXME allow passing whole directory?
 #[proc_macro_attribute]
+#[expect(clippy::too_many_lines, reason = "tmp")]
 pub fn template_stream(
     attributes: proc_macro::TokenStream,
     item: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
-    let input_paths = parse_macro_input!(attributes with Punctuated::<LitStr, Token![,]>::parse_separated_nonempty);
+    let input_paths = parse_macro_input!(attributes
+        with Punctuated::<LitStr, Token![,]>::parse_separated_nonempty);
     // https://github.com/dtolnay/trybuild/issues/202
     let cargo_manifest_dir = std::env::var_os("CARGO_MANIFEST_DIR_OVERRIDE")
         .or_else(|| std::env::var_os("CARGO_MANIFEST_DIR"))
@@ -148,12 +152,34 @@ pub fn template_stream(
         .map(|file| {
             let path = root.join(file.value());
 
-            let file_name = path.file_name().unwrap().to_string_lossy();
+            let file_name = path.file_name().unwrap().to_string_lossy().to_string();
 
-            // TODO FIXME error if end doesn't match
             let template_name = file_name.trim_end_matches(".html.hbs");
 
-            let input = std::fs::read_to_string(&path).unwrap_or_else(|err| {
+            (path, template_name.to_owned())
+        })
+        .collect();
+
+    let mut graph = StableGraph::new();
+    let graph = &mut graph;
+    let first_nodes: HashMap<_, _> = inputs
+        .iter()
+        .map(|(_path, template_name)| {
+            let first = graph.add_node(TemplateNode {
+                template_name: template_name.to_owned(),
+                node_type: NodeType::Other,
+            });
+
+            (template_name.clone(), first)
+        })
+        .collect();
+
+    let inputs: Vec<_> = inputs
+        .iter()
+        .map(|(path, template_name)| {
+            // TODO FIXME error if end doesn't match
+
+            let input = std::fs::read_to_string(path).unwrap_or_else(|err| {
                 // TODO FIXME don't panic
                 panic!("failed to read file at path: {} {}", path.display(), err)
             });
@@ -166,7 +192,7 @@ pub fn template_stream(
                         remaining_input,
                         "",
                         "File: {}\n{element:?}\nremaining input: {remaining_input}",
-                        file.value()
+                        path.display()
                     );
                     element
                 }
@@ -174,53 +200,89 @@ pub fn template_stream(
                     let remaining_input: String = input.collect();
                     panic!(
                         "File: {}\n{error}\nremaining input: {remaining_input}",
-                        file.value()
+                        path.display()
                     );
                 }
             };
+            let first = first_nodes.get(template_name).unwrap();
+            let (last, current) = children_to_ast(
+                &first_nodes,
+                template_name,
+                graph,
+                *first,
+                IntermediateAstElement::Noop,
+                dom,
+                "root",
+            );
+            flush_pending_edge(
+                graph,
+                last,
+                current,
+                TemplateNode {
+                    template_name: template_name.clone(),
+                    node_type: NodeType::Other,
+                },
+            );
 
-            let mut graph = StableGraph::new();
-            let first = graph.add_node(NodeType::Other);
-            let mut last = first;
-            let mut current = IntermediateAstElement {
-                variable: None,
-                escaping_fun: EscapingFunction::NoVariableStart,
-                text: String::new(),
-            };
-            (last, current) =
-                children_to_ast(template_name, &mut graph, last, current, dom, "root");
-            let previous = last;
-            last = graph.add_node(NodeType::Other);
-            graph.add_edge(previous, last, current);
-
-            let mut file = File::create(path.with_extension("dot")).unwrap();
-            file.write_all(
-                format!(
-                    "{}",
-                    Dot::new(&graph.map(
-                        |node_idx, node| format!("{}: {:?}", node_idx.index(), node),
-                        |edge_idx, edge| format!("{}: {}", edge_idx.index(), edge)
-                    ))
-                )
-                .as_bytes(),
-            )
-            .unwrap();
             TemplateCodegen {
                 template_name: template_name.to_owned(),
-                path,
-                graph,
-                first,
+                path: path.to_owned(),
+                first: *first,
                 last,
             }
         })
         .collect();
 
-    let code = codegen(&inputs);
+    let mut file = File::create(
+        inputs
+            .first()
+            .unwrap()
+            .path
+            .with_file_name(inputs.iter().map(|tc| tc.template_name.clone()).join(","))
+            .with_extension("dot"),
+    )
+    .unwrap();
+    let immut_graph = &*graph;
+    file.write_all(
+        format!(
+            "{:?}",
+            Dot::with_attr_getters(
+                immut_graph,
+                &[Config::NodeNoLabel, Config::EdgeNoLabel],
+                &|_, er| match er.weight() {
+                    IntermediateAstElement::InnerTemplate
+                    | IntermediateAstElement::PartialBlockPartial => {
+                        format!(
+                            "label = \"{} {}\" style = dotted",
+                            er.id().index(),
+                            er.weight().to_string().replace('\"', "\\\"")
+                        )
+                    }
+                    _ => {
+                        format!(
+                            "label = \"{} {}\"",
+                            er.id().index(),
+                            er.weight().to_string().replace('\"', "\\\"")
+                        )
+                    }
+                },
+                &|_, nr| format!(
+                    "label = \"{} {}\"",
+                    nr.id().index(),
+                    nr.weight().to_string().replace('\"', "\\\"")
+                ),
+            )
+        )
+        .as_bytes(),
+    )
+    .unwrap();
+
+    let code = codegen(graph, &inputs);
 
     let mut item = parse_macro_input!(item as Item);
 
     if std::env::var_os("ZERO_COST_TEMPLATING_NO_EXPAND").is_none() {
-        InnerReplace(inputs).visit_item_mut(&mut item);
+        InnerReplace(inputs, graph).visit_item_mut(&mut item);
     }
 
     let expanded = quote! {
@@ -232,8 +294,8 @@ pub fn template_stream(
     };
 
     // TODO FIXME remove for production
-    if let Err(_error) = syn::parse2::<syn::File>(expanded.clone()) {
-        //panic!("{error}\n{expanded}")
+    if let Err(error) = syn::parse2::<syn::File>(expanded.clone()) {
+        panic!("{error}\n{expanded}")
     }
 
     proc_macro::TokenStream::from(expanded)
