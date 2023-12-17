@@ -5,8 +5,6 @@ extern crate alloc;
 
 use std::pin::pin;
 
-use alloc::borrow::Cow;
-
 use futures::StreamExt;
 use zero_cost_templating_macros::template_stream;
 
@@ -14,7 +12,6 @@ use zero_cost_templating_macros::template_stream;
 pub async fn test() {
     let template = only_template_initial0();
     let template = template.only_template_template0();
-    let template = template.partial_block_partial_template3();
 }
 
 #[tokio::main]

@@ -49,28 +49,21 @@ fn handle_call(
             span,
         )
         .0; // good span for mismatched type error
-        let last_node = graph
-            .edges_directed(edge.target(), Direction::Outgoing)
-            .next()
-            .is_none();
-        let next_template_struct = if last_node {
-            quote_spanned! {span=> _magic_expression_result.after }
-        } else {
-            node_type(
-                graph,
-                edge.target(),
-                &(
-                    quote_spanned! {span=> _ },
-                    quote_spanned! {span=> _magic_expression_result.partial },
-                ),
-                &(
-                    quote_spanned! {span=> _ },
-                    quote_spanned! {span=> _magic_expression_result.after },
-                ),
-                span,
-            )
-            .1
-        };
+
+        let next_template_struct = node_type(
+            graph,
+            edge.target(),
+            &(
+                quote_spanned! {span=> _ },
+                quote_spanned! {span=> _magic_expression_result.partial },
+            ),
+            &(
+                quote_spanned! {span=> _ },
+                quote_spanned! {span=> _magic_expression_result.after },
+            ),
+            span,
+        )
+        .1;
 
         // TODO FIXME fix unwrap by better matching here in general
         let escaped_value = parameter.map(|parameter| match edge.weight().variable().unwrap().1 {
@@ -183,7 +176,13 @@ fn node_type(
     after: &(TokenStream, TokenStream),
     span: Span,
 ) -> (TokenStream, TokenStream) {
-    // maybe add the last node check in here?
+    let last_node = graph
+        .edges_directed(node_index, Direction::Outgoing)
+        .next()
+        .is_none();
+    if last_node {
+        return after.clone();
+    }
 
     let partial_type = &partial.0;
     let partial_create = &partial.1;
@@ -331,22 +330,14 @@ pub fn calculate_edges<'a>(
     template_codegen: &'a TemplateCodegen,
 ) -> impl Iterator<Item = proc_macro2::TokenStream> + 'a {
     graph.edge_references().map(|edge| {
-        let last_node = graph
-            .edges_directed(edge.target(), Direction::Outgoing)
-            .next()
-            .is_none();
-        let return_type = if last_node {
-            quote! { After }
-        } else {
-            node_type(
-                graph,
-                edge.target(),
-                &(quote! { Partial }, quote! { template.partial }),
-                &(quote! { After }, quote! { template.after }),
-                Span::call_site(),
-            )
-            .0
-        };
+        let return_type = node_type(
+            graph,
+            edge.target(),
+            &(quote! { Partial }, quote! { template.partial }),
+            &(quote! { After }, quote! { template.after }),
+            Span::call_site(),
+        )
+        .0;
         let variable_name = edge.weight().variable_name().as_ref().map_or_else(
             || {
                 format_ident!(
