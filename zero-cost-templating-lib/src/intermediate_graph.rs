@@ -115,7 +115,7 @@ pub fn add_node_with_edge(
     node: TemplateNode,
     edge_type: IntermediateAstElement,
 ) -> (NodeIndex, IntermediateAstElement) {
-    match (node.node_type, current, edge_type) {
+    match (&node.node_type, current, edge_type) {
         (NodeType::Other, IntermediateAstElement::Text(old), IntermediateAstElement::Text(new)) => {
             (last, IntermediateAstElement::Text(old + &new))
         }
@@ -135,7 +135,7 @@ pub fn flush_pending_edge(
     node: TemplateNode,
 ) -> (NodeIndex, IntermediateAstElement) {
     match current {
-        IntermediateAstElement::Noop => (last, current),
+        IntermediateAstElement::Noop => (last, IntermediateAstElement::Noop),
         current @ (IntermediateAstElement::Variable(..)
         | IntermediateAstElement::Text(_)
         | IntermediateAstElement::PartialBlockPartial
@@ -282,6 +282,8 @@ pub fn children_to_ast(
 
                 // This is needed so e.g. branching doesn't break the guarantee that
                 // there is exactly one successor node after InnerTemplate
+                // that guarantee is needed to tell the template what the after node is
+                // TODO FIXME maybe add a special current == NoopForceFlush
                 (last, current) = add_node_with_edge(
                     graph,
                     last,
@@ -306,7 +308,9 @@ pub fn children_to_ast(
                 );
 
                 // This is needed so e.g. branching doesn't break the guarantee that
-                // there is exactly one successor node after PartialBlock
+                // there is exactly one successor node after InnerTemplate
+                // that guarantee is needed to tell the template what the after node is
+                // TODO FIXME maybe add a special current == NoopForceFlush
                 (last, current) = add_node_with_edge(
                     graph,
                     last,
@@ -319,28 +323,61 @@ pub fn children_to_ast(
                 );
             }
             Child::If(_variable, if_children, else_children) => {
-                let if_last;
-                (if_last, current) = children_to_ast(
-                    first_nodes,
-                    template_name,
+                (last, current) = flush_pending_edge(
                     graph,
                     last,
                     current,
-                    if_children,
-                    parent,
+                    TemplateNode {
+                        template_name: template_name.to_owned(),
+                        node_type: NodeType::Other,
+                    },
                 );
 
-                let else_last;
-                (else_last, current) = children_to_ast(
-                    first_nodes,
-                    template_name,
-                    graph,
-                    last,
-                    current,
-                    else_children,
-                    parent,
-                );
+                let if_last = {
+                    let (mut if_last, if_current) = children_to_ast(
+                        first_nodes,
+                        template_name,
+                        graph,
+                        last,
+                        IntermediateAstElement::Noop,
+                        if_children,
+                        parent,
+                    );
+                    (if_last, _) = flush_pending_edge(
+                        graph,
+                        if_last,
+                        if_current,
+                        TemplateNode {
+                            template_name: template_name.to_owned(),
+                            node_type: NodeType::Other,
+                        },
+                    );
+                    if_last
+                };
 
+                let else_last = {
+                    let (mut else_last, else_current) = children_to_ast(
+                        first_nodes,
+                        template_name,
+                        graph,
+                        last,
+                        IntermediateAstElement::Noop,
+                        else_children,
+                        parent,
+                    );
+                    (else_last, _) = flush_pending_edge(
+                        graph,
+                        else_last,
+                        else_current,
+                        TemplateNode {
+                            template_name: template_name.to_owned(),
+                            node_type: NodeType::Other,
+                        },
+                    );
+                    else_last
+                };
+
+                // TODO FIXME if last would be a vec, then we probably wouldn't need this
                 last = graph.add_node(TemplateNode {
                     template_name: template_name.to_owned(),
                     node_type: NodeType::Other,
