@@ -13,9 +13,10 @@ pub async fn test() {
     let template = template.test_template0();
     let page_title = Cow::from("thetitle");
     let template = template.test_page_title1(page_title);
+    let template = template.test_template2();
     let csrf_token = Cow::from("thetoken");
-    let template = template.test_csrf_token2(csrf_token);
-    template.test_template6()
+    let template = template.test_csrf_token3(csrf_token);
+    template.test_template4()
 }
 
 pub fn main() {}

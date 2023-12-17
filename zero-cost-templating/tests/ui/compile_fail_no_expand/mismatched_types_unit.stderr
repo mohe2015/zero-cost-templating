@@ -1,10 +1,10 @@
 error[E0308]: mismatched types
-  --> tests/ui/compile_fail_no_expand/mismatched_types_unit.rs:18:5
+  --> tests/ui/compile_fail_no_expand/mismatched_types_unit.rs:19:5
    |
-18 |     template.test_template6()
+19 |     template.test_template4()
    |     ^^^^^^^^^^^^^^^^^^^^^^^^^- help: consider using a semicolon here: `;`
    |     |
-   |     expected `()`, found `Template<TestTemplate6, (), ()>`
+   |     expected `()`, found `Template<TestTemplate5, (), ()>`
    |
    = note: expected unit type `()`
-                 found struct `Template<TestTemplate6, (), ()>`
+                 found struct `Template<TestTemplate5, (), ()>`
