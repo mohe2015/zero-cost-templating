@@ -166,8 +166,6 @@ pub fn encode_double_quoted_attribute<'a, I: Into<Cow<'a, str>>>(input: I) -> Co
 mod tests {
     #[test]
     fn ui() {
-        std::env::set_var("ZERO_COST_TEMPLATING_NO_EXPAND", "no_expand");
-
         std::env::set_var(
             "CARGO_MANIFEST_DIR_OVERRIDE",
             std::env::var_os("CARGO_MANIFEST_DIR").unwrap(),
@@ -176,19 +174,6 @@ mod tests {
         let test_cases = trybuild::TestCases::new();
         test_cases.pass("tests/ui/pass/*.rs");
         test_cases.compile_fail("tests/ui/compile_fail/*.rs");
-        test_cases.compile_fail("tests/ui/compile_fail_no_expand/*.rs");
-
-        // this is important to force execution and get the correct environment variables
-        drop(test_cases);
-
-        std::env::remove_var("ZERO_COST_TEMPLATING_NO_EXPAND");
-
-        let test_cases = trybuild::TestCases::new();
-        test_cases.pass("tests/ui/pass/*.rs");
-        test_cases.compile_fail("tests/ui/compile_fail/*.rs");
-        test_cases.compile_fail("tests/ui/compile_fail_expand/*.rs");
-
-        // this is important to force execution and get the correct environment variables
         drop(test_cases);
     }
 }

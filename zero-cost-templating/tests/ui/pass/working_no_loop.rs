@@ -27,9 +27,6 @@ pub async fn test() {
 
 #[tokio::main]
 pub async fn main() {
-    if option_env!("ZERO_COST_TEMPLATING_NO_EXPAND").is_some() {
-        return;
-    }
     let mut actual = String::new();
     let stream = test();
     let mut stream = pin!(stream);

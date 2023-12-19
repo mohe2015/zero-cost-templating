@@ -19,7 +19,7 @@ pub async fn test() {
     let template = template.test_template4();
     let template = template.test_template10();
     let template = template.test_copyright_year11(Cow::from("2023".to_string()));
-    let test: String = { template.test_template12() };
+    let test: String = template.test_template12();
 }
 
 pub fn main() {}

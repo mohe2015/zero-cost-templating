@@ -63,9 +63,6 @@ async fn if_else_false_output() {
 
 #[tokio::main]
 pub async fn main() {
-    if option_env!("ZERO_COST_TEMPLATING_NO_EXPAND").is_some() {
-        return;
-    }
     if_else_true_output().await;
     if_else_false_output().await;
 }

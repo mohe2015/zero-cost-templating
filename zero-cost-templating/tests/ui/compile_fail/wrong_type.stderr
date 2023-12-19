@@ -1,5 +1,7 @@
 error[E0308]: mismatched types
-  --> tests/ui/compile_fail/wrong_type.rs:22:26
+  --> tests/ui/compile_fail_no_expand/wrong_type.rs:22:24
    |
-22 |     let test: String = { template.test_template12() };
-   |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `()`
+22 |     let test: String = template.test_template12();
+   |               ------   ^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `()`
+   |               |
+   |               expected due to this
