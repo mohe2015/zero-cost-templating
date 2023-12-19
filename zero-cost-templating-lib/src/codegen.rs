@@ -287,9 +287,9 @@ pub fn codegen(
         let other = quote! {
             #[allow(unused)]
             /// Start
-            pub fn #ident() -> (#template_struct, impl AsyncIterator<Item = alloc::borrow::Cow<'static, str>>) {
+            pub fn #ident() -> (#template_struct, impl std::async_iter::AsyncIterator<Item = alloc::borrow::Cow<'static, str>>) {
                 (todo!(), async gen {
-                    yield Cow::from("hi");
+                    yield alloc::borrow::Cow::from("hi");
                 })
             }
         };

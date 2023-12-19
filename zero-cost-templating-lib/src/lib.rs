@@ -108,15 +108,13 @@
 
 extern crate alloc;
 
-use std::async_iter::AsyncIterator;
-
 pub mod codegen;
 pub mod html_recursive_descent;
 pub mod intermediate_graph;
 
 pub fn ident() -> (
     (),
-    impl AsyncIterator<Item = alloc::borrow::Cow<'static, str>>,
+    impl std::async_iter::AsyncIterator<Item = alloc::borrow::Cow<'static, str>>,
 ) {
     ((), async gen {
         yield alloc::borrow::Cow::from("hi");
