@@ -105,6 +105,8 @@
 #![feature(async_closure, async_iterator, coroutines, gen_blocks, noop_waker)]
 #![feature(lint_reasons)]
 
+pub mod async_iterator_extension;
+
 extern crate alloc;
 
 use alloc::borrow::Cow;
