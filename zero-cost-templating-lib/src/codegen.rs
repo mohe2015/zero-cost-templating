@@ -340,6 +340,14 @@ pub fn calculate_edges<'a>(
             Span::call_site(),
         )
         .0;
+        let return_type_no_partial = node_type(
+            graph,
+            edge.target(),
+            &(quote! { () }, quote! { () }),
+            &(quote! { After }, quote! { template.after }),
+            Span::call_site(),
+        )
+        .0;
         let variable_name = edge.weight().variable_name().as_ref().map_or_else(
             || {
                 format_ident!(
@@ -389,6 +397,12 @@ pub fn calculate_edges<'a>(
                                         After
                                         > {
                                 pub fn #variable_name(self #parameter) -> #return_type {
+                                    todo!()
+                                }
+                            }
+
+                            impl<After> Template<#impl_template_name, (), After> {
+                                pub fn #variable_name(self #parameter) -> #return_type_no_partial {
                                     todo!()
                                 }
                             }
