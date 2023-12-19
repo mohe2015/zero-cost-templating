@@ -106,6 +106,19 @@
 #![feature(lint_reasons)]
 #![feature(async_closure, async_iterator, coroutines, gen_blocks, noop_waker)]
 
+extern crate alloc;
+
+use std::async_iter::AsyncIterator;
+
 pub mod codegen;
 pub mod html_recursive_descent;
 pub mod intermediate_graph;
+
+pub fn ident() -> (
+    (),
+    impl AsyncIterator<Item = alloc::borrow::Cow<'static, str>>,
+) {
+    ((), async gen {
+        yield alloc::borrow::Cow::from("hi");
+    })
+}

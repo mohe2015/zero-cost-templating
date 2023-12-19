@@ -287,8 +287,10 @@ pub fn codegen(
         let other = quote! {
             #[allow(unused)]
             /// Start
-            pub fn #ident() -> #template_struct {
-                unreachable!("Start")
+            pub fn #ident() -> (#template_struct, impl AsyncIterator<Item = alloc::borrow::Cow<'static, str>>) {
+                (todo!(), async gen {
+                    yield Cow::from("hi");
+                })
             }
         };
         let recompile_ident = format_ident!("_{}_FORCE_RECOMPILE", template_codegen.template_name);

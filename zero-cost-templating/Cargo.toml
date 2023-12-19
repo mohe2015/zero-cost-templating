@@ -58,14 +58,14 @@ iai-callgrind = "0.8"
 #name = "wrong_type"
 #path = "tests/ui/compile_fail/wrong_type.rs"
 
-#[[bin]]
-#name = "working_no_loop"
-#path = "tests/ui/pass/working_no_loop.rs"
+[[bin]]
+name = "working_no_loop"
+path = "tests/ui/pass/working_no_loop.rs"
 
-#[[bin]]
-#name = "if_else"
-#path = "tests/ui/pass/if_else.rs"
+[[bin]]
+name = "if_else"
+path = "tests/ui/pass/if_else.rs"
 
-#[[bin]]
-#name = "only_template"
-#path = "tests/ui/pass/only_template.rs"
+[[bin]]
+name = "only_template"
+path = "tests/ui/pass/only_template.rs"
