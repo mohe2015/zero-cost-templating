@@ -232,13 +232,13 @@ pub fn calculate_edges<'a>(
                                         Template<Partial, PartialPartial, PartialAfter>,
                                         After
                                         > {
-                                pub fn #variable_name(self #parameter) -> #return_type {
+                                pub fn #variable_name(self #parameter) -> (#return_type, impl ::std::async_iter::AsyncIterator<Item = ::alloc::borrow::Cow<'static, str>>) {
                                     todo!()
                                 }
                             }
 
                             impl<After> Template<#impl_template_name, (), After> {
-                                pub fn #variable_name(self #parameter) -> After {
+                                pub fn #variable_name(self #parameter) -> (After, impl ::std::async_iter::AsyncIterator<Item = ::alloc::borrow::Cow<'static, str>>) {
                                     todo!()
                                 }
                             }
@@ -248,7 +248,7 @@ pub fn calculate_edges<'a>(
                         quote! {
                             impl<Partial, After>
                                 Template<#impl_template_name, Partial, After> {
-                                pub fn #variable_name(self #parameter) -> #return_type {
+                                pub fn #variable_name(self #parameter) -> (#return_type, impl ::std::async_iter::AsyncIterator<Item = ::alloc::borrow::Cow<'static, str>>) {
                                     todo!()
                                 }
                             }
@@ -287,7 +287,7 @@ pub fn codegen(
         let other = quote! {
             #[allow(unused)]
             /// Start
-            pub fn #ident() -> (#template_struct, impl std::async_iter::AsyncIterator<Item = alloc::borrow::Cow<'static, str>>) {
+            pub fn #ident() -> (#template_struct, impl ::std::async_iter::AsyncIterator<Item = ::alloc::borrow::Cow<'static, str>>) {
                 (todo!(), async gen {
                     yield alloc::borrow::Cow::from("hi");
                 })
