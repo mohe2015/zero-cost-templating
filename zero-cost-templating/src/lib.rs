@@ -102,7 +102,7 @@
     clippy::use_debug,
     reason = "development"
 )]
-#![feature(coroutines)]
+#![feature(async_closure, async_iterator, coroutines, gen_blocks, noop_waker)]
 #![feature(lint_reasons)]
 
 extern crate alloc;

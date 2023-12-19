@@ -1,6 +1,6 @@
 #![deny(warnings)]
 #![feature(lint_reasons)]
-#![feature(coroutines)]
+#![feature(async_closure, async_iterator, coroutines, gen_blocks, noop_waker)]
 
 extern crate alloc;
 

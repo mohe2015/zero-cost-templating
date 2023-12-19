@@ -1,7 +1,9 @@
+cargo-features = ["edition2024"]
+
 [package]
 name = "zero-cost-templating-macros"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -13,7 +15,5 @@ zero-cost-templating-lib = { path = "../zero-cost-templating-lib" }
 syn = { version = "2", features = ["full", "extra-traits"] }
 quote = "1"
 proc-macro2 = "1"
-nom = "7"
 itertools = "0.12"
 petgraph = "0.6"
-prettyplease = "0.2"

@@ -126,26 +126,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "futures-async-stream"
-version = "0.2.9"
-source = "git+https://github.com/mohe2015/futures-async-stream.git#f73fa1d68db546fab2eda79de2dd50a95b8b28e4"
-dependencies = [
- "futures-async-stream-macro",
- "futures-core",
- "pin-project",
-]
-
-[[package]]
-name = "futures-async-stream-macro"
-version = "0.2.9"
-source = "git+https://github.com/mohe2015/futures-async-stream.git#f73fa1d68db546fab2eda79de2dd50a95b8b28e4"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn 2.0.39",
-]
-
-[[package]]
 name = "futures-channel"
 version = "0.3.29"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -250,15 +230,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d77f7ec81a6d05a3abb01ab6eb7590f6083d08449fe5a1c8b1e620283546ccb7"
 
 [[package]]
-name = "html-escape"
-version = "0.2.13"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6d1ad449764d627e22bfd7cd5e8868264fc9236e07c752972b4080cd351cb476"
-dependencies = [
- "utf8-width",
-]
-
-[[package]]
 name = "iai-callgrind"
 version = "0.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -340,12 +311,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f665ee40bc4a3c5590afb1e9677db74a508659dfd71e126420da8274909a0167"
 
 [[package]]
-name = "minimal-lexical"
-version = "0.2.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "68354c5c6bd36d73ff3feceb05efa59b6acb7626617f4962be322a825e61f79a"
-
-[[package]]
 name = "miniz_oxide"
 version = "0.7.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -363,16 +328,6 @@ dependencies = [
  "libc",
  "wasi",
  "windows-sys",
-]
-
-[[package]]
-name = "nom"
-version = "7.1.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d273983c5a657a70a3e8f2a01329822f3b8c8172b73826411a55751e404a0a4a"
-dependencies = [
- "memchr",
- "minimal-lexical",
 ]
 
 [[package]]
@@ -464,16 +419,6 @@ name = "pin-utils"
 version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8b870d8c151b6f2fb93e84a13146138f05d02ed11c7e7c54f8826aaaf7c9f184"
-
-[[package]]
-name = "prettyplease"
-version = "0.2.15"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ae005bd773ab59b4725093fd7df83fd7892f7d8eafb48dbd7de6e024e4215f9d"
-dependencies = [
- "proc-macro2",
- "syn 2.0.39",
-]
 
 [[package]]
 name = "proc-macro-error"
@@ -720,12 +665,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3354b9ac3fae1ff6755cb6db53683adb661634f67557942dea4facebec0fee4b"
 
 [[package]]
-name = "utf8-width"
-version = "0.1.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5190c9442dcdaf0ddd50f37420417d219ae5261bbf5db120d0f9bab996c9cba1"
-
-[[package]]
 name = "version_check"
 version = "0.9.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -839,8 +778,6 @@ name = "zero-cost-templating"
 version = "0.1.0"
 dependencies = [
  "futures",
- "futures-async-stream",
- "html-escape",
  "iai-callgrind",
  "pin-project",
  "regex",
@@ -854,11 +791,9 @@ name = "zero-cost-templating-lib"
 version = "0.1.0"
 dependencies = [
  "futures",
- "futures-async-stream",
  "heck",
  "itertools",
  "petgraph",
- "prettyplease",
  "proc-macro2",
  "quote",
  "syn 2.0.39",
@@ -869,9 +804,7 @@ name = "zero-cost-templating-macros"
 version = "0.1.0"
 dependencies = [
  "itertools",
- "nom",
  "petgraph",
- "prettyplease",
  "proc-macro2",
  "quote",
  "syn 2.0.39",

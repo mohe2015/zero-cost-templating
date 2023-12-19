@@ -102,7 +102,7 @@
     clippy::use_debug,
     reason = "development"
 )]
-#![feature(coroutines)]
+#![feature(async_closure, async_iterator, coroutines, gen_blocks, noop_waker)]
 #![feature(lint_reasons)]
 #![feature(proc_macro_span)]
 
@@ -284,7 +284,6 @@ pub fn template_stream(
 
         #code
 
-        #[::futures_async_stream::stream(item = alloc::borrow::Cow<'static, str>)]
         #item
     };
 

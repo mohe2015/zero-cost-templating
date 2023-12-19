@@ -1,17 +1,17 @@
+cargo-features = ["edition2024"]
+
 [package]
 name = "zero-cost-templating"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 zero-cost-templating-macros = { path = "../zero-cost-templating-macros" }
 futures = "0.3"
-futures-async-stream = { git = "https://github.com/mohe2015/futures-async-stream.git" }
 tokio = { version = "1", features = ["full"] }
 pin-project = "1"
-html-escape = "0.2"
 regex = "1"
 
 [dev-dependencies]
@@ -58,14 +58,14 @@ iai-callgrind = "0.8"
 #name = "wrong_type"
 #path = "tests/ui/compile_fail/wrong_type.rs"
 
-[[bin]]
-name = "working_no_loop"
-path = "tests/ui/pass/working_no_loop.rs"
+#[[bin]]
+#name = "working_no_loop"
+#path = "tests/ui/pass/working_no_loop.rs"
 
-[[bin]]
-name = "if_else"
-path = "tests/ui/pass/if_else.rs"
+#[[bin]]
+#name = "if_else"
+#path = "tests/ui/pass/if_else.rs"
 
-[[bin]]
-name = "only_template"
-path = "tests/ui/pass/only_template.rs"
+#[[bin]]
+#name = "only_template"
+#path = "tests/ui/pass/only_template.rs"
