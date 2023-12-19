@@ -176,14 +176,15 @@ pub fn calculate_edges<'a>(
     template_codegen: &'a TemplateCodegen,
 ) -> impl Iterator<Item = proc_macro2::TokenStream> + 'a {
     graph.edge_references().map(|edge| {
-        let return_type = node_type(
+        let return_ = node_type(
             graph,
             edge.target(),
-            &(quote! { Partial }, quote! { template.partial }),
-            &(quote! { After }, quote! { template.after }),
+            &(quote! { Partial }, quote! { self.partial }),
+            &(quote! { After }, quote! { self.after }),
             Span::call_site(),
-        )
-        .0;
+        );
+        let return_type = return_.0;
+        let return_create = return_.1;
         let variable_name = edge.weight().variable_name().as_ref().map_or_else(
             || {
                 format_ident!(
@@ -233,13 +234,17 @@ pub fn calculate_edges<'a>(
                                         After
                                         > {
                                 pub fn #variable_name(self #parameter) -> (#return_type, impl ::std::async_iter::AsyncIterator<Item = ::alloc::borrow::Cow<'static, str>>) {
-                                    todo!()
+                                    (#return_create, async gen {
+                                        yield alloc::borrow::Cow::from("hi");
+                                    })
                                 }
                             }
 
                             impl<After> Template<#impl_template_name, (), After> {
                                 pub fn #variable_name(self #parameter) -> (After, impl ::std::async_iter::AsyncIterator<Item = ::alloc::borrow::Cow<'static, str>>) {
-                                    todo!()
+                                    (#return_create, async gen {
+                                        yield alloc::borrow::Cow::from("hi");
+                                    })
                                 }
                             }
                         }
@@ -249,7 +254,9 @@ pub fn calculate_edges<'a>(
                             impl<Partial, After>
                                 Template<#impl_template_name, Partial, After> {
                                 pub fn #variable_name(self #parameter) -> (#return_type, impl ::std::async_iter::AsyncIterator<Item = ::alloc::borrow::Cow<'static, str>>) {
-                                    todo!()
+                                    (#return_create, async gen {
+                                        yield alloc::borrow::Cow::from("hi");
+                                    })
                                 }
                             }
                         }
@@ -282,13 +289,14 @@ pub fn codegen(
             &(quote! { () }, quote! { () }),
             &(quote! { () }, quote! { () }),
             Span::call_site(),
-        )
-        .0;
+        );
+        let template_struct_type = template_struct.0;
+        let template_struct_create = template_struct.1;
         let other = quote! {
             #[allow(unused)]
             /// Start
-            pub fn #ident() -> (#template_struct, impl ::std::async_iter::AsyncIterator<Item = ::alloc::borrow::Cow<'static, str>>) {
-                (todo!(), async gen {
+            pub fn #ident() -> (#template_struct_type, impl ::std::async_iter::AsyncIterator<Item = ::alloc::borrow::Cow<'static, str>>) {
+                (#template_struct_create, async gen {
                     yield alloc::borrow::Cow::from("hi");
                 })
             }
