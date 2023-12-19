@@ -625,9 +625,9 @@ dependencies = [
 
 [[package]]
 name = "tokio"
-version = "1.35.0"
+version = "1.35.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "841d45b238a16291a4e1584e61820b8ae57d696cc5015c459c229ccc6990cc1c"
+checksum = "c89b4efa943be685f629b149f53829423f8f5531ea21249408e8e2f8671ec104"
 dependencies = [
  "backtrace",
  "bytes",
@@ -656,7 +656,7 @@ dependencies = [
 [[package]]
 name = "trybuild"
 version = "1.0.85"
-source = "git+https://github.com/mohe2015/trybuild.git?branch=edition-2024#9fb0c2f578da5aeca10e0d37414d3424917918d6"
+source = "git+https://github.com/mohe2015/trybuild.git?branch=edition-2024#ee0a5625806bde9a12d4a6cceccfc8c41f119bf5"
 dependencies = [
  "basic-toml",
  "glob",
