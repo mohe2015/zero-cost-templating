@@ -12,7 +12,7 @@ proc-macro = true
 
 [dependencies]
 zero-cost-templating-lib = { path = "../zero-cost-templating-lib" }
-syn = { version = "2", features = ["full", "extra-traits"] }
+syn = { git = "https://github.com/mohe2015/syn.git", branch = "gen", features = ["full", "extra-traits"] }
 quote = "1"
 proc-macro2 = "1"
 itertools = "0.12"
