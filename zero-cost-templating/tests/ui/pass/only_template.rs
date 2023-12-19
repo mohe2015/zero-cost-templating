@@ -12,6 +12,7 @@ use zero_cost_templating_macros::template_stream;
 pub async fn test() {
     let template = only_template_initial0();
     let template = template.only_template_template0();
+    template.partial_block_partial_template4();
 }
 
 #[tokio::main]
