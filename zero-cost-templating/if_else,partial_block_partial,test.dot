@@ -1,0 +1,60 @@
+digraph {
+    0 [ label = "0 if_else other"]
+    1 [ label = "1 partial_block_partial other"]
+    2 [ label = "2 test other"]
+    3 [ label = "3 if_else other"]
+    4 [ label = "4 if_else other"]
+    5 [ label = "5 if_else other"]
+    6 [ label = "6 partial_block_partial partial"]
+    7 [ label = "7 partial_block_partial other"]
+    8 [ label = "8 test other"]
+    9 [ label = "9 test other"]
+    10 [ label = "10 test other"]
+    11 [ label = "11 test other"]
+    12 [ label = "12 test other"]
+    13 [ label = "13 test other"]
+    14 [ label = "14 test other"]
+    15 [ label = "15 test other"]
+    16 [ label = "16 test other"]
+    17 [ label = "17 test other"]
+    18 [ label = "18 test other"]
+    19 [ label = "19 test other"]
+    0 -> 3 [ label = "0 true"]
+    0 -> 4 [ label = "1 false"]
+    3 -> 5 [ label = "2 noop"]
+    4 -> 5 [ label = "3 noop"]
+    1 -> 6 [ label = "4 <p>"]
+    6 -> 7 [ label = "5 </p>"]
+    2 -> 8 [ label = "6 <!DOCTYPE html>
+<html lang=\"en\">
+  <head>
+    <meta charset=\"utf-8\">
+    <title>title</title>
+    <link rel=\"stylesheet\" href=\"style.css\">
+    <script src=\"script.js\"></script>
+  </head>
+  <body>
+    <h1>"]
+    8 -> 9 [ label = "7 {{page_title:element}}"]
+    9 -> 10 [ label = "8 </h1>
+    <input type=\"hidden\" value=\""]
+    10 -> 11 [ label = "9 {{csrf_token:attr}}"]
+    11 -> 12 [ label = "10 \">
+    <ul>
+    "]
+    12 -> 13 [ label = "11 
+      <li>"]
+    13 -> 14 [ label = "12 {{title:element}}"]
+    14 -> 15 [ label = "13 </li>
+      <li>"]
+    15 -> 16 [ label = "14 {{text:element}}"]
+    16 -> 12 [ label = "15 </li>
+    "]
+    12 -> 17 [ label = "16 
+    </ul>
+    <span>"]
+    17 -> 18 [ label = "17 {{copyright_year:element}}"]
+    18 -> 19 [ label = "18 </span>
+  </body>
+</html>"]
+}
