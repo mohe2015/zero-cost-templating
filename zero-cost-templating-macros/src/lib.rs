@@ -117,9 +117,8 @@ use petgraph::stable_graph::StableGraph;
 use petgraph::visit::{EdgeRef, NodeRef};
 use quote::quote;
 use syn::punctuated::Punctuated;
-use syn::visit_mut::VisitMut;
 use syn::{parse_macro_input, Item, LitStr, Token};
-use zero_cost_templating_lib::codegen::{codegen, InnerReplace, TemplateCodegen};
+use zero_cost_templating_lib::codegen::{codegen, TemplateCodegen};
 use zero_cost_templating_lib::html_recursive_descent::parse_children;
 use zero_cost_templating_lib::intermediate_graph::{
     children_to_ast, flush_pending_edge, IntermediateAstElement, NodeType, TemplateNode,
@@ -279,11 +278,7 @@ pub fn template_stream(
 
     let code = codegen(graph, &inputs);
 
-    let mut item = parse_macro_input!(item as Item);
-
-    if std::env::var_os("ZERO_COST_TEMPLATING_NO_EXPAND").is_none() {
-        InnerReplace(inputs, graph).visit_item_mut(&mut item);
-    }
+    let item = parse_macro_input!(item as Item);
 
     let expanded = quote! {
 
