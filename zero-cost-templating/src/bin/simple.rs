@@ -29,6 +29,8 @@ macro_rules! yields {
     }};
 }
 
+// it is really important to have IDE support so we should probably temporarily switch back to the async-stream crate or roll our own. We also need to handle the yields! macro or add it to the other crate?
+
 #[template_stream("if_else.html.hbs")]
 pub async gen fn test() -> Cow<'static, str> {
     let template = yields!(if_else_initial0());
