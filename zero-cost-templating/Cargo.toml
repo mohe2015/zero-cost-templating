@@ -15,7 +15,7 @@ pin-project = "1"
 regex = "1"
 
 [dev-dependencies]
-trybuild = "1"
+trybuild = { git = "https://github.com/mohe2015/trybuild.git", branch = "edition-2024" }
 iai-callgrind = "0.8"
 
 #[[bench]]
