@@ -19,16 +19,7 @@ fn node_type(
     partial: &(TokenStream, TokenStream),
     after: &(TokenStream, TokenStream),
     span: Span,
-    last_node_handling: bool,
 ) -> (TokenStream, TokenStream) {
-    let last_node = graph
-        .edges_directed(node_index, Direction::Outgoing)
-        .next()
-        .is_none();
-    if last_node_handling && last_node {
-        return after.clone();
-    }
-
     let partial_type = &partial.0;
     let partial_create = &partial.1;
 
@@ -48,7 +39,6 @@ fn node_type(
                 &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
                 &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
                 span,
-                true,
             );
             let inner_after_type = inner_after.0;
             let inner_after_create = inner_after.1;
@@ -90,7 +80,6 @@ fn node_type(
                 &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
                 &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
                 span,
-                true,
             );
 
             // TODO FIXME implement empty partial or prevent empty partial
@@ -106,7 +95,6 @@ fn node_type(
                 &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
                 &inner_after,
                 span,
-                false,
             );
 
             let inner_template = graph
@@ -120,7 +108,6 @@ fn node_type(
                 &inner_partial,
                 &inner_after,
                 span,
-                false, // TODO check
             )
         }
         NodeType::Other => {
@@ -226,7 +213,6 @@ pub fn calculate_edge(
         &(quote! { Partial }, quote! { self.partial }),
         &(quote! { After }, quote! { self.after }),
         Span::call_site(),
-        true,
     );
     let return_type = r#return.0;
     let return_create = r#return.1;
@@ -358,7 +344,6 @@ pub fn codegen_template_codegen(
         &(quote! { () }, quote! { () }),
         &(quote! { () }, quote! { () }),
         Span::call_site(),
-        true,
     );
     let template_struct_type = template_struct.0;
     let template_struct_create = template_struct.1;
