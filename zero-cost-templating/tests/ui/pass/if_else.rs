@@ -21,11 +21,11 @@ mod if_else_true {
     pub async gen fn test_true() -> Cow<'static, str> {
         let template = yields!(if_else_initial0());
         if true {
-            let template = yields!(template.if_else_template1());
-            yields!(template.if_else_template3())
-        } else {
             let template = yields!(template.if_else_template0());
             yields!(template.if_else_template2())
+        } else {
+            let template = yields!(template.if_else_template1());
+            yields!(template.if_else_template3())
         };
     }
 }
@@ -34,11 +34,11 @@ mod if_else_true {
 pub async gen fn test_false() -> Cow<'static, str> {
     let template = yields!(if_else_initial0());
     if false {
-        let template = yields!(template.if_else_template1());
-        yields!(template.if_else_template3())
-    } else {
         let template = yields!(template.if_else_template0());
         yields!(template.if_else_template2())
+    } else {
+        let template = yields!(template.if_else_template1());
+        yields!(template.if_else_template3())
     };
 }
 

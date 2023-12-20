@@ -9,7 +9,7 @@ use petgraph::Direction;
 use proc_macro2::{Span, TokenStream};
 use quote::{format_ident, quote, quote_spanned};
 
-use crate::intermediate_graph::{IntermediateAstElement, NodeType, TemplateNode};
+use crate::intermediate_graph::{IntermediateAstElement, NodeType, TemplateNode, EscapingFunction};
 
 #[expect(clippy::too_many_lines, reason = "tmp")]
 /// return.0 is type and return.1 is create expression
@@ -171,6 +171,36 @@ pub fn calculate_nodes<'a>(
         })
 }
 
+#[must_use]
+pub fn element_to_yield(intermediate_ast_element: &IntermediateAstElement) -> proc_macro2::TokenStream {
+    match intermediate_ast_element {
+        IntermediateAstElement::Variable(variable_name, EscapingFunction::HtmlAttribute) => {
+            let variable_name = format_ident!("{}", variable_name);
+            quote! {
+                yield zero_cost_templating::encode_double_quoted_attribute(#variable_name);
+            }
+        }
+        IntermediateAstElement::Variable(variable_name, EscapingFunction::HtmlElementInner) => {
+            let variable_name = format_ident!("{}", variable_name);
+            quote! {
+                yield zero_cost_templating::encode_element_text(#variable_name);
+            }
+        }
+        IntermediateAstElement::Text(text) => {
+            quote! {
+                yield ::alloc::borrow::Cow::from(#text);
+            }
+        }
+        IntermediateAstElement::Noop => {
+            quote! {
+
+            }
+        }
+        v => unreachable!("unexpected value to yield {:?}", v)
+    }
+}
+
+#[expect(clippy::too_many_lines, reason = "tmp")]
 pub fn calculate_edges<'a>(
     graph: &'a StableGraph<TemplateNode, IntermediateAstElement>,
     template_codegen: &'a TemplateCodegen,
@@ -185,7 +215,7 @@ pub fn calculate_edges<'a>(
         );
         let return_type = r#return.0;
         let return_create = r#return.1;
-        let variable_name = edge.weight().variable_name().as_ref().map_or_else(
+        let function_name = edge.weight().variable_name().as_ref().map_or_else(
             || {
                 format_ident!(
                     "{}_template{}",
@@ -202,12 +232,12 @@ pub fn calculate_edges<'a>(
                 )
             },
         );
-        let parameter = edge
+        let variable_name = edge
             .weight()
             .variable_name()
             .as_ref()
-            .map(|variable| format_ident!("{}", variable))
-            .map(|variable| {
+            .map(|variable| format_ident!("{}", variable));
+        let parameter = variable_name.as_ref().map(|variable| {
                 quote! {
                     , #variable: impl Into<::alloc::borrow::Cow<'static, str>>
                 }
@@ -220,6 +250,8 @@ pub fn calculate_edges<'a>(
                     template_codegen.template_name.to_upper_camel_case(),
                     edge.source().index().to_string(),
                 );
+                
+                let to_yield = element_to_yield(edge.weight());
                 match &graph[edge.target()].node_type {
                     NodeType::PartialBlock => {
                         quote! {
@@ -233,18 +265,18 @@ pub fn calculate_edges<'a>(
                                         Template<Partial, PartialPartial, PartialAfter>,
                                         After
                                         > {
-                                pub fn #variable_name(self #parameter) -> (#return_type, impl ::std::async_iter::AsyncIterator<Item = ::alloc::borrow::Cow<'static, str>>) {
+                                pub fn #function_name(self #parameter) -> (#return_type, impl ::std::async_iter::AsyncIterator<Item = ::alloc::borrow::Cow<'static, str>>) {
                                     (#return_create, async gen {
-                                        yield alloc::borrow::Cow::from("hi");
+                                        #to_yield
                                     })
                                 }
                             }
 
                             // empty partial
                             impl<After> Template<#impl_template_name, (), After> {
-                                pub fn #variable_name(self #parameter) -> (After, impl ::std::async_iter::AsyncIterator<Item = ::alloc::borrow::Cow<'static, str>>) {
+                                pub fn #function_name(self #parameter) -> (After, impl ::std::async_iter::AsyncIterator<Item = ::alloc::borrow::Cow<'static, str>>) {
                                     (self.after, async gen {
-                                        yield alloc::borrow::Cow::from("hi");
+                                        #to_yield
                                     })
                                 }
                             }
@@ -254,9 +286,9 @@ pub fn calculate_edges<'a>(
                         quote! {
                             impl<Partial, After>
                                 Template<#impl_template_name, Partial, After> {
-                                pub fn #variable_name(self #parameter) -> (#return_type, impl ::std::async_iter::AsyncIterator<Item = ::alloc::borrow::Cow<'static, str>>) {
+                                pub fn #function_name(self #parameter) -> (#return_type, impl ::std::async_iter::AsyncIterator<Item = ::alloc::borrow::Cow<'static, str>>) {
                                     (#return_create, async gen {
-                                        yield alloc::borrow::Cow::from("hi");
+                                        #to_yield
                                     })
                                 }
                             }
@@ -298,7 +330,7 @@ pub fn codegen(
             /// Start
             pub fn #ident() -> (#template_struct_type, impl ::std::async_iter::AsyncIterator<Item = ::alloc::borrow::Cow<'static, str>>) {
                 (#template_struct_create, async gen {
-                    yield alloc::borrow::Cow::from("hi");
+                    
                 })
             }
         };
