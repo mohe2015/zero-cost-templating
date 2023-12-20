@@ -214,125 +214,126 @@ pub fn element_to_yield(
     }
 }
 
-#[expect(clippy::too_many_lines, reason = "tmp")]
+pub fn calculate_edge( graph: &StableGraph<TemplateNode, IntermediateAstElement>,
+template_codegen: &TemplateCodegen,edge: petgraph::stable_graph::EdgeReference<'_, IntermediateAstElement>) -> proc_macro2::TokenStream {
+    let r#return = node_type(
+        graph,
+        edge.target(),
+        &(quote! { Partial }, quote! { self.partial }),
+        &(quote! { After }, quote! { self.after }),
+        Span::call_site(),
+        true
+    );
+    let return_type = r#return.0;
+    let return_create = r#return.1;
+    let function_name = edge.weight().variable_name().as_ref().map_or_else(
+        || {
+            format_ident!(
+                "{}_template{}",
+                template_codegen.template_name,
+                edge.id().index()
+            )
+        },
+        |variable| {
+            format_ident!(
+                "{}_{}{}",
+                template_codegen.template_name,
+                variable,
+                edge.id().index()
+            )
+        },
+    );
+    let variable_name = edge
+        .weight()
+        .variable_name()
+        .as_ref()
+        .map(|variable| format_ident!("{}", variable));
+    let parameter = variable_name.as_ref().map(|variable| {
+            quote! {
+                , #variable: impl Into<::alloc::borrow::Cow<'static, str>>
+            }
+        });
+    let impl_func = match (&graph[edge.source()].node_type, &graph[edge.target()].node_type) {
+        (NodeType::InnerTemplate | NodeType::PartialBlock, _) => None,
+        (NodeType::Other, NodeType::PartialBlock) => Some({
+            let impl_template_name = format_ident!(
+                "{}Template{}",
+                template_codegen.template_name.to_upper_camel_case(),
+                edge.source().index().to_string(),
+            );
+            
+            let to_yield = element_to_yield(edge.weight());
+        
+                quote! {
+                    impl<Partial,
+                        PartialPartial,
+                        PartialAfter,
+                        After
+                        >
+                        Template<
+                                #impl_template_name,
+                                Template<Partial, PartialPartial, PartialAfter>,
+                                After
+                                > {
+                        pub fn #function_name(self #parameter) -> (#return_type, impl ::std::async_iter::AsyncIterator<Item = ::alloc::borrow::Cow<'static, str>>) {
+                            (#return_create, async gen {
+                                #to_yield
+                            })
+                        }
+                    }
+
+                    // empty partial
+                    impl<After> Template<#impl_template_name, (), After> {
+                        pub fn #function_name(self #parameter) -> (After, impl ::std::async_iter::AsyncIterator<Item = ::alloc::borrow::Cow<'static, str>>) {
+                            (self.after, async gen {
+                                #to_yield
+                            })
+                        }
+                    }
+                }
+            
+    
+        }),
+        (NodeType::Other,NodeType::InnerTemplate | NodeType::Other) => Some({
+            let impl_template_name = format_ident!(
+                "{}Template{}",
+                template_codegen.template_name.to_upper_camel_case(),
+                edge.source().index().to_string(),
+            );
+            
+            let to_yield = element_to_yield(edge.weight());
+        
+                quote! {
+                    impl<Partial, After>
+                        Template<#impl_template_name, Partial, After> {
+                        pub fn #function_name(self #parameter) -> (#return_type, impl ::std::async_iter::AsyncIterator<Item = ::alloc::borrow::Cow<'static, str>>) {
+                            (#return_create, async gen {
+                                #to_yield
+                            })
+                        }
+                    }
+                }
+            
+    })
+};
+    quote! {
+        #impl_func
+    }
+}
+
 pub fn calculate_edges<'a>(
     graph: &'a StableGraph<TemplateNode, IntermediateAstElement>,
     template_codegen: &'a TemplateCodegen,
 ) -> impl Iterator<Item = proc_macro2::TokenStream> + 'a {
     graph.edge_references().map(|edge| {
-        let r#return = node_type(
-            graph,
-            edge.target(),
-            &(quote! { Partial }, quote! { self.partial }),
-            &(quote! { After }, quote! { self.after }),
-            Span::call_site(),
-            true
-        );
-        let return_type = r#return.0;
-        let return_create = r#return.1;
-        let function_name = edge.weight().variable_name().as_ref().map_or_else(
-            || {
-                format_ident!(
-                    "{}_template{}",
-                    template_codegen.template_name,
-                    edge.id().index()
-                )
-            },
-            |variable| {
-                format_ident!(
-                    "{}_{}{}",
-                    template_codegen.template_name,
-                    variable,
-                    edge.id().index()
-                )
-            },
-        );
-        let variable_name = edge
-            .weight()
-            .variable_name()
-            .as_ref()
-            .map(|variable| format_ident!("{}", variable));
-        let parameter = variable_name.as_ref().map(|variable| {
-                quote! {
-                    , #variable: impl Into<::alloc::borrow::Cow<'static, str>>
-                }
-            });
-        let impl_func = match (&graph[edge.source()].node_type, &graph[edge.target()].node_type) {
-            (NodeType::InnerTemplate | NodeType::PartialBlock, _) => None,
-            (NodeType::Other, NodeType::PartialBlock) => Some({
-                let impl_template_name = format_ident!(
-                    "{}Template{}",
-                    template_codegen.template_name.to_upper_camel_case(),
-                    edge.source().index().to_string(),
-                );
-                
-                let to_yield = element_to_yield(edge.weight());
-              
-                        quote! {
-                            impl<Partial,
-                                PartialPartial,
-                                PartialAfter,
-                                After
-                                >
-                                Template<
-                                        #impl_template_name,
-                                        Template<Partial, PartialPartial, PartialAfter>,
-                                        After
-                                        > {
-                                pub fn #function_name(self #parameter) -> (#return_type, impl ::std::async_iter::AsyncIterator<Item = ::alloc::borrow::Cow<'static, str>>) {
-                                    (#return_create, async gen {
-                                        #to_yield
-                                    })
-                                }
-                            }
-
-                            // empty partial
-                            impl<After> Template<#impl_template_name, (), After> {
-                                pub fn #function_name(self #parameter) -> (After, impl ::std::async_iter::AsyncIterator<Item = ::alloc::borrow::Cow<'static, str>>) {
-                                    (self.after, async gen {
-                                        #to_yield
-                                    })
-                                }
-                            }
-                        }
-                    
-            
-            }),
-            (NodeType::Other,NodeType::InnerTemplate | NodeType::Other) => Some({
-                let impl_template_name = format_ident!(
-                    "{}Template{}",
-                    template_codegen.template_name.to_upper_camel_case(),
-                    edge.source().index().to_string(),
-                );
-                
-                let to_yield = element_to_yield(edge.weight());
-                
-                        quote! {
-                            impl<Partial, After>
-                                Template<#impl_template_name, Partial, After> {
-                                pub fn #function_name(self #parameter) -> (#return_type, impl ::std::async_iter::AsyncIterator<Item = ::alloc::borrow::Cow<'static, str>>) {
-                                    (#return_create, async gen {
-                                        #to_yield
-                                    })
-                                }
-                            }
-                        }
-                    
-        })
-    };
-        quote! {
-            #impl_func
-        }
+        calculate_edge(graph, template_codegen, edge)
     })
 }
 
 #[must_use]
-pub fn codegen(
-    graph: &StableGraph<TemplateNode, IntermediateAstElement>,
-    templates: &[TemplateCodegen],
-) -> proc_macro2::TokenStream {
-    let code = templates.iter().map(|template_codegen| {
-        let instructions = calculate_nodes(graph, template_codegen);
+pub fn codegen_template_codegen(    graph: &StableGraph<TemplateNode, IntermediateAstElement>,
+    template_codegen: &TemplateCodegen) -> proc_macro2::TokenStream {
+    let instructions = calculate_nodes(graph, template_codegen);
         let edges = calculate_edges(graph, template_codegen);
         let ident = format_ident!(
             "{}_initial{}",
@@ -354,7 +355,6 @@ pub fn codegen(
             /// Start
             pub fn #ident() -> (#template_struct_type, impl ::std::async_iter::AsyncIterator<Item = ::alloc::borrow::Cow<'static, str>>) {
                 (#template_struct_create, async gen {
-                    
                 })
             }
         };
@@ -370,6 +370,15 @@ pub fn codegen(
 
             const #recompile_ident: &'static str = include_str!(#path);
         }
+}
+
+#[must_use]
+pub fn codegen(
+    graph: &StableGraph<TemplateNode, IntermediateAstElement>,
+    templates: &[TemplateCodegen],
+) -> proc_macro2::TokenStream {
+    let code = templates.iter().map(|template_codegen| {
+        codegen_template_codegen(graph, template_codegen)
     });
 
     let result = quote! {
