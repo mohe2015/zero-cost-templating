@@ -289,7 +289,8 @@ pub fn children_to_ast(
                 // It should be a Vec<(last, current)> because
                 // then a simple if else could be optimized too two nodes with a double edge.
 
-                // we need to always add a node because our codgen requires an outgoing node and if this is the last node this is not guaranteed
+                // we need to always add a node because our codgen
+                // requires an outgoing node and if this is the last node this is not guaranteed
                 let current_node = graph.add_node(TemplateNode {
                     template_name: template_name.to_owned(),
                     node_type: NodeType::Other,

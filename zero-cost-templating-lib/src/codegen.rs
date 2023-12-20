@@ -9,7 +9,7 @@ use petgraph::Direction;
 use proc_macro2::{Span, TokenStream};
 use quote::{format_ident, quote, quote_spanned};
 
-use crate::intermediate_graph::{IntermediateAstElement, NodeType, TemplateNode, EscapingFunction};
+use crate::intermediate_graph::{EscapingFunction, IntermediateAstElement, NodeType, TemplateNode};
 
 #[expect(clippy::too_many_lines, reason = "tmp")]
 /// return.0 is type and return.1 is create expression
@@ -19,7 +19,7 @@ fn node_type(
     partial: &(TokenStream, TokenStream),
     after: &(TokenStream, TokenStream),
     span: Span,
-    last_node_handling: bool
+    last_node_handling: bool,
 ) -> (TokenStream, TokenStream) {
     let last_node = graph
         .edges_directed(node_index, Direction::Outgoing)
@@ -48,7 +48,7 @@ fn node_type(
                 &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
                 &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
                 span,
-                true
+                true,
             );
             let inner_after_type = inner_after.0;
             let inner_after_create = inner_after.1;
@@ -90,7 +90,7 @@ fn node_type(
                 &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
                 &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
                 span,
-                true
+                true,
             );
 
             // TODO FIXME implement empty partial or prevent empty partial
@@ -106,7 +106,7 @@ fn node_type(
                 &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
                 &inner_after,
                 span,
-                false
+                false,
             );
 
             let inner_template = graph
@@ -120,7 +120,7 @@ fn node_type(
                 &inner_partial,
                 &inner_after,
                 span,
-                true, // TODO check
+                false, // TODO check
             )
         }
         NodeType::Other => {
@@ -172,12 +172,23 @@ pub fn calculate_nodes<'a>(
             quote! {
                 #[must_use]
                 pub struct #template_struct;
+
+                impl<Partial, After>
+                    Template<#template_struct, Partial, After> {
+                    pub fn up(self) -> (After,
+                            impl ::std::async_iter::AsyncIterator<Item = ::alloc::borrow::Cow<'static, str>>) {
+                        (self.after, async gen {
+                        })
+                    }
+                }
             }
         })
 }
 
 #[must_use]
-pub fn element_to_yield(intermediate_ast_element: &IntermediateAstElement) -> proc_macro2::TokenStream {
+pub fn element_to_yield(
+    intermediate_ast_element: &IntermediateAstElement,
+) -> proc_macro2::TokenStream {
     match intermediate_ast_element {
         IntermediateAstElement::Variable(variable_name, EscapingFunction::HtmlAttribute) => {
             let variable_name = format_ident!("{}", variable_name);
@@ -197,11 +208,9 @@ pub fn element_to_yield(intermediate_ast_element: &IntermediateAstElement) -> pr
             }
         }
         IntermediateAstElement::Noop => {
-            quote! {
-
-            }
+            quote! {}
         }
-        v => unreachable!("unexpected value to yield {:?}", v)
+        v => unreachable!("unexpected value to yield {:?}", v),
     }
 }
 

@@ -12,8 +12,8 @@ use zero_cost_templating_macros::template_stream;
 pub async gen fn test() -> Cow<'static, str> {
     let template = yields!(only_template_initial0());
     let template = yields!(template.only_template_template0());
-    let template: Template<OnlyTemplateTemplate2, (), Template<(), (), ()>> =
-        yields!(template.partial_block_partial_template4());
+    let template = yields!(template.partial_block_partial_template4());
+    let template = yields!(template.up());
 }
 
 #[tokio::main]

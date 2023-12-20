@@ -123,7 +123,8 @@ macro_rules! yields {
         let expr = $e;
         let ret = expr.0;
         let mut iter = std::pin::pin!(expr.1);
-        while let Some(v) = ::zero_cost_templating::async_iterator_extension::AsyncIterExt::next(&mut iter).await {
+        while let Some(v) =
+            ::zero_cost_templating::async_iterator_extension::AsyncIterExt::next(&mut iter).await {
             yield v;
         }
         ret
