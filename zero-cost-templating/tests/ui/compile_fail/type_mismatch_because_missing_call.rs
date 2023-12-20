@@ -8,7 +8,7 @@ use zero_cost_templating::yields;
 use zero_cost_templating_macros::template_stream;
 
 #[template_stream("test.html.hbs")]
-pub async fn test() {
+pub async gen fn test() -> Cow<'static, str> {
     let template = yields!(test_initial0());
     //let template = template.template0();
     let page_title = Cow::from("thetitle");

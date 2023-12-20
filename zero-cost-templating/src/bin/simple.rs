@@ -22,8 +22,7 @@ use zero_cost_templating::{template_stream, yields};
 #[template_stream("if_else.html.hbs")]
 pub async gen fn test() -> Cow<'static, str> {
     let template = yields!(if_else_initial0());
-    let template = yields!(template.if_else_template0());
-    
+    let _template = yields!(template.if_else_template0());
 }
 
 pub fn main() {}

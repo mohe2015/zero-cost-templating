@@ -7,12 +7,11 @@ use std::pin::pin;
 
 use alloc::borrow::Cow;
 
-use futures::StreamExt;
 use zero_cost_templating::{async_iterator_extension::AsyncIterExt, yields};
 use zero_cost_templating_macros::template_stream;
 
 #[template_stream("test.html.hbs")]
-pub async fn test() {
+pub async gen fn test() -> Cow<'static, str> {
     let template = yields!(test_initial0());
     let template = yields!(template.test_template0());
     let page_title = Cow::from("thetitle");

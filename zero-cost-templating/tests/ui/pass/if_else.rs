@@ -4,40 +4,41 @@
 
 extern crate alloc;
 
-use std::pin::pin;
+use std::{borrow::Cow, pin::pin};
 
-use futures::StreamExt;
 use zero_cost_templating::{async_iterator_extension::AsyncIterExt, yields};
 use zero_cost_templating_macros::template_stream;
 
 // so to be able to modularly use this we need to generate the struct once for the whole crate
 
 mod if_else_true {
+    use std::borrow::Cow;
+
     use zero_cost_templating::yields;
     use zero_cost_templating_macros::template_stream;
 
     #[template_stream("if_else.html.hbs")]
-    pub async fn test_true() {
+    pub async gen fn test_true() -> Cow<'static, str> {
         let template = yields!(if_else_initial0());
         if true {
-            let template = yields!(template.if_else_template0());
-            yields!(template.if_else_template2())
-        } else {
             let template = yields!(template.if_else_template1());
             yields!(template.if_else_template3())
+        } else {
+            let template = yields!(template.if_else_template0());
+            yields!(template.if_else_template2())
         };
     }
 }
 
 #[template_stream("if_else.html.hbs")]
-pub async fn test_false() {
+pub async gen fn test_false() -> Cow<'static, str> {
     let template = yields!(if_else_initial0());
     if false {
-        let template = yields!(template.if_else_template0());
-        yields!(template.if_else_template2())
-    } else {
         let template = yields!(template.if_else_template1());
         yields!(template.if_else_template3())
+    } else {
+        let template = yields!(template.if_else_template0());
+        yields!(template.if_else_template2())
     };
 }
 
