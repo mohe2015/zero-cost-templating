@@ -176,9 +176,9 @@ pub fn calculate_nodes<'a>(
                 impl<Partial, After>
                     Template<#template_struct, Partial, After> {
                     pub fn up(self) -> (After,
-                            impl ::std::async_iter::AsyncIterator<Item = ::alloc::borrow::Cow<'static, str>>) {
-                        (self.after, async gen {
-                        })
+                            impl ::std::async_iter::AsyncIterator<Item =
+                                ::alloc::borrow::Cow<'static, str>>) {
+                        (self.after, async gen {})
                     }
                 }
             }
@@ -214,6 +214,7 @@ pub fn element_to_yield(
     }
 }
 
+#[must_use]
 pub fn calculate_edge(
     graph: &StableGraph<TemplateNode, IntermediateAstElement>,
     template_codegen: &TemplateCodegen,
@@ -281,7 +282,9 @@ pub fn calculate_edge(
                             Template<Partial, PartialPartial, PartialAfter>,
                             After
                             > {
-                    pub fn #function_name(self #parameter) -> (#return_type, impl ::std::async_iter::AsyncIterator<Item = ::alloc::borrow::Cow<'static, str>>) {
+                    pub fn #function_name(self #parameter) -> (#return_type,
+                            impl ::std::async_iter::AsyncIterator<Item =
+                                ::alloc::borrow::Cow<'static, str>>) {
                         (#return_create, async gen {
                             #to_yield
                         })
@@ -290,7 +293,9 @@ pub fn calculate_edge(
 
                 // empty partial
                 impl<After> Template<#impl_template_name, (), After> {
-                    pub fn #function_name(self #parameter) -> (After, impl ::std::async_iter::AsyncIterator<Item = ::alloc::borrow::Cow<'static, str>>) {
+                    pub fn #function_name(self #parameter) -> (After,
+                            impl ::std::async_iter::AsyncIterator<Item =
+                                ::alloc::borrow::Cow<'static, str>>) {
                         (self.after, async gen {
                             #to_yield
                         })
@@ -310,7 +315,9 @@ pub fn calculate_edge(
             quote! {
                 impl<Partial, After>
                     Template<#impl_template_name, Partial, After> {
-                    pub fn #function_name(self #parameter) -> (#return_type, impl ::std::async_iter::AsyncIterator<Item = ::alloc::borrow::Cow<'static, str>>) {
+                    pub fn #function_name(self #parameter) -> (#return_type,
+                            impl ::std::async_iter::AsyncIterator<Item =
+                                ::alloc::borrow::Cow<'static, str>>) {
                         (#return_create, async gen {
                             #to_yield
                         })
@@ -355,14 +362,6 @@ pub fn codegen_template_codegen(
     );
     let template_struct_type = template_struct.0;
     let template_struct_create = template_struct.1;
-    let other = quote! {
-        #[allow(unused)]
-        /// Start
-        pub fn #ident() -> (#template_struct_type, impl ::std::async_iter::AsyncIterator<Item = ::alloc::borrow::Cow<'static, str>>) {
-            (#template_struct_create, async gen {
-            })
-        }
-    };
     let recompile_ident = format_ident!("_{}_FORCE_RECOMPILE", template_codegen.template_name);
     let path = template_codegen.path.to_string_lossy();
     quote! {
@@ -371,7 +370,12 @@ pub fn codegen_template_codegen(
 
         #(#edges)*
 
-        #other
+        #[allow(unused)]
+        /// Start
+        pub fn #ident() -> (#template_struct_type,
+                impl ::std::async_iter::AsyncIterator<Item = ::alloc::borrow::Cow<'static, str>>) {
+            (#template_struct_create, async gen {})
+        }
 
         const #recompile_ident: &'static str = include_str!(#path);
     }
