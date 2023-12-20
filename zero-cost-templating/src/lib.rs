@@ -116,7 +116,19 @@ pub use futures::stream::iter;
 pub use futures::Stream;
 use regex::Captures;
 pub use zero_cost_templating_macros::template_stream;
-//pub use html_escape::{encode_double_quoted_attribute, encode_safe};
+
+#[macro_export]
+macro_rules! yields {
+    ($e: expr) => {{
+        let expr = $e;
+        let ret = expr.0;
+        let mut iter = std::pin::pin!(expr.1);
+        while let Some(v) = ::zero_cost_templating::async_iterator_extension::AsyncIterExt::next(&mut iter).await {
+            yield v;
+        }
+        ret
+    }};
+}
 
 pub fn encode_element_text<'a, I: Into<Cow<'a, str>>>(input: I) -> Cow<'a, str> {
     // https://html.spec.whatwg.org/dev/syntax.html

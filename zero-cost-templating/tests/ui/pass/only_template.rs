@@ -6,13 +6,14 @@ extern crate alloc;
 use std::pin::pin;
 
 use futures::StreamExt;
+use zero_cost_templating::{async_iterator_extension::AsyncIterExt, yields};
 use zero_cost_templating_macros::template_stream;
 
 #[template_stream("only_template.html.hbs", "partial_block_partial.html.hbs")]
 pub async gen fn test() {
-    let template = only_template_initial0();
-    let template = template.only_template_template0();
-    template.partial_block_partial_template4();
+    let template = yields!(only_template_initial0());
+    let template = yields!(template.only_template_template0());
+    yields!(template.partial_block_partial_template4());
 }
 
 #[tokio::main]

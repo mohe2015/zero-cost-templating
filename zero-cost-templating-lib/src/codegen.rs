@@ -176,15 +176,15 @@ pub fn calculate_edges<'a>(
     template_codegen: &'a TemplateCodegen,
 ) -> impl Iterator<Item = proc_macro2::TokenStream> + 'a {
     graph.edge_references().map(|edge| {
-        let return_ = node_type(
+        let r#return = node_type(
             graph,
             edge.target(),
             &(quote! { Partial }, quote! { self.partial }),
             &(quote! { After }, quote! { self.after }),
             Span::call_site(),
         );
-        let return_type = return_.0;
-        let return_create = return_.1;
+        let return_type = r#return.0;
+        let return_create = r#return.1;
         let variable_name = edge.weight().variable_name().as_ref().map_or_else(
             || {
                 format_ident!(
@@ -240,9 +240,10 @@ pub fn calculate_edges<'a>(
                                 }
                             }
 
+                            // empty partial
                             impl<After> Template<#impl_template_name, (), After> {
                                 pub fn #variable_name(self #parameter) -> (After, impl ::std::async_iter::AsyncIterator<Item = ::alloc::borrow::Cow<'static, str>>) {
-                                    (#return_create, async gen {
+                                    (self.after, async gen {
                                         yield alloc::borrow::Cow::from("hi");
                                     })
                                 }

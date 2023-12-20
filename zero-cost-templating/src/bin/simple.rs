@@ -4,7 +4,7 @@ extern crate alloc;
 
 use std::borrow::Cow;
 
-use zero_cost_templating::template_stream;
+use zero_cost_templating::{template_stream, yields};
 
 // https://github.com/dtolnay/cargo-expand
 
@@ -17,24 +17,13 @@ use zero_cost_templating::template_stream;
 // search for
 // `{static coroutine@
 
-macro_rules! yields {
-    ($e: expr) => {{
-        let expr = $e;
-        let ret = expr.0;
-        let mut iter = std::pin::pin!(expr.1);
-        while let Some(v) = ::zero_cost_templating::async_iterator_extension::AsyncIterExt::next(&mut iter).await {
-            yield v;
-        }
-        ret
-    }};
-}
-
 // it is really important to have IDE support so we should probably temporarily switch back to the async-stream crate or roll our own. We also need to handle the yields! macro or add it to the other crate?
 
 #[template_stream("if_else.html.hbs")]
 pub async gen fn test() -> Cow<'static, str> {
     let template = yields!(if_else_initial0());
-    let template = template.if_else_template0();
+    let template = yields!(template.if_else_template0());
+    
 }
 
 pub fn main() {}
