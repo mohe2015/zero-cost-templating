@@ -257,9 +257,9 @@ pub fn calculate_edges<'a>(
                     , #variable: impl Into<::alloc::borrow::Cow<'static, str>>
                 }
             });
-        let impl_func = match &graph[edge.source()].node_type {
-            NodeType::InnerTemplate | NodeType::PartialBlock => None,
-            NodeType::Other => Some({
+        let impl_func = match (&graph[edge.source()].node_type, &graph[edge.target()].node_type) {
+            (NodeType::InnerTemplate | NodeType::PartialBlock, _) => None,
+            (NodeType::Other, NodeType::PartialBlock) => Some({
                 let impl_template_name = format_ident!(
                     "{}Template{}",
                     template_codegen.template_name.to_upper_camel_case(),
@@ -267,8 +267,7 @@ pub fn calculate_edges<'a>(
                 );
                 
                 let to_yield = element_to_yield(edge.weight());
-                match &graph[edge.target()].node_type {
-                    NodeType::PartialBlock => {
+              
                         quote! {
                             impl<Partial,
                                 PartialPartial,
@@ -296,8 +295,18 @@ pub fn calculate_edges<'a>(
                                 }
                             }
                         }
-                    }
-                    NodeType::InnerTemplate | NodeType::Other => {
+                    
+            
+            }),
+            (NodeType::Other,NodeType::InnerTemplate | NodeType::Other) => Some({
+                let impl_template_name = format_ident!(
+                    "{}Template{}",
+                    template_codegen.template_name.to_upper_camel_case(),
+                    edge.source().index().to_string(),
+                );
+                
+                let to_yield = element_to_yield(edge.weight());
+                
                         quote! {
                             impl<Partial, After>
                                 Template<#impl_template_name, Partial, After> {
@@ -308,10 +317,9 @@ pub fn calculate_edges<'a>(
                                 }
                             }
                         }
-                    }
-                }
-            }),
-        };
+                    
+        })
+    };
         quote! {
             #impl_func
         }
