@@ -12,7 +12,8 @@ use zero_cost_templating_macros::template_stream;
 pub async gen fn test() -> Cow<'static, str> {
     let template = yields!(only_template_initial0());
     let template = yields!(template.only_template_template0());
-    yields!(template.partial_block_partial_template4());
+    let template: Template<OnlyTemplateTemplate2, (), Template<(), (), ()>> =
+        yields!(template.partial_block_partial_template4());
 }
 
 #[tokio::main]
@@ -23,12 +24,5 @@ pub async fn main() {
     while let Some(value) = stream.next().await {
         actual.push_str(&value);
     }
-    assert_eq!(
-        "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    \
-    <title>title</title>\n    <link rel=\"stylesheet\" href=\"style.css\">\n    \
-    <script src=\"script.js\"></script>\n  </head>\n  <body>\n    <h1>thetitle</h1>\n    \
-    <input type=\"hidden\" value=\"thetoken\">\n    <ul>\n    \n    </ul>\n    \
-    <span>2023</span>\n  </body>\n</html>",
-        actual
-    );
+    assert_eq!("<p></p>", actual);
 }
