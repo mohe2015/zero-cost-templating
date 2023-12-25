@@ -20,7 +20,7 @@ mod if_else_true {
     #[template_stream("if_else.html.hbs")]
     pub async gen fn test_true() -> Cow<'static, str> {
         let template = yields!(if_else_initial0());
-        if true {
+        let template = if true {
             let template = yields!(template.if_else_template0());
             yields!(template.if_else_template2())
         } else {
@@ -33,7 +33,7 @@ mod if_else_true {
 #[template_stream("if_else.html.hbs")]
 pub async gen fn test_false() -> Cow<'static, str> {
     let template = yields!(if_else_initial0());
-    if false {
+    let template = if false {
         let template = yields!(template.if_else_template0());
         yields!(template.if_else_template2())
     } else {
