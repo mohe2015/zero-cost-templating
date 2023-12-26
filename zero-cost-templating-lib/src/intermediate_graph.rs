@@ -124,6 +124,8 @@ impl Display for TemplateNode {
 
 // Normal use of the library should create few nodes and few necessary calls. But edge cases should not all be optimized if it makes the code ugly etc.
 // Maybe in some future version add the full path to the graph including inner template stuff? maybe for inner templates add an edge layer or something like that for edges that don't exist for all users
+// probably not a good idea because of generic programming
+// the end of the partial could point to the after partial node (no doesn't work if partial is used multiple times)
 
 /// Adds the node in all cases if it is not NodeType::Other.
 /// If it is NodeType::Other only adds it if there are pending outgoing edges (even not added if current node type is not NodeType::Other).
