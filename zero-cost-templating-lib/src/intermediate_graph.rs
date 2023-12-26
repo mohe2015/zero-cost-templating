@@ -171,7 +171,6 @@ pub fn flush_with_node(
     tmp: Vec<(NodeIndex, Option<IntermediateAstElement>)>,
     node: TemplateNode,
 ) -> NodeIndex {
-    assert!(!tmp.is_empty());
     if tmp.len() == 1 && graph[tmp[0].0].node_type == node.node_type {
         return tmp[0].0;
     }
@@ -304,8 +303,10 @@ pub fn children_to_ast(
                 // https://html.spec.whatwg.org/dev/syntax.html
                 // https://github.com/cure53/DOMPurify/blob/main/src/tags.js
                 let escaping_fun = match parent {
-                    "h1" | "li" | "span" | "title" | "main" => EscapingFunction::HtmlElementInner,
-                    other => panic!("unknown escaping rules for element {other}"),
+                    "h1" | "li" | "span" | "title" | "main" | "a" | "p" | "div" => {
+                        EscapingFunction::HtmlElementInner
+                    }
+                    other => panic!("while parsing template {template_name}: unknown escaping rules for element {other}"),
                 };
                 tmp = add_edge_maybe_with_node(
                     graph,
@@ -539,7 +540,7 @@ pub fn element_to_ast(
                         let escaping_fun = match (name.as_str(), attribute.key.as_str()) {
                             (_, "value" | "class") => EscapingFunction::HtmlAttribute,
                             (name, attr) => panic!(
-                                "in element {name}, unknown escaping rules for attribute name \
+                                "while parsing template {template_name}: in element {name}, unknown escaping rules for attribute name \
                                  {attr}"
                             ),
                         };
