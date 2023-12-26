@@ -162,73 +162,63 @@ pub fn connect_edges_to_node(
 /// If adding the edge requires a new node, it adds the node of the specified type.
 pub fn add_edge_maybe_with_node(
     graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
-    tmp: Vec<(NodeIndex, Option<IntermediateAstElement>)>,
+    mut tmp: Vec<(NodeIndex, Option<IntermediateAstElement>)>,
     edge_type: IntermediateAstElement,
     node: TemplateNode,
 ) -> Vec<(NodeIndex, Option<IntermediateAstElement>)> {
-    todo!()
-    /*
-    match (&node.node_type, current, edge_type) {
-        (
-            NodeType::Other,
-            IntermediateAstElement::Text(old),
-            IntermediateAstElement::Variable {
-                before,
-                variable_name,
-                escaping_fun,
-                after,
-            },
-        ) => (
-            last,
-            IntermediateAstElement::Variable {
-                before: old + &before,
-                variable_name,
-                escaping_fun,
-                after,
-            },
-        ),
-        (
-            NodeType::Other,
-            IntermediateAstElement::Variable {
-                before,
-                variable_name,
-                escaping_fun,
-                after,
-            },
-            IntermediateAstElement::Text(new),
-        ) => (
-            last,
-            IntermediateAstElement::Variable {
-                before,
-                variable_name,
-                escaping_fun,
-                after: after + &new,
-            },
-        ),
-        (NodeType::Other, IntermediateAstElement::Text(old), IntermediateAstElement::Text(new)) => {
-            (last, IntermediateAstElement::Text(old + &new))
-        }
-        (NodeType::Other, IntermediateAstElement::Noop, edge_type) => (last, edge_type),
-        (_, current, edge_type) => {
-            let current_node = graph.add_node(node);
-            graph.add_edge(last, current_node, current);
-            (current_node, edge_type)
-        }
+    //let new_node = None;
+    for (from, edge) in tmp.iter_mut() {
+        todo!();
+        /*
+        match (&node.node_type, current, edge_type) {
+            (
+                NodeType::Other,
+                IntermediateAstElement::Text(old),
+                IntermediateAstElement::Variable {
+                    before,
+                    variable_name,
+                    escaping_fun,
+                    after,
+                },
+            ) => (
+                last,
+                IntermediateAstElement::Variable {
+                    before: old + &before,
+                    variable_name,
+                    escaping_fun,
+                    after,
+                },
+            ),
+            (
+                NodeType::Other,
+                IntermediateAstElement::Variable {
+                    before,
+                    variable_name,
+                    escaping_fun,
+                    after,
+                },
+                IntermediateAstElement::Text(new),
+            ) => (
+                last,
+                IntermediateAstElement::Variable {
+                    before,
+                    variable_name,
+                    escaping_fun,
+                    after: after + &new,
+                },
+            ),
+            (NodeType::Other, IntermediateAstElement::Text(old), IntermediateAstElement::Text(new)) => {
+                (last, IntermediateAstElement::Text(old + &new))
+            }
+            (NodeType::Other, IntermediateAstElement::Noop, edge_type) => (last, edge_type),
+            (_, current, edge_type) => {
+                let current_node = graph.add_node(node);
+                graph.add_edge(last, current_node, current);
+                (current_node, edge_type)
+            }
+        }*/
     }
-    */
-    /*
-    match current {
-        IntermediateAstElement::Noop => (last, IntermediateAstElement::Noop),
-        current @ (IntermediateAstElement::Variable { .. }
-        | IntermediateAstElement::Text(_)
-        | IntermediateAstElement::PartialBlockPartial
-        | IntermediateAstElement::InnerTemplate) => {
-            let current_node = graph.add_node(node);
-            graph.add_edge(last, current_node, current);
-            (current_node, IntermediateAstElement::Noop)
-        }
-    }
-    */
+    tmp
 }
 
 #[must_use]
