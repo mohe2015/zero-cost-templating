@@ -21,9 +21,9 @@ use crate::intermediate_graph::{EscapingFunction, IntermediateAstElement, NodeTy
 fn node_partial_block_type(
     graph: &StableGraph<TemplateNode, IntermediateAstElement>,
     node_index: NodeIndex,
+    span: Span,
     partial: &(TokenStream, TokenStream),
     after: &(TokenStream, TokenStream),
-    span: Span,
 ) -> (TokenStream, TokenStream) {
     assert_eq!(
         graph[node_index].node_type,
@@ -34,12 +34,10 @@ fn node_partial_block_type(
     let partial_type = &partial.0;
     let partial_create = &partial.1;
 
-    let partial_after = node_type(
-        graph,
-        node_index,
+    let partial_after = node_raw_type(
+        graph, node_index, span,
         &(quote_spanned! {span=> () }, quote_spanned! {span=> () }), // I think we need to keep the partial?
         after,
-        span,
     );
     let partial_after_type = partial_after.0;
     let partial_after_create = partial_after.1;
@@ -77,11 +75,9 @@ fn node_inner_template_type(
     );
     
     let inner_after = node_type(
-        graph,
-        node_index,
+        graph, node_index, span,
         &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
         &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
-        span,
     );
 
     let inner_partial = graph
@@ -98,11 +94,9 @@ fn node_inner_template_type(
         (quote_spanned! {span=> () }, quote_spanned! {span=> () })
     } else {
         node_type(
-            graph,
-            inner_partial.target(),
+            graph, inner_partial.target(), span,
             &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
             &inner_after,
-            span,
         )
     };
 
@@ -115,21 +109,27 @@ fn node_inner_template_type(
     node_type(
         graph,
         inner_template.target(),
+        span,
         &inner_partial,
         &inner_after,
-        span,
     )
 }
 
 fn node_other_type(
-    node: &TemplateNode,
+    graph: &StableGraph<TemplateNode, IntermediateAstElement>,
     node_index: NodeIndex,
     span: Span,
     partial: &(TokenStream, TokenStream),
     after: &(TokenStream, TokenStream),
 ) -> (TokenStream, TokenStream) {
-    assert_eq!(node.node_type, NodeType::Other, "must be NodeType::Other");
+    assert_eq!(graph[node_index].node_type, NodeType::Other, "must be NodeType::Other");
 
+    node_raw_type(graph, node_index, span, partial, after)
+}
+
+fn node_raw_type(graph: &StableGraph<TemplateNode, IntermediateAstElement>,
+    node_index: NodeIndex,
+    span: Span, partial: &(TokenStream, TokenStream), after: &(TokenStream, TokenStream)) -> (TokenStream, TokenStream) {
     let partial_type = &partial.0;
     let partial_create = &partial.1;
 
@@ -138,7 +138,7 @@ fn node_other_type(
 
     let ident = format_ident!(
         "{}Template{}",
-        node.template_name.to_upper_camel_case(),
+        graph[node_index].template_name.to_upper_camel_case(),
         node_index.index().to_string(),
         span = span
     );
@@ -161,15 +161,15 @@ fn node_other_type(
 fn node_type(
     graph: &StableGraph<TemplateNode, IntermediateAstElement>,
     node_index: NodeIndex,
+    span: Span,
     partial: &(TokenStream, TokenStream),
     after: &(TokenStream, TokenStream),
-    span: Span,
 ) -> (TokenStream, TokenStream) {
     let node = &graph[node_index];
     match node.node_type {
-        NodeType::PartialBlock => node_partial_block_type(graph, node_index, partial, after, span),
+        NodeType::PartialBlock => node_partial_block_type(graph, node_index, span, partial, after),
         NodeType::InnerTemplate => node_inner_template_type(graph, node_index, span),
-        NodeType::Other => node_other_type(node, node_index, span, partial, after),
+        NodeType::Other => node_other_type(graph, node_index, span, partial, after),
     }
 }
 
@@ -268,9 +268,9 @@ pub fn calculate_edge(
     let r#return = node_type(
         graph,
         edge.target(),
+        Span::call_site(),
         &(quote! { Partial }, quote! { self.partial }),
         &(quote! { After }, quote! { self.after }),
-        Span::call_site(),
     );
     let return_type = r#return.0;
     let return_create = r#return.1;
@@ -298,9 +298,9 @@ pub fn calculate_edge(
             let r#return2 = node_type(
                 graph,
                 edge.target(),
+                Span::call_site(),
                 &(quote! { () }, quote! { () }),
                 &(quote! { After }, quote! { self.after }),
-                Span::call_site(),
             );
             let return2_type = r#return2.0;
             let return2_create = r#return2.1;
@@ -388,9 +388,9 @@ pub fn codegen_template_codegen(
     let template_struct = node_type(
         graph,
         template_codegen.first,
-        &(quote! { () }, quote! { () }),
-        &(quote! { () }, quote! { () }),
         Span::call_site(),
+        &(quote! { () }, quote! { () }),
+        &(quote! { () }, quote! { () }),
     );
     let template_struct_type = template_struct.0;
     let template_struct_create = template_struct.1;
