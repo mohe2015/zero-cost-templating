@@ -280,12 +280,12 @@ pub fn children_to_ast(
                     first_nodes,
                     template_name,
                     graph,
-                    vec![(loop_start.clone(), None)],
+                    vec![(loop_start, None)],
                     children,
                     parent,
                 );
 
-                connect_edges_to_node(graph, loop_end, loop_start.clone());
+                connect_edges_to_node(graph, loop_end, loop_start);
 
                 tmp = vec![(loop_start, None)];
             }
@@ -303,7 +303,7 @@ pub fn children_to_ast(
                 // TODO create an add_edge function that enforces that a new node is not needed.
                 let mut partial_block_partial_tmp = add_edge_maybe_with_node(
                     graph,
-                    vec![(inner_template_tmp.clone(), None)],
+                    vec![(inner_template_tmp, None)],
                     IntermediateAstElement::PartialBlockPartial,
                     TemplateNode {
                         template_name: template_name.to_owned(),
@@ -332,10 +332,10 @@ pub fn children_to_ast(
                     .unwrap_or_else(|| panic!("unknown inner template {name}"));
 
                 
-                let inner_template_template_tmp = add_edge_maybe_with_node(graph, vec![(inner_template_tmp.clone(), None)], 
+                let inner_template_template_tmp = add_edge_maybe_with_node(graph, vec![(inner_template_tmp, None)], 
                     IntermediateAstElement::InnerTemplate,
                     TemplateNode {
-                        template_name: name.to_owned(),
+                        template_name: name,
                         node_type: NodeType::Other,
                     },
                 );
@@ -369,7 +369,7 @@ pub fn children_to_ast(
                 );
 
                 let true_tmp =
-                    children_to_ast(first_nodes, template_name, graph, vec![(if_start.clone(), None)], if_children, parent);
+                    children_to_ast(first_nodes, template_name, graph, vec![(if_start, None)], if_children, parent);
 
                 let mut false_tmp = children_to_ast(
                     first_nodes,
