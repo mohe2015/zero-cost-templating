@@ -247,26 +247,26 @@ pub fn template_stream(
                 &|_, er| match er.weight().inner {
                     IntermediateAstElementInner::InnerTemplate => {
                         format!(
-                            "label = \"{}\" style = dashed color = orange",
+                            "label = \"{}\" style = dashed color = blue",
                             er.weight().to_string().replace('\"', "\\\"")
                         )
                     }
                     IntermediateAstElementInner::PartialBlockPartial => {
                         format!(
-                            "label = \"{}\" style = dashed color = green",
+                            "label = \"{}\" style = dashed color = orange",
                             er.weight().to_string().replace('\"', "\\\"")
                         )
                     }
                     _ => {
                         format!(
-                            "label = \"{}\"",
+                            "label = \"{}\" color = red",
                             er.weight().to_string().replace('\"', "\\\"")
                         )
                     }
                 },
                 &|_, nr| match nr.weight().node_type {
                     NodeType::PartialBlock => format!(
-                        "label = \"{}\" color = red",
+                        "label = \"{}\" color = orange",
                         nr.weight().to_string().replace('\"', "\\\"")
                     ),
                     NodeType::InnerTemplate => format!(
@@ -274,7 +274,7 @@ pub fn template_stream(
                         nr.weight().to_string().replace('\"', "\\\"")
                     ),
                     NodeType::Other => format!(
-                        "label = \"{}\"",
+                        "label = \"{}\" color = red",
                         nr.weight().to_string().replace('\"', "\\\"")
                     ),
                 },
