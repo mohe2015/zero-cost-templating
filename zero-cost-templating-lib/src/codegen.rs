@@ -245,6 +245,7 @@ pub fn element_to_yield(
     }
 }
 
+#[expect(clippy::too_many_lines, reason = "tmp")]
 #[must_use]
 pub fn calculate_edge(
     graph: &StableGraph<TemplateNode, IntermediateAstElement>,
@@ -285,7 +286,16 @@ pub fn calculate_edge(
         &graph[edge.source()].node_type,
         &graph[edge.target()].node_type,
     ) {
-        (NodeType::InnerTemplate | NodeType::PartialBlock, _) => None, // TODO
+        (NodeType::InnerTemplate, _) => None,
+        (NodeType::PartialBlock, NodeType::Other) => {
+            todo!()
+        }
+        (NodeType::PartialBlock, NodeType::PartialBlock) => {
+            todo!()
+        }
+        (NodeType::PartialBlock, NodeType::InnerTemplate) => {
+            todo!()
+        }
         (NodeType::Other, NodeType::PartialBlock) => {
             let r#return2 = node_type(
                 graph,
