@@ -213,6 +213,8 @@ pub fn add_edge_maybe_with_node(
     */
 }
 
+/// If `input` is nonempty, so nonempty excluding empty each and empty if this will never return a None
+// I think a pre-pass should remove these so you as the caller already know that this is not the case.
 #[must_use]
 #[expect(clippy::too_many_lines, reason = "tmp")]
 pub fn children_to_ast(
@@ -266,28 +268,28 @@ pub fn children_to_ast(
                 tmp = element_to_ast(first_nodes, template_name, graph, tmp, element);
             }
             Child::Each(_identifier, children) => {
-                // TODO FIXME edge case empty each
+                if !children.is_empty() {
+                    let loop_start = flush_with_node(
+                        graph,
+                        tmp,
+                        TemplateNode {
+                            template_name: template_name.to_owned(),
+                            node_type: NodeType::Other,
+                        },
+                    );
+                    let loop_end = children_to_ast(
+                        first_nodes,
+                        template_name,
+                        graph,
+                        vec![(loop_start, None)],
+                        children,
+                        parent,
+                    );
 
-                let loop_start = flush_with_node(
-                    graph,
-                    tmp,
-                    TemplateNode {
-                        template_name: template_name.to_owned(),
-                        node_type: NodeType::Other,
-                    },
-                );
-                let loop_end = children_to_ast(
-                    first_nodes,
-                    template_name,
-                    graph,
-                    vec![(loop_start, None)],
-                    children,
-                    parent,
-                );
+                    connect_edges_to_node(graph, loop_end, loop_start);
 
-                connect_edges_to_node(graph, loop_end, loop_start);
-
-                tmp = vec![(loop_start, None)];
+                    tmp = vec![(loop_start, None)];
+                }
             }
             Child::PartialBlock(name, children) => {
                 let inner_template_tmp = flush_with_node(
