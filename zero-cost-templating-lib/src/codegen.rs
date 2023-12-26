@@ -127,12 +127,17 @@ fn node_other_type(
     node: &TemplateNode,
     node_index: NodeIndex,
     span: Span,
-    partial_type: &TokenStream,
-    after_type: &TokenStream,
-    partial_create: &TokenStream,
-    after_create: &TokenStream,
+    partial: &(TokenStream, TokenStream),
+    after: &(TokenStream, TokenStream),
 ) -> (TokenStream, TokenStream) {
     assert_eq!(node.node_type, NodeType::Other, "must be NodeType::Other");
+
+    let partial_type = &partial.0;
+    let partial_create = &partial.1;
+
+    let after_type = &after.0;
+    let after_create = &after.1;
+
     let ident = format_ident!(
         "{}Template{}",
         node.template_name.to_upper_camel_case(),
@@ -155,7 +160,6 @@ fn node_other_type(
 
 /// return.0 is type and return.1 is create expression
 /// This method's only responsibility is to convert the node to a type and creation ``TokenStream``.
-// TODO FIXME probably extract the match out of here as not all parameters are used in all cases?
 fn node_type(
     graph: &StableGraph<TemplateNode, IntermediateAstElement>,
     node_index: NodeIndex,
@@ -163,25 +167,11 @@ fn node_type(
     after: &(TokenStream, TokenStream),
     span: Span,
 ) -> (TokenStream, TokenStream) {
-    let partial_type = &partial.0;
-    let partial_create = &partial.1;
-
-    let after_type = &after.0;
-    let after_create = &after.1;
-
     let node = &graph[node_index];
     match node.node_type {
         NodeType::PartialBlock => node_partial_block_type(graph, node_index, partial, after, span),
         NodeType::InnerTemplate => node_inner_template_type(graph, node_index, span),
-        NodeType::Other => node_other_type(
-            node,
-            node_index,
-            span,
-            partial_type,
-            after_type,
-            partial_create,
-            after_create,
-        ),
+        NodeType::Other => node_other_type(node, node_index, span, partial, after),
     }
 }
 
@@ -214,6 +204,7 @@ pub fn calculate_nodes<'a>(
 pub fn element_to_yield(
     intermediate_ast_element: &IntermediateAstElement,
 ) -> proc_macro2::TokenStream {
+    // TODO FIXME check for empty string yielding in production
     match intermediate_ast_element {
         IntermediateAstElement::Variable {
             before,
@@ -255,13 +246,12 @@ pub fn element_to_yield(
 }
 
 #[must_use]
-#[expect(clippy::too_many_lines, reason = "tmp")]
 pub fn calculate_edge(
     graph: &StableGraph<TemplateNode, IntermediateAstElement>,
     template_codegen: &TemplateCodegen,
     edge: petgraph::stable_graph::EdgeReference<'_, IntermediateAstElement>,
 ) -> proc_macro2::TokenStream {
-    // TODO FIXME only add number when multiple outgoing edges
+    // TODO FIXME only add number when multiple outgoing edges (add the number to documentation to aid in debugging)
     let function_name = edge.weight().variable_name().as_ref().map_or_else(
         || format_ident!("next{}", edge.id().index()),
         |variable| format_ident!("{}{}", variable, edge.id().index()),

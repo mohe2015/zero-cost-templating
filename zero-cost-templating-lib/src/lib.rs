@@ -100,6 +100,7 @@
     clippy::pattern_type_mismatch,
     clippy::print_stdout,
     clippy::use_debug,
+    clippy::indexing_slicing,
     reason = "development"
 )]
 #![feature(box_patterns)]
