@@ -21,8 +21,9 @@ use zero_cost_templating::{template_stream, yields};
 #[template_stream("templates")]
 pub async gen fn test() -> Cow<'static, str> {
     let template = yields!(g_partial_block());
-    let template = yields!(template.start("start"));
-    let template = yields!(template.before("before"));
+    let template = yields!(template.next());
+    let template = yields!(template.before("test"));
+    let template = yields!(template.test("test"));
 }
 
 pub fn main() {}
