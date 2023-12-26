@@ -223,15 +223,15 @@ pub fn children_to_ast(
                 tmp = add_node_with_edge(
                     graph,
                     tmp,
-                    TemplateNode {
-                        template_name: template_name.to_owned(),
-                        node_type: NodeType::Other,
-                    },
                     IntermediateAstElement::Variable {
                         before: String::new(),
                         variable_name: next_variable,
                         escaping_fun,
                         after: String::new(),
+                    },
+                    TemplateNode {
+                        template_name: template_name.to_owned(),
+                        node_type: NodeType::Other,
                     },
                 );
             }
@@ -239,11 +239,11 @@ pub fn children_to_ast(
                 tmp = add_node_with_edge(
                     graph,
                     tmp,
+                    IntermediateAstElement::Text(string),
                     TemplateNode {
                         template_name: template_name.to_owned(),
                         node_type: NodeType::Other,
                     },
-                    IntermediateAstElement::Text(string),
                 );
             }
             Child::Element(element) => {
@@ -288,8 +288,7 @@ pub fn children_to_ast(
                     );
                     flush_pending_edge(
                         graph,
-                        inner_last,
-                        inner_current,
+                        inner_tmp,
                         TemplateNode {
                             template_name: template_name.to_owned(),
                             node_type: NodeType::Other,
@@ -302,11 +301,11 @@ pub fn children_to_ast(
                 tmp = add_node_with_edge(
                     graph,
                     tmp,
+                    IntermediateAstElement::Noop,
                     TemplateNode {
                         template_name: template_name.to_owned(),
                         node_type: NodeType::InnerTemplate,
                     },
-                    IntermediateAstElement::Noop,
                 );
 
                 graph.add_edge(
@@ -342,21 +341,21 @@ pub fn children_to_ast(
                 tmp = add_node_with_edge(
                     graph,
                     tmp,
+                    IntermediateAstElement::Noop,
                     TemplateNode {
                         template_name: template_name.to_owned(),
                         node_type: NodeType::PartialBlock,
                     },
-                    IntermediateAstElement::Noop,
                 );
 
                 tmp = add_node_with_edge(
                     graph,
                     tmp,
+                    IntermediateAstElement::Noop,
                     TemplateNode {
                         template_name: template_name.to_owned(),
                         node_type: NodeType::Other,
                     },
-                    IntermediateAstElement::Noop,
                 );
             }
             Child::If(_variable, if_children, else_children) => {
@@ -369,49 +368,20 @@ pub fn children_to_ast(
                     },
                 );
 
-                let if_last = {
-                    let (mut if_last, if_current) = children_to_ast(
-                        first_nodes,
-                        template_name,
-                        graph,
-                        last,
-                        IntermediateAstElement::Noop,
-                        if_children,
-                        parent,
-                    );
-                    (if_last, _) = flush_pending_edge(
-                        graph,
-                        if_last,
-                        if_current,
-                        TemplateNode {
-                            template_name: template_name.to_owned(),
-                            node_type: NodeType::Other,
-                        },
-                    );
-                    if_last
-                };
+                let if_tmp =
+                    children_to_ast(first_nodes, template_name, graph, tmp, if_children, parent);
 
-                let else_last = {
-                    let (mut else_last, else_current) = children_to_ast(
-                        first_nodes,
-                        template_name,
-                        graph,
-                        last,
-                        IntermediateAstElement::Noop,
-                        else_children,
-                        parent,
-                    );
-                    (else_last, _) = flush_pending_edge(
-                        graph,
-                        else_last,
-                        else_current,
-                        TemplateNode {
-                            template_name: template_name.to_owned(),
-                            node_type: NodeType::Other,
-                        },
-                    );
-                    else_last
-                };
+                let else_tmp = children_to_ast(
+                    first_nodes,
+                    template_name,
+                    graph,
+                    tmp,
+                    else_children,
+                    parent,
+                );
+
+                tmp = if_tmp;
+                tmp.append(&mut else_tmp);
             }
         }
     }
