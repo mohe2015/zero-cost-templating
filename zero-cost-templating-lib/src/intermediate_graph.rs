@@ -264,12 +264,13 @@ pub fn children_to_ast(
                     parent,
                 );
 
+                // TODO make add_node_with_edge non optional, add back flush_edges that returns a type that is suitable here
                 connect_nodes(graph, loop_end, None, loop_start);
 
                 tmp = loop_start;
             }
             Child::PartialBlock(name, children) => {
-                tmp = add_node_with_edge(
+                let inner_template_tmp = add_node_with_edge(
                     graph,
                     tmp,
                     None,
@@ -279,59 +280,45 @@ pub fn children_to_ast(
                     },
                 );
 
-                let partial_block_partial = {
-                    // this part needs to be fully disjunct from the rest
-                    let partial_block_partial = graph.add_node(TemplateNode {
+                // this part needs to be fully disjunct from the rest
+                // TODO create an add_edge function that enforces that a new node is not needed.
+                let mut partial_block_partial_tmp = add_node_with_edge(
+                    graph,
+                    inner_template_tmp,
+                    Some(IntermediateAstElement::PartialBlockPartial),
+                    TemplateNode {
                         template_name: template_name.to_owned(),
                         node_type: NodeType::Other,
-                    });
-                    let inner_tmp = children_to_ast(
-                        first_nodes,
-                        template_name,
-                        graph,
-                        partial_block_partial,
-                        IntermediateAstElement::Noop,
-                        children,
-                        parent,
-                    );
-                    flush_pending_edge(
-                        graph,
-                        inner_tmp,
-                        TemplateNode {
-                            template_name: template_name.to_owned(),
-                            node_type: NodeType::Other,
-                        },
-                    );
-                    partial_block_partial
-                };
-
-                let inner_template;
-
-                graph.add_edge(
-                    inner_template,
-                    partial_block_partial,
-                    IntermediateAstElement::PartialBlockPartial,
+                    },
+                );
+                partial_block_partial_tmp = children_to_ast(
+                    first_nodes,
+                    template_name,
+                    graph,
+                    partial_block_partial_tmp,
+                    children,
+                    parent,
+                );
+                partial_block_partial_tmp = flush_pending_edge(
+                    graph,
+                    partial_block_partial_tmp,
+                    TemplateNode {
+                        template_name: template_name.to_owned(),
+                        node_type: NodeType::Other,
+                    },
                 );
 
                 let inner_template_target = *first_nodes
                     .get(&name)
                     .unwrap_or_else(|| panic!("unknown inner template {name}"));
 
-                graph.add_edge(
-                    inner_template,
+                connect_edges(
+                    inner_template_tmp,
                     inner_template_target,
                     IntermediateAstElement::InnerTemplate,
                 );
 
-                last = inner_template;
-
-                let current_node = graph.add_node(TemplateNode {
-                    template_name: template_name.to_owned(),
-                    node_type: NodeType::Other,
-                });
-                graph.add_edge(last, current_node, current);
-                current = IntermediateAstElement::Noop;
-                last = current_node;
+                tmp = inner_template_tmp;
             }
             Child::PartialBlockPartial => {
                 tmp = add_node_with_edge(
