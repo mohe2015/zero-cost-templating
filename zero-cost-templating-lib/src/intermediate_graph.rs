@@ -1,7 +1,7 @@
 use core::fmt::Display;
 use std::collections::HashMap;
 
-use petgraph::stable_graph::{NodeIndex, StableGraph};
+use petgraph::{stable_graph::{NodeIndex, StableGraph}, data::Build};
 
 use crate::html_recursive_descent::{AttributeValuePart, Child, Element};
 
@@ -135,15 +135,27 @@ pub fn flush_with_node(
     tmp: Vec<(NodeIndex, Option<IntermediateAstElement>)>,
     node: TemplateNode,
 ) -> NodeIndex {
-    todo!();
+    assert!(!tmp.is_empty());
+    if tmp.len() == 1 && tmp[0].1.is_none() && graph[tmp[0].0].node_type == node.node_type {
+        return tmp[0].0;
+    }
+    let to = graph.add_node(node);
+    for (from, edge) in tmp {
+        // TODO FIXME maybe just unwrap?
+        graph.add_edge(from, to, edge.unwrap_or_else(|| IntermediateAstElement::Text(String::new())));
+    }
+    to
 }
 
 pub fn connect_edges_to_node(
     graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
     tmp: Vec<(NodeIndex, Option<IntermediateAstElement>)>,
-    node: NodeIndex
+    to: NodeIndex
 ) {
-
+    for (from, edge) in tmp {
+        // TODO FIXME maybe just unwrap?
+        graph.add_edge(from, to, edge.unwrap_or_else(|| IntermediateAstElement::Text(String::new())));
+    }
 }
 
 /// Adds the edge in all cases.
