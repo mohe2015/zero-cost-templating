@@ -16,8 +16,10 @@ use zero_cost_templating::{async_iterator_extension::AsyncIterExt, template_stre
 
 // RUSTFLAGS="-Zprint-type-sizes" cargo run --release --bin simple > type-sizes.txt
 // search for
+// `{async gen block@
 // `{static coroutine@
 
+// Don't use Cow because it is so big?
 #[template_stream("templates")]
 pub async gen fn test() -> Cow<'static, str> {
     let template = yields!(g_partial_block());
