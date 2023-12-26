@@ -4,7 +4,7 @@ use heck::ToUpperCamelCase;
 use itertools::Itertools;
 use petgraph::prelude::NodeIndex;
 use petgraph::stable_graph::StableGraph;
-use petgraph::visit::{EdgeRef, IntoEdgeReferences, IntoNodeReferences, NodeRef};
+use petgraph::visit::{EdgeRef, IntoEdgeReferences, IntoNodeReferences};
 use petgraph::Direction;
 use proc_macro2::{Span, TokenStream};
 use quote::{format_ident, quote, quote_spanned};
@@ -101,17 +101,19 @@ fn node_inner_template_type(
         .edges_directed(inner_partial.target(), Direction::Outgoing)
         .next()
         .is_none();
-    let inner_partial = if inner_partial_empty {
-        (quote_spanned! {span=> () }, quote_spanned! {span=> () })
-    } else {
-        node_type(
-            graph,
-            inner_partial.target(),
-            span,
-            &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
-            &inner_after,
-        )
-    };
+
+    // maybe don't do this?
+    //let inner_partial = if inner_partial_empty {
+    //    (quote_spanned! {span=> () }, quote_spanned! {span=> () })
+    //} else {
+    let inner_partial = node_type(
+        graph,
+        inner_partial.target(),
+        span,
+        &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
+        &inner_after,
+    );
+    // };
 
     let inner_template = graph
         .edges_directed(node_index, Direction::Outgoing)
@@ -140,6 +142,14 @@ fn node_other_type(
         NodeType::Other,
         "must be NodeType::Other"
     );
+
+    let last_node = graph
+        .edges_directed(node_index, Direction::Outgoing)
+        .next()
+        .is_none();
+    if last_node {
+        return after.clone();
+    }
 
     node_raw_type(graph, node_index, span, partial, after)
 }
