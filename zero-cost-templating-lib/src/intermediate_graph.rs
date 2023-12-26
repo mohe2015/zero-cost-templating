@@ -200,7 +200,7 @@ pub fn add_edge_maybe_with_node(
     next_edge: IntermediateAstElement,
     to: TemplateNode,
 ) -> Vec<(NodeIndex, Option<IntermediateAstElement>)> {
-    //let new_node = None;
+    let new_node = None;
     for (from, current_edge) in tmp {
         match (graph[from].node_type, current_edge, next_edge) {
             (
@@ -276,11 +276,11 @@ pub fn add_edge_maybe_with_node(
                     inner: IntermediateAstElementInner::Text(old + &new),
                 },
             ),
-            (NodeType::Other, None, edge_type) => (from, edge_type),
-            (_, current, edge_type) => {
-                let current_node = graph.add_node(to);
-                graph.add_edge(from, current_node, current);
-                (current_node, edge_type)
+            (_, None, edge_type) => (from, edge_type),
+            (_, Some(current), edge_type) => {
+                let to = new_node.get_or_insert_with(|| graph.add_node(to));
+                graph.add_edge(from, *to, current);
+                (*to, edge_type)
             }
         }
     }
