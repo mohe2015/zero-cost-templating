@@ -245,16 +245,21 @@ pub fn template_stream(
                 immut_graph,
                 &[Config::NodeNoLabel, Config::EdgeNoLabel],
                 &|_, er| match er.weight().inner {
-                    IntermediateAstElementInner::InnerTemplate
-                    | IntermediateAstElementInner::PartialBlockPartial => {
+                    IntermediateAstElementInner::InnerTemplate => {
                         format!(
-                            "label = \"{}\" style = dotted",
+                            "label = \"{}\" style = dashed color = orange",
+                            er.weight().to_string().replace('\"', "\\\"")
+                        )
+                    }
+                    IntermediateAstElementInner::PartialBlockPartial => {
+                        format!(
+                            "label = \"{}\" style = dashed color = green",
                             er.weight().to_string().replace('\"', "\\\"")
                         )
                     }
                     _ => {
                         format!(
-                            "label = \"{}\" color = blue",
+                            "label = \"{}\"",
                             er.weight().to_string().replace('\"', "\\\"")
                         )
                     }
