@@ -87,20 +87,27 @@ fn node_type(
                 span,
             );
 
-            // TODO FIXME implement empty partial or prevent empty partial
-
             let inner_partial = graph
                 .edges_directed(node_index, Direction::Outgoing)
                 .filter(|edge| *edge.weight() == IntermediateAstElement::PartialBlockPartial)
                 .exactly_one()
                 .unwrap();
-            let inner_partial = node_type(
-                graph,
-                inner_partial.target(),
-                &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
-                &inner_after,
-                span,
-            );
+
+            let inner_partial_empty = graph
+                .edges_directed(inner_partial.target(), Direction::Outgoing)
+                .next()
+                .is_none();
+            let inner_partial = if inner_partial_empty {
+                (quote_spanned! {span=> () }, quote_spanned! {span=> () })
+            } else {
+                node_type(
+                    graph,
+                    inner_partial.target(),
+                    &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
+                    &inner_after,
+                    span,
+                )
+            };
 
             let inner_template = graph
                 .edges_directed(node_index, Direction::Outgoing)
@@ -152,20 +159,17 @@ pub fn calculate_nodes<'a>(
 ) -> impl Iterator<Item = proc_macro2::TokenStream> + 'a {
     graph
         .node_references()
-        .filter_map(|(node_index, node)| match node.node_type {
-            NodeType::InnerTemplate | NodeType::PartialBlock => None,
-            NodeType::Other => Some(format_ident!(
+        .map(|(node_index, _)|  {
+            let template_struct = format_ident!(
                 "{}Template{}",
                 template_codegen.template_name.to_upper_camel_case(),
                 node_index.index().to_string(),
-            )),
-        })
-        .map(|template_struct| {
+            );
             quote! {
                 #[must_use]
                 pub struct #template_struct;
             }
-        })
+ } )
 }
 
 #[must_use]
@@ -256,8 +260,22 @@ pub fn calculate_edge(
         &graph[edge.source()].node_type,
         &graph[edge.target()].node_type,
     ) {
-        (NodeType::InnerTemplate | NodeType::PartialBlock, _) => None,
+        (NodeType::InnerTemplate | NodeType::PartialBlock, _) => None, // TODO
         (NodeType::Other, NodeType::PartialBlock) => {
+            let after_partial_block = graph
+            .edges_directed(edge.target(), Direction::Outgoing)
+            .exactly_one()
+            .unwrap();
+            let after_partial_block = node_type(
+                graph,
+                after_partial_block.target(),
+                &(quote! { () }, quote! { () }),
+                &(quote! { After }, quote! { self.after }),
+                Span::call_site(),
+            );
+            let after_partial_block_type = after_partial_block.0;
+            let after_partial_block_create = after_partial_block.1;
+
             Some({
             quote! {
                 impl<Partial,
@@ -286,10 +304,10 @@ pub fn calculate_edge(
                             (),
                             After
                             > {
-                    pub fn #function_name(self #parameter) -> (After,
+                    pub fn #function_name(self #parameter) -> (#after_partial_block_type,
                             impl ::std::async_iter::AsyncIterator<Item =
                                 ::alloc::borrow::Cow<'static, str>>) {
-                        (self.after, async gen {
+                        (#after_partial_block_create, async gen {
                             #to_yield
                         })
                     }
