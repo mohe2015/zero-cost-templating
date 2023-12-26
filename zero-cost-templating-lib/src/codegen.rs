@@ -11,6 +11,48 @@ use quote::{format_ident, quote, quote_spanned};
 
 use crate::intermediate_graph::{EscapingFunction, IntermediateAstElement, NodeType, TemplateNode};
 
+fn node_partial_block_type(graph: &StableGraph<TemplateNode, IntermediateAstElement>,
+    node_index: NodeIndex,partial: &(TokenStream, TokenStream),
+    after: &(TokenStream, TokenStream),
+    span: Span,) -> (TokenStream, TokenStream){
+        let partial_type = &partial.0;
+        let partial_create = &partial.1;
+    
+
+    // this needs to be an ordinary node
+    let inner_after = graph
+    .edges_directed(node_index, Direction::Outgoing)
+    .exactly_one()
+    .unwrap();
+    let inner_after = node_type(
+    graph,
+    inner_after.target(),
+    &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
+    after,
+    span,
+    );
+    let inner_after_type = inner_after.0;
+    let inner_after_create = inner_after.1;
+
+    let common = quote_spanned! {span=>
+    Template::<#partial_type, (), #inner_after_type>
+    };
+    let create = quote_spanned! {span=>
+    {
+        r#type: #partial_create.r#type,
+        partial: (),
+        after: #inner_after_create
+    }
+    };
+
+    (
+    common.clone(),
+    quote_spanned! {span=>
+        #common #create
+    },
+    )
+}
+
 #[expect(clippy::too_many_lines, reason = "tmp")]
 /// return.0 is type and return.1 is create expression
 /// This method's only responsibility is to convert the node type to a type and creation TokenStream.
@@ -31,38 +73,7 @@ fn node_type(
     let node = &graph[node_index];
     match node.node_type {
         NodeType::PartialBlock => {
-            // this needs to be an ordinary node
-            let inner_after = graph
-                .edges_directed(node_index, Direction::Outgoing)
-                .exactly_one()
-                .unwrap();
-            let inner_after = node_type(
-                graph,
-                inner_after.target(),
-                &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
-                after,
-                span,
-            );
-            let inner_after_type = inner_after.0;
-            let inner_after_create = inner_after.1;
-
-            let common = quote_spanned! {span=>
-                Template::<#partial_type, (), #inner_after_type>
-            };
-            let create = quote_spanned! {span=>
-                {
-                    r#type: #partial_create.r#type,
-                    partial: (),
-                    after: #inner_after_create
-                }
-            };
-
-            (
-                common.clone(),
-                quote_spanned! {span=>
-                    #common #create
-                },
-            )
+            node_partial_block_type(graph, node_index, partial, after, span)
         }
         NodeType::InnerTemplate => {
             let inner_after = graph
