@@ -258,7 +258,7 @@ pub fn element_to_yield(
         }
         IntermediateAstElementInner::InnerTemplate
         | IntermediateAstElementInner::PartialBlockPartial => {
-            unreachable!()
+            quote! {}
         }
     }
 }
@@ -305,26 +305,16 @@ pub fn calculate_edge(
         &graph[edge.source()].node_type,
         &graph[edge.target()].node_type,
     ) {
-        (NodeType::InnerTemplate, _) => None,
-        (NodeType::PartialBlock, NodeType::Other) => {
-            todo!()
-        }
-        (NodeType::PartialBlock, NodeType::PartialBlock) => {
-            todo!()
-        }
-        (NodeType::PartialBlock, NodeType::InnerTemplate) => {
-            todo!()
-        }
-        (NodeType::Other, NodeType::PartialBlock) => {
-            let r#return2 = node_type(
+        (_, NodeType::PartialBlock) => {
+            let return_empty_template = node_type(
                 graph,
                 edge.target(),
                 Span::call_site(),
                 &(quote! { () }, quote! { () }),
                 &(quote! { After }, quote! { self.after }),
             );
-            let return2_type = r#return2.0;
-            let return2_create = r#return2.1;
+            let return_empty_template_type = return_empty_template.0;
+            let return_empty_template_create = return_empty_template.1;
             Some({
                 quote! {
                     impl<Partial,
@@ -353,10 +343,10 @@ pub fn calculate_edge(
                                 (),
                                 After
                                 > {
-                        pub fn #function_name(self #parameter) -> (#return2_type,
+                        pub fn #function_name(self #parameter) -> (#return_empty_template_type,
                                 impl ::std::async_iter::AsyncIterator<Item =
                                     ::alloc::borrow::Cow<'static, str>>) {
-                            (#return2_create, async gen {
+                            (#return_empty_template_create, async gen {
                                 #to_yield
                             })
                         }
@@ -364,8 +354,7 @@ pub fn calculate_edge(
                 }
             })
         }
-        (NodeType::Other, NodeType::InnerTemplate | NodeType::Other) => Some({
-            // maybe change something here?
+        (_, NodeType::InnerTemplate | NodeType::Other) => Some({
             quote! {
                 impl<Partial, After>
                     Template<#impl_template_name, Partial, After> {
