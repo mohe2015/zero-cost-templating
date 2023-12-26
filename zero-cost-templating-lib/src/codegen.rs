@@ -12,12 +12,15 @@ use quote::{format_ident, quote, quote_spanned};
 use crate::intermediate_graph::{EscapingFunction, IntermediateAstElement, NodeType, TemplateNode};
 
 /// design: all nodes have a struct type so you can go too all nodes
-/// partial block works by going inside on the incoming edge and the outgoing edge goes back to the partial node.
-/// this makes it possible to directly use an if after the partial block or another partial block without special casing
+/// partial block works by going inside on the incoming edge and
+/// the outgoing edge goes back to the partial node.
+/// this makes it possible to directly use an if
+/// after the partial block or another partial block without special casing
 
 /// multiple partial blocks after each other should work
 
-/// partial is only the type of the node itself (maybe we could change this to be a full node type (with Template::?))
+/// partial is only the type of the node itself
+/// (maybe we could change this to be a full node type (with Template::?))
 fn node_partial_block_type(
     graph: &StableGraph<TemplateNode, IntermediateAstElement>,
     node_index: NodeIndex,
@@ -35,8 +38,11 @@ fn node_partial_block_type(
     let partial_create = &partial.1;
 
     let partial_after = node_raw_type(
-        graph, node_index, span,
-        &(quote_spanned! {span=> () }, quote_spanned! {span=> () }), // I think we need to keep the partial?
+        graph,
+        node_index,
+        span,
+        // I think we need to keep the partial?
+        &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
         after,
     );
     let partial_after_type = partial_after.0;
@@ -61,7 +67,8 @@ fn node_partial_block_type(
     )
 }
 
-/// the same design for inner template: the node itself will be visited when going out of the inner template
+/// the same design for inner template:
+/// the node itself will be visited when going out of the inner template
 
 fn node_inner_template_type(
     graph: &StableGraph<TemplateNode, IntermediateAstElement>,
@@ -73,9 +80,11 @@ fn node_inner_template_type(
         NodeType::InnerTemplate,
         "must be NodeType::InnerTemplate"
     );
-    
+
     let inner_after = node_raw_type(
-        graph, node_index, span,
+        graph,
+        node_index,
+        span,
         &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
         &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
     );
@@ -94,7 +103,9 @@ fn node_inner_template_type(
         (quote_spanned! {span=> () }, quote_spanned! {span=> () })
     } else {
         node_type(
-            graph, inner_partial.target(), span,
+            graph,
+            inner_partial.target(),
+            span,
             &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
             &inner_after,
         )
@@ -122,14 +133,22 @@ fn node_other_type(
     partial: &(TokenStream, TokenStream),
     after: &(TokenStream, TokenStream),
 ) -> (TokenStream, TokenStream) {
-    assert_eq!(graph[node_index].node_type, NodeType::Other, "must be NodeType::Other");
+    assert_eq!(
+        graph[node_index].node_type,
+        NodeType::Other,
+        "must be NodeType::Other"
+    );
 
     node_raw_type(graph, node_index, span, partial, after)
 }
 
-fn node_raw_type(graph: &StableGraph<TemplateNode, IntermediateAstElement>,
+fn node_raw_type(
+    graph: &StableGraph<TemplateNode, IntermediateAstElement>,
     node_index: NodeIndex,
-    span: Span, partial: &(TokenStream, TokenStream), after: &(TokenStream, TokenStream)) -> (TokenStream, TokenStream) {
+    span: Span,
+    partial: &(TokenStream, TokenStream),
+    after: &(TokenStream, TokenStream),
+) -> (TokenStream, TokenStream) {
     let partial_type = &partial.0;
     let partial_create = &partial.1;
 
@@ -235,8 +254,7 @@ pub fn element_to_yield(
                 yield ::alloc::borrow::Cow::from(#text);
             }
         }
-        IntermediateAstElement::InnerTemplate
-        | IntermediateAstElement::PartialBlockPartial => {
+        IntermediateAstElement::InnerTemplate | IntermediateAstElement::PartialBlockPartial => {
             unreachable!()
         }
     }
@@ -249,7 +267,8 @@ pub fn calculate_edge(
     template_codegen: &TemplateCodegen,
     edge: petgraph::stable_graph::EdgeReference<'_, IntermediateAstElement>,
 ) -> proc_macro2::TokenStream {
-    // TODO FIXME only add number when multiple outgoing edges (add the number to documentation to aid in debugging)
+    // TODO FIXME only add number when multiple outgoing edges
+    // (add the number to documentation to aid in debugging)
     let function_name = edge.weight().variable_name().as_ref().map_or_else(
         || format_ident!("next{}", edge.id().index()),
         |variable| format_ident!("{}{}", variable, edge.id().index()),

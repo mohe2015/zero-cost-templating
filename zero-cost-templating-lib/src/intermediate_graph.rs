@@ -1,7 +1,10 @@
 use core::fmt::Display;
 use std::collections::HashMap;
 
-use petgraph::{stable_graph::{NodeIndex, StableGraph}, data::Build};
+use petgraph::{
+    data::Build,
+    stable_graph::{NodeIndex, StableGraph},
+};
 
 use crate::html_recursive_descent::{AttributeValuePart, Child, Element};
 
@@ -24,7 +27,7 @@ impl Display for EscapingFunction {
 pub struct IntermediateAstElement {
     /// The tag to distinguish multiple outgoing nodes. E.g. `true` and `false` for an if.
     tag: String,
-    inner: IntermediateAstElementInner
+    inner: IntermediateAstElementInner,
 }
 
 #[derive(Debug, PartialEq, Eq, Hash, PartialOrd, Ord, Clone)]
@@ -45,11 +48,15 @@ pub enum IntermediateAstElementInner {
 impl IntermediateAstElement {
     #[must_use]
     pub const fn variable(&self) -> Option<(&String, &EscapingFunction)> {
-        if let Self { inner: IntermediateAstElementInner::Variable {
-            variable_name,
-            escaping_fun,
+        if let Self {
+            inner:
+                IntermediateAstElementInner::Variable {
+                    variable_name,
+                    escaping_fun,
+                    ..
+                },
             ..
-        }, .. } = self
+        } = self
         {
             Some((variable_name, escaping_fun))
         } else {
@@ -59,7 +66,11 @@ impl IntermediateAstElement {
 
     #[must_use]
     pub const fn variable_name(&self) -> Option<&String> {
-        if let Self { inner: IntermediateAstElementInner::Variable { variable_name, .. }, .. } = self {
+        if let Self {
+            inner: IntermediateAstElementInner::Variable { variable_name, .. },
+            ..
+        } = self
+        {
             Some(variable_name)
         } else {
             None
@@ -68,7 +79,11 @@ impl IntermediateAstElement {
 
     #[must_use]
     pub const fn text(&self) -> Option<&String> {
-        if let Self { inner: IntermediateAstElementInner::Text(string), .. } = self {
+        if let Self {
+            inner: IntermediateAstElementInner::Text(string),
+            ..
+        } = self
+        {
             Some(string)
         } else {
             None
@@ -79,22 +94,35 @@ impl IntermediateAstElement {
 impl Display for IntermediateAstElement {
     fn fmt(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         match self {
-            Self { inner: IntermediateAstElementInner::Variable {
-                before,
-                variable_name,
-                escaping_fun,
-                after,
-            }, .. } => {
+            Self {
+                inner:
+                    IntermediateAstElementInner::Variable {
+                        before,
+                        variable_name,
+                        escaping_fun,
+                        after,
+                    },
+                ..
+            } => {
                 write!(
                     formatter,
                     "{before}{{{{{variable_name}:{escaping_fun}}}}}{after}"
                 )
             }
-            Self { inner: IntermediateAstElementInner::Text(text), .. } => {
+            Self {
+                inner: IntermediateAstElementInner::Text(text),
+                ..
+            } => {
                 write!(formatter, "{text}")
             }
-            Self { inner: IntermediateAstElementInner::PartialBlockPartial, .. } => write!(formatter, "partial"),
-            Self { inner: IntermediateAstElementInner::InnerTemplate, .. } => write!(formatter, "template"),
+            Self {
+                inner: IntermediateAstElementInner::PartialBlockPartial,
+                ..
+            } => write!(formatter, "partial"),
+            Self {
+                inner: IntermediateAstElementInner::InnerTemplate,
+                ..
+            } => write!(formatter, "template"),
         }
     }
 }
@@ -128,13 +156,18 @@ impl Display for TemplateNode {
     }
 }
 
-// Normal use of the library should create few nodes and few necessary calls. But edge cases should not all be optimized if it makes the code ugly etc.
-// Maybe in some future version add the full path to the graph including inner template stuff? maybe for inner templates add an edge layer or something like that for edges that don't exist for all users
+// Normal use of the library should create few nodes and few necessary calls.
+// But edge cases should not all be optimized if it makes the code ugly etc.
+// Maybe in some future version add the full path to the graph including inner template stuff?
+// maybe for inner templates add an edge layer or
+// something like that for edges that don't exist for all users
 // probably not a good idea because of generic programming
-// the end of the partial could point to the after partial node (no doesn't work if partial is used multiple times)
+// the end of the partial could point to the after partial node
+// (no doesn't work if partial is used multiple times)
 
 /// Adds the node in all cases if it is not NodeType::Other.
-/// If it is NodeType::Other only adds it if there are pending outgoing edges (even not added if current node type is not NodeType::Other).
+/// If it is NodeType::Other only adds it if there are pending outgoing edges
+/// (even not added if current node type is not NodeType::Other).
 // Two partials after each other...
 pub fn flush_with_node(
     graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
@@ -148,7 +181,14 @@ pub fn flush_with_node(
     let to = graph.add_node(node);
     for (from, edge) in tmp {
         // TODO FIXME maybe just unwrap?
-        graph.add_edge(from, to, edge.unwrap_or_else(|| IntermediateAstElement { tag: String::new(), inner:  IntermediateAstElementInner::Text(String::new())}));
+        graph.add_edge(
+            from,
+            to,
+            edge.unwrap_or_else(|| IntermediateAstElement {
+                tag: String::new(),
+                inner: IntermediateAstElementInner::Text(String::new()),
+            }),
+        );
     }
     to
 }
@@ -156,11 +196,18 @@ pub fn flush_with_node(
 pub fn connect_edges_to_node(
     graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
     tmp: Vec<(NodeIndex, Option<IntermediateAstElement>)>,
-    to: NodeIndex
+    to: NodeIndex,
 ) {
     for (from, edge) in tmp {
         // TODO FIXME maybe just unwrap?
-        graph.add_edge(from, to, edge.unwrap_or_else(|| IntermediateAstElement { tag: String::new(), inner: IntermediateAstElementInner::Text(String::new())}));
+        graph.add_edge(
+            from,
+            to,
+            edge.unwrap_or_else(|| IntermediateAstElement {
+                tag: String::new(),
+                inner: IntermediateAstElementInner::Text(String::new()),
+            }),
+        );
     }
 }
 
@@ -213,7 +260,8 @@ pub fn add_edge_maybe_with_node(
                     after: after + &new,
                 },
             ),
-            (NodeType::Other, IntermediateAstElement::Text(old), IntermediateAstElement::Text(new)) => {
+            (NodeType::Other, IntermediateAstElement::Text(old),
+            IntermediateAstElement::Text(new)) => {
                 (last, IntermediateAstElement::Text(old + &new))
             }
             (NodeType::Other, IntermediateAstElement::Noop, edge_type) => (last, edge_type),
@@ -249,12 +297,15 @@ pub fn children_to_ast(
                 tmp = add_edge_maybe_with_node(
                     graph,
                     tmp,
-                    IntermediateAstElement { tag: String::new(), inner: IntermediateAstElementInner::Variable {
-                        before: String::new(),
-                        variable_name: next_variable,
-                        escaping_fun,
-                        after: String::new(),
-                    }},
+                    IntermediateAstElement {
+                        tag: String::new(),
+                        inner: IntermediateAstElementInner::Variable {
+                            before: String::new(),
+                            variable_name: next_variable,
+                            escaping_fun,
+                            after: String::new(),
+                        },
+                    },
                     TemplateNode {
                         template_name: template_name.to_owned(),
                         node_type: NodeType::Other,
@@ -265,7 +316,10 @@ pub fn children_to_ast(
                 tmp = add_edge_maybe_with_node(
                     graph,
                     tmp,
-                    IntermediateAstElement { tag: String::new(), inner: IntermediateAstElementInner::Text(string)},
+                    IntermediateAstElement {
+                        tag: String::new(),
+                        inner: IntermediateAstElementInner::Text(string),
+                    },
                     TemplateNode {
                         template_name: template_name.to_owned(),
                         node_type: NodeType::Other,
@@ -318,7 +372,10 @@ pub fn children_to_ast(
                 let mut partial_block_partial_tmp = add_edge_maybe_with_node(
                     graph,
                     vec![(inner_template_tmp, None)],
-                    IntermediateAstElement { tag: String::new(), inner: IntermediateAstElementInner::PartialBlockPartial},
+                    IntermediateAstElement {
+                        tag: String::new(),
+                        inner: IntermediateAstElementInner::PartialBlockPartial,
+                    },
                     TemplateNode {
                         template_name: template_name.to_owned(),
                         node_type: NodeType::Other,
@@ -345,32 +402,35 @@ pub fn children_to_ast(
                     .get(&name)
                     .unwrap_or_else(|| panic!("unknown inner template {name}"));
 
-                
-                let inner_template_template_tmp = add_edge_maybe_with_node(graph, vec![(inner_template_tmp, None)], 
-                IntermediateAstElement { tag: String::new(), inner: IntermediateAstElementInner::InnerTemplate},
+                let inner_template_template_tmp = add_edge_maybe_with_node(
+                    graph,
+                    vec![(inner_template_tmp, None)],
+                    IntermediateAstElement {
+                        tag: String::new(),
+                        inner: IntermediateAstElementInner::InnerTemplate,
+                    },
                     TemplateNode {
                         template_name: name,
                         node_type: NodeType::Other,
                     },
                 );
 
-                connect_edges_to_node(
-                    graph,
-                    inner_template_template_tmp,
-                    inner_template_target,
-                );
+                connect_edges_to_node(graph, inner_template_template_tmp, inner_template_target);
 
                 tmp = vec![(inner_template_tmp, None)];
             }
             Child::PartialBlockPartial => {
-                tmp = vec![(flush_with_node(
-                    graph,
-                    tmp,
-                    TemplateNode {
-                        template_name: template_name.to_owned(),
-                        node_type: NodeType::PartialBlock,
-                    },
-                ), None)];
+                tmp = vec![(
+                    flush_with_node(
+                        graph,
+                        tmp,
+                        TemplateNode {
+                            template_name: template_name.to_owned(),
+                            node_type: NodeType::PartialBlock,
+                        },
+                    ),
+                    None,
+                )];
             }
             Child::If(_variable, if_children, else_children) => {
                 let if_start = flush_with_node(
@@ -382,8 +442,14 @@ pub fn children_to_ast(
                     },
                 );
 
-                let true_tmp =
-                    children_to_ast(first_nodes, template_name, graph, vec![(if_start, None)], if_children, parent);
+                let true_tmp = children_to_ast(
+                    first_nodes,
+                    template_name,
+                    graph,
+                    vec![(if_start, None)],
+                    if_children,
+                    parent,
+                );
 
                 let mut false_tmp = children_to_ast(
                     first_nodes,
@@ -415,7 +481,10 @@ pub fn element_to_ast(
     tmp = add_edge_maybe_with_node(
         graph,
         tmp,
-        IntermediateAstElement { tag: String::new(), inner: IntermediateAstElementInner::Text(format!("<{name}"))},
+        IntermediateAstElement {
+            tag: String::new(),
+            inner: IntermediateAstElementInner::Text(format!("<{name}")),
+        },
         TemplateNode {
             template_name: template_name.to_owned(),
             node_type: NodeType::Other,
@@ -426,10 +495,10 @@ pub fn element_to_ast(
             tmp = add_edge_maybe_with_node(
                 graph,
                 tmp,
-                IntermediateAstElement { tag: String::new(), inner: IntermediateAstElementInner::Text(format!(
-                    r#" {}=""#,
-                    attribute.key
-                ))},
+                IntermediateAstElement {
+                    tag: String::new(),
+                    inner: IntermediateAstElementInner::Text(format!(r#" {}=""#, attribute.key)),
+                },
                 TemplateNode {
                     template_name: template_name.to_owned(),
                     node_type: NodeType::Other,
@@ -450,12 +519,15 @@ pub fn element_to_ast(
                         tmp = add_edge_maybe_with_node(
                             graph,
                             tmp,
-                            IntermediateAstElement { tag: String::new(), inner: IntermediateAstElementInner::Variable {
-                                before: String::new(),
-                                variable_name: next_variable,
-                                escaping_fun,
-                                after: String::new(),
-                            }},
+                            IntermediateAstElement {
+                                tag: String::new(),
+                                inner: IntermediateAstElementInner::Variable {
+                                    before: String::new(),
+                                    variable_name: next_variable,
+                                    escaping_fun,
+                                    after: String::new(),
+                                },
+                            },
                             TemplateNode {
                                 template_name: template_name.to_owned(),
                                 node_type: NodeType::Other,
@@ -466,7 +538,10 @@ pub fn element_to_ast(
                         tmp = add_edge_maybe_with_node(
                             graph,
                             tmp,
-                            IntermediateAstElement { tag: String::new(), inner: IntermediateAstElementInner::Text(string)},
+                            IntermediateAstElement {
+                                tag: String::new(),
+                                inner: IntermediateAstElementInner::Text(string),
+                            },
                             TemplateNode {
                                 template_name: template_name.to_owned(),
                                 node_type: NodeType::Other,
@@ -478,7 +553,10 @@ pub fn element_to_ast(
             tmp = add_edge_maybe_with_node(
                 graph,
                 tmp,
-                IntermediateAstElement { tag: String::new(), inner: IntermediateAstElementInner::Text(r#"""#.to_owned())},
+                IntermediateAstElement {
+                    tag: String::new(),
+                    inner: IntermediateAstElementInner::Text(r#"""#.to_owned()),
+                },
                 TemplateNode {
                     template_name: template_name.to_owned(),
                     node_type: NodeType::Other,
@@ -488,10 +566,10 @@ pub fn element_to_ast(
             tmp = add_edge_maybe_with_node(
                 graph,
                 tmp,
-                IntermediateAstElement { tag: String::new(), inner: IntermediateAstElementInner::Text(format!(
-                    r#" {}"#,
-                    attribute.key
-                ))},
+                IntermediateAstElement {
+                    tag: String::new(),
+                    inner: IntermediateAstElementInner::Text(format!(r#" {}"#, attribute.key)),
+                },
                 TemplateNode {
                     template_name: template_name.to_owned(),
                     node_type: NodeType::Other,
@@ -502,7 +580,10 @@ pub fn element_to_ast(
     tmp = add_edge_maybe_with_node(
         graph,
         tmp,
-        IntermediateAstElement { tag: String::new(), inner: IntermediateAstElementInner::Text(">".to_owned())},
+        IntermediateAstElement {
+            tag: String::new(),
+            inner: IntermediateAstElementInner::Text(">".to_owned()),
+        },
         TemplateNode {
             template_name: template_name.to_owned(),
             node_type: NodeType::Other,
@@ -524,7 +605,10 @@ pub fn element_to_ast(
             tmp = add_edge_maybe_with_node(
                 graph,
                 tmp,
-                IntermediateAstElement { tag: String::new(), inner: IntermediateAstElementInner::Text(format!("</{name}>")) },
+                IntermediateAstElement {
+                    tag: String::new(),
+                    inner: IntermediateAstElementInner::Text(format!("</{name}>")),
+                },
                 TemplateNode {
                     template_name: template_name.to_owned(),
                     node_type: NodeType::Other,
