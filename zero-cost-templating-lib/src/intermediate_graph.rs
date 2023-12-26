@@ -124,21 +124,20 @@ impl Display for TemplateNode {
 
 /// Adds the node in all cases if it is not NodeType::Other.
 /// If it is NodeType::Other only adds it if there are pending outgoing edges (even not added if current node type is not NodeType::Other).
-/// Will always return `(NodeIndex, None)`
 pub fn flush_with_node(
     graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
     tmp: Vec<(NodeIndex, Option<IntermediateAstElement>)>,
     node: TemplateNode,
-) -> (NodeIndex, Option<IntermediateAstElement>) {
+) -> NodeIndex {
     todo!();
 }
 
 pub fn connect_edges_to_node(
     graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
     tmp: Vec<(NodeIndex, Option<IntermediateAstElement>)>,
-    node: (NodeIndex, Option<IntermediateAstElement>)
+    node: NodeIndex
 ) {
-    // check that node Option is none
+
 }
 
 /// Adds the edge in all cases.
@@ -267,6 +266,8 @@ pub fn children_to_ast(
                 tmp = element_to_ast(first_nodes, template_name, graph, tmp, element);
             }
             Child::Each(_identifier, children) => {
+                // TODO FIXME edge case empty each
+
                 let loop_start = flush_with_node(
                     graph,
                     tmp,
