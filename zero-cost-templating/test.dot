@@ -1,0 +1,31 @@
+digraph {
+    0 [ label = "0 test other"]
+    1 [ label = "1 test other"]
+    2 [ label = "2 test other"]
+    3 [ label = "3 test other"]
+    4 [ label = "4 test other"]
+    0 -> 1 [ label = "0 <!DOCTYPE html>
+<html lang=\"en\">
+  <head>
+    <meta charset=\"utf-8\">
+    <title>title</title>
+    <link rel=\"stylesheet\" href=\"style.css\">
+    <script src=\"script.js\"></script>
+  </head>
+  <body>
+    <h1>{{page_title:element}}</h1>
+    <input type=\"hidden\" value=\""]
+    1 -> 2 [ label = "1 {{csrf_token:attr}}\">
+    <ul>
+    "]
+    2 -> 3 [ label = "2 
+      <li>{{title:element}}</li>
+      <li>"]
+    3 -> 2 [ label = "3 {{text:element}}</li>
+    "]
+    2 -> 4 [ label = "4 
+    </ul>
+    <span>{{copyright_year:element}}</span>
+  </body>
+</html>"]
+}

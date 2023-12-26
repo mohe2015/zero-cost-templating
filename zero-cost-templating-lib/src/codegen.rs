@@ -29,6 +29,7 @@ fn node_type(
     let node = &graph[node_index];
     match node.node_type {
         NodeType::PartialBlock => {
+            // this needs to be an ordinary node
             let inner_after = graph
                 .edges_directed(node_index, Direction::Outgoing)
                 .exactly_one()
@@ -37,24 +38,20 @@ fn node_type(
                 graph,
                 inner_after.target(),
                 &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
-                &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
+                after,
                 span,
             );
             let inner_after_type = inner_after.0;
             let inner_after_create = inner_after.1;
 
             let common = quote_spanned! {span=>
-                Template::<#partial_type, (), Template::<#inner_after_type, (), #after_type>>
+                Template::<#partial_type, (), #inner_after_type>
             };
             let create = quote_spanned! {span=>
                 {
                     r#type: #partial_create.r#type,
                     partial: (),
-                    after: Template {
-                        r#type: #inner_after_create,
-                        partial: (),
-                        after: #after_create
-                    }
+                    after: #inner_after_create
                 }
             };
 
@@ -213,15 +210,7 @@ pub fn calculate_edge(
     template_codegen: &TemplateCodegen,
     edge: petgraph::stable_graph::EdgeReference<'_, IntermediateAstElement>,
 ) -> proc_macro2::TokenStream {
-    let r#return = node_type(
-        graph,
-        edge.target(),
-        &(quote! { Partial }, quote! { self.partial }),
-        &(quote! { After }, quote! { self.after }),
-        Span::call_site(),
-    );
-    let return_type = r#return.0;
-    let return_create = r#return.1;
+   
     let function_name = edge.weight().variable_name().as_ref().map_or_else(
         || format_ident!("next{}", edge.id().index()), // TODO FIXME only add number when multiple outgoing edges
         |variable| {
@@ -248,6 +237,16 @@ pub fn calculate_edge(
     ) {
         (NodeType::InnerTemplate | NodeType::PartialBlock, _) => None,
         (NodeType::Other, NodeType::PartialBlock) => Some({
+            let r#return = node_type(
+                graph,
+                edge.target(),
+                &(quote! { Partial }, quote! { self.partial }),
+                &(quote! { After }, quote! { self.after }),
+                Span::call_site(),
+            );
+            let return_type = r#return.0;
+            let return_create = r#return.1;
+
             let impl_template_name = format_ident!(
                 "{}Template{}",
                 template_codegen.template_name.to_upper_camel_case(),
@@ -278,6 +277,16 @@ pub fn calculate_edge(
             }
         }),
         (NodeType::Other, NodeType::InnerTemplate | NodeType::Other) => Some({
+            let r#return = node_type(
+                graph,
+                edge.target(),
+                &(quote! { Partial }, quote! { self.partial }),
+                &(quote! { After }, quote! { self.after }),
+                Span::call_site(),
+            );
+            let return_type = r#return.0;
+            let return_create = r#return.1;
+
             let impl_template_name = format_ident!(
                 "{}Template{}",
                 template_codegen.template_name.to_upper_camel_case(),
