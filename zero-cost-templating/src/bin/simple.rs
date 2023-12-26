@@ -22,9 +22,12 @@ use zero_cost_templating::{template_stream, yields};
 pub async gen fn test() -> Cow<'static, str> {
     let template = yields!(g_partial_block());
     let template = yields!(template.next());
-    let template = yields!(template.before("test"));
+    let template = yields!(template.before("before"));
     let template = yields!(template.test("test"));
     let template = yields!(template.next());
+    let template = yields!(template.test("test"));
+    let template = yields!(template.after("after"));
+    yields!(template.next());
 }
 
 pub fn main() {}
