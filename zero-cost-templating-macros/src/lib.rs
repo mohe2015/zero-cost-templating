@@ -121,7 +121,8 @@ use syn::{parse_macro_input, Item, LitStr, Token};
 use zero_cost_templating_lib::codegen::{codegen, TemplateCodegen};
 use zero_cost_templating_lib::html_recursive_descent::parse_children;
 use zero_cost_templating_lib::intermediate_graph::{
-    children_to_ast, flush_pending_edge, IntermediateAstElement, NodeType, TemplateNode,
+    children_to_ast, flush_with_node, IntermediateAstElement, IntermediateAstElementInner,
+    NodeType, TemplateNode,
 };
 
 // https://veykril.github.io/posts/ide-proc-macros/
@@ -204,19 +205,10 @@ pub fn template_stream(
                 }
             };
             let first = first_nodes.get(template_name).unwrap();
-            let (last, current) = children_to_ast(
-                &first_nodes,
-                template_name,
+            let tmp = children_to_ast(&first_nodes, template_name, graph, vec![], dom, "root");
+            let last = flush_with_node(
                 graph,
-                *first,
-                IntermediateAstElement::Noop,
-                dom,
-                "root",
-            );
-            flush_pending_edge(
-                graph,
-                last,
-                current,
+                tmp,
                 TemplateNode {
                     template_name: template_name.clone(),
                     node_type: NodeType::Other,
@@ -248,9 +240,9 @@ pub fn template_stream(
             Dot::with_attr_getters(
                 immut_graph,
                 &[Config::NodeNoLabel, Config::EdgeNoLabel],
-                &|_, er| match er.weight() {
-                    IntermediateAstElement::InnerTemplate
-                    | IntermediateAstElement::PartialBlockPartial => {
+                &|_, er| match er.weight().inner {
+                    IntermediateAstElementInner::InnerTemplate
+                    | IntermediateAstElementInner::PartialBlockPartial => {
                         format!(
                             "label = \"{} {}\" style = dotted",
                             er.id().index(),

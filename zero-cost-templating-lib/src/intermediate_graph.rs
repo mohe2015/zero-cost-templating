@@ -23,8 +23,8 @@ impl Display for EscapingFunction {
 #[derive(Debug, PartialEq, Eq, Hash, PartialOrd, Ord, Clone)]
 pub struct IntermediateAstElement {
     /// The tag to distinguish multiple outgoing nodes. E.g. `true` and `false` for an if.
-    tag: String,
-    inner: IntermediateAstElementInner,
+    pub tag: String,
+    pub inner: IntermediateAstElementInner,
 }
 
 #[derive(Debug, PartialEq, Eq, Hash, PartialOrd, Ord, Clone)]
@@ -203,7 +203,7 @@ pub fn add_edge_maybe_with_node(
     let mut new_node = None;
     tmp.into_iter()
         .map(
-            |(from, current_edge)| match (graph[from].node_type, current_edge, next_edge) {
+            |(from, current_edge)| match (&graph[from].node_type, current_edge, &next_edge) {
                 (
                     NodeType::Other,
                     Some(IntermediateAstElement {
@@ -226,9 +226,9 @@ pub fn add_edge_maybe_with_node(
                         tag: current_tag + &next_tag,
                         inner: IntermediateAstElementInner::Variable {
                             before: old + &before,
-                            variable_name,
-                            escaping_fun,
-                            after,
+                            variable_name: variable_name.to_owned(),
+                            escaping_fun: escaping_fun.to_owned(),
+                            after: after.to_owned(),
                         },
                     }),
                 ),
@@ -277,11 +277,11 @@ pub fn add_edge_maybe_with_node(
                         inner: IntermediateAstElementInner::Text(old + &new),
                     }),
                 ),
-                (_, None, edge_type) => (from, Some(edge_type)),
+                (_, None, edge_type) => (from, Some(edge_type.clone())),
                 (_, Some(current), edge_type) => {
-                    let to = new_node.get_or_insert_with(|| graph.add_node(to));
+                    let to = new_node.get_or_insert_with(|| graph.add_node(to.clone()));
                     graph.add_edge(from, *to, current);
-                    (*to, Some(edge_type))
+                    (*to, Some(edge_type.clone()))
                 }
             },
         )

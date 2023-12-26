@@ -9,7 +9,9 @@ use petgraph::Direction;
 use proc_macro2::{Span, TokenStream};
 use quote::{format_ident, quote, quote_spanned};
 
-use crate::intermediate_graph::{EscapingFunction, IntermediateAstElement, NodeType, TemplateNode};
+use crate::intermediate_graph::{
+    EscapingFunction, IntermediateAstElement, IntermediateAstElementInner, NodeType, TemplateNode,
+};
 
 /// design: all nodes have a struct type so you can go too all nodes
 /// partial block works by going inside on the incoming edge and
@@ -91,7 +93,7 @@ fn node_inner_template_type(
 
     let inner_partial = graph
         .edges_directed(node_index, Direction::Outgoing)
-        .filter(|edge| *edge.weight() == IntermediateAstElement::PartialBlockPartial)
+        .filter(|edge| edge.weight().inner == IntermediateAstElementInner::PartialBlockPartial)
         .exactly_one()
         .unwrap();
 
@@ -113,7 +115,7 @@ fn node_inner_template_type(
 
     let inner_template = graph
         .edges_directed(node_index, Direction::Outgoing)
-        .filter(|edge| *edge.weight() == IntermediateAstElement::InnerTemplate)
+        .filter(|edge| edge.weight().inner == IntermediateAstElementInner::InnerTemplate)
         .exactly_one()
         .unwrap();
 
@@ -222,8 +224,8 @@ pub fn element_to_yield(
     intermediate_ast_element: &IntermediateAstElement,
 ) -> proc_macro2::TokenStream {
     // TODO FIXME check for empty string yielding in production
-    match intermediate_ast_element {
-        IntermediateAstElement::Variable {
+    match &intermediate_ast_element.inner {
+        IntermediateAstElementInner::Variable {
             before,
             variable_name,
             escaping_fun: EscapingFunction::HtmlAttribute,
@@ -236,7 +238,7 @@ pub fn element_to_yield(
                 yield ::alloc::borrow::Cow::from(#after);
             }
         }
-        IntermediateAstElement::Variable {
+        IntermediateAstElementInner::Variable {
             before,
             variable_name,
             escaping_fun: EscapingFunction::HtmlElementInner,
@@ -249,12 +251,13 @@ pub fn element_to_yield(
                 yield ::alloc::borrow::Cow::from(#after);
             }
         }
-        IntermediateAstElement::Text(text) => {
+        IntermediateAstElementInner::Text(text) => {
             quote! {
                 yield ::alloc::borrow::Cow::from(#text);
             }
         }
-        IntermediateAstElement::InnerTemplate | IntermediateAstElement::PartialBlockPartial => {
+        IntermediateAstElementInner::InnerTemplate
+        | IntermediateAstElementInner::PartialBlockPartial => {
             unreachable!()
         }
     }
