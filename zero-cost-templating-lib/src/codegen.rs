@@ -20,6 +20,14 @@ fn node_type(
     after: &(TokenStream, TokenStream),
     span: Span,
 ) -> (TokenStream, TokenStream) {
+    let last_node = graph
+        .edges_directed(node_index, Direction::Outgoing)
+        .next()
+        .is_none();
+    if last_node {
+        return after.clone();
+    }
+
     let partial_type = &partial.0;
     let partial_create = &partial.1;
 
@@ -196,10 +204,9 @@ pub fn element_to_yield(
                 yield ::alloc::borrow::Cow::from(#text);
             }
         }
-        IntermediateAstElement::Noop => {
+        IntermediateAstElement::Noop | IntermediateAstElement::InnerTemplate | IntermediateAstElement::PartialBlockPartial => {
             quote! {}
         }
-        v => unreachable!("unexpected value to yield {:?}", v),
     }
 }
 
@@ -210,7 +217,6 @@ pub fn calculate_edge(
     template_codegen: &TemplateCodegen,
     edge: petgraph::stable_graph::EdgeReference<'_, IntermediateAstElement>,
 ) -> proc_macro2::TokenStream {
-   
     let function_name = edge.weight().variable_name().as_ref().map_or_else(
         || format_ident!("next{}", edge.id().index()), // TODO FIXME only add number when multiple outgoing edges
         |variable| {
@@ -231,30 +237,28 @@ pub fn calculate_edge(
             , #variable: impl Into<::alloc::borrow::Cow<'static, str>>
         }
     });
+    let r#return = node_type(
+        graph,
+        edge.target(),
+        &(quote! { Partial }, quote! { self.partial }),
+        &(quote! { After }, quote! { self.after }),
+        Span::call_site(),
+    );
+    let return_type = r#return.0;
+    let return_create = r#return.1;
+    let impl_template_name = format_ident!(
+        "{}Template{}",
+        template_codegen.template_name.to_upper_camel_case(),
+        edge.source().index().to_string(),
+    );
+    let to_yield = element_to_yield(edge.weight());
     let impl_func = match (
         &graph[edge.source()].node_type,
         &graph[edge.target()].node_type,
     ) {
         (NodeType::InnerTemplate | NodeType::PartialBlock, _) => None,
-        (NodeType::Other, NodeType::PartialBlock) => Some({
-            let r#return = node_type(
-                graph,
-                edge.target(),
-                &(quote! { Partial }, quote! { self.partial }),
-                &(quote! { After }, quote! { self.after }),
-                Span::call_site(),
-            );
-            let return_type = r#return.0;
-            let return_create = r#return.1;
-
-            let impl_template_name = format_ident!(
-                "{}Template{}",
-                template_codegen.template_name.to_upper_camel_case(),
-                edge.source().index().to_string(),
-            );
-
-            let to_yield = element_to_yield(edge.weight());
-
+        (NodeType::Other, NodeType::PartialBlock) => {
+            Some({
             quote! {
                 impl<Partial,
                     PartialPartial,
@@ -274,27 +278,27 @@ pub fn calculate_edge(
                         })
                     }
                 }
+
+                impl<After
+                    >
+                    Template<
+                            #impl_template_name,
+                            (),
+                            After
+                            > {
+                    pub fn #function_name(self #parameter) -> (After,
+                            impl ::std::async_iter::AsyncIterator<Item =
+                                ::alloc::borrow::Cow<'static, str>>) {
+                        (self.after, async gen {
+                            #to_yield
+                        })
+                    }
+                }
             }
-        }),
+        })
+    },
         (NodeType::Other, NodeType::InnerTemplate | NodeType::Other) => Some({
-            let r#return = node_type(
-                graph,
-                edge.target(),
-                &(quote! { Partial }, quote! { self.partial }),
-                &(quote! { After }, quote! { self.after }),
-                Span::call_site(),
-            );
-            let return_type = r#return.0;
-            let return_create = r#return.1;
-
-            let impl_template_name = format_ident!(
-                "{}Template{}",
-                template_codegen.template_name.to_upper_camel_case(),
-                edge.source().index().to_string(),
-            );
-
-            let to_yield = element_to_yield(edge.weight());
-
+            // maybe change something here?
             quote! {
                 impl<Partial, After>
                     Template<#impl_template_name, Partial, After> {
