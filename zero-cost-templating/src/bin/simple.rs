@@ -20,11 +20,11 @@ use zero_cost_templating::{template_stream, yields};
 // it is really important to have IDE support so we should probably temporarily
 // switch back to the async-stream crate or roll our own.
 
-#[template_stream("if_else.html.hbs")]
+#[template_stream("only_template.html.hbs", "partial_block_partial.html.hbs")]
 pub async gen fn test() -> Cow<'static, str> {
-    let template = yields!(if_else0());
-    let template = yields!(template.next0());
-    yields!(template.next2());
+    let template = yields!(only_template0());
+    let template = yields!(template.start0("start"));
+    let template = yields!(template.before5("before"));
 }
 
 pub fn main() {}
