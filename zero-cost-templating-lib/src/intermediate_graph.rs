@@ -171,7 +171,7 @@ pub fn flush_with_node(
     tmp: Vec<(NodeIndex, Option<IntermediateAstElement>)>,
     node: TemplateNode,
 ) -> NodeIndex {
-    if tmp.len() == 1 && node.node_type == NodeType::Other {
+    if tmp.len() == 1 && tmp[0].1.is_none() && node.node_type == NodeType::Other {
         return tmp[0].0;
     }
     let to = graph.add_node(node.clone());
