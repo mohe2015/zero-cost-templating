@@ -229,15 +229,7 @@ pub fn template_stream(
         })
         .collect();
 
-    let mut file = File::create(
-        inputs
-            .first()
-            .unwrap()
-            .path
-            .with_file_name(inputs.iter().map(|tc| tc.template_name.clone()).join(","))
-            .with_extension("dot"),
-    )
-    .unwrap();
+    let mut file = File::create("template_graph.dot").unwrap();
     let immut_graph = &*graph;
     file.write_all(
         format!(
