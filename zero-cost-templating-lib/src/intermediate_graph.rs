@@ -122,18 +122,6 @@ impl Display for TemplateNode {
     }
 }
 
-/// Adds the edge in all cases.
-/// Enforces that no new node is needed to add the edge. doesn't work at the start of the template because there may not be any node.
-pub fn add_edge(
-    graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
-    tmp: Vec<(NodeIndex, Option<IntermediateAstElement>)>,
-    edge_type: IntermediateAstElement,
-) -> Vec<(NodeIndex, Option<IntermediateAstElement>)> {
-    // assert no variable edge?
-
-    todo!();
-}
-
 /// Adds the node in all cases if it is not NodeType::Other.
 /// If it is NodeType::Other only adds it if there are pending outgoing edges (even not added if current node type is not NodeType::Other).
 /// Will always return `(NodeIndex, None)`
@@ -343,8 +331,12 @@ pub fn children_to_ast(
                     .unwrap_or_else(|| panic!("unknown inner template {name}"));
 
                 
-                let inner_template_template_tmp = add_edge(graph, vec![inner_template_tmp.clone()], 
+                let inner_template_template_tmp = add_edge_maybe_with_node(graph, vec![inner_template_tmp.clone()], 
                     IntermediateAstElement::InnerTemplate,
+                    TemplateNode {
+                        template_name: name.to_owned(),
+                        node_type: NodeType::Other,
+                    },
                 );
 
                 connect_edges_to_node(
