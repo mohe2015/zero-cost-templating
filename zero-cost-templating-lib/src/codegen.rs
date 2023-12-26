@@ -27,7 +27,8 @@ fn node_partial_block_type(
     graph: &StableGraph<TemplateNode, IntermediateAstElement>,
     node_index: NodeIndex,
     span: Span,
-    partial: &(TokenStream, TokenStream), // this parameter here should be special?
+    partial: &(TokenStream, TokenStream),
+    partial_template_name: &(TokenStream, TokenStream),
     after: &(TokenStream, TokenStream),
 ) -> (TokenStream, TokenStream) {
     assert_eq!(
@@ -36,26 +37,19 @@ fn node_partial_block_type(
         "must be NodeType::PartialBlock"
     );
 
-    let partial_type = &partial.0;
-    let partial_create = &partial.1;
+    let partial_template_name_type = &partial_template_name.0;
+    let partial_template_name_create = &partial_template_name.1;
 
-    let partial_after = node_raw_type(
-        graph,
-        node_index,
-        span,
-        // I think we need to keep the partial?
-        &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
-        after,
-    );
+    let partial_after = node_raw_type(graph, node_index, span, partial, after);
     let partial_after_type = partial_after.0;
     let partial_after_create = partial_after.1;
 
     let common = quote_spanned! {span=>
-        Template::<#partial_type, (), #partial_after_type>
+        Template::<#partial_template_name_type, (), #partial_after_type>
     };
     let create = quote_spanned! {span=>
     {
-        r#type: #partial_create.r#type,
+        r#type: #partial_template_name_create,
         partial: (),
         after: #partial_after_create
     }
@@ -97,7 +91,7 @@ fn node_inner_template_type(
         .exactly_one()
         .unwrap();
 
-    let inner_partial_empty = graph
+    let _inner_partial_empty = graph
         .edges_directed(inner_partial.target(), Direction::Outgoing)
         .next()
         .is_none();
@@ -224,6 +218,7 @@ pub fn calculate_nodes<'a>(
         );
         quote! {
             #[must_use]
+            #[derive(Clone, Copy)]
             pub struct #template_struct;
         }
     })
@@ -341,20 +336,24 @@ pub fn calculate_edge(
                 graph,
                 edge.target(),
                 Span::call_site(),
-                &(quote! { Partial }, quote! { self.partial }),
+                &(
+                    quote! { Template<PartialName, PartialPartial, PartialAfter> },
+                    quote! { self.partial },
+                ),
+                &(quote! { PartialName }, quote! { self.partial.r#type }),
                 &(quote! { After }, quote! { self.after }),
             );
             let return_type = r#return.0;
             let return_create = r#return.1;
             quote! {
-                impl<Partial,
+                impl<PartialName: Copy,
                     PartialPartial,
                     PartialAfter,
                     After
                     >
                     Template<
                             #impl_template_name,
-                            Template<Partial, PartialPartial, PartialAfter>,
+                            Template<PartialName, PartialPartial, PartialAfter>,
                             After
                             > {
                     #[doc = #documentation]
@@ -461,6 +460,7 @@ pub fn codegen(
 
     let result = quote! {
         #[must_use]
+        #[derive(Clone, Copy)]
         pub struct Template<Type, Partial, After> {
             r#type: Type,
             partial: Partial,

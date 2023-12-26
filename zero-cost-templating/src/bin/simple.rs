@@ -24,6 +24,7 @@ pub async gen fn test() -> Cow<'static, str> {
     let template = yields!(template.next());
     let template = yields!(template.before("test"));
     let template = yields!(template.test("test"));
+    let template = yields!(template.next());
 }
 
 pub fn main() {}
