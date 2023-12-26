@@ -4,7 +4,7 @@ use heck::ToUpperCamelCase;
 use itertools::Itertools;
 use petgraph::prelude::NodeIndex;
 use petgraph::stable_graph::StableGraph;
-use petgraph::visit::{EdgeRef, IntoEdgeReferences, IntoNodeReferences};
+use petgraph::visit::{EdgeRef, IntoEdgeReferences, IntoNodeReferences, NodeRef};
 use petgraph::Direction;
 use proc_macro2::{Span, TokenStream};
 use quote::{format_ident, quote, quote_spanned};
@@ -321,6 +321,15 @@ pub fn calculate_edge(
         edge.source().index().to_string(),
     );
     let to_yield = element_to_yield(edge.weight());
+    let documentation = format!(
+        "Transition from `{}: {}` to `{}: {}` using `{}: {}`",
+        edge.source().index(),
+        graph[edge.source()],
+        edge.target().index(),
+        graph[edge.target()],
+        edge.id().index(),
+        edge.weight()
+    );
     let impl_func = match (
         &graph[edge.source()].node_type,
         &graph[edge.target()].node_type,
@@ -337,6 +346,7 @@ pub fn calculate_edge(
                             Template<Partial, PartialPartial, PartialAfter>,
                             After
                             > {
+                    #[doc = #documentation]
                     pub fn #function_name(self #parameter) -> (#return_type,
                             impl ::std::async_iter::AsyncIterator<Item =
                                 ::alloc::borrow::Cow<'static, str>>) {
@@ -351,6 +361,8 @@ pub fn calculate_edge(
             quote! {
                 impl<Partial, After>
                     Template<#impl_template_name, Partial, After> {
+
+                    #[doc = #documentation]
                     pub fn #function_name(self #parameter) -> (#return_type,
                             impl ::std::async_iter::AsyncIterator<Item =
                                 ::alloc::borrow::Cow<'static, str>>) {

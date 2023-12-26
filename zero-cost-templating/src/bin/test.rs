@@ -214,6 +214,8 @@ pub struct AEmptyTemplate90;
 #[must_use]
 pub struct AEmptyTemplate91;
 impl<Partial, After> Template<AEmptyTemplate1, Partial, After> {
+    #[doc =
+    "Transition from `1: b_text other` to `29: b_text other` using `0: [] hello`"]
     pub fn next(self)
         ->
             (Template<BTextTemplate29, Partial, After>,
@@ -228,6 +230,8 @@ impl<Partial, After> Template<AEmptyTemplate1, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate2, Partial, After> {
+    #[doc =
+    "Transition from `2: c_element_with_attribute other` to `30: c_element_with_attribute other` using `1: [] <a class=\"test\"></a>`"]
     pub fn next(self)
         ->
             (Template<CElementWithAttributeTemplate30, Partial, After>,
@@ -245,6 +249,8 @@ impl<Partial, After> Template<AEmptyTemplate2, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate3, Partial, After> {
+    #[doc =
+    "Transition from `3: c_element_with_content other` to `31: c_element_with_content other` using `2: [] <h1>hi</h1>`"]
     pub fn next(self)
         ->
             (Template<CElementWithContentTemplate31, Partial, After>,
@@ -259,6 +265,8 @@ impl<Partial, After> Template<AEmptyTemplate3, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate4, Partial, After> {
+    #[doc =
+    "Transition from `4: c_empty_element other` to `32: c_empty_element other` using `3: [] <h1></h1>`"]
     pub fn next(self)
         ->
             (Template<CEmptyElementTemplate32, Partial, After>,
@@ -273,6 +281,8 @@ impl<Partial, After> Template<AEmptyTemplate4, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate5, Partial, After> {
+    #[doc =
+    "Transition from `5: c_self_closing_boolean_attr other` to `33: c_self_closing_boolean_attr other` using `4: [] <!DOCTYPE html>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingBooleanAttrTemplate33, Partial, After>,
@@ -290,6 +300,8 @@ impl<Partial, After> Template<AEmptyTemplate5, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate6, Partial, After> {
+    #[doc =
+    "Transition from `6: c_self_closing other` to `34: c_self_closing other` using `5: [] <!DOCTYPE>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingTemplate34, Partial, After>,
@@ -304,6 +316,8 @@ impl<Partial, After> Template<AEmptyTemplate6, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate7, Partial, After> {
+    #[doc =
+    "Transition from `7: d_element_with_attribute_and_variables other` to `35: d_element_with_attribute_and_variables other` using `6: [] <a class=\"{{test:attr}}\">`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate35, Partial,
@@ -325,6 +339,8 @@ impl<Partial, After> Template<AEmptyTemplate7, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate35, Partial, After> {
+    #[doc =
+    "Transition from `35: d_element_with_attribute_and_variables other` to `36: d_element_with_attribute_and_variables other` using `7: [] {{var:element}}</a>`"]
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
@@ -345,6 +361,8 @@ impl<Partial, After> Template<AEmptyTemplate35, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate8, Partial, After> {
+    #[doc =
+    "Transition from `8: d_variable other` to `37: d_variable other` using `8: [] <p>{{test:element}}</p>`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate37, Partial, After>,
@@ -364,6 +382,8 @@ impl<Partial, After> Template<AEmptyTemplate8, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `9: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -378,6 +398,8 @@ impl<Partial, After> Template<AEmptyTemplate9, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `10: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -392,6 +414,8 @@ impl<Partial, After> Template<AEmptyTemplate9, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `11: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -406,6 +430,8 @@ impl<Partial, After> Template<AEmptyTemplate10, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `12: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -420,6 +446,8 @@ impl<Partial, After> Template<AEmptyTemplate10, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `13: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -434,6 +462,8 @@ impl<Partial, After> Template<AEmptyTemplate11, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `14: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -448,6 +478,8 @@ impl<Partial, After> Template<AEmptyTemplate11, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate12, Partial, After> {
+    #[doc =
+    "Transition from `12: e_if_else_with_variables other` to `41: e_if_else_with_variables other` using `15: [] <span>`"]
     pub fn next(self)
         ->
             (Template<EIfElseWithVariablesTemplate41, Partial, After>,
@@ -462,6 +494,8 @@ impl<Partial, After> Template<AEmptyTemplate12, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `16: [true] {{t:element}}</span>`"]
     pub fn t_true(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -481,6 +515,8 @@ impl<Partial, After> Template<AEmptyTemplate41, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `17: [false] {{f:element}}</span>`"]
     pub fn f_false(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -500,6 +536,8 @@ impl<Partial, After> Template<AEmptyTemplate41, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `18: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -514,6 +552,8 @@ impl<Partial, After> Template<AEmptyTemplate13, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `19: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -528,6 +568,8 @@ impl<Partial, After> Template<AEmptyTemplate13, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `14: f_each_empty other` using `20: [enter_loop] `"]
     pub fn next_enter_loop(self)
         ->
             (Template<FEachEmptyTemplate14, Partial, After>,
@@ -542,6 +584,8 @@ impl<Partial, After> Template<AEmptyTemplate14, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `44: f_each_empty other` using `21: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachEmptyTemplate44, Partial, After>,
@@ -556,6 +600,8 @@ impl<Partial, After> Template<AEmptyTemplate14, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate15, Partial, After> {
+    #[doc =
+    "Transition from `15: f_each_one_variable other` to `45: f_each_one_variable other` using `22: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachOneVariableTemplate45, Partial, After>,
@@ -570,6 +616,8 @@ impl<Partial, After> Template<AEmptyTemplate15, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `45: f_each_one_variable other` using `23: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -590,6 +638,8 @@ impl<Partial, After> Template<AEmptyTemplate45, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `46: f_each_one_variable other` using `24: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachOneVariableTemplate46, Partial, After>,
@@ -604,6 +654,8 @@ impl<Partial, After> Template<AEmptyTemplate45, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate16, Partial, After> {
+    #[doc =
+    "Transition from `16: f_each_two_variables other` to `47: f_each_two_variables other` using `25: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachTwoVariablesTemplate47, Partial, After>,
@@ -618,6 +670,8 @@ impl<Partial, After> Template<AEmptyTemplate16, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `48: f_each_two_variables other` using `26: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -638,6 +692,8 @@ impl<Partial, After> Template<AEmptyTemplate47, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate48, Partial, After> {
+    #[doc =
+    "Transition from `48: f_each_two_variables other` to `47: f_each_two_variables other` using `27: [] {{content:element}}`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -658,6 +714,8 @@ impl<Partial, After> Template<AEmptyTemplate48, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `49: f_each_two_variables other` using `28: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesTemplate49, Partial, After>,
@@ -672,6 +730,8 @@ impl<Partial, After> Template<AEmptyTemplate47, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate17, Partial, After> {
+    #[doc =
+    "Transition from `17: g_empty_template_multiple other` to `50: g_empty_template_multiple inner` using `29: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -693,6 +753,8 @@ impl<Partial, After> Template<AEmptyTemplate17, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate50, Partial, After> {
+    #[doc =
+    "Transition from `50: g_empty_template_multiple inner` to `52: g_empty_template_multiple inner` using `32: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -714,6 +776,8 @@ impl<Partial, After> Template<AEmptyTemplate50, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate18, Partial, After> {
+    #[doc =
+    "Transition from `18: g_empty_template other` to `54: g_empty_template inner` using `35: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -737,6 +801,8 @@ impl<Partial, After> Template<AEmptyTemplate18, Partial, After> {
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<AEmptyTemplate19,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `19: g_partial_block_partial other` to `56: g_partial_block_partial partial` using `38: [] <span>{{before:element}}<p>`"]
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<Partial, (),
@@ -765,6 +831,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<AEmptyTemplate56,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `56: g_partial_block_partial partial` to `57: g_partial_block_partial partial` using `39: [] </p><div>`"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -786,6 +854,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
     }
 }
 impl<Partial, After> Template<AEmptyTemplate57, Partial, After> {
+    #[doc =
+    "Transition from `57: g_partial_block_partial partial` to `58: g_partial_block_partial other` using `40: [] </div>{{after:element}}</span>`"]
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate58, Partial, After>,
@@ -805,6 +875,8 @@ impl<Partial, After> Template<AEmptyTemplate57, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate20, Partial, After> {
+    #[doc =
+    "Transition from `20: g_partial_block other` to `59: g_partial_block inner` using `41: [] <span>hello`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockPartialTemplate19,
@@ -841,6 +913,8 @@ impl<Partial, After> Template<AEmptyTemplate20, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate60, Partial, After> {
+    #[doc =
+    "Transition from `60: g_partial_block other` to `61: g_partial_block other` using `43: [] childrenstart{{test:element}}childrenend`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate61, Partial, After>,
@@ -860,6 +934,8 @@ impl<Partial, After> Template<AEmptyTemplate60, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate59, Partial, After> {
+    #[doc =
+    "Transition from `59: g_partial_block inner` to `62: g_partial_block other` using `45: [] world</span>`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockTemplate62, Partial, After>,
@@ -875,6 +951,8 @@ impl<Partial, After> Template<AEmptyTemplate59, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate21, Partial, After> {
+    #[doc =
+    "Transition from `21: g_template_only_partial_block_multiple other` to `63: g_template_only_partial_block_multiple inner` using `46: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -897,6 +975,8 @@ impl<Partial, After> Template<AEmptyTemplate21, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate63, Partial, After> {
+    #[doc =
+    "Transition from `63: g_template_only_partial_block_multiple inner` to `65: g_template_only_partial_block_multiple inner` using `49: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -919,6 +999,8 @@ impl<Partial, After> Template<AEmptyTemplate63, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate22, Partial, After> {
+    #[doc =
+    "Transition from `22: g_template_only_partial_block_with_text_multiple other` to `67: g_template_only_partial_block_with_text_multiple inner` using `52: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -964,6 +1046,8 @@ impl<Partial, After> Template<AEmptyTemplate22, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate68, Partial, After> {
+    #[doc =
+    "Transition from `68: g_template_only_partial_block_with_text_multiple other` to `69: g_template_only_partial_block_with_text_multiple other` using `54: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate69,
@@ -980,6 +1064,8 @@ impl<Partial, After> Template<AEmptyTemplate68, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate67, Partial, After> {
+    #[doc =
+    "Transition from `67: g_template_only_partial_block_with_text_multiple inner` to `70: g_template_only_partial_block_with_text_multiple inner` using `56: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -1025,6 +1111,8 @@ impl<Partial, After> Template<AEmptyTemplate67, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate71, Partial, After> {
+    #[doc =
+    "Transition from `71: g_template_only_partial_block_with_text_multiple other` to `72: g_template_only_partial_block_with_text_multiple other` using `58: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate72,
@@ -1041,6 +1129,8 @@ impl<Partial, After> Template<AEmptyTemplate71, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate23, Partial, After> {
+    #[doc =
+    "Transition from `23: g_template_only_partial_block_with_text other` to `73: g_template_only_partial_block_with_text inner` using `60: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -1081,6 +1171,8 @@ impl<Partial, After> Template<AEmptyTemplate23, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate74, Partial, After> {
+    #[doc =
+    "Transition from `74: g_template_only_partial_block_with_text other` to `75: g_template_only_partial_block_with_text other` using `62: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextTemplate75, Partial,
@@ -1096,6 +1188,8 @@ impl<Partial, After> Template<AEmptyTemplate74, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate24, Partial, After> {
+    #[doc =
+    "Transition from `24: g_template_only_partial_block_with_variable_multiple other` to `76: g_template_only_partial_block_with_variable_multiple inner` using `64: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -1142,6 +1236,8 @@ impl<Partial, After> Template<AEmptyTemplate24, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate77, Partial, After> {
+    #[doc =
+    "Transition from `77: g_template_only_partial_block_with_variable_multiple other` to `78: g_template_only_partial_block_with_variable_multiple other` using `66: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate78,
@@ -1163,6 +1259,8 @@ impl<Partial, After> Template<AEmptyTemplate77, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate76, Partial, After> {
+    #[doc =
+    "Transition from `76: g_template_only_partial_block_with_variable_multiple inner` to `79: g_template_only_partial_block_with_variable_multiple inner` using `68: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -1209,6 +1307,8 @@ impl<Partial, After> Template<AEmptyTemplate76, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate80, Partial, After> {
+    #[doc =
+    "Transition from `80: g_template_only_partial_block_with_variable_multiple other` to `81: g_template_only_partial_block_with_variable_multiple other` using `70: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate81,
@@ -1230,6 +1330,8 @@ impl<Partial, After> Template<AEmptyTemplate80, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate79, Partial, After> {
+    #[doc =
+    "Transition from `79: g_template_only_partial_block_with_variable_multiple inner` to `82: g_template_only_partial_block_with_variable_multiple other` using `72: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate82,
@@ -1246,6 +1348,8 @@ impl<Partial, After> Template<AEmptyTemplate79, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate25, Partial, After> {
+    #[doc =
+    "Transition from `25: g_template_only_partial_block_with_variable other` to `83: g_template_only_partial_block_with_variable inner` using `73: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -1289,6 +1393,8 @@ impl<Partial, After> Template<AEmptyTemplate25, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate84, Partial, After> {
+    #[doc =
+    "Transition from `84: g_template_only_partial_block_with_variable other` to `85: g_template_only_partial_block_with_variable other` using `75: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate85,
@@ -1309,6 +1415,8 @@ impl<Partial, After> Template<AEmptyTemplate84, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate83, Partial, After> {
+    #[doc =
+    "Transition from `83: g_template_only_partial_block_with_variable inner` to `86: g_template_only_partial_block_with_variable other` using `77: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate86,
@@ -1324,6 +1432,8 @@ impl<Partial, After> Template<AEmptyTemplate83, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate26, Partial, After> {
+    #[doc =
+    "Transition from `26: g_template_only_partial_block other` to `87: g_template_only_partial_block inner` using `78: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -1345,6 +1455,8 @@ impl<Partial, After> Template<AEmptyTemplate26, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `89: f_each_two_variables_html other` using `81: [enter_loop] \n    <li>{{title:element}}</li>\n    <li>`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -1365,6 +1477,8 @@ impl<Partial, After> Template<AEmptyTemplate27, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate89, Partial, After> {
+    #[doc =
+    "Transition from `89: f_each_two_variables_html other` to `27: f_each_two_variables_html other` using `82: [] {{content:element}}</li>\n`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -1385,6 +1499,8 @@ impl<Partial, After> Template<AEmptyTemplate89, Partial, After> {
     }
 }
 impl<Partial, After> Template<AEmptyTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `90: f_each_two_variables_html other` using `83: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesHtmlTemplate90, Partial, After>,
@@ -1401,6 +1517,8 @@ impl<Partial, After> Template<AEmptyTemplate27, Partial, After> {
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<AEmptyTemplate28,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `28: g_only_partial_block other` to `91: g_only_partial_block partial` using `84: [] `"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -1618,6 +1736,8 @@ pub struct BTextTemplate90;
 #[must_use]
 pub struct BTextTemplate91;
 impl<Partial, After> Template<BTextTemplate1, Partial, After> {
+    #[doc =
+    "Transition from `1: b_text other` to `29: b_text other` using `0: [] hello`"]
     pub fn next(self)
         ->
             (Template<BTextTemplate29, Partial, After>,
@@ -1632,6 +1752,8 @@ impl<Partial, After> Template<BTextTemplate1, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate2, Partial, After> {
+    #[doc =
+    "Transition from `2: c_element_with_attribute other` to `30: c_element_with_attribute other` using `1: [] <a class=\"test\"></a>`"]
     pub fn next(self)
         ->
             (Template<CElementWithAttributeTemplate30, Partial, After>,
@@ -1649,6 +1771,8 @@ impl<Partial, After> Template<BTextTemplate2, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate3, Partial, After> {
+    #[doc =
+    "Transition from `3: c_element_with_content other` to `31: c_element_with_content other` using `2: [] <h1>hi</h1>`"]
     pub fn next(self)
         ->
             (Template<CElementWithContentTemplate31, Partial, After>,
@@ -1663,6 +1787,8 @@ impl<Partial, After> Template<BTextTemplate3, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate4, Partial, After> {
+    #[doc =
+    "Transition from `4: c_empty_element other` to `32: c_empty_element other` using `3: [] <h1></h1>`"]
     pub fn next(self)
         ->
             (Template<CEmptyElementTemplate32, Partial, After>,
@@ -1677,6 +1803,8 @@ impl<Partial, After> Template<BTextTemplate4, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate5, Partial, After> {
+    #[doc =
+    "Transition from `5: c_self_closing_boolean_attr other` to `33: c_self_closing_boolean_attr other` using `4: [] <!DOCTYPE html>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingBooleanAttrTemplate33, Partial, After>,
@@ -1694,6 +1822,8 @@ impl<Partial, After> Template<BTextTemplate5, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate6, Partial, After> {
+    #[doc =
+    "Transition from `6: c_self_closing other` to `34: c_self_closing other` using `5: [] <!DOCTYPE>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingTemplate34, Partial, After>,
@@ -1708,6 +1838,8 @@ impl<Partial, After> Template<BTextTemplate6, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate7, Partial, After> {
+    #[doc =
+    "Transition from `7: d_element_with_attribute_and_variables other` to `35: d_element_with_attribute_and_variables other` using `6: [] <a class=\"{{test:attr}}\">`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate35, Partial,
@@ -1729,6 +1861,8 @@ impl<Partial, After> Template<BTextTemplate7, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate35, Partial, After> {
+    #[doc =
+    "Transition from `35: d_element_with_attribute_and_variables other` to `36: d_element_with_attribute_and_variables other` using `7: [] {{var:element}}</a>`"]
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
@@ -1749,6 +1883,8 @@ impl<Partial, After> Template<BTextTemplate35, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate8, Partial, After> {
+    #[doc =
+    "Transition from `8: d_variable other` to `37: d_variable other` using `8: [] <p>{{test:element}}</p>`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate37, Partial, After>,
@@ -1768,6 +1904,8 @@ impl<Partial, After> Template<BTextTemplate8, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `9: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -1782,6 +1920,8 @@ impl<Partial, After> Template<BTextTemplate9, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `10: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -1796,6 +1936,8 @@ impl<Partial, After> Template<BTextTemplate9, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `11: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -1810,6 +1952,8 @@ impl<Partial, After> Template<BTextTemplate10, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `12: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -1824,6 +1968,8 @@ impl<Partial, After> Template<BTextTemplate10, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `13: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -1838,6 +1984,8 @@ impl<Partial, After> Template<BTextTemplate11, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `14: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -1852,6 +2000,8 @@ impl<Partial, After> Template<BTextTemplate11, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate12, Partial, After> {
+    #[doc =
+    "Transition from `12: e_if_else_with_variables other` to `41: e_if_else_with_variables other` using `15: [] <span>`"]
     pub fn next(self)
         ->
             (Template<EIfElseWithVariablesTemplate41, Partial, After>,
@@ -1866,6 +2016,8 @@ impl<Partial, After> Template<BTextTemplate12, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `16: [true] {{t:element}}</span>`"]
     pub fn t_true(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -1885,6 +2037,8 @@ impl<Partial, After> Template<BTextTemplate41, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `17: [false] {{f:element}}</span>`"]
     pub fn f_false(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -1904,6 +2058,8 @@ impl<Partial, After> Template<BTextTemplate41, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `18: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -1918,6 +2074,8 @@ impl<Partial, After> Template<BTextTemplate13, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `19: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -1932,6 +2090,8 @@ impl<Partial, After> Template<BTextTemplate13, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `14: f_each_empty other` using `20: [enter_loop] `"]
     pub fn next_enter_loop(self)
         ->
             (Template<FEachEmptyTemplate14, Partial, After>,
@@ -1946,6 +2106,8 @@ impl<Partial, After> Template<BTextTemplate14, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `44: f_each_empty other` using `21: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachEmptyTemplate44, Partial, After>,
@@ -1960,6 +2122,8 @@ impl<Partial, After> Template<BTextTemplate14, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate15, Partial, After> {
+    #[doc =
+    "Transition from `15: f_each_one_variable other` to `45: f_each_one_variable other` using `22: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachOneVariableTemplate45, Partial, After>,
@@ -1974,6 +2138,8 @@ impl<Partial, After> Template<BTextTemplate15, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `45: f_each_one_variable other` using `23: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -1994,6 +2160,8 @@ impl<Partial, After> Template<BTextTemplate45, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `46: f_each_one_variable other` using `24: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachOneVariableTemplate46, Partial, After>,
@@ -2008,6 +2176,8 @@ impl<Partial, After> Template<BTextTemplate45, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate16, Partial, After> {
+    #[doc =
+    "Transition from `16: f_each_two_variables other` to `47: f_each_two_variables other` using `25: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachTwoVariablesTemplate47, Partial, After>,
@@ -2022,6 +2192,8 @@ impl<Partial, After> Template<BTextTemplate16, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `48: f_each_two_variables other` using `26: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -2042,6 +2214,8 @@ impl<Partial, After> Template<BTextTemplate47, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate48, Partial, After> {
+    #[doc =
+    "Transition from `48: f_each_two_variables other` to `47: f_each_two_variables other` using `27: [] {{content:element}}`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -2062,6 +2236,8 @@ impl<Partial, After> Template<BTextTemplate48, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `49: f_each_two_variables other` using `28: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesTemplate49, Partial, After>,
@@ -2076,6 +2252,8 @@ impl<Partial, After> Template<BTextTemplate47, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate17, Partial, After> {
+    #[doc =
+    "Transition from `17: g_empty_template_multiple other` to `50: g_empty_template_multiple inner` using `29: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -2097,6 +2275,8 @@ impl<Partial, After> Template<BTextTemplate17, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate50, Partial, After> {
+    #[doc =
+    "Transition from `50: g_empty_template_multiple inner` to `52: g_empty_template_multiple inner` using `32: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -2118,6 +2298,8 @@ impl<Partial, After> Template<BTextTemplate50, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate18, Partial, After> {
+    #[doc =
+    "Transition from `18: g_empty_template other` to `54: g_empty_template inner` using `35: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -2141,6 +2323,8 @@ impl<Partial, After> Template<BTextTemplate18, Partial, After> {
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<BTextTemplate19, Template<Partial, PartialPartial, PartialAfter>,
     After> {
+    #[doc =
+    "Transition from `19: g_partial_block_partial other` to `56: g_partial_block_partial partial` using `38: [] <span>{{before:element}}<p>`"]
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<Partial, (),
@@ -2169,6 +2353,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<BTextTemplate56, Template<Partial, PartialPartial, PartialAfter>,
     After> {
+    #[doc =
+    "Transition from `56: g_partial_block_partial partial` to `57: g_partial_block_partial partial` using `39: [] </p><div>`"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -2190,6 +2376,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
     }
 }
 impl<Partial, After> Template<BTextTemplate57, Partial, After> {
+    #[doc =
+    "Transition from `57: g_partial_block_partial partial` to `58: g_partial_block_partial other` using `40: [] </div>{{after:element}}</span>`"]
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate58, Partial, After>,
@@ -2209,6 +2397,8 @@ impl<Partial, After> Template<BTextTemplate57, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate20, Partial, After> {
+    #[doc =
+    "Transition from `20: g_partial_block other` to `59: g_partial_block inner` using `41: [] <span>hello`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockPartialTemplate19,
@@ -2245,6 +2435,8 @@ impl<Partial, After> Template<BTextTemplate20, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate60, Partial, After> {
+    #[doc =
+    "Transition from `60: g_partial_block other` to `61: g_partial_block other` using `43: [] childrenstart{{test:element}}childrenend`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate61, Partial, After>,
@@ -2264,6 +2456,8 @@ impl<Partial, After> Template<BTextTemplate60, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate59, Partial, After> {
+    #[doc =
+    "Transition from `59: g_partial_block inner` to `62: g_partial_block other` using `45: [] world</span>`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockTemplate62, Partial, After>,
@@ -2279,6 +2473,8 @@ impl<Partial, After> Template<BTextTemplate59, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate21, Partial, After> {
+    #[doc =
+    "Transition from `21: g_template_only_partial_block_multiple other` to `63: g_template_only_partial_block_multiple inner` using `46: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -2301,6 +2497,8 @@ impl<Partial, After> Template<BTextTemplate21, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate63, Partial, After> {
+    #[doc =
+    "Transition from `63: g_template_only_partial_block_multiple inner` to `65: g_template_only_partial_block_multiple inner` using `49: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -2323,6 +2521,8 @@ impl<Partial, After> Template<BTextTemplate63, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate22, Partial, After> {
+    #[doc =
+    "Transition from `22: g_template_only_partial_block_with_text_multiple other` to `67: g_template_only_partial_block_with_text_multiple inner` using `52: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -2368,6 +2568,8 @@ impl<Partial, After> Template<BTextTemplate22, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate68, Partial, After> {
+    #[doc =
+    "Transition from `68: g_template_only_partial_block_with_text_multiple other` to `69: g_template_only_partial_block_with_text_multiple other` using `54: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate69,
@@ -2384,6 +2586,8 @@ impl<Partial, After> Template<BTextTemplate68, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate67, Partial, After> {
+    #[doc =
+    "Transition from `67: g_template_only_partial_block_with_text_multiple inner` to `70: g_template_only_partial_block_with_text_multiple inner` using `56: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -2429,6 +2633,8 @@ impl<Partial, After> Template<BTextTemplate67, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate71, Partial, After> {
+    #[doc =
+    "Transition from `71: g_template_only_partial_block_with_text_multiple other` to `72: g_template_only_partial_block_with_text_multiple other` using `58: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate72,
@@ -2445,6 +2651,8 @@ impl<Partial, After> Template<BTextTemplate71, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate23, Partial, After> {
+    #[doc =
+    "Transition from `23: g_template_only_partial_block_with_text other` to `73: g_template_only_partial_block_with_text inner` using `60: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -2485,6 +2693,8 @@ impl<Partial, After> Template<BTextTemplate23, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate74, Partial, After> {
+    #[doc =
+    "Transition from `74: g_template_only_partial_block_with_text other` to `75: g_template_only_partial_block_with_text other` using `62: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextTemplate75, Partial,
@@ -2500,6 +2710,8 @@ impl<Partial, After> Template<BTextTemplate74, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate24, Partial, After> {
+    #[doc =
+    "Transition from `24: g_template_only_partial_block_with_variable_multiple other` to `76: g_template_only_partial_block_with_variable_multiple inner` using `64: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -2546,6 +2758,8 @@ impl<Partial, After> Template<BTextTemplate24, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate77, Partial, After> {
+    #[doc =
+    "Transition from `77: g_template_only_partial_block_with_variable_multiple other` to `78: g_template_only_partial_block_with_variable_multiple other` using `66: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate78,
@@ -2567,6 +2781,8 @@ impl<Partial, After> Template<BTextTemplate77, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate76, Partial, After> {
+    #[doc =
+    "Transition from `76: g_template_only_partial_block_with_variable_multiple inner` to `79: g_template_only_partial_block_with_variable_multiple inner` using `68: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -2613,6 +2829,8 @@ impl<Partial, After> Template<BTextTemplate76, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate80, Partial, After> {
+    #[doc =
+    "Transition from `80: g_template_only_partial_block_with_variable_multiple other` to `81: g_template_only_partial_block_with_variable_multiple other` using `70: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate81,
@@ -2634,6 +2852,8 @@ impl<Partial, After> Template<BTextTemplate80, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate79, Partial, After> {
+    #[doc =
+    "Transition from `79: g_template_only_partial_block_with_variable_multiple inner` to `82: g_template_only_partial_block_with_variable_multiple other` using `72: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate82,
@@ -2650,6 +2870,8 @@ impl<Partial, After> Template<BTextTemplate79, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate25, Partial, After> {
+    #[doc =
+    "Transition from `25: g_template_only_partial_block_with_variable other` to `83: g_template_only_partial_block_with_variable inner` using `73: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -2693,6 +2915,8 @@ impl<Partial, After> Template<BTextTemplate25, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate84, Partial, After> {
+    #[doc =
+    "Transition from `84: g_template_only_partial_block_with_variable other` to `85: g_template_only_partial_block_with_variable other` using `75: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate85,
@@ -2713,6 +2937,8 @@ impl<Partial, After> Template<BTextTemplate84, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate83, Partial, After> {
+    #[doc =
+    "Transition from `83: g_template_only_partial_block_with_variable inner` to `86: g_template_only_partial_block_with_variable other` using `77: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate86,
@@ -2728,6 +2954,8 @@ impl<Partial, After> Template<BTextTemplate83, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate26, Partial, After> {
+    #[doc =
+    "Transition from `26: g_template_only_partial_block other` to `87: g_template_only_partial_block inner` using `78: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -2749,6 +2977,8 @@ impl<Partial, After> Template<BTextTemplate26, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `89: f_each_two_variables_html other` using `81: [enter_loop] \n    <li>{{title:element}}</li>\n    <li>`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -2769,6 +2999,8 @@ impl<Partial, After> Template<BTextTemplate27, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate89, Partial, After> {
+    #[doc =
+    "Transition from `89: f_each_two_variables_html other` to `27: f_each_two_variables_html other` using `82: [] {{content:element}}</li>\n`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -2789,6 +3021,8 @@ impl<Partial, After> Template<BTextTemplate89, Partial, After> {
     }
 }
 impl<Partial, After> Template<BTextTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `90: f_each_two_variables_html other` using `83: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesHtmlTemplate90, Partial, After>,
@@ -2805,6 +3039,8 @@ impl<Partial, After> Template<BTextTemplate27, Partial, After> {
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<BTextTemplate28, Template<Partial, PartialPartial, PartialAfter>,
     After> {
+    #[doc =
+    "Transition from `28: g_only_partial_block other` to `91: g_only_partial_block partial` using `84: [] `"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -3023,6 +3259,8 @@ pub struct CElementWithAttributeTemplate90;
 pub struct CElementWithAttributeTemplate91;
 impl<Partial, After> Template<CElementWithAttributeTemplate1, Partial, After>
     {
+    #[doc =
+    "Transition from `1: b_text other` to `29: b_text other` using `0: [] hello`"]
     pub fn next(self)
         ->
             (Template<BTextTemplate29, Partial, After>,
@@ -3038,6 +3276,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate1, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate2, Partial, After>
     {
+    #[doc =
+    "Transition from `2: c_element_with_attribute other` to `30: c_element_with_attribute other` using `1: [] <a class=\"test\"></a>`"]
     pub fn next(self)
         ->
             (Template<CElementWithAttributeTemplate30, Partial, After>,
@@ -3056,6 +3296,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate2, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate3, Partial, After>
     {
+    #[doc =
+    "Transition from `3: c_element_with_content other` to `31: c_element_with_content other` using `2: [] <h1>hi</h1>`"]
     pub fn next(self)
         ->
             (Template<CElementWithContentTemplate31, Partial, After>,
@@ -3071,6 +3313,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate3, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate4, Partial, After>
     {
+    #[doc =
+    "Transition from `4: c_empty_element other` to `32: c_empty_element other` using `3: [] <h1></h1>`"]
     pub fn next(self)
         ->
             (Template<CEmptyElementTemplate32, Partial, After>,
@@ -3086,6 +3330,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate4, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate5, Partial, After>
     {
+    #[doc =
+    "Transition from `5: c_self_closing_boolean_attr other` to `33: c_self_closing_boolean_attr other` using `4: [] <!DOCTYPE html>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingBooleanAttrTemplate33, Partial, After>,
@@ -3104,6 +3350,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate5, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate6, Partial, After>
     {
+    #[doc =
+    "Transition from `6: c_self_closing other` to `34: c_self_closing other` using `5: [] <!DOCTYPE>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingTemplate34, Partial, After>,
@@ -3119,6 +3367,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate6, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate7, Partial, After>
     {
+    #[doc =
+    "Transition from `7: d_element_with_attribute_and_variables other` to `35: d_element_with_attribute_and_variables other` using `6: [] <a class=\"{{test:attr}}\">`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate35, Partial,
@@ -3141,6 +3391,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate7, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate35, Partial, After>
     {
+    #[doc =
+    "Transition from `35: d_element_with_attribute_and_variables other` to `36: d_element_with_attribute_and_variables other` using `7: [] {{var:element}}</a>`"]
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
@@ -3162,6 +3414,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate35, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate8, Partial, After>
     {
+    #[doc =
+    "Transition from `8: d_variable other` to `37: d_variable other` using `8: [] <p>{{test:element}}</p>`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate37, Partial, After>,
@@ -3182,6 +3436,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate8, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate9, Partial, After>
     {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `9: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -3197,6 +3453,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate9, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate9, Partial, After>
     {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `10: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -3212,6 +3470,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate9, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate10, Partial, After>
     {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `11: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -3227,6 +3487,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate10, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate10, Partial, After>
     {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `12: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -3242,6 +3504,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate10, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate11, Partial, After>
     {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `13: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -3257,6 +3521,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate11, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate11, Partial, After>
     {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `14: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -3272,6 +3538,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate11, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate12, Partial, After>
     {
+    #[doc =
+    "Transition from `12: e_if_else_with_variables other` to `41: e_if_else_with_variables other` using `15: [] <span>`"]
     pub fn next(self)
         ->
             (Template<EIfElseWithVariablesTemplate41, Partial, After>,
@@ -3287,6 +3555,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate12, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate41, Partial, After>
     {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `16: [true] {{t:element}}</span>`"]
     pub fn t_true(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -3307,6 +3577,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate41, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate41, Partial, After>
     {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `17: [false] {{f:element}}</span>`"]
     pub fn f_false(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -3327,6 +3599,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate41, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate13, Partial, After>
     {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `18: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -3342,6 +3616,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate13, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate13, Partial, After>
     {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `19: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -3357,6 +3633,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate13, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate14, Partial, After>
     {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `14: f_each_empty other` using `20: [enter_loop] `"]
     pub fn next_enter_loop(self)
         ->
             (Template<FEachEmptyTemplate14, Partial, After>,
@@ -3372,6 +3650,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate14, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate14, Partial, After>
     {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `44: f_each_empty other` using `21: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachEmptyTemplate44, Partial, After>,
@@ -3387,6 +3667,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate14, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate15, Partial, After>
     {
+    #[doc =
+    "Transition from `15: f_each_one_variable other` to `45: f_each_one_variable other` using `22: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachOneVariableTemplate45, Partial, After>,
@@ -3402,6 +3684,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate15, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate45, Partial, After>
     {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `45: f_each_one_variable other` using `23: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -3423,6 +3707,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate45, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate45, Partial, After>
     {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `46: f_each_one_variable other` using `24: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachOneVariableTemplate46, Partial, After>,
@@ -3438,6 +3724,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate45, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate16, Partial, After>
     {
+    #[doc =
+    "Transition from `16: f_each_two_variables other` to `47: f_each_two_variables other` using `25: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachTwoVariablesTemplate47, Partial, After>,
@@ -3453,6 +3741,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate16, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate47, Partial, After>
     {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `48: f_each_two_variables other` using `26: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -3474,6 +3764,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate47, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate48, Partial, After>
     {
+    #[doc =
+    "Transition from `48: f_each_two_variables other` to `47: f_each_two_variables other` using `27: [] {{content:element}}`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -3495,6 +3787,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate48, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate47, Partial, After>
     {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `49: f_each_two_variables other` using `28: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesTemplate49, Partial, After>,
@@ -3510,6 +3804,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate47, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate17, Partial, After>
     {
+    #[doc =
+    "Transition from `17: g_empty_template_multiple other` to `50: g_empty_template_multiple inner` using `29: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -3532,6 +3828,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate17, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate50, Partial, After>
     {
+    #[doc =
+    "Transition from `50: g_empty_template_multiple inner` to `52: g_empty_template_multiple inner` using `32: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -3554,6 +3852,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate50, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate18, Partial, After>
     {
+    #[doc =
+    "Transition from `18: g_empty_template other` to `54: g_empty_template inner` using `35: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -3577,6 +3877,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate18, Partial, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<CElementWithAttributeTemplate19,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `19: g_partial_block_partial other` to `56: g_partial_block_partial partial` using `38: [] <span>{{before:element}}<p>`"]
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<Partial, (),
@@ -3605,6 +3907,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<CElementWithAttributeTemplate56,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `56: g_partial_block_partial partial` to `57: g_partial_block_partial partial` using `39: [] </p><div>`"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -3627,6 +3931,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate57, Partial, After>
     {
+    #[doc =
+    "Transition from `57: g_partial_block_partial partial` to `58: g_partial_block_partial other` using `40: [] </div>{{after:element}}</span>`"]
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate58, Partial, After>,
@@ -3647,6 +3953,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate57, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate20, Partial, After>
     {
+    #[doc =
+    "Transition from `20: g_partial_block other` to `59: g_partial_block inner` using `41: [] <span>hello`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockPartialTemplate19,
@@ -3684,6 +3992,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate20, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate60, Partial, After>
     {
+    #[doc =
+    "Transition from `60: g_partial_block other` to `61: g_partial_block other` using `43: [] childrenstart{{test:element}}childrenend`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate61, Partial, After>,
@@ -3704,6 +4014,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate60, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate59, Partial, After>
     {
+    #[doc =
+    "Transition from `59: g_partial_block inner` to `62: g_partial_block other` using `45: [] world</span>`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockTemplate62, Partial, After>,
@@ -3720,6 +4032,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate59, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate21, Partial, After>
     {
+    #[doc =
+    "Transition from `21: g_template_only_partial_block_multiple other` to `63: g_template_only_partial_block_multiple inner` using `46: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -3743,6 +4057,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate21, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate63, Partial, After>
     {
+    #[doc =
+    "Transition from `63: g_template_only_partial_block_multiple inner` to `65: g_template_only_partial_block_multiple inner` using `49: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -3766,6 +4082,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate63, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate22, Partial, After>
     {
+    #[doc =
+    "Transition from `22: g_template_only_partial_block_with_text_multiple other` to `67: g_template_only_partial_block_with_text_multiple inner` using `52: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -3812,6 +4130,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate22, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate68, Partial, After>
     {
+    #[doc =
+    "Transition from `68: g_template_only_partial_block_with_text_multiple other` to `69: g_template_only_partial_block_with_text_multiple other` using `54: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate69,
@@ -3829,6 +4149,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate68, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate67, Partial, After>
     {
+    #[doc =
+    "Transition from `67: g_template_only_partial_block_with_text_multiple inner` to `70: g_template_only_partial_block_with_text_multiple inner` using `56: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -3875,6 +4197,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate67, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate71, Partial, After>
     {
+    #[doc =
+    "Transition from `71: g_template_only_partial_block_with_text_multiple other` to `72: g_template_only_partial_block_with_text_multiple other` using `58: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate72,
@@ -3892,6 +4216,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate71, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate23, Partial, After>
     {
+    #[doc =
+    "Transition from `23: g_template_only_partial_block_with_text other` to `73: g_template_only_partial_block_with_text inner` using `60: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -3933,6 +4259,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate23, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate74, Partial, After>
     {
+    #[doc =
+    "Transition from `74: g_template_only_partial_block_with_text other` to `75: g_template_only_partial_block_with_text other` using `62: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextTemplate75, Partial,
@@ -3949,6 +4277,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate74, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate24, Partial, After>
     {
+    #[doc =
+    "Transition from `24: g_template_only_partial_block_with_variable_multiple other` to `76: g_template_only_partial_block_with_variable_multiple inner` using `64: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -3996,6 +4326,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate24, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate77, Partial, After>
     {
+    #[doc =
+    "Transition from `77: g_template_only_partial_block_with_variable_multiple other` to `78: g_template_only_partial_block_with_variable_multiple other` using `66: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate78,
@@ -4018,6 +4350,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate77, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate76, Partial, After>
     {
+    #[doc =
+    "Transition from `76: g_template_only_partial_block_with_variable_multiple inner` to `79: g_template_only_partial_block_with_variable_multiple inner` using `68: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -4065,6 +4399,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate76, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate80, Partial, After>
     {
+    #[doc =
+    "Transition from `80: g_template_only_partial_block_with_variable_multiple other` to `81: g_template_only_partial_block_with_variable_multiple other` using `70: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate81,
@@ -4087,6 +4423,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate80, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate79, Partial, After>
     {
+    #[doc =
+    "Transition from `79: g_template_only_partial_block_with_variable_multiple inner` to `82: g_template_only_partial_block_with_variable_multiple other` using `72: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate82,
@@ -4104,6 +4442,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate79, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate25, Partial, After>
     {
+    #[doc =
+    "Transition from `25: g_template_only_partial_block_with_variable other` to `83: g_template_only_partial_block_with_variable inner` using `73: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -4148,6 +4488,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate25, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate84, Partial, After>
     {
+    #[doc =
+    "Transition from `84: g_template_only_partial_block_with_variable other` to `85: g_template_only_partial_block_with_variable other` using `75: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate85,
@@ -4169,6 +4511,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate84, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate83, Partial, After>
     {
+    #[doc =
+    "Transition from `83: g_template_only_partial_block_with_variable inner` to `86: g_template_only_partial_block_with_variable other` using `77: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate86,
@@ -4185,6 +4529,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate83, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate26, Partial, After>
     {
+    #[doc =
+    "Transition from `26: g_template_only_partial_block other` to `87: g_template_only_partial_block inner` using `78: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -4207,6 +4553,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate26, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate27, Partial, After>
     {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `89: f_each_two_variables_html other` using `81: [enter_loop] \n    <li>{{title:element}}</li>\n    <li>`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -4228,6 +4576,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate27, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate89, Partial, After>
     {
+    #[doc =
+    "Transition from `89: f_each_two_variables_html other` to `27: f_each_two_variables_html other` using `82: [] {{content:element}}</li>\n`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -4249,6 +4599,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate89, Partial, After>
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate27, Partial, After>
     {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `90: f_each_two_variables_html other` using `83: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesHtmlTemplate90, Partial, After>,
@@ -4265,6 +4617,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate27, Partial, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<CElementWithAttributeTemplate28,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `28: g_only_partial_block other` to `91: g_only_partial_block partial` using `84: [] `"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -4486,6 +4840,8 @@ pub struct CElementWithContentTemplate90;
 #[must_use]
 pub struct CElementWithContentTemplate91;
 impl<Partial, After> Template<CElementWithContentTemplate1, Partial, After> {
+    #[doc =
+    "Transition from `1: b_text other` to `29: b_text other` using `0: [] hello`"]
     pub fn next(self)
         ->
             (Template<BTextTemplate29, Partial, After>,
@@ -4500,6 +4856,8 @@ impl<Partial, After> Template<CElementWithContentTemplate1, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate2, Partial, After> {
+    #[doc =
+    "Transition from `2: c_element_with_attribute other` to `30: c_element_with_attribute other` using `1: [] <a class=\"test\"></a>`"]
     pub fn next(self)
         ->
             (Template<CElementWithAttributeTemplate30, Partial, After>,
@@ -4517,6 +4875,8 @@ impl<Partial, After> Template<CElementWithContentTemplate2, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate3, Partial, After> {
+    #[doc =
+    "Transition from `3: c_element_with_content other` to `31: c_element_with_content other` using `2: [] <h1>hi</h1>`"]
     pub fn next(self)
         ->
             (Template<CElementWithContentTemplate31, Partial, After>,
@@ -4531,6 +4891,8 @@ impl<Partial, After> Template<CElementWithContentTemplate3, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate4, Partial, After> {
+    #[doc =
+    "Transition from `4: c_empty_element other` to `32: c_empty_element other` using `3: [] <h1></h1>`"]
     pub fn next(self)
         ->
             (Template<CEmptyElementTemplate32, Partial, After>,
@@ -4545,6 +4907,8 @@ impl<Partial, After> Template<CElementWithContentTemplate4, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate5, Partial, After> {
+    #[doc =
+    "Transition from `5: c_self_closing_boolean_attr other` to `33: c_self_closing_boolean_attr other` using `4: [] <!DOCTYPE html>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingBooleanAttrTemplate33, Partial, After>,
@@ -4562,6 +4926,8 @@ impl<Partial, After> Template<CElementWithContentTemplate5, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate6, Partial, After> {
+    #[doc =
+    "Transition from `6: c_self_closing other` to `34: c_self_closing other` using `5: [] <!DOCTYPE>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingTemplate34, Partial, After>,
@@ -4576,6 +4942,8 @@ impl<Partial, After> Template<CElementWithContentTemplate6, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate7, Partial, After> {
+    #[doc =
+    "Transition from `7: d_element_with_attribute_and_variables other` to `35: d_element_with_attribute_and_variables other` using `6: [] <a class=\"{{test:attr}}\">`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate35, Partial,
@@ -4597,6 +4965,8 @@ impl<Partial, After> Template<CElementWithContentTemplate7, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate35, Partial, After> {
+    #[doc =
+    "Transition from `35: d_element_with_attribute_and_variables other` to `36: d_element_with_attribute_and_variables other` using `7: [] {{var:element}}</a>`"]
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
@@ -4617,6 +4987,8 @@ impl<Partial, After> Template<CElementWithContentTemplate35, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate8, Partial, After> {
+    #[doc =
+    "Transition from `8: d_variable other` to `37: d_variable other` using `8: [] <p>{{test:element}}</p>`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate37, Partial, After>,
@@ -4636,6 +5008,8 @@ impl<Partial, After> Template<CElementWithContentTemplate8, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `9: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -4650,6 +5024,8 @@ impl<Partial, After> Template<CElementWithContentTemplate9, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `10: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -4664,6 +5040,8 @@ impl<Partial, After> Template<CElementWithContentTemplate9, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `11: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -4678,6 +5056,8 @@ impl<Partial, After> Template<CElementWithContentTemplate10, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `12: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -4692,6 +5072,8 @@ impl<Partial, After> Template<CElementWithContentTemplate10, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `13: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -4706,6 +5088,8 @@ impl<Partial, After> Template<CElementWithContentTemplate11, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `14: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -4720,6 +5104,8 @@ impl<Partial, After> Template<CElementWithContentTemplate11, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate12, Partial, After> {
+    #[doc =
+    "Transition from `12: e_if_else_with_variables other` to `41: e_if_else_with_variables other` using `15: [] <span>`"]
     pub fn next(self)
         ->
             (Template<EIfElseWithVariablesTemplate41, Partial, After>,
@@ -4734,6 +5120,8 @@ impl<Partial, After> Template<CElementWithContentTemplate12, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `16: [true] {{t:element}}</span>`"]
     pub fn t_true(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -4753,6 +5141,8 @@ impl<Partial, After> Template<CElementWithContentTemplate41, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `17: [false] {{f:element}}</span>`"]
     pub fn f_false(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -4772,6 +5162,8 @@ impl<Partial, After> Template<CElementWithContentTemplate41, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `18: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -4786,6 +5178,8 @@ impl<Partial, After> Template<CElementWithContentTemplate13, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `19: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -4800,6 +5194,8 @@ impl<Partial, After> Template<CElementWithContentTemplate13, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `14: f_each_empty other` using `20: [enter_loop] `"]
     pub fn next_enter_loop(self)
         ->
             (Template<FEachEmptyTemplate14, Partial, After>,
@@ -4814,6 +5210,8 @@ impl<Partial, After> Template<CElementWithContentTemplate14, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `44: f_each_empty other` using `21: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachEmptyTemplate44, Partial, After>,
@@ -4828,6 +5226,8 @@ impl<Partial, After> Template<CElementWithContentTemplate14, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate15, Partial, After> {
+    #[doc =
+    "Transition from `15: f_each_one_variable other` to `45: f_each_one_variable other` using `22: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachOneVariableTemplate45, Partial, After>,
@@ -4842,6 +5242,8 @@ impl<Partial, After> Template<CElementWithContentTemplate15, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `45: f_each_one_variable other` using `23: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -4862,6 +5264,8 @@ impl<Partial, After> Template<CElementWithContentTemplate45, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `46: f_each_one_variable other` using `24: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachOneVariableTemplate46, Partial, After>,
@@ -4876,6 +5280,8 @@ impl<Partial, After> Template<CElementWithContentTemplate45, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate16, Partial, After> {
+    #[doc =
+    "Transition from `16: f_each_two_variables other` to `47: f_each_two_variables other` using `25: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachTwoVariablesTemplate47, Partial, After>,
@@ -4890,6 +5296,8 @@ impl<Partial, After> Template<CElementWithContentTemplate16, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `48: f_each_two_variables other` using `26: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -4910,6 +5318,8 @@ impl<Partial, After> Template<CElementWithContentTemplate47, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate48, Partial, After> {
+    #[doc =
+    "Transition from `48: f_each_two_variables other` to `47: f_each_two_variables other` using `27: [] {{content:element}}`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -4930,6 +5340,8 @@ impl<Partial, After> Template<CElementWithContentTemplate48, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `49: f_each_two_variables other` using `28: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesTemplate49, Partial, After>,
@@ -4944,6 +5356,8 @@ impl<Partial, After> Template<CElementWithContentTemplate47, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate17, Partial, After> {
+    #[doc =
+    "Transition from `17: g_empty_template_multiple other` to `50: g_empty_template_multiple inner` using `29: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -4965,6 +5379,8 @@ impl<Partial, After> Template<CElementWithContentTemplate17, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate50, Partial, After> {
+    #[doc =
+    "Transition from `50: g_empty_template_multiple inner` to `52: g_empty_template_multiple inner` using `32: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -4986,6 +5402,8 @@ impl<Partial, After> Template<CElementWithContentTemplate50, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate18, Partial, After> {
+    #[doc =
+    "Transition from `18: g_empty_template other` to `54: g_empty_template inner` using `35: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -5009,6 +5427,8 @@ impl<Partial, After> Template<CElementWithContentTemplate18, Partial, After> {
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<CElementWithContentTemplate19,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `19: g_partial_block_partial other` to `56: g_partial_block_partial partial` using `38: [] <span>{{before:element}}<p>`"]
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<Partial, (),
@@ -5037,6 +5457,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<CElementWithContentTemplate56,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `56: g_partial_block_partial partial` to `57: g_partial_block_partial partial` using `39: [] </p><div>`"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -5058,6 +5480,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate57, Partial, After> {
+    #[doc =
+    "Transition from `57: g_partial_block_partial partial` to `58: g_partial_block_partial other` using `40: [] </div>{{after:element}}</span>`"]
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate58, Partial, After>,
@@ -5077,6 +5501,8 @@ impl<Partial, After> Template<CElementWithContentTemplate57, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate20, Partial, After> {
+    #[doc =
+    "Transition from `20: g_partial_block other` to `59: g_partial_block inner` using `41: [] <span>hello`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockPartialTemplate19,
@@ -5113,6 +5539,8 @@ impl<Partial, After> Template<CElementWithContentTemplate20, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate60, Partial, After> {
+    #[doc =
+    "Transition from `60: g_partial_block other` to `61: g_partial_block other` using `43: [] childrenstart{{test:element}}childrenend`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate61, Partial, After>,
@@ -5132,6 +5560,8 @@ impl<Partial, After> Template<CElementWithContentTemplate60, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate59, Partial, After> {
+    #[doc =
+    "Transition from `59: g_partial_block inner` to `62: g_partial_block other` using `45: [] world</span>`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockTemplate62, Partial, After>,
@@ -5147,6 +5577,8 @@ impl<Partial, After> Template<CElementWithContentTemplate59, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate21, Partial, After> {
+    #[doc =
+    "Transition from `21: g_template_only_partial_block_multiple other` to `63: g_template_only_partial_block_multiple inner` using `46: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -5169,6 +5601,8 @@ impl<Partial, After> Template<CElementWithContentTemplate21, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate63, Partial, After> {
+    #[doc =
+    "Transition from `63: g_template_only_partial_block_multiple inner` to `65: g_template_only_partial_block_multiple inner` using `49: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -5191,6 +5625,8 @@ impl<Partial, After> Template<CElementWithContentTemplate63, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate22, Partial, After> {
+    #[doc =
+    "Transition from `22: g_template_only_partial_block_with_text_multiple other` to `67: g_template_only_partial_block_with_text_multiple inner` using `52: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -5236,6 +5672,8 @@ impl<Partial, After> Template<CElementWithContentTemplate22, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate68, Partial, After> {
+    #[doc =
+    "Transition from `68: g_template_only_partial_block_with_text_multiple other` to `69: g_template_only_partial_block_with_text_multiple other` using `54: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate69,
@@ -5252,6 +5690,8 @@ impl<Partial, After> Template<CElementWithContentTemplate68, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate67, Partial, After> {
+    #[doc =
+    "Transition from `67: g_template_only_partial_block_with_text_multiple inner` to `70: g_template_only_partial_block_with_text_multiple inner` using `56: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -5297,6 +5737,8 @@ impl<Partial, After> Template<CElementWithContentTemplate67, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate71, Partial, After> {
+    #[doc =
+    "Transition from `71: g_template_only_partial_block_with_text_multiple other` to `72: g_template_only_partial_block_with_text_multiple other` using `58: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate72,
@@ -5313,6 +5755,8 @@ impl<Partial, After> Template<CElementWithContentTemplate71, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate23, Partial, After> {
+    #[doc =
+    "Transition from `23: g_template_only_partial_block_with_text other` to `73: g_template_only_partial_block_with_text inner` using `60: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -5353,6 +5797,8 @@ impl<Partial, After> Template<CElementWithContentTemplate23, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate74, Partial, After> {
+    #[doc =
+    "Transition from `74: g_template_only_partial_block_with_text other` to `75: g_template_only_partial_block_with_text other` using `62: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextTemplate75, Partial,
@@ -5368,6 +5814,8 @@ impl<Partial, After> Template<CElementWithContentTemplate74, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate24, Partial, After> {
+    #[doc =
+    "Transition from `24: g_template_only_partial_block_with_variable_multiple other` to `76: g_template_only_partial_block_with_variable_multiple inner` using `64: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -5414,6 +5862,8 @@ impl<Partial, After> Template<CElementWithContentTemplate24, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate77, Partial, After> {
+    #[doc =
+    "Transition from `77: g_template_only_partial_block_with_variable_multiple other` to `78: g_template_only_partial_block_with_variable_multiple other` using `66: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate78,
@@ -5435,6 +5885,8 @@ impl<Partial, After> Template<CElementWithContentTemplate77, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate76, Partial, After> {
+    #[doc =
+    "Transition from `76: g_template_only_partial_block_with_variable_multiple inner` to `79: g_template_only_partial_block_with_variable_multiple inner` using `68: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -5481,6 +5933,8 @@ impl<Partial, After> Template<CElementWithContentTemplate76, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate80, Partial, After> {
+    #[doc =
+    "Transition from `80: g_template_only_partial_block_with_variable_multiple other` to `81: g_template_only_partial_block_with_variable_multiple other` using `70: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate81,
@@ -5502,6 +5956,8 @@ impl<Partial, After> Template<CElementWithContentTemplate80, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate79, Partial, After> {
+    #[doc =
+    "Transition from `79: g_template_only_partial_block_with_variable_multiple inner` to `82: g_template_only_partial_block_with_variable_multiple other` using `72: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate82,
@@ -5518,6 +5974,8 @@ impl<Partial, After> Template<CElementWithContentTemplate79, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate25, Partial, After> {
+    #[doc =
+    "Transition from `25: g_template_only_partial_block_with_variable other` to `83: g_template_only_partial_block_with_variable inner` using `73: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -5561,6 +6019,8 @@ impl<Partial, After> Template<CElementWithContentTemplate25, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate84, Partial, After> {
+    #[doc =
+    "Transition from `84: g_template_only_partial_block_with_variable other` to `85: g_template_only_partial_block_with_variable other` using `75: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate85,
@@ -5581,6 +6041,8 @@ impl<Partial, After> Template<CElementWithContentTemplate84, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate83, Partial, After> {
+    #[doc =
+    "Transition from `83: g_template_only_partial_block_with_variable inner` to `86: g_template_only_partial_block_with_variable other` using `77: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate86,
@@ -5596,6 +6058,8 @@ impl<Partial, After> Template<CElementWithContentTemplate83, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate26, Partial, After> {
+    #[doc =
+    "Transition from `26: g_template_only_partial_block other` to `87: g_template_only_partial_block inner` using `78: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -5617,6 +6081,8 @@ impl<Partial, After> Template<CElementWithContentTemplate26, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `89: f_each_two_variables_html other` using `81: [enter_loop] \n    <li>{{title:element}}</li>\n    <li>`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -5637,6 +6103,8 @@ impl<Partial, After> Template<CElementWithContentTemplate27, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate89, Partial, After> {
+    #[doc =
+    "Transition from `89: f_each_two_variables_html other` to `27: f_each_two_variables_html other` using `82: [] {{content:element}}</li>\n`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -5657,6 +6125,8 @@ impl<Partial, After> Template<CElementWithContentTemplate89, Partial, After> {
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `90: f_each_two_variables_html other` using `83: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesHtmlTemplate90, Partial, After>,
@@ -5673,6 +6143,8 @@ impl<Partial, After> Template<CElementWithContentTemplate27, Partial, After> {
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<CElementWithContentTemplate28,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `28: g_only_partial_block other` to `91: g_only_partial_block partial` using `84: [] `"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -5893,6 +6365,8 @@ pub struct CEmptyElementTemplate90;
 #[must_use]
 pub struct CEmptyElementTemplate91;
 impl<Partial, After> Template<CEmptyElementTemplate1, Partial, After> {
+    #[doc =
+    "Transition from `1: b_text other` to `29: b_text other` using `0: [] hello`"]
     pub fn next(self)
         ->
             (Template<BTextTemplate29, Partial, After>,
@@ -5907,6 +6381,8 @@ impl<Partial, After> Template<CEmptyElementTemplate1, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate2, Partial, After> {
+    #[doc =
+    "Transition from `2: c_element_with_attribute other` to `30: c_element_with_attribute other` using `1: [] <a class=\"test\"></a>`"]
     pub fn next(self)
         ->
             (Template<CElementWithAttributeTemplate30, Partial, After>,
@@ -5924,6 +6400,8 @@ impl<Partial, After> Template<CEmptyElementTemplate2, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate3, Partial, After> {
+    #[doc =
+    "Transition from `3: c_element_with_content other` to `31: c_element_with_content other` using `2: [] <h1>hi</h1>`"]
     pub fn next(self)
         ->
             (Template<CElementWithContentTemplate31, Partial, After>,
@@ -5938,6 +6416,8 @@ impl<Partial, After> Template<CEmptyElementTemplate3, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate4, Partial, After> {
+    #[doc =
+    "Transition from `4: c_empty_element other` to `32: c_empty_element other` using `3: [] <h1></h1>`"]
     pub fn next(self)
         ->
             (Template<CEmptyElementTemplate32, Partial, After>,
@@ -5952,6 +6432,8 @@ impl<Partial, After> Template<CEmptyElementTemplate4, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate5, Partial, After> {
+    #[doc =
+    "Transition from `5: c_self_closing_boolean_attr other` to `33: c_self_closing_boolean_attr other` using `4: [] <!DOCTYPE html>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingBooleanAttrTemplate33, Partial, After>,
@@ -5969,6 +6451,8 @@ impl<Partial, After> Template<CEmptyElementTemplate5, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate6, Partial, After> {
+    #[doc =
+    "Transition from `6: c_self_closing other` to `34: c_self_closing other` using `5: [] <!DOCTYPE>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingTemplate34, Partial, After>,
@@ -5983,6 +6467,8 @@ impl<Partial, After> Template<CEmptyElementTemplate6, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate7, Partial, After> {
+    #[doc =
+    "Transition from `7: d_element_with_attribute_and_variables other` to `35: d_element_with_attribute_and_variables other` using `6: [] <a class=\"{{test:attr}}\">`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate35, Partial,
@@ -6004,6 +6490,8 @@ impl<Partial, After> Template<CEmptyElementTemplate7, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate35, Partial, After> {
+    #[doc =
+    "Transition from `35: d_element_with_attribute_and_variables other` to `36: d_element_with_attribute_and_variables other` using `7: [] {{var:element}}</a>`"]
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
@@ -6024,6 +6512,8 @@ impl<Partial, After> Template<CEmptyElementTemplate35, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate8, Partial, After> {
+    #[doc =
+    "Transition from `8: d_variable other` to `37: d_variable other` using `8: [] <p>{{test:element}}</p>`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate37, Partial, After>,
@@ -6043,6 +6533,8 @@ impl<Partial, After> Template<CEmptyElementTemplate8, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `9: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -6057,6 +6549,8 @@ impl<Partial, After> Template<CEmptyElementTemplate9, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `10: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -6071,6 +6565,8 @@ impl<Partial, After> Template<CEmptyElementTemplate9, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `11: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -6085,6 +6581,8 @@ impl<Partial, After> Template<CEmptyElementTemplate10, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `12: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -6099,6 +6597,8 @@ impl<Partial, After> Template<CEmptyElementTemplate10, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `13: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -6113,6 +6613,8 @@ impl<Partial, After> Template<CEmptyElementTemplate11, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `14: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -6127,6 +6629,8 @@ impl<Partial, After> Template<CEmptyElementTemplate11, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate12, Partial, After> {
+    #[doc =
+    "Transition from `12: e_if_else_with_variables other` to `41: e_if_else_with_variables other` using `15: [] <span>`"]
     pub fn next(self)
         ->
             (Template<EIfElseWithVariablesTemplate41, Partial, After>,
@@ -6141,6 +6645,8 @@ impl<Partial, After> Template<CEmptyElementTemplate12, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `16: [true] {{t:element}}</span>`"]
     pub fn t_true(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -6160,6 +6666,8 @@ impl<Partial, After> Template<CEmptyElementTemplate41, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `17: [false] {{f:element}}</span>`"]
     pub fn f_false(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -6179,6 +6687,8 @@ impl<Partial, After> Template<CEmptyElementTemplate41, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `18: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -6193,6 +6703,8 @@ impl<Partial, After> Template<CEmptyElementTemplate13, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `19: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -6207,6 +6719,8 @@ impl<Partial, After> Template<CEmptyElementTemplate13, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `14: f_each_empty other` using `20: [enter_loop] `"]
     pub fn next_enter_loop(self)
         ->
             (Template<FEachEmptyTemplate14, Partial, After>,
@@ -6221,6 +6735,8 @@ impl<Partial, After> Template<CEmptyElementTemplate14, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `44: f_each_empty other` using `21: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachEmptyTemplate44, Partial, After>,
@@ -6235,6 +6751,8 @@ impl<Partial, After> Template<CEmptyElementTemplate14, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate15, Partial, After> {
+    #[doc =
+    "Transition from `15: f_each_one_variable other` to `45: f_each_one_variable other` using `22: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachOneVariableTemplate45, Partial, After>,
@@ -6249,6 +6767,8 @@ impl<Partial, After> Template<CEmptyElementTemplate15, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `45: f_each_one_variable other` using `23: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -6269,6 +6789,8 @@ impl<Partial, After> Template<CEmptyElementTemplate45, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `46: f_each_one_variable other` using `24: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachOneVariableTemplate46, Partial, After>,
@@ -6283,6 +6805,8 @@ impl<Partial, After> Template<CEmptyElementTemplate45, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate16, Partial, After> {
+    #[doc =
+    "Transition from `16: f_each_two_variables other` to `47: f_each_two_variables other` using `25: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachTwoVariablesTemplate47, Partial, After>,
@@ -6297,6 +6821,8 @@ impl<Partial, After> Template<CEmptyElementTemplate16, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `48: f_each_two_variables other` using `26: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -6317,6 +6843,8 @@ impl<Partial, After> Template<CEmptyElementTemplate47, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate48, Partial, After> {
+    #[doc =
+    "Transition from `48: f_each_two_variables other` to `47: f_each_two_variables other` using `27: [] {{content:element}}`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -6337,6 +6865,8 @@ impl<Partial, After> Template<CEmptyElementTemplate48, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `49: f_each_two_variables other` using `28: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesTemplate49, Partial, After>,
@@ -6351,6 +6881,8 @@ impl<Partial, After> Template<CEmptyElementTemplate47, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate17, Partial, After> {
+    #[doc =
+    "Transition from `17: g_empty_template_multiple other` to `50: g_empty_template_multiple inner` using `29: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -6372,6 +6904,8 @@ impl<Partial, After> Template<CEmptyElementTemplate17, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate50, Partial, After> {
+    #[doc =
+    "Transition from `50: g_empty_template_multiple inner` to `52: g_empty_template_multiple inner` using `32: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -6393,6 +6927,8 @@ impl<Partial, After> Template<CEmptyElementTemplate50, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate18, Partial, After> {
+    #[doc =
+    "Transition from `18: g_empty_template other` to `54: g_empty_template inner` using `35: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -6416,6 +6952,8 @@ impl<Partial, After> Template<CEmptyElementTemplate18, Partial, After> {
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<CEmptyElementTemplate19,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `19: g_partial_block_partial other` to `56: g_partial_block_partial partial` using `38: [] <span>{{before:element}}<p>`"]
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<Partial, (),
@@ -6444,6 +6982,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<CEmptyElementTemplate56,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `56: g_partial_block_partial partial` to `57: g_partial_block_partial partial` using `39: [] </p><div>`"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -6465,6 +7005,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate57, Partial, After> {
+    #[doc =
+    "Transition from `57: g_partial_block_partial partial` to `58: g_partial_block_partial other` using `40: [] </div>{{after:element}}</span>`"]
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate58, Partial, After>,
@@ -6484,6 +7026,8 @@ impl<Partial, After> Template<CEmptyElementTemplate57, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate20, Partial, After> {
+    #[doc =
+    "Transition from `20: g_partial_block other` to `59: g_partial_block inner` using `41: [] <span>hello`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockPartialTemplate19,
@@ -6520,6 +7064,8 @@ impl<Partial, After> Template<CEmptyElementTemplate20, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate60, Partial, After> {
+    #[doc =
+    "Transition from `60: g_partial_block other` to `61: g_partial_block other` using `43: [] childrenstart{{test:element}}childrenend`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate61, Partial, After>,
@@ -6539,6 +7085,8 @@ impl<Partial, After> Template<CEmptyElementTemplate60, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate59, Partial, After> {
+    #[doc =
+    "Transition from `59: g_partial_block inner` to `62: g_partial_block other` using `45: [] world</span>`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockTemplate62, Partial, After>,
@@ -6554,6 +7102,8 @@ impl<Partial, After> Template<CEmptyElementTemplate59, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate21, Partial, After> {
+    #[doc =
+    "Transition from `21: g_template_only_partial_block_multiple other` to `63: g_template_only_partial_block_multiple inner` using `46: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -6576,6 +7126,8 @@ impl<Partial, After> Template<CEmptyElementTemplate21, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate63, Partial, After> {
+    #[doc =
+    "Transition from `63: g_template_only_partial_block_multiple inner` to `65: g_template_only_partial_block_multiple inner` using `49: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -6598,6 +7150,8 @@ impl<Partial, After> Template<CEmptyElementTemplate63, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate22, Partial, After> {
+    #[doc =
+    "Transition from `22: g_template_only_partial_block_with_text_multiple other` to `67: g_template_only_partial_block_with_text_multiple inner` using `52: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -6643,6 +7197,8 @@ impl<Partial, After> Template<CEmptyElementTemplate22, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate68, Partial, After> {
+    #[doc =
+    "Transition from `68: g_template_only_partial_block_with_text_multiple other` to `69: g_template_only_partial_block_with_text_multiple other` using `54: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate69,
@@ -6659,6 +7215,8 @@ impl<Partial, After> Template<CEmptyElementTemplate68, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate67, Partial, After> {
+    #[doc =
+    "Transition from `67: g_template_only_partial_block_with_text_multiple inner` to `70: g_template_only_partial_block_with_text_multiple inner` using `56: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -6704,6 +7262,8 @@ impl<Partial, After> Template<CEmptyElementTemplate67, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate71, Partial, After> {
+    #[doc =
+    "Transition from `71: g_template_only_partial_block_with_text_multiple other` to `72: g_template_only_partial_block_with_text_multiple other` using `58: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate72,
@@ -6720,6 +7280,8 @@ impl<Partial, After> Template<CEmptyElementTemplate71, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate23, Partial, After> {
+    #[doc =
+    "Transition from `23: g_template_only_partial_block_with_text other` to `73: g_template_only_partial_block_with_text inner` using `60: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -6760,6 +7322,8 @@ impl<Partial, After> Template<CEmptyElementTemplate23, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate74, Partial, After> {
+    #[doc =
+    "Transition from `74: g_template_only_partial_block_with_text other` to `75: g_template_only_partial_block_with_text other` using `62: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextTemplate75, Partial,
@@ -6775,6 +7339,8 @@ impl<Partial, After> Template<CEmptyElementTemplate74, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate24, Partial, After> {
+    #[doc =
+    "Transition from `24: g_template_only_partial_block_with_variable_multiple other` to `76: g_template_only_partial_block_with_variable_multiple inner` using `64: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -6821,6 +7387,8 @@ impl<Partial, After> Template<CEmptyElementTemplate24, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate77, Partial, After> {
+    #[doc =
+    "Transition from `77: g_template_only_partial_block_with_variable_multiple other` to `78: g_template_only_partial_block_with_variable_multiple other` using `66: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate78,
@@ -6842,6 +7410,8 @@ impl<Partial, After> Template<CEmptyElementTemplate77, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate76, Partial, After> {
+    #[doc =
+    "Transition from `76: g_template_only_partial_block_with_variable_multiple inner` to `79: g_template_only_partial_block_with_variable_multiple inner` using `68: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -6888,6 +7458,8 @@ impl<Partial, After> Template<CEmptyElementTemplate76, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate80, Partial, After> {
+    #[doc =
+    "Transition from `80: g_template_only_partial_block_with_variable_multiple other` to `81: g_template_only_partial_block_with_variable_multiple other` using `70: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate81,
@@ -6909,6 +7481,8 @@ impl<Partial, After> Template<CEmptyElementTemplate80, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate79, Partial, After> {
+    #[doc =
+    "Transition from `79: g_template_only_partial_block_with_variable_multiple inner` to `82: g_template_only_partial_block_with_variable_multiple other` using `72: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate82,
@@ -6925,6 +7499,8 @@ impl<Partial, After> Template<CEmptyElementTemplate79, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate25, Partial, After> {
+    #[doc =
+    "Transition from `25: g_template_only_partial_block_with_variable other` to `83: g_template_only_partial_block_with_variable inner` using `73: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -6968,6 +7544,8 @@ impl<Partial, After> Template<CEmptyElementTemplate25, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate84, Partial, After> {
+    #[doc =
+    "Transition from `84: g_template_only_partial_block_with_variable other` to `85: g_template_only_partial_block_with_variable other` using `75: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate85,
@@ -6988,6 +7566,8 @@ impl<Partial, After> Template<CEmptyElementTemplate84, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate83, Partial, After> {
+    #[doc =
+    "Transition from `83: g_template_only_partial_block_with_variable inner` to `86: g_template_only_partial_block_with_variable other` using `77: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate86,
@@ -7003,6 +7583,8 @@ impl<Partial, After> Template<CEmptyElementTemplate83, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate26, Partial, After> {
+    #[doc =
+    "Transition from `26: g_template_only_partial_block other` to `87: g_template_only_partial_block inner` using `78: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -7024,6 +7606,8 @@ impl<Partial, After> Template<CEmptyElementTemplate26, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `89: f_each_two_variables_html other` using `81: [enter_loop] \n    <li>{{title:element}}</li>\n    <li>`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -7044,6 +7628,8 @@ impl<Partial, After> Template<CEmptyElementTemplate27, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate89, Partial, After> {
+    #[doc =
+    "Transition from `89: f_each_two_variables_html other` to `27: f_each_two_variables_html other` using `82: [] {{content:element}}</li>\n`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -7064,6 +7650,8 @@ impl<Partial, After> Template<CEmptyElementTemplate89, Partial, After> {
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `90: f_each_two_variables_html other` using `83: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesHtmlTemplate90, Partial, After>,
@@ -7080,6 +7668,8 @@ impl<Partial, After> Template<CEmptyElementTemplate27, Partial, After> {
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<CEmptyElementTemplate28,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `28: g_only_partial_block other` to `91: g_only_partial_block partial` using `84: [] `"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -7298,6 +7888,8 @@ pub struct CSelfClosingBooleanAttrTemplate90;
 pub struct CSelfClosingBooleanAttrTemplate91;
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate1, Partial, After> {
+    #[doc =
+    "Transition from `1: b_text other` to `29: b_text other` using `0: [] hello`"]
     pub fn next(self)
         ->
             (Template<BTextTemplate29, Partial, After>,
@@ -7313,6 +7905,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate2, Partial, After> {
+    #[doc =
+    "Transition from `2: c_element_with_attribute other` to `30: c_element_with_attribute other` using `1: [] <a class=\"test\"></a>`"]
     pub fn next(self)
         ->
             (Template<CElementWithAttributeTemplate30, Partial, After>,
@@ -7331,6 +7925,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate3, Partial, After> {
+    #[doc =
+    "Transition from `3: c_element_with_content other` to `31: c_element_with_content other` using `2: [] <h1>hi</h1>`"]
     pub fn next(self)
         ->
             (Template<CElementWithContentTemplate31, Partial, After>,
@@ -7346,6 +7942,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate4, Partial, After> {
+    #[doc =
+    "Transition from `4: c_empty_element other` to `32: c_empty_element other` using `3: [] <h1></h1>`"]
     pub fn next(self)
         ->
             (Template<CEmptyElementTemplate32, Partial, After>,
@@ -7361,6 +7959,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate5, Partial, After> {
+    #[doc =
+    "Transition from `5: c_self_closing_boolean_attr other` to `33: c_self_closing_boolean_attr other` using `4: [] <!DOCTYPE html>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingBooleanAttrTemplate33, Partial, After>,
@@ -7379,6 +7979,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate6, Partial, After> {
+    #[doc =
+    "Transition from `6: c_self_closing other` to `34: c_self_closing other` using `5: [] <!DOCTYPE>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingTemplate34, Partial, After>,
@@ -7394,6 +7996,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate7, Partial, After> {
+    #[doc =
+    "Transition from `7: d_element_with_attribute_and_variables other` to `35: d_element_with_attribute_and_variables other` using `6: [] <a class=\"{{test:attr}}\">`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate35, Partial,
@@ -7416,6 +8020,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate35, Partial, After> {
+    #[doc =
+    "Transition from `35: d_element_with_attribute_and_variables other` to `36: d_element_with_attribute_and_variables other` using `7: [] {{var:element}}</a>`"]
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
@@ -7437,6 +8043,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate8, Partial, After> {
+    #[doc =
+    "Transition from `8: d_variable other` to `37: d_variable other` using `8: [] <p>{{test:element}}</p>`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate37, Partial, After>,
@@ -7457,6 +8065,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `9: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -7472,6 +8082,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `10: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -7487,6 +8099,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `11: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -7502,6 +8116,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `12: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -7517,6 +8133,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `13: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -7532,6 +8150,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `14: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -7547,6 +8167,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate12, Partial, After> {
+    #[doc =
+    "Transition from `12: e_if_else_with_variables other` to `41: e_if_else_with_variables other` using `15: [] <span>`"]
     pub fn next(self)
         ->
             (Template<EIfElseWithVariablesTemplate41, Partial, After>,
@@ -7562,6 +8184,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `16: [true] {{t:element}}</span>`"]
     pub fn t_true(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -7582,6 +8206,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `17: [false] {{f:element}}</span>`"]
     pub fn f_false(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -7602,6 +8228,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `18: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -7617,6 +8245,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `19: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -7632,6 +8262,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `14: f_each_empty other` using `20: [enter_loop] `"]
     pub fn next_enter_loop(self)
         ->
             (Template<FEachEmptyTemplate14, Partial, After>,
@@ -7647,6 +8279,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `44: f_each_empty other` using `21: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachEmptyTemplate44, Partial, After>,
@@ -7662,6 +8296,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate15, Partial, After> {
+    #[doc =
+    "Transition from `15: f_each_one_variable other` to `45: f_each_one_variable other` using `22: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachOneVariableTemplate45, Partial, After>,
@@ -7677,6 +8313,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `45: f_each_one_variable other` using `23: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -7698,6 +8336,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `46: f_each_one_variable other` using `24: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachOneVariableTemplate46, Partial, After>,
@@ -7713,6 +8353,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate16, Partial, After> {
+    #[doc =
+    "Transition from `16: f_each_two_variables other` to `47: f_each_two_variables other` using `25: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachTwoVariablesTemplate47, Partial, After>,
@@ -7728,6 +8370,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `48: f_each_two_variables other` using `26: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -7749,6 +8393,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate48, Partial, After> {
+    #[doc =
+    "Transition from `48: f_each_two_variables other` to `47: f_each_two_variables other` using `27: [] {{content:element}}`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -7770,6 +8416,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `49: f_each_two_variables other` using `28: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesTemplate49, Partial, After>,
@@ -7785,6 +8433,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate17, Partial, After> {
+    #[doc =
+    "Transition from `17: g_empty_template_multiple other` to `50: g_empty_template_multiple inner` using `29: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -7807,6 +8457,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate50, Partial, After> {
+    #[doc =
+    "Transition from `50: g_empty_template_multiple inner` to `52: g_empty_template_multiple inner` using `32: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -7829,6 +8481,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate18, Partial, After> {
+    #[doc =
+    "Transition from `18: g_empty_template other` to `54: g_empty_template inner` using `35: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -7852,6 +8506,8 @@ impl<Partial, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<CSelfClosingBooleanAttrTemplate19,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `19: g_partial_block_partial other` to `56: g_partial_block_partial partial` using `38: [] <span>{{before:element}}<p>`"]
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<Partial, (),
@@ -7880,6 +8536,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<CSelfClosingBooleanAttrTemplate56,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `56: g_partial_block_partial partial` to `57: g_partial_block_partial partial` using `39: [] </p><div>`"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -7902,6 +8560,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate57, Partial, After> {
+    #[doc =
+    "Transition from `57: g_partial_block_partial partial` to `58: g_partial_block_partial other` using `40: [] </div>{{after:element}}</span>`"]
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate58, Partial, After>,
@@ -7922,6 +8582,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate20, Partial, After> {
+    #[doc =
+    "Transition from `20: g_partial_block other` to `59: g_partial_block inner` using `41: [] <span>hello`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockPartialTemplate19,
@@ -7959,6 +8621,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate60, Partial, After> {
+    #[doc =
+    "Transition from `60: g_partial_block other` to `61: g_partial_block other` using `43: [] childrenstart{{test:element}}childrenend`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate61, Partial, After>,
@@ -7979,6 +8643,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate59, Partial, After> {
+    #[doc =
+    "Transition from `59: g_partial_block inner` to `62: g_partial_block other` using `45: [] world</span>`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockTemplate62, Partial, After>,
@@ -7995,6 +8661,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate21, Partial, After> {
+    #[doc =
+    "Transition from `21: g_template_only_partial_block_multiple other` to `63: g_template_only_partial_block_multiple inner` using `46: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -8018,6 +8686,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate63, Partial, After> {
+    #[doc =
+    "Transition from `63: g_template_only_partial_block_multiple inner` to `65: g_template_only_partial_block_multiple inner` using `49: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -8041,6 +8711,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate22, Partial, After> {
+    #[doc =
+    "Transition from `22: g_template_only_partial_block_with_text_multiple other` to `67: g_template_only_partial_block_with_text_multiple inner` using `52: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -8087,6 +8759,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate68, Partial, After> {
+    #[doc =
+    "Transition from `68: g_template_only_partial_block_with_text_multiple other` to `69: g_template_only_partial_block_with_text_multiple other` using `54: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate69,
@@ -8104,6 +8778,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate67, Partial, After> {
+    #[doc =
+    "Transition from `67: g_template_only_partial_block_with_text_multiple inner` to `70: g_template_only_partial_block_with_text_multiple inner` using `56: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -8150,6 +8826,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate71, Partial, After> {
+    #[doc =
+    "Transition from `71: g_template_only_partial_block_with_text_multiple other` to `72: g_template_only_partial_block_with_text_multiple other` using `58: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate72,
@@ -8167,6 +8845,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate23, Partial, After> {
+    #[doc =
+    "Transition from `23: g_template_only_partial_block_with_text other` to `73: g_template_only_partial_block_with_text inner` using `60: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -8208,6 +8888,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate74, Partial, After> {
+    #[doc =
+    "Transition from `74: g_template_only_partial_block_with_text other` to `75: g_template_only_partial_block_with_text other` using `62: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextTemplate75, Partial,
@@ -8224,6 +8906,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate24, Partial, After> {
+    #[doc =
+    "Transition from `24: g_template_only_partial_block_with_variable_multiple other` to `76: g_template_only_partial_block_with_variable_multiple inner` using `64: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -8271,6 +8955,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate77, Partial, After> {
+    #[doc =
+    "Transition from `77: g_template_only_partial_block_with_variable_multiple other` to `78: g_template_only_partial_block_with_variable_multiple other` using `66: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate78,
@@ -8293,6 +8979,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate76, Partial, After> {
+    #[doc =
+    "Transition from `76: g_template_only_partial_block_with_variable_multiple inner` to `79: g_template_only_partial_block_with_variable_multiple inner` using `68: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -8340,6 +9028,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate80, Partial, After> {
+    #[doc =
+    "Transition from `80: g_template_only_partial_block_with_variable_multiple other` to `81: g_template_only_partial_block_with_variable_multiple other` using `70: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate81,
@@ -8362,6 +9052,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate79, Partial, After> {
+    #[doc =
+    "Transition from `79: g_template_only_partial_block_with_variable_multiple inner` to `82: g_template_only_partial_block_with_variable_multiple other` using `72: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate82,
@@ -8379,6 +9071,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate25, Partial, After> {
+    #[doc =
+    "Transition from `25: g_template_only_partial_block_with_variable other` to `83: g_template_only_partial_block_with_variable inner` using `73: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -8423,6 +9117,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate84, Partial, After> {
+    #[doc =
+    "Transition from `84: g_template_only_partial_block_with_variable other` to `85: g_template_only_partial_block_with_variable other` using `75: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate85,
@@ -8444,6 +9140,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate83, Partial, After> {
+    #[doc =
+    "Transition from `83: g_template_only_partial_block_with_variable inner` to `86: g_template_only_partial_block_with_variable other` using `77: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate86,
@@ -8460,6 +9158,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate26, Partial, After> {
+    #[doc =
+    "Transition from `26: g_template_only_partial_block other` to `87: g_template_only_partial_block inner` using `78: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -8482,6 +9182,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `89: f_each_two_variables_html other` using `81: [enter_loop] \n    <li>{{title:element}}</li>\n    <li>`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -8503,6 +9205,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate89, Partial, After> {
+    #[doc =
+    "Transition from `89: f_each_two_variables_html other` to `27: f_each_two_variables_html other` using `82: [] {{content:element}}</li>\n`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -8524,6 +9228,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<CSelfClosingBooleanAttrTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `90: f_each_two_variables_html other` using `83: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesHtmlTemplate90, Partial, After>,
@@ -8540,6 +9246,8 @@ impl<Partial, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<CSelfClosingBooleanAttrTemplate28,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `28: g_only_partial_block other` to `91: g_only_partial_block partial` using `84: [] `"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -8761,6 +9469,8 @@ pub struct CSelfClosingTemplate90;
 #[must_use]
 pub struct CSelfClosingTemplate91;
 impl<Partial, After> Template<CSelfClosingTemplate1, Partial, After> {
+    #[doc =
+    "Transition from `1: b_text other` to `29: b_text other` using `0: [] hello`"]
     pub fn next(self)
         ->
             (Template<BTextTemplate29, Partial, After>,
@@ -8775,6 +9485,8 @@ impl<Partial, After> Template<CSelfClosingTemplate1, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate2, Partial, After> {
+    #[doc =
+    "Transition from `2: c_element_with_attribute other` to `30: c_element_with_attribute other` using `1: [] <a class=\"test\"></a>`"]
     pub fn next(self)
         ->
             (Template<CElementWithAttributeTemplate30, Partial, After>,
@@ -8792,6 +9504,8 @@ impl<Partial, After> Template<CSelfClosingTemplate2, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate3, Partial, After> {
+    #[doc =
+    "Transition from `3: c_element_with_content other` to `31: c_element_with_content other` using `2: [] <h1>hi</h1>`"]
     pub fn next(self)
         ->
             (Template<CElementWithContentTemplate31, Partial, After>,
@@ -8806,6 +9520,8 @@ impl<Partial, After> Template<CSelfClosingTemplate3, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate4, Partial, After> {
+    #[doc =
+    "Transition from `4: c_empty_element other` to `32: c_empty_element other` using `3: [] <h1></h1>`"]
     pub fn next(self)
         ->
             (Template<CEmptyElementTemplate32, Partial, After>,
@@ -8820,6 +9536,8 @@ impl<Partial, After> Template<CSelfClosingTemplate4, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate5, Partial, After> {
+    #[doc =
+    "Transition from `5: c_self_closing_boolean_attr other` to `33: c_self_closing_boolean_attr other` using `4: [] <!DOCTYPE html>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingBooleanAttrTemplate33, Partial, After>,
@@ -8837,6 +9555,8 @@ impl<Partial, After> Template<CSelfClosingTemplate5, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate6, Partial, After> {
+    #[doc =
+    "Transition from `6: c_self_closing other` to `34: c_self_closing other` using `5: [] <!DOCTYPE>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingTemplate34, Partial, After>,
@@ -8851,6 +9571,8 @@ impl<Partial, After> Template<CSelfClosingTemplate6, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate7, Partial, After> {
+    #[doc =
+    "Transition from `7: d_element_with_attribute_and_variables other` to `35: d_element_with_attribute_and_variables other` using `6: [] <a class=\"{{test:attr}}\">`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate35, Partial,
@@ -8872,6 +9594,8 @@ impl<Partial, After> Template<CSelfClosingTemplate7, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate35, Partial, After> {
+    #[doc =
+    "Transition from `35: d_element_with_attribute_and_variables other` to `36: d_element_with_attribute_and_variables other` using `7: [] {{var:element}}</a>`"]
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
@@ -8892,6 +9616,8 @@ impl<Partial, After> Template<CSelfClosingTemplate35, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate8, Partial, After> {
+    #[doc =
+    "Transition from `8: d_variable other` to `37: d_variable other` using `8: [] <p>{{test:element}}</p>`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate37, Partial, After>,
@@ -8911,6 +9637,8 @@ impl<Partial, After> Template<CSelfClosingTemplate8, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `9: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -8925,6 +9653,8 @@ impl<Partial, After> Template<CSelfClosingTemplate9, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `10: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -8939,6 +9669,8 @@ impl<Partial, After> Template<CSelfClosingTemplate9, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `11: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -8953,6 +9685,8 @@ impl<Partial, After> Template<CSelfClosingTemplate10, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `12: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -8967,6 +9701,8 @@ impl<Partial, After> Template<CSelfClosingTemplate10, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `13: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -8981,6 +9717,8 @@ impl<Partial, After> Template<CSelfClosingTemplate11, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `14: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -8995,6 +9733,8 @@ impl<Partial, After> Template<CSelfClosingTemplate11, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate12, Partial, After> {
+    #[doc =
+    "Transition from `12: e_if_else_with_variables other` to `41: e_if_else_with_variables other` using `15: [] <span>`"]
     pub fn next(self)
         ->
             (Template<EIfElseWithVariablesTemplate41, Partial, After>,
@@ -9009,6 +9749,8 @@ impl<Partial, After> Template<CSelfClosingTemplate12, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `16: [true] {{t:element}}</span>`"]
     pub fn t_true(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -9028,6 +9770,8 @@ impl<Partial, After> Template<CSelfClosingTemplate41, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `17: [false] {{f:element}}</span>`"]
     pub fn f_false(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -9047,6 +9791,8 @@ impl<Partial, After> Template<CSelfClosingTemplate41, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `18: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -9061,6 +9807,8 @@ impl<Partial, After> Template<CSelfClosingTemplate13, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `19: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -9075,6 +9823,8 @@ impl<Partial, After> Template<CSelfClosingTemplate13, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `14: f_each_empty other` using `20: [enter_loop] `"]
     pub fn next_enter_loop(self)
         ->
             (Template<FEachEmptyTemplate14, Partial, After>,
@@ -9089,6 +9839,8 @@ impl<Partial, After> Template<CSelfClosingTemplate14, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `44: f_each_empty other` using `21: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachEmptyTemplate44, Partial, After>,
@@ -9103,6 +9855,8 @@ impl<Partial, After> Template<CSelfClosingTemplate14, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate15, Partial, After> {
+    #[doc =
+    "Transition from `15: f_each_one_variable other` to `45: f_each_one_variable other` using `22: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachOneVariableTemplate45, Partial, After>,
@@ -9117,6 +9871,8 @@ impl<Partial, After> Template<CSelfClosingTemplate15, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `45: f_each_one_variable other` using `23: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -9137,6 +9893,8 @@ impl<Partial, After> Template<CSelfClosingTemplate45, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `46: f_each_one_variable other` using `24: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachOneVariableTemplate46, Partial, After>,
@@ -9151,6 +9909,8 @@ impl<Partial, After> Template<CSelfClosingTemplate45, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate16, Partial, After> {
+    #[doc =
+    "Transition from `16: f_each_two_variables other` to `47: f_each_two_variables other` using `25: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachTwoVariablesTemplate47, Partial, After>,
@@ -9165,6 +9925,8 @@ impl<Partial, After> Template<CSelfClosingTemplate16, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `48: f_each_two_variables other` using `26: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -9185,6 +9947,8 @@ impl<Partial, After> Template<CSelfClosingTemplate47, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate48, Partial, After> {
+    #[doc =
+    "Transition from `48: f_each_two_variables other` to `47: f_each_two_variables other` using `27: [] {{content:element}}`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -9205,6 +9969,8 @@ impl<Partial, After> Template<CSelfClosingTemplate48, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `49: f_each_two_variables other` using `28: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesTemplate49, Partial, After>,
@@ -9219,6 +9985,8 @@ impl<Partial, After> Template<CSelfClosingTemplate47, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate17, Partial, After> {
+    #[doc =
+    "Transition from `17: g_empty_template_multiple other` to `50: g_empty_template_multiple inner` using `29: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -9240,6 +10008,8 @@ impl<Partial, After> Template<CSelfClosingTemplate17, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate50, Partial, After> {
+    #[doc =
+    "Transition from `50: g_empty_template_multiple inner` to `52: g_empty_template_multiple inner` using `32: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -9261,6 +10031,8 @@ impl<Partial, After> Template<CSelfClosingTemplate50, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate18, Partial, After> {
+    #[doc =
+    "Transition from `18: g_empty_template other` to `54: g_empty_template inner` using `35: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -9284,6 +10056,8 @@ impl<Partial, After> Template<CSelfClosingTemplate18, Partial, After> {
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<CSelfClosingTemplate19,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `19: g_partial_block_partial other` to `56: g_partial_block_partial partial` using `38: [] <span>{{before:element}}<p>`"]
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<Partial, (),
@@ -9312,6 +10086,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<CSelfClosingTemplate56,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `56: g_partial_block_partial partial` to `57: g_partial_block_partial partial` using `39: [] </p><div>`"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -9333,6 +10109,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate57, Partial, After> {
+    #[doc =
+    "Transition from `57: g_partial_block_partial partial` to `58: g_partial_block_partial other` using `40: [] </div>{{after:element}}</span>`"]
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate58, Partial, After>,
@@ -9352,6 +10130,8 @@ impl<Partial, After> Template<CSelfClosingTemplate57, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate20, Partial, After> {
+    #[doc =
+    "Transition from `20: g_partial_block other` to `59: g_partial_block inner` using `41: [] <span>hello`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockPartialTemplate19,
@@ -9388,6 +10168,8 @@ impl<Partial, After> Template<CSelfClosingTemplate20, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate60, Partial, After> {
+    #[doc =
+    "Transition from `60: g_partial_block other` to `61: g_partial_block other` using `43: [] childrenstart{{test:element}}childrenend`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate61, Partial, After>,
@@ -9407,6 +10189,8 @@ impl<Partial, After> Template<CSelfClosingTemplate60, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate59, Partial, After> {
+    #[doc =
+    "Transition from `59: g_partial_block inner` to `62: g_partial_block other` using `45: [] world</span>`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockTemplate62, Partial, After>,
@@ -9422,6 +10206,8 @@ impl<Partial, After> Template<CSelfClosingTemplate59, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate21, Partial, After> {
+    #[doc =
+    "Transition from `21: g_template_only_partial_block_multiple other` to `63: g_template_only_partial_block_multiple inner` using `46: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -9444,6 +10230,8 @@ impl<Partial, After> Template<CSelfClosingTemplate21, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate63, Partial, After> {
+    #[doc =
+    "Transition from `63: g_template_only_partial_block_multiple inner` to `65: g_template_only_partial_block_multiple inner` using `49: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -9466,6 +10254,8 @@ impl<Partial, After> Template<CSelfClosingTemplate63, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate22, Partial, After> {
+    #[doc =
+    "Transition from `22: g_template_only_partial_block_with_text_multiple other` to `67: g_template_only_partial_block_with_text_multiple inner` using `52: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -9511,6 +10301,8 @@ impl<Partial, After> Template<CSelfClosingTemplate22, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate68, Partial, After> {
+    #[doc =
+    "Transition from `68: g_template_only_partial_block_with_text_multiple other` to `69: g_template_only_partial_block_with_text_multiple other` using `54: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate69,
@@ -9527,6 +10319,8 @@ impl<Partial, After> Template<CSelfClosingTemplate68, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate67, Partial, After> {
+    #[doc =
+    "Transition from `67: g_template_only_partial_block_with_text_multiple inner` to `70: g_template_only_partial_block_with_text_multiple inner` using `56: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -9572,6 +10366,8 @@ impl<Partial, After> Template<CSelfClosingTemplate67, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate71, Partial, After> {
+    #[doc =
+    "Transition from `71: g_template_only_partial_block_with_text_multiple other` to `72: g_template_only_partial_block_with_text_multiple other` using `58: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate72,
@@ -9588,6 +10384,8 @@ impl<Partial, After> Template<CSelfClosingTemplate71, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate23, Partial, After> {
+    #[doc =
+    "Transition from `23: g_template_only_partial_block_with_text other` to `73: g_template_only_partial_block_with_text inner` using `60: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -9628,6 +10426,8 @@ impl<Partial, After> Template<CSelfClosingTemplate23, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate74, Partial, After> {
+    #[doc =
+    "Transition from `74: g_template_only_partial_block_with_text other` to `75: g_template_only_partial_block_with_text other` using `62: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextTemplate75, Partial,
@@ -9643,6 +10443,8 @@ impl<Partial, After> Template<CSelfClosingTemplate74, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate24, Partial, After> {
+    #[doc =
+    "Transition from `24: g_template_only_partial_block_with_variable_multiple other` to `76: g_template_only_partial_block_with_variable_multiple inner` using `64: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -9689,6 +10491,8 @@ impl<Partial, After> Template<CSelfClosingTemplate24, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate77, Partial, After> {
+    #[doc =
+    "Transition from `77: g_template_only_partial_block_with_variable_multiple other` to `78: g_template_only_partial_block_with_variable_multiple other` using `66: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate78,
@@ -9710,6 +10514,8 @@ impl<Partial, After> Template<CSelfClosingTemplate77, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate76, Partial, After> {
+    #[doc =
+    "Transition from `76: g_template_only_partial_block_with_variable_multiple inner` to `79: g_template_only_partial_block_with_variable_multiple inner` using `68: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -9756,6 +10562,8 @@ impl<Partial, After> Template<CSelfClosingTemplate76, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate80, Partial, After> {
+    #[doc =
+    "Transition from `80: g_template_only_partial_block_with_variable_multiple other` to `81: g_template_only_partial_block_with_variable_multiple other` using `70: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate81,
@@ -9777,6 +10585,8 @@ impl<Partial, After> Template<CSelfClosingTemplate80, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate79, Partial, After> {
+    #[doc =
+    "Transition from `79: g_template_only_partial_block_with_variable_multiple inner` to `82: g_template_only_partial_block_with_variable_multiple other` using `72: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate82,
@@ -9793,6 +10603,8 @@ impl<Partial, After> Template<CSelfClosingTemplate79, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate25, Partial, After> {
+    #[doc =
+    "Transition from `25: g_template_only_partial_block_with_variable other` to `83: g_template_only_partial_block_with_variable inner` using `73: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -9836,6 +10648,8 @@ impl<Partial, After> Template<CSelfClosingTemplate25, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate84, Partial, After> {
+    #[doc =
+    "Transition from `84: g_template_only_partial_block_with_variable other` to `85: g_template_only_partial_block_with_variable other` using `75: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate85,
@@ -9856,6 +10670,8 @@ impl<Partial, After> Template<CSelfClosingTemplate84, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate83, Partial, After> {
+    #[doc =
+    "Transition from `83: g_template_only_partial_block_with_variable inner` to `86: g_template_only_partial_block_with_variable other` using `77: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate86,
@@ -9871,6 +10687,8 @@ impl<Partial, After> Template<CSelfClosingTemplate83, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate26, Partial, After> {
+    #[doc =
+    "Transition from `26: g_template_only_partial_block other` to `87: g_template_only_partial_block inner` using `78: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -9892,6 +10710,8 @@ impl<Partial, After> Template<CSelfClosingTemplate26, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `89: f_each_two_variables_html other` using `81: [enter_loop] \n    <li>{{title:element}}</li>\n    <li>`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -9912,6 +10732,8 @@ impl<Partial, After> Template<CSelfClosingTemplate27, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate89, Partial, After> {
+    #[doc =
+    "Transition from `89: f_each_two_variables_html other` to `27: f_each_two_variables_html other` using `82: [] {{content:element}}</li>\n`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -9932,6 +10754,8 @@ impl<Partial, After> Template<CSelfClosingTemplate89, Partial, After> {
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `90: f_each_two_variables_html other` using `83: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesHtmlTemplate90, Partial, After>,
@@ -9948,6 +10772,8 @@ impl<Partial, After> Template<CSelfClosingTemplate27, Partial, After> {
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<CSelfClosingTemplate28,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `28: g_only_partial_block other` to `91: g_only_partial_block partial` using `84: [] `"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -10166,6 +10992,8 @@ pub struct DElementWithAttributeAndVariablesTemplate90;
 pub struct DElementWithAttributeAndVariablesTemplate91;
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate1, Partial, After> {
+    #[doc =
+    "Transition from `1: b_text other` to `29: b_text other` using `0: [] hello`"]
     pub fn next(self)
         ->
             (Template<BTextTemplate29, Partial, After>,
@@ -10181,6 +11009,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate2, Partial, After> {
+    #[doc =
+    "Transition from `2: c_element_with_attribute other` to `30: c_element_with_attribute other` using `1: [] <a class=\"test\"></a>`"]
     pub fn next(self)
         ->
             (Template<CElementWithAttributeTemplate30, Partial, After>,
@@ -10199,6 +11029,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate3, Partial, After> {
+    #[doc =
+    "Transition from `3: c_element_with_content other` to `31: c_element_with_content other` using `2: [] <h1>hi</h1>`"]
     pub fn next(self)
         ->
             (Template<CElementWithContentTemplate31, Partial, After>,
@@ -10214,6 +11046,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate4, Partial, After> {
+    #[doc =
+    "Transition from `4: c_empty_element other` to `32: c_empty_element other` using `3: [] <h1></h1>`"]
     pub fn next(self)
         ->
             (Template<CEmptyElementTemplate32, Partial, After>,
@@ -10229,6 +11063,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate5, Partial, After> {
+    #[doc =
+    "Transition from `5: c_self_closing_boolean_attr other` to `33: c_self_closing_boolean_attr other` using `4: [] <!DOCTYPE html>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingBooleanAttrTemplate33, Partial, After>,
@@ -10247,6 +11083,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate6, Partial, After> {
+    #[doc =
+    "Transition from `6: c_self_closing other` to `34: c_self_closing other` using `5: [] <!DOCTYPE>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingTemplate34, Partial, After>,
@@ -10262,6 +11100,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate7, Partial, After> {
+    #[doc =
+    "Transition from `7: d_element_with_attribute_and_variables other` to `35: d_element_with_attribute_and_variables other` using `6: [] <a class=\"{{test:attr}}\">`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate35, Partial,
@@ -10284,6 +11124,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate35, Partial, After> {
+    #[doc =
+    "Transition from `35: d_element_with_attribute_and_variables other` to `36: d_element_with_attribute_and_variables other` using `7: [] {{var:element}}</a>`"]
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
@@ -10305,6 +11147,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate8, Partial, After> {
+    #[doc =
+    "Transition from `8: d_variable other` to `37: d_variable other` using `8: [] <p>{{test:element}}</p>`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate37, Partial, After>,
@@ -10325,6 +11169,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `9: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -10340,6 +11186,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `10: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -10355,6 +11203,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `11: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -10370,6 +11220,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `12: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -10385,6 +11237,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `13: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -10400,6 +11254,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `14: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -10415,6 +11271,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate12, Partial, After> {
+    #[doc =
+    "Transition from `12: e_if_else_with_variables other` to `41: e_if_else_with_variables other` using `15: [] <span>`"]
     pub fn next(self)
         ->
             (Template<EIfElseWithVariablesTemplate41, Partial, After>,
@@ -10430,6 +11288,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `16: [true] {{t:element}}</span>`"]
     pub fn t_true(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -10450,6 +11310,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `17: [false] {{f:element}}</span>`"]
     pub fn f_false(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -10470,6 +11332,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `18: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -10485,6 +11349,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `19: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -10500,6 +11366,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `14: f_each_empty other` using `20: [enter_loop] `"]
     pub fn next_enter_loop(self)
         ->
             (Template<FEachEmptyTemplate14, Partial, After>,
@@ -10515,6 +11383,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `44: f_each_empty other` using `21: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachEmptyTemplate44, Partial, After>,
@@ -10530,6 +11400,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate15, Partial, After> {
+    #[doc =
+    "Transition from `15: f_each_one_variable other` to `45: f_each_one_variable other` using `22: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachOneVariableTemplate45, Partial, After>,
@@ -10545,6 +11417,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `45: f_each_one_variable other` using `23: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -10566,6 +11440,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `46: f_each_one_variable other` using `24: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachOneVariableTemplate46, Partial, After>,
@@ -10581,6 +11457,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate16, Partial, After> {
+    #[doc =
+    "Transition from `16: f_each_two_variables other` to `47: f_each_two_variables other` using `25: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachTwoVariablesTemplate47, Partial, After>,
@@ -10596,6 +11474,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `48: f_each_two_variables other` using `26: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -10617,6 +11497,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate48, Partial, After> {
+    #[doc =
+    "Transition from `48: f_each_two_variables other` to `47: f_each_two_variables other` using `27: [] {{content:element}}`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -10638,6 +11520,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `49: f_each_two_variables other` using `28: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesTemplate49, Partial, After>,
@@ -10653,6 +11537,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate17, Partial, After> {
+    #[doc =
+    "Transition from `17: g_empty_template_multiple other` to `50: g_empty_template_multiple inner` using `29: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -10675,6 +11561,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate50, Partial, After> {
+    #[doc =
+    "Transition from `50: g_empty_template_multiple inner` to `52: g_empty_template_multiple inner` using `32: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -10697,6 +11585,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate18, Partial, After> {
+    #[doc =
+    "Transition from `18: g_empty_template other` to `54: g_empty_template inner` using `35: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -10720,6 +11610,8 @@ impl<Partial, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<DElementWithAttributeAndVariablesTemplate19,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `19: g_partial_block_partial other` to `56: g_partial_block_partial partial` using `38: [] <span>{{before:element}}<p>`"]
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<Partial, (),
@@ -10748,6 +11640,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<DElementWithAttributeAndVariablesTemplate56,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `56: g_partial_block_partial partial` to `57: g_partial_block_partial partial` using `39: [] </p><div>`"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -10770,6 +11664,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate57, Partial, After> {
+    #[doc =
+    "Transition from `57: g_partial_block_partial partial` to `58: g_partial_block_partial other` using `40: [] </div>{{after:element}}</span>`"]
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate58, Partial, After>,
@@ -10790,6 +11686,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate20, Partial, After> {
+    #[doc =
+    "Transition from `20: g_partial_block other` to `59: g_partial_block inner` using `41: [] <span>hello`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockPartialTemplate19,
@@ -10827,6 +11725,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate60, Partial, After> {
+    #[doc =
+    "Transition from `60: g_partial_block other` to `61: g_partial_block other` using `43: [] childrenstart{{test:element}}childrenend`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate61, Partial, After>,
@@ -10847,6 +11747,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate59, Partial, After> {
+    #[doc =
+    "Transition from `59: g_partial_block inner` to `62: g_partial_block other` using `45: [] world</span>`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockTemplate62, Partial, After>,
@@ -10863,6 +11765,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate21, Partial, After> {
+    #[doc =
+    "Transition from `21: g_template_only_partial_block_multiple other` to `63: g_template_only_partial_block_multiple inner` using `46: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -10886,6 +11790,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate63, Partial, After> {
+    #[doc =
+    "Transition from `63: g_template_only_partial_block_multiple inner` to `65: g_template_only_partial_block_multiple inner` using `49: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -10909,6 +11815,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate22, Partial, After> {
+    #[doc =
+    "Transition from `22: g_template_only_partial_block_with_text_multiple other` to `67: g_template_only_partial_block_with_text_multiple inner` using `52: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -10955,6 +11863,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate68, Partial, After> {
+    #[doc =
+    "Transition from `68: g_template_only_partial_block_with_text_multiple other` to `69: g_template_only_partial_block_with_text_multiple other` using `54: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate69,
@@ -10972,6 +11882,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate67, Partial, After> {
+    #[doc =
+    "Transition from `67: g_template_only_partial_block_with_text_multiple inner` to `70: g_template_only_partial_block_with_text_multiple inner` using `56: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -11018,6 +11930,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate71, Partial, After> {
+    #[doc =
+    "Transition from `71: g_template_only_partial_block_with_text_multiple other` to `72: g_template_only_partial_block_with_text_multiple other` using `58: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate72,
@@ -11035,6 +11949,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate23, Partial, After> {
+    #[doc =
+    "Transition from `23: g_template_only_partial_block_with_text other` to `73: g_template_only_partial_block_with_text inner` using `60: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -11076,6 +11992,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate74, Partial, After> {
+    #[doc =
+    "Transition from `74: g_template_only_partial_block_with_text other` to `75: g_template_only_partial_block_with_text other` using `62: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextTemplate75, Partial,
@@ -11092,6 +12010,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate24, Partial, After> {
+    #[doc =
+    "Transition from `24: g_template_only_partial_block_with_variable_multiple other` to `76: g_template_only_partial_block_with_variable_multiple inner` using `64: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -11139,6 +12059,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate77, Partial, After> {
+    #[doc =
+    "Transition from `77: g_template_only_partial_block_with_variable_multiple other` to `78: g_template_only_partial_block_with_variable_multiple other` using `66: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate78,
@@ -11161,6 +12083,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate76, Partial, After> {
+    #[doc =
+    "Transition from `76: g_template_only_partial_block_with_variable_multiple inner` to `79: g_template_only_partial_block_with_variable_multiple inner` using `68: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -11208,6 +12132,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate80, Partial, After> {
+    #[doc =
+    "Transition from `80: g_template_only_partial_block_with_variable_multiple other` to `81: g_template_only_partial_block_with_variable_multiple other` using `70: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate81,
@@ -11230,6 +12156,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate79, Partial, After> {
+    #[doc =
+    "Transition from `79: g_template_only_partial_block_with_variable_multiple inner` to `82: g_template_only_partial_block_with_variable_multiple other` using `72: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate82,
@@ -11247,6 +12175,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate25, Partial, After> {
+    #[doc =
+    "Transition from `25: g_template_only_partial_block_with_variable other` to `83: g_template_only_partial_block_with_variable inner` using `73: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -11291,6 +12221,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate84, Partial, After> {
+    #[doc =
+    "Transition from `84: g_template_only_partial_block_with_variable other` to `85: g_template_only_partial_block_with_variable other` using `75: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate85,
@@ -11312,6 +12244,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate83, Partial, After> {
+    #[doc =
+    "Transition from `83: g_template_only_partial_block_with_variable inner` to `86: g_template_only_partial_block_with_variable other` using `77: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate86,
@@ -11328,6 +12262,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate26, Partial, After> {
+    #[doc =
+    "Transition from `26: g_template_only_partial_block other` to `87: g_template_only_partial_block inner` using `78: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -11350,6 +12286,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `89: f_each_two_variables_html other` using `81: [enter_loop] \n    <li>{{title:element}}</li>\n    <li>`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -11371,6 +12309,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate89, Partial, After> {
+    #[doc =
+    "Transition from `89: f_each_two_variables_html other` to `27: f_each_two_variables_html other` using `82: [] {{content:element}}</li>\n`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -11392,6 +12332,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<DElementWithAttributeAndVariablesTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `90: f_each_two_variables_html other` using `83: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesHtmlTemplate90, Partial, After>,
@@ -11408,6 +12350,8 @@ impl<Partial, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<DElementWithAttributeAndVariablesTemplate28,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `28: g_only_partial_block other` to `91: g_only_partial_block partial` using `84: [] `"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -11629,6 +12573,8 @@ pub struct DVariableTemplate90;
 #[must_use]
 pub struct DVariableTemplate91;
 impl<Partial, After> Template<DVariableTemplate1, Partial, After> {
+    #[doc =
+    "Transition from `1: b_text other` to `29: b_text other` using `0: [] hello`"]
     pub fn next(self)
         ->
             (Template<BTextTemplate29, Partial, After>,
@@ -11643,6 +12589,8 @@ impl<Partial, After> Template<DVariableTemplate1, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate2, Partial, After> {
+    #[doc =
+    "Transition from `2: c_element_with_attribute other` to `30: c_element_with_attribute other` using `1: [] <a class=\"test\"></a>`"]
     pub fn next(self)
         ->
             (Template<CElementWithAttributeTemplate30, Partial, After>,
@@ -11660,6 +12608,8 @@ impl<Partial, After> Template<DVariableTemplate2, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate3, Partial, After> {
+    #[doc =
+    "Transition from `3: c_element_with_content other` to `31: c_element_with_content other` using `2: [] <h1>hi</h1>`"]
     pub fn next(self)
         ->
             (Template<CElementWithContentTemplate31, Partial, After>,
@@ -11674,6 +12624,8 @@ impl<Partial, After> Template<DVariableTemplate3, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate4, Partial, After> {
+    #[doc =
+    "Transition from `4: c_empty_element other` to `32: c_empty_element other` using `3: [] <h1></h1>`"]
     pub fn next(self)
         ->
             (Template<CEmptyElementTemplate32, Partial, After>,
@@ -11688,6 +12640,8 @@ impl<Partial, After> Template<DVariableTemplate4, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate5, Partial, After> {
+    #[doc =
+    "Transition from `5: c_self_closing_boolean_attr other` to `33: c_self_closing_boolean_attr other` using `4: [] <!DOCTYPE html>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingBooleanAttrTemplate33, Partial, After>,
@@ -11705,6 +12659,8 @@ impl<Partial, After> Template<DVariableTemplate5, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate6, Partial, After> {
+    #[doc =
+    "Transition from `6: c_self_closing other` to `34: c_self_closing other` using `5: [] <!DOCTYPE>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingTemplate34, Partial, After>,
@@ -11719,6 +12675,8 @@ impl<Partial, After> Template<DVariableTemplate6, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate7, Partial, After> {
+    #[doc =
+    "Transition from `7: d_element_with_attribute_and_variables other` to `35: d_element_with_attribute_and_variables other` using `6: [] <a class=\"{{test:attr}}\">`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate35, Partial,
@@ -11740,6 +12698,8 @@ impl<Partial, After> Template<DVariableTemplate7, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate35, Partial, After> {
+    #[doc =
+    "Transition from `35: d_element_with_attribute_and_variables other` to `36: d_element_with_attribute_and_variables other` using `7: [] {{var:element}}</a>`"]
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
@@ -11760,6 +12720,8 @@ impl<Partial, After> Template<DVariableTemplate35, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate8, Partial, After> {
+    #[doc =
+    "Transition from `8: d_variable other` to `37: d_variable other` using `8: [] <p>{{test:element}}</p>`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate37, Partial, After>,
@@ -11779,6 +12741,8 @@ impl<Partial, After> Template<DVariableTemplate8, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `9: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -11793,6 +12757,8 @@ impl<Partial, After> Template<DVariableTemplate9, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `10: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -11807,6 +12773,8 @@ impl<Partial, After> Template<DVariableTemplate9, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `11: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -11821,6 +12789,8 @@ impl<Partial, After> Template<DVariableTemplate10, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `12: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -11835,6 +12805,8 @@ impl<Partial, After> Template<DVariableTemplate10, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `13: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -11849,6 +12821,8 @@ impl<Partial, After> Template<DVariableTemplate11, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `14: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -11863,6 +12837,8 @@ impl<Partial, After> Template<DVariableTemplate11, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate12, Partial, After> {
+    #[doc =
+    "Transition from `12: e_if_else_with_variables other` to `41: e_if_else_with_variables other` using `15: [] <span>`"]
     pub fn next(self)
         ->
             (Template<EIfElseWithVariablesTemplate41, Partial, After>,
@@ -11877,6 +12853,8 @@ impl<Partial, After> Template<DVariableTemplate12, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `16: [true] {{t:element}}</span>`"]
     pub fn t_true(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -11896,6 +12874,8 @@ impl<Partial, After> Template<DVariableTemplate41, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `17: [false] {{f:element}}</span>`"]
     pub fn f_false(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -11915,6 +12895,8 @@ impl<Partial, After> Template<DVariableTemplate41, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `18: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -11929,6 +12911,8 @@ impl<Partial, After> Template<DVariableTemplate13, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `19: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -11943,6 +12927,8 @@ impl<Partial, After> Template<DVariableTemplate13, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `14: f_each_empty other` using `20: [enter_loop] `"]
     pub fn next_enter_loop(self)
         ->
             (Template<FEachEmptyTemplate14, Partial, After>,
@@ -11957,6 +12943,8 @@ impl<Partial, After> Template<DVariableTemplate14, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `44: f_each_empty other` using `21: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachEmptyTemplate44, Partial, After>,
@@ -11971,6 +12959,8 @@ impl<Partial, After> Template<DVariableTemplate14, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate15, Partial, After> {
+    #[doc =
+    "Transition from `15: f_each_one_variable other` to `45: f_each_one_variable other` using `22: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachOneVariableTemplate45, Partial, After>,
@@ -11985,6 +12975,8 @@ impl<Partial, After> Template<DVariableTemplate15, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `45: f_each_one_variable other` using `23: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -12005,6 +12997,8 @@ impl<Partial, After> Template<DVariableTemplate45, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `46: f_each_one_variable other` using `24: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachOneVariableTemplate46, Partial, After>,
@@ -12019,6 +13013,8 @@ impl<Partial, After> Template<DVariableTemplate45, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate16, Partial, After> {
+    #[doc =
+    "Transition from `16: f_each_two_variables other` to `47: f_each_two_variables other` using `25: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachTwoVariablesTemplate47, Partial, After>,
@@ -12033,6 +13029,8 @@ impl<Partial, After> Template<DVariableTemplate16, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `48: f_each_two_variables other` using `26: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -12053,6 +13051,8 @@ impl<Partial, After> Template<DVariableTemplate47, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate48, Partial, After> {
+    #[doc =
+    "Transition from `48: f_each_two_variables other` to `47: f_each_two_variables other` using `27: [] {{content:element}}`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -12073,6 +13073,8 @@ impl<Partial, After> Template<DVariableTemplate48, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `49: f_each_two_variables other` using `28: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesTemplate49, Partial, After>,
@@ -12087,6 +13089,8 @@ impl<Partial, After> Template<DVariableTemplate47, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate17, Partial, After> {
+    #[doc =
+    "Transition from `17: g_empty_template_multiple other` to `50: g_empty_template_multiple inner` using `29: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -12108,6 +13112,8 @@ impl<Partial, After> Template<DVariableTemplate17, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate50, Partial, After> {
+    #[doc =
+    "Transition from `50: g_empty_template_multiple inner` to `52: g_empty_template_multiple inner` using `32: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -12129,6 +13135,8 @@ impl<Partial, After> Template<DVariableTemplate50, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate18, Partial, After> {
+    #[doc =
+    "Transition from `18: g_empty_template other` to `54: g_empty_template inner` using `35: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -12152,6 +13160,8 @@ impl<Partial, After> Template<DVariableTemplate18, Partial, After> {
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<DVariableTemplate19,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `19: g_partial_block_partial other` to `56: g_partial_block_partial partial` using `38: [] <span>{{before:element}}<p>`"]
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<Partial, (),
@@ -12180,6 +13190,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<DVariableTemplate56,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `56: g_partial_block_partial partial` to `57: g_partial_block_partial partial` using `39: [] </p><div>`"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -12201,6 +13213,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
     }
 }
 impl<Partial, After> Template<DVariableTemplate57, Partial, After> {
+    #[doc =
+    "Transition from `57: g_partial_block_partial partial` to `58: g_partial_block_partial other` using `40: [] </div>{{after:element}}</span>`"]
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate58, Partial, After>,
@@ -12220,6 +13234,8 @@ impl<Partial, After> Template<DVariableTemplate57, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate20, Partial, After> {
+    #[doc =
+    "Transition from `20: g_partial_block other` to `59: g_partial_block inner` using `41: [] <span>hello`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockPartialTemplate19,
@@ -12256,6 +13272,8 @@ impl<Partial, After> Template<DVariableTemplate20, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate60, Partial, After> {
+    #[doc =
+    "Transition from `60: g_partial_block other` to `61: g_partial_block other` using `43: [] childrenstart{{test:element}}childrenend`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate61, Partial, After>,
@@ -12275,6 +13293,8 @@ impl<Partial, After> Template<DVariableTemplate60, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate59, Partial, After> {
+    #[doc =
+    "Transition from `59: g_partial_block inner` to `62: g_partial_block other` using `45: [] world</span>`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockTemplate62, Partial, After>,
@@ -12290,6 +13310,8 @@ impl<Partial, After> Template<DVariableTemplate59, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate21, Partial, After> {
+    #[doc =
+    "Transition from `21: g_template_only_partial_block_multiple other` to `63: g_template_only_partial_block_multiple inner` using `46: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -12312,6 +13334,8 @@ impl<Partial, After> Template<DVariableTemplate21, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate63, Partial, After> {
+    #[doc =
+    "Transition from `63: g_template_only_partial_block_multiple inner` to `65: g_template_only_partial_block_multiple inner` using `49: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -12334,6 +13358,8 @@ impl<Partial, After> Template<DVariableTemplate63, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate22, Partial, After> {
+    #[doc =
+    "Transition from `22: g_template_only_partial_block_with_text_multiple other` to `67: g_template_only_partial_block_with_text_multiple inner` using `52: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -12379,6 +13405,8 @@ impl<Partial, After> Template<DVariableTemplate22, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate68, Partial, After> {
+    #[doc =
+    "Transition from `68: g_template_only_partial_block_with_text_multiple other` to `69: g_template_only_partial_block_with_text_multiple other` using `54: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate69,
@@ -12395,6 +13423,8 @@ impl<Partial, After> Template<DVariableTemplate68, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate67, Partial, After> {
+    #[doc =
+    "Transition from `67: g_template_only_partial_block_with_text_multiple inner` to `70: g_template_only_partial_block_with_text_multiple inner` using `56: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -12440,6 +13470,8 @@ impl<Partial, After> Template<DVariableTemplate67, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate71, Partial, After> {
+    #[doc =
+    "Transition from `71: g_template_only_partial_block_with_text_multiple other` to `72: g_template_only_partial_block_with_text_multiple other` using `58: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate72,
@@ -12456,6 +13488,8 @@ impl<Partial, After> Template<DVariableTemplate71, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate23, Partial, After> {
+    #[doc =
+    "Transition from `23: g_template_only_partial_block_with_text other` to `73: g_template_only_partial_block_with_text inner` using `60: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -12496,6 +13530,8 @@ impl<Partial, After> Template<DVariableTemplate23, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate74, Partial, After> {
+    #[doc =
+    "Transition from `74: g_template_only_partial_block_with_text other` to `75: g_template_only_partial_block_with_text other` using `62: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextTemplate75, Partial,
@@ -12511,6 +13547,8 @@ impl<Partial, After> Template<DVariableTemplate74, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate24, Partial, After> {
+    #[doc =
+    "Transition from `24: g_template_only_partial_block_with_variable_multiple other` to `76: g_template_only_partial_block_with_variable_multiple inner` using `64: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -12557,6 +13595,8 @@ impl<Partial, After> Template<DVariableTemplate24, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate77, Partial, After> {
+    #[doc =
+    "Transition from `77: g_template_only_partial_block_with_variable_multiple other` to `78: g_template_only_partial_block_with_variable_multiple other` using `66: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate78,
@@ -12578,6 +13618,8 @@ impl<Partial, After> Template<DVariableTemplate77, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate76, Partial, After> {
+    #[doc =
+    "Transition from `76: g_template_only_partial_block_with_variable_multiple inner` to `79: g_template_only_partial_block_with_variable_multiple inner` using `68: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -12624,6 +13666,8 @@ impl<Partial, After> Template<DVariableTemplate76, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate80, Partial, After> {
+    #[doc =
+    "Transition from `80: g_template_only_partial_block_with_variable_multiple other` to `81: g_template_only_partial_block_with_variable_multiple other` using `70: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate81,
@@ -12645,6 +13689,8 @@ impl<Partial, After> Template<DVariableTemplate80, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate79, Partial, After> {
+    #[doc =
+    "Transition from `79: g_template_only_partial_block_with_variable_multiple inner` to `82: g_template_only_partial_block_with_variable_multiple other` using `72: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate82,
@@ -12661,6 +13707,8 @@ impl<Partial, After> Template<DVariableTemplate79, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate25, Partial, After> {
+    #[doc =
+    "Transition from `25: g_template_only_partial_block_with_variable other` to `83: g_template_only_partial_block_with_variable inner` using `73: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -12704,6 +13752,8 @@ impl<Partial, After> Template<DVariableTemplate25, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate84, Partial, After> {
+    #[doc =
+    "Transition from `84: g_template_only_partial_block_with_variable other` to `85: g_template_only_partial_block_with_variable other` using `75: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate85,
@@ -12724,6 +13774,8 @@ impl<Partial, After> Template<DVariableTemplate84, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate83, Partial, After> {
+    #[doc =
+    "Transition from `83: g_template_only_partial_block_with_variable inner` to `86: g_template_only_partial_block_with_variable other` using `77: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate86,
@@ -12739,6 +13791,8 @@ impl<Partial, After> Template<DVariableTemplate83, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate26, Partial, After> {
+    #[doc =
+    "Transition from `26: g_template_only_partial_block other` to `87: g_template_only_partial_block inner` using `78: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -12760,6 +13814,8 @@ impl<Partial, After> Template<DVariableTemplate26, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `89: f_each_two_variables_html other` using `81: [enter_loop] \n    <li>{{title:element}}</li>\n    <li>`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -12780,6 +13836,8 @@ impl<Partial, After> Template<DVariableTemplate27, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate89, Partial, After> {
+    #[doc =
+    "Transition from `89: f_each_two_variables_html other` to `27: f_each_two_variables_html other` using `82: [] {{content:element}}</li>\n`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -12800,6 +13858,8 @@ impl<Partial, After> Template<DVariableTemplate89, Partial, After> {
     }
 }
 impl<Partial, After> Template<DVariableTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `90: f_each_two_variables_html other` using `83: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesHtmlTemplate90, Partial, After>,
@@ -12816,6 +13876,8 @@ impl<Partial, After> Template<DVariableTemplate27, Partial, After> {
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<DVariableTemplate28,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `28: g_only_partial_block other` to `91: g_only_partial_block partial` using `84: [] `"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -13033,6 +14095,8 @@ pub struct EIfElseEmptyFalseTemplate90;
 #[must_use]
 pub struct EIfElseEmptyFalseTemplate91;
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate1, Partial, After> {
+    #[doc =
+    "Transition from `1: b_text other` to `29: b_text other` using `0: [] hello`"]
     pub fn next(self)
         ->
             (Template<BTextTemplate29, Partial, After>,
@@ -13047,6 +14111,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate1, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate2, Partial, After> {
+    #[doc =
+    "Transition from `2: c_element_with_attribute other` to `30: c_element_with_attribute other` using `1: [] <a class=\"test\"></a>`"]
     pub fn next(self)
         ->
             (Template<CElementWithAttributeTemplate30, Partial, After>,
@@ -13064,6 +14130,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate2, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate3, Partial, After> {
+    #[doc =
+    "Transition from `3: c_element_with_content other` to `31: c_element_with_content other` using `2: [] <h1>hi</h1>`"]
     pub fn next(self)
         ->
             (Template<CElementWithContentTemplate31, Partial, After>,
@@ -13078,6 +14146,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate3, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate4, Partial, After> {
+    #[doc =
+    "Transition from `4: c_empty_element other` to `32: c_empty_element other` using `3: [] <h1></h1>`"]
     pub fn next(self)
         ->
             (Template<CEmptyElementTemplate32, Partial, After>,
@@ -13092,6 +14162,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate4, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate5, Partial, After> {
+    #[doc =
+    "Transition from `5: c_self_closing_boolean_attr other` to `33: c_self_closing_boolean_attr other` using `4: [] <!DOCTYPE html>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingBooleanAttrTemplate33, Partial, After>,
@@ -13109,6 +14181,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate5, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate6, Partial, After> {
+    #[doc =
+    "Transition from `6: c_self_closing other` to `34: c_self_closing other` using `5: [] <!DOCTYPE>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingTemplate34, Partial, After>,
@@ -13123,6 +14197,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate6, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate7, Partial, After> {
+    #[doc =
+    "Transition from `7: d_element_with_attribute_and_variables other` to `35: d_element_with_attribute_and_variables other` using `6: [] <a class=\"{{test:attr}}\">`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate35, Partial,
@@ -13144,6 +14220,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate7, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate35, Partial, After> {
+    #[doc =
+    "Transition from `35: d_element_with_attribute_and_variables other` to `36: d_element_with_attribute_and_variables other` using `7: [] {{var:element}}</a>`"]
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
@@ -13164,6 +14242,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate35, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate8, Partial, After> {
+    #[doc =
+    "Transition from `8: d_variable other` to `37: d_variable other` using `8: [] <p>{{test:element}}</p>`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate37, Partial, After>,
@@ -13183,6 +14263,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate8, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `9: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -13197,6 +14279,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate9, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `10: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -13211,6 +14295,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate9, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `11: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -13225,6 +14311,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate10, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `12: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -13239,6 +14327,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate10, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `13: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -13253,6 +14343,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate11, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `14: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -13267,6 +14359,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate11, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate12, Partial, After> {
+    #[doc =
+    "Transition from `12: e_if_else_with_variables other` to `41: e_if_else_with_variables other` using `15: [] <span>`"]
     pub fn next(self)
         ->
             (Template<EIfElseWithVariablesTemplate41, Partial, After>,
@@ -13281,6 +14375,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate12, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `16: [true] {{t:element}}</span>`"]
     pub fn t_true(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -13300,6 +14396,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate41, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `17: [false] {{f:element}}</span>`"]
     pub fn f_false(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -13319,6 +14417,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate41, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `18: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -13333,6 +14433,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate13, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `19: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -13347,6 +14449,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate13, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `14: f_each_empty other` using `20: [enter_loop] `"]
     pub fn next_enter_loop(self)
         ->
             (Template<FEachEmptyTemplate14, Partial, After>,
@@ -13361,6 +14465,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate14, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `44: f_each_empty other` using `21: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachEmptyTemplate44, Partial, After>,
@@ -13375,6 +14481,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate14, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate15, Partial, After> {
+    #[doc =
+    "Transition from `15: f_each_one_variable other` to `45: f_each_one_variable other` using `22: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachOneVariableTemplate45, Partial, After>,
@@ -13389,6 +14497,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate15, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `45: f_each_one_variable other` using `23: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -13409,6 +14519,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate45, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `46: f_each_one_variable other` using `24: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachOneVariableTemplate46, Partial, After>,
@@ -13423,6 +14535,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate45, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate16, Partial, After> {
+    #[doc =
+    "Transition from `16: f_each_two_variables other` to `47: f_each_two_variables other` using `25: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachTwoVariablesTemplate47, Partial, After>,
@@ -13437,6 +14551,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate16, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `48: f_each_two_variables other` using `26: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -13457,6 +14573,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate47, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate48, Partial, After> {
+    #[doc =
+    "Transition from `48: f_each_two_variables other` to `47: f_each_two_variables other` using `27: [] {{content:element}}`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -13477,6 +14595,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate48, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `49: f_each_two_variables other` using `28: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesTemplate49, Partial, After>,
@@ -13491,6 +14611,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate47, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate17, Partial, After> {
+    #[doc =
+    "Transition from `17: g_empty_template_multiple other` to `50: g_empty_template_multiple inner` using `29: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -13512,6 +14634,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate17, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate50, Partial, After> {
+    #[doc =
+    "Transition from `50: g_empty_template_multiple inner` to `52: g_empty_template_multiple inner` using `32: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -13533,6 +14657,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate50, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate18, Partial, After> {
+    #[doc =
+    "Transition from `18: g_empty_template other` to `54: g_empty_template inner` using `35: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -13556,6 +14682,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate18, Partial, After> {
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<EIfElseEmptyFalseTemplate19,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `19: g_partial_block_partial other` to `56: g_partial_block_partial partial` using `38: [] <span>{{before:element}}<p>`"]
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<Partial, (),
@@ -13584,6 +14712,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<EIfElseEmptyFalseTemplate56,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `56: g_partial_block_partial partial` to `57: g_partial_block_partial partial` using `39: [] </p><div>`"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -13605,6 +14735,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate57, Partial, After> {
+    #[doc =
+    "Transition from `57: g_partial_block_partial partial` to `58: g_partial_block_partial other` using `40: [] </div>{{after:element}}</span>`"]
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate58, Partial, After>,
@@ -13624,6 +14756,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate57, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate20, Partial, After> {
+    #[doc =
+    "Transition from `20: g_partial_block other` to `59: g_partial_block inner` using `41: [] <span>hello`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockPartialTemplate19,
@@ -13660,6 +14794,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate20, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate60, Partial, After> {
+    #[doc =
+    "Transition from `60: g_partial_block other` to `61: g_partial_block other` using `43: [] childrenstart{{test:element}}childrenend`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate61, Partial, After>,
@@ -13679,6 +14815,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate60, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate59, Partial, After> {
+    #[doc =
+    "Transition from `59: g_partial_block inner` to `62: g_partial_block other` using `45: [] world</span>`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockTemplate62, Partial, After>,
@@ -13694,6 +14832,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate59, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate21, Partial, After> {
+    #[doc =
+    "Transition from `21: g_template_only_partial_block_multiple other` to `63: g_template_only_partial_block_multiple inner` using `46: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -13716,6 +14856,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate21, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate63, Partial, After> {
+    #[doc =
+    "Transition from `63: g_template_only_partial_block_multiple inner` to `65: g_template_only_partial_block_multiple inner` using `49: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -13738,6 +14880,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate63, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate22, Partial, After> {
+    #[doc =
+    "Transition from `22: g_template_only_partial_block_with_text_multiple other` to `67: g_template_only_partial_block_with_text_multiple inner` using `52: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -13783,6 +14927,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate22, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate68, Partial, After> {
+    #[doc =
+    "Transition from `68: g_template_only_partial_block_with_text_multiple other` to `69: g_template_only_partial_block_with_text_multiple other` using `54: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate69,
@@ -13799,6 +14945,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate68, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate67, Partial, After> {
+    #[doc =
+    "Transition from `67: g_template_only_partial_block_with_text_multiple inner` to `70: g_template_only_partial_block_with_text_multiple inner` using `56: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -13844,6 +14992,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate67, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate71, Partial, After> {
+    #[doc =
+    "Transition from `71: g_template_only_partial_block_with_text_multiple other` to `72: g_template_only_partial_block_with_text_multiple other` using `58: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate72,
@@ -13860,6 +15010,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate71, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate23, Partial, After> {
+    #[doc =
+    "Transition from `23: g_template_only_partial_block_with_text other` to `73: g_template_only_partial_block_with_text inner` using `60: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -13900,6 +15052,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate23, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate74, Partial, After> {
+    #[doc =
+    "Transition from `74: g_template_only_partial_block_with_text other` to `75: g_template_only_partial_block_with_text other` using `62: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextTemplate75, Partial,
@@ -13915,6 +15069,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate74, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate24, Partial, After> {
+    #[doc =
+    "Transition from `24: g_template_only_partial_block_with_variable_multiple other` to `76: g_template_only_partial_block_with_variable_multiple inner` using `64: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -13961,6 +15117,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate24, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate77, Partial, After> {
+    #[doc =
+    "Transition from `77: g_template_only_partial_block_with_variable_multiple other` to `78: g_template_only_partial_block_with_variable_multiple other` using `66: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate78,
@@ -13982,6 +15140,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate77, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate76, Partial, After> {
+    #[doc =
+    "Transition from `76: g_template_only_partial_block_with_variable_multiple inner` to `79: g_template_only_partial_block_with_variable_multiple inner` using `68: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -14028,6 +15188,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate76, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate80, Partial, After> {
+    #[doc =
+    "Transition from `80: g_template_only_partial_block_with_variable_multiple other` to `81: g_template_only_partial_block_with_variable_multiple other` using `70: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate81,
@@ -14049,6 +15211,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate80, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate79, Partial, After> {
+    #[doc =
+    "Transition from `79: g_template_only_partial_block_with_variable_multiple inner` to `82: g_template_only_partial_block_with_variable_multiple other` using `72: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate82,
@@ -14065,6 +15229,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate79, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate25, Partial, After> {
+    #[doc =
+    "Transition from `25: g_template_only_partial_block_with_variable other` to `83: g_template_only_partial_block_with_variable inner` using `73: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -14108,6 +15274,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate25, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate84, Partial, After> {
+    #[doc =
+    "Transition from `84: g_template_only_partial_block_with_variable other` to `85: g_template_only_partial_block_with_variable other` using `75: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate85,
@@ -14128,6 +15296,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate84, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate83, Partial, After> {
+    #[doc =
+    "Transition from `83: g_template_only_partial_block_with_variable inner` to `86: g_template_only_partial_block_with_variable other` using `77: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate86,
@@ -14143,6 +15313,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate83, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate26, Partial, After> {
+    #[doc =
+    "Transition from `26: g_template_only_partial_block other` to `87: g_template_only_partial_block inner` using `78: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -14164,6 +15336,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate26, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `89: f_each_two_variables_html other` using `81: [enter_loop] \n    <li>{{title:element}}</li>\n    <li>`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -14184,6 +15358,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate27, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate89, Partial, After> {
+    #[doc =
+    "Transition from `89: f_each_two_variables_html other` to `27: f_each_two_variables_html other` using `82: [] {{content:element}}</li>\n`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -14204,6 +15380,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate89, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `90: f_each_two_variables_html other` using `83: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesHtmlTemplate90, Partial, After>,
@@ -14220,6 +15398,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate27, Partial, After> {
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<EIfElseEmptyFalseTemplate28,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `28: g_only_partial_block other` to `91: g_only_partial_block partial` using `84: [] `"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -14441,6 +15621,8 @@ pub struct EIfElseEmptyTrueTemplate90;
 #[must_use]
 pub struct EIfElseEmptyTrueTemplate91;
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate1, Partial, After> {
+    #[doc =
+    "Transition from `1: b_text other` to `29: b_text other` using `0: [] hello`"]
     pub fn next(self)
         ->
             (Template<BTextTemplate29, Partial, After>,
@@ -14455,6 +15637,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate1, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate2, Partial, After> {
+    #[doc =
+    "Transition from `2: c_element_with_attribute other` to `30: c_element_with_attribute other` using `1: [] <a class=\"test\"></a>`"]
     pub fn next(self)
         ->
             (Template<CElementWithAttributeTemplate30, Partial, After>,
@@ -14472,6 +15656,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate2, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate3, Partial, After> {
+    #[doc =
+    "Transition from `3: c_element_with_content other` to `31: c_element_with_content other` using `2: [] <h1>hi</h1>`"]
     pub fn next(self)
         ->
             (Template<CElementWithContentTemplate31, Partial, After>,
@@ -14486,6 +15672,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate3, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate4, Partial, After> {
+    #[doc =
+    "Transition from `4: c_empty_element other` to `32: c_empty_element other` using `3: [] <h1></h1>`"]
     pub fn next(self)
         ->
             (Template<CEmptyElementTemplate32, Partial, After>,
@@ -14500,6 +15688,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate4, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate5, Partial, After> {
+    #[doc =
+    "Transition from `5: c_self_closing_boolean_attr other` to `33: c_self_closing_boolean_attr other` using `4: [] <!DOCTYPE html>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingBooleanAttrTemplate33, Partial, After>,
@@ -14517,6 +15707,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate5, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate6, Partial, After> {
+    #[doc =
+    "Transition from `6: c_self_closing other` to `34: c_self_closing other` using `5: [] <!DOCTYPE>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingTemplate34, Partial, After>,
@@ -14531,6 +15723,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate6, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate7, Partial, After> {
+    #[doc =
+    "Transition from `7: d_element_with_attribute_and_variables other` to `35: d_element_with_attribute_and_variables other` using `6: [] <a class=\"{{test:attr}}\">`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate35, Partial,
@@ -14552,6 +15746,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate7, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate35, Partial, After> {
+    #[doc =
+    "Transition from `35: d_element_with_attribute_and_variables other` to `36: d_element_with_attribute_and_variables other` using `7: [] {{var:element}}</a>`"]
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
@@ -14572,6 +15768,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate35, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate8, Partial, After> {
+    #[doc =
+    "Transition from `8: d_variable other` to `37: d_variable other` using `8: [] <p>{{test:element}}</p>`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate37, Partial, After>,
@@ -14591,6 +15789,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate8, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `9: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -14605,6 +15805,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate9, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `10: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -14619,6 +15821,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate9, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `11: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -14633,6 +15837,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate10, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `12: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -14647,6 +15853,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate10, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `13: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -14661,6 +15869,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate11, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `14: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -14675,6 +15885,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate11, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate12, Partial, After> {
+    #[doc =
+    "Transition from `12: e_if_else_with_variables other` to `41: e_if_else_with_variables other` using `15: [] <span>`"]
     pub fn next(self)
         ->
             (Template<EIfElseWithVariablesTemplate41, Partial, After>,
@@ -14689,6 +15901,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate12, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `16: [true] {{t:element}}</span>`"]
     pub fn t_true(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -14708,6 +15922,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate41, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `17: [false] {{f:element}}</span>`"]
     pub fn f_false(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -14727,6 +15943,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate41, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `18: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -14741,6 +15959,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate13, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `19: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -14755,6 +15975,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate13, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `14: f_each_empty other` using `20: [enter_loop] `"]
     pub fn next_enter_loop(self)
         ->
             (Template<FEachEmptyTemplate14, Partial, After>,
@@ -14769,6 +15991,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate14, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `44: f_each_empty other` using `21: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachEmptyTemplate44, Partial, After>,
@@ -14783,6 +16007,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate14, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate15, Partial, After> {
+    #[doc =
+    "Transition from `15: f_each_one_variable other` to `45: f_each_one_variable other` using `22: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachOneVariableTemplate45, Partial, After>,
@@ -14797,6 +16023,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate15, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `45: f_each_one_variable other` using `23: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -14817,6 +16045,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate45, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `46: f_each_one_variable other` using `24: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachOneVariableTemplate46, Partial, After>,
@@ -14831,6 +16061,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate45, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate16, Partial, After> {
+    #[doc =
+    "Transition from `16: f_each_two_variables other` to `47: f_each_two_variables other` using `25: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachTwoVariablesTemplate47, Partial, After>,
@@ -14845,6 +16077,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate16, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `48: f_each_two_variables other` using `26: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -14865,6 +16099,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate47, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate48, Partial, After> {
+    #[doc =
+    "Transition from `48: f_each_two_variables other` to `47: f_each_two_variables other` using `27: [] {{content:element}}`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -14885,6 +16121,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate48, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `49: f_each_two_variables other` using `28: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesTemplate49, Partial, After>,
@@ -14899,6 +16137,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate47, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate17, Partial, After> {
+    #[doc =
+    "Transition from `17: g_empty_template_multiple other` to `50: g_empty_template_multiple inner` using `29: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -14920,6 +16160,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate17, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate50, Partial, After> {
+    #[doc =
+    "Transition from `50: g_empty_template_multiple inner` to `52: g_empty_template_multiple inner` using `32: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -14941,6 +16183,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate50, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate18, Partial, After> {
+    #[doc =
+    "Transition from `18: g_empty_template other` to `54: g_empty_template inner` using `35: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -14964,6 +16208,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate18, Partial, After> {
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<EIfElseEmptyTrueTemplate19,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `19: g_partial_block_partial other` to `56: g_partial_block_partial partial` using `38: [] <span>{{before:element}}<p>`"]
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<Partial, (),
@@ -14992,6 +16238,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<EIfElseEmptyTrueTemplate56,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `56: g_partial_block_partial partial` to `57: g_partial_block_partial partial` using `39: [] </p><div>`"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -15013,6 +16261,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate57, Partial, After> {
+    #[doc =
+    "Transition from `57: g_partial_block_partial partial` to `58: g_partial_block_partial other` using `40: [] </div>{{after:element}}</span>`"]
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate58, Partial, After>,
@@ -15032,6 +16282,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate57, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate20, Partial, After> {
+    #[doc =
+    "Transition from `20: g_partial_block other` to `59: g_partial_block inner` using `41: [] <span>hello`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockPartialTemplate19,
@@ -15068,6 +16320,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate20, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate60, Partial, After> {
+    #[doc =
+    "Transition from `60: g_partial_block other` to `61: g_partial_block other` using `43: [] childrenstart{{test:element}}childrenend`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate61, Partial, After>,
@@ -15087,6 +16341,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate60, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate59, Partial, After> {
+    #[doc =
+    "Transition from `59: g_partial_block inner` to `62: g_partial_block other` using `45: [] world</span>`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockTemplate62, Partial, After>,
@@ -15102,6 +16358,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate59, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate21, Partial, After> {
+    #[doc =
+    "Transition from `21: g_template_only_partial_block_multiple other` to `63: g_template_only_partial_block_multiple inner` using `46: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -15124,6 +16382,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate21, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate63, Partial, After> {
+    #[doc =
+    "Transition from `63: g_template_only_partial_block_multiple inner` to `65: g_template_only_partial_block_multiple inner` using `49: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -15146,6 +16406,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate63, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate22, Partial, After> {
+    #[doc =
+    "Transition from `22: g_template_only_partial_block_with_text_multiple other` to `67: g_template_only_partial_block_with_text_multiple inner` using `52: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -15191,6 +16453,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate22, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate68, Partial, After> {
+    #[doc =
+    "Transition from `68: g_template_only_partial_block_with_text_multiple other` to `69: g_template_only_partial_block_with_text_multiple other` using `54: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate69,
@@ -15207,6 +16471,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate68, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate67, Partial, After> {
+    #[doc =
+    "Transition from `67: g_template_only_partial_block_with_text_multiple inner` to `70: g_template_only_partial_block_with_text_multiple inner` using `56: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -15252,6 +16518,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate67, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate71, Partial, After> {
+    #[doc =
+    "Transition from `71: g_template_only_partial_block_with_text_multiple other` to `72: g_template_only_partial_block_with_text_multiple other` using `58: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate72,
@@ -15268,6 +16536,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate71, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate23, Partial, After> {
+    #[doc =
+    "Transition from `23: g_template_only_partial_block_with_text other` to `73: g_template_only_partial_block_with_text inner` using `60: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -15308,6 +16578,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate23, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate74, Partial, After> {
+    #[doc =
+    "Transition from `74: g_template_only_partial_block_with_text other` to `75: g_template_only_partial_block_with_text other` using `62: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextTemplate75, Partial,
@@ -15323,6 +16595,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate74, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate24, Partial, After> {
+    #[doc =
+    "Transition from `24: g_template_only_partial_block_with_variable_multiple other` to `76: g_template_only_partial_block_with_variable_multiple inner` using `64: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -15369,6 +16643,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate24, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate77, Partial, After> {
+    #[doc =
+    "Transition from `77: g_template_only_partial_block_with_variable_multiple other` to `78: g_template_only_partial_block_with_variable_multiple other` using `66: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate78,
@@ -15390,6 +16666,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate77, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate76, Partial, After> {
+    #[doc =
+    "Transition from `76: g_template_only_partial_block_with_variable_multiple inner` to `79: g_template_only_partial_block_with_variable_multiple inner` using `68: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -15436,6 +16714,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate76, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate80, Partial, After> {
+    #[doc =
+    "Transition from `80: g_template_only_partial_block_with_variable_multiple other` to `81: g_template_only_partial_block_with_variable_multiple other` using `70: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate81,
@@ -15457,6 +16737,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate80, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate79, Partial, After> {
+    #[doc =
+    "Transition from `79: g_template_only_partial_block_with_variable_multiple inner` to `82: g_template_only_partial_block_with_variable_multiple other` using `72: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate82,
@@ -15473,6 +16755,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate79, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate25, Partial, After> {
+    #[doc =
+    "Transition from `25: g_template_only_partial_block_with_variable other` to `83: g_template_only_partial_block_with_variable inner` using `73: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -15516,6 +16800,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate25, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate84, Partial, After> {
+    #[doc =
+    "Transition from `84: g_template_only_partial_block_with_variable other` to `85: g_template_only_partial_block_with_variable other` using `75: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate85,
@@ -15536,6 +16822,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate84, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate83, Partial, After> {
+    #[doc =
+    "Transition from `83: g_template_only_partial_block_with_variable inner` to `86: g_template_only_partial_block_with_variable other` using `77: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate86,
@@ -15551,6 +16839,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate83, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate26, Partial, After> {
+    #[doc =
+    "Transition from `26: g_template_only_partial_block other` to `87: g_template_only_partial_block inner` using `78: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -15572,6 +16862,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate26, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `89: f_each_two_variables_html other` using `81: [enter_loop] \n    <li>{{title:element}}</li>\n    <li>`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -15592,6 +16884,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate27, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate89, Partial, After> {
+    #[doc =
+    "Transition from `89: f_each_two_variables_html other` to `27: f_each_two_variables_html other` using `82: [] {{content:element}}</li>\n`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -15612,6 +16906,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate89, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `90: f_each_two_variables_html other` using `83: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesHtmlTemplate90, Partial, After>,
@@ -15628,6 +16924,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate27, Partial, After> {
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<EIfElseEmptyTrueTemplate28,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `28: g_only_partial_block other` to `91: g_only_partial_block partial` using `84: [] `"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -15849,6 +17147,8 @@ pub struct EIfElseEmptyTemplate90;
 #[must_use]
 pub struct EIfElseEmptyTemplate91;
 impl<Partial, After> Template<EIfElseEmptyTemplate1, Partial, After> {
+    #[doc =
+    "Transition from `1: b_text other` to `29: b_text other` using `0: [] hello`"]
     pub fn next(self)
         ->
             (Template<BTextTemplate29, Partial, After>,
@@ -15863,6 +17163,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate1, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate2, Partial, After> {
+    #[doc =
+    "Transition from `2: c_element_with_attribute other` to `30: c_element_with_attribute other` using `1: [] <a class=\"test\"></a>`"]
     pub fn next(self)
         ->
             (Template<CElementWithAttributeTemplate30, Partial, After>,
@@ -15880,6 +17182,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate2, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate3, Partial, After> {
+    #[doc =
+    "Transition from `3: c_element_with_content other` to `31: c_element_with_content other` using `2: [] <h1>hi</h1>`"]
     pub fn next(self)
         ->
             (Template<CElementWithContentTemplate31, Partial, After>,
@@ -15894,6 +17198,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate3, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate4, Partial, After> {
+    #[doc =
+    "Transition from `4: c_empty_element other` to `32: c_empty_element other` using `3: [] <h1></h1>`"]
     pub fn next(self)
         ->
             (Template<CEmptyElementTemplate32, Partial, After>,
@@ -15908,6 +17214,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate4, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate5, Partial, After> {
+    #[doc =
+    "Transition from `5: c_self_closing_boolean_attr other` to `33: c_self_closing_boolean_attr other` using `4: [] <!DOCTYPE html>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingBooleanAttrTemplate33, Partial, After>,
@@ -15925,6 +17233,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate5, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate6, Partial, After> {
+    #[doc =
+    "Transition from `6: c_self_closing other` to `34: c_self_closing other` using `5: [] <!DOCTYPE>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingTemplate34, Partial, After>,
@@ -15939,6 +17249,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate6, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate7, Partial, After> {
+    #[doc =
+    "Transition from `7: d_element_with_attribute_and_variables other` to `35: d_element_with_attribute_and_variables other` using `6: [] <a class=\"{{test:attr}}\">`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate35, Partial,
@@ -15960,6 +17272,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate7, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate35, Partial, After> {
+    #[doc =
+    "Transition from `35: d_element_with_attribute_and_variables other` to `36: d_element_with_attribute_and_variables other` using `7: [] {{var:element}}</a>`"]
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
@@ -15980,6 +17294,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate35, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate8, Partial, After> {
+    #[doc =
+    "Transition from `8: d_variable other` to `37: d_variable other` using `8: [] <p>{{test:element}}</p>`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate37, Partial, After>,
@@ -15999,6 +17315,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate8, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `9: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -16013,6 +17331,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate9, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `10: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -16027,6 +17347,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate9, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `11: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -16041,6 +17363,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate10, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `12: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -16055,6 +17379,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate10, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `13: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -16069,6 +17395,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate11, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `14: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -16083,6 +17411,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate11, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate12, Partial, After> {
+    #[doc =
+    "Transition from `12: e_if_else_with_variables other` to `41: e_if_else_with_variables other` using `15: [] <span>`"]
     pub fn next(self)
         ->
             (Template<EIfElseWithVariablesTemplate41, Partial, After>,
@@ -16097,6 +17427,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate12, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `16: [true] {{t:element}}</span>`"]
     pub fn t_true(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -16116,6 +17448,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate41, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `17: [false] {{f:element}}</span>`"]
     pub fn f_false(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -16135,6 +17469,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate41, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `18: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -16149,6 +17485,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate13, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `19: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -16163,6 +17501,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate13, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `14: f_each_empty other` using `20: [enter_loop] `"]
     pub fn next_enter_loop(self)
         ->
             (Template<FEachEmptyTemplate14, Partial, After>,
@@ -16177,6 +17517,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate14, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `44: f_each_empty other` using `21: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachEmptyTemplate44, Partial, After>,
@@ -16191,6 +17533,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate14, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate15, Partial, After> {
+    #[doc =
+    "Transition from `15: f_each_one_variable other` to `45: f_each_one_variable other` using `22: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachOneVariableTemplate45, Partial, After>,
@@ -16205,6 +17549,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate15, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `45: f_each_one_variable other` using `23: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -16225,6 +17571,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate45, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `46: f_each_one_variable other` using `24: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachOneVariableTemplate46, Partial, After>,
@@ -16239,6 +17587,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate45, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate16, Partial, After> {
+    #[doc =
+    "Transition from `16: f_each_two_variables other` to `47: f_each_two_variables other` using `25: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachTwoVariablesTemplate47, Partial, After>,
@@ -16253,6 +17603,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate16, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `48: f_each_two_variables other` using `26: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -16273,6 +17625,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate47, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate48, Partial, After> {
+    #[doc =
+    "Transition from `48: f_each_two_variables other` to `47: f_each_two_variables other` using `27: [] {{content:element}}`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -16293,6 +17647,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate48, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `49: f_each_two_variables other` using `28: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesTemplate49, Partial, After>,
@@ -16307,6 +17663,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate47, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate17, Partial, After> {
+    #[doc =
+    "Transition from `17: g_empty_template_multiple other` to `50: g_empty_template_multiple inner` using `29: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -16328,6 +17686,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate17, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate50, Partial, After> {
+    #[doc =
+    "Transition from `50: g_empty_template_multiple inner` to `52: g_empty_template_multiple inner` using `32: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -16349,6 +17709,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate50, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate18, Partial, After> {
+    #[doc =
+    "Transition from `18: g_empty_template other` to `54: g_empty_template inner` using `35: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -16372,6 +17734,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate18, Partial, After> {
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<EIfElseEmptyTemplate19,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `19: g_partial_block_partial other` to `56: g_partial_block_partial partial` using `38: [] <span>{{before:element}}<p>`"]
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<Partial, (),
@@ -16400,6 +17764,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<EIfElseEmptyTemplate56,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `56: g_partial_block_partial partial` to `57: g_partial_block_partial partial` using `39: [] </p><div>`"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -16421,6 +17787,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate57, Partial, After> {
+    #[doc =
+    "Transition from `57: g_partial_block_partial partial` to `58: g_partial_block_partial other` using `40: [] </div>{{after:element}}</span>`"]
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate58, Partial, After>,
@@ -16440,6 +17808,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate57, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate20, Partial, After> {
+    #[doc =
+    "Transition from `20: g_partial_block other` to `59: g_partial_block inner` using `41: [] <span>hello`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockPartialTemplate19,
@@ -16476,6 +17846,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate20, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate60, Partial, After> {
+    #[doc =
+    "Transition from `60: g_partial_block other` to `61: g_partial_block other` using `43: [] childrenstart{{test:element}}childrenend`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate61, Partial, After>,
@@ -16495,6 +17867,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate60, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate59, Partial, After> {
+    #[doc =
+    "Transition from `59: g_partial_block inner` to `62: g_partial_block other` using `45: [] world</span>`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockTemplate62, Partial, After>,
@@ -16510,6 +17884,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate59, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate21, Partial, After> {
+    #[doc =
+    "Transition from `21: g_template_only_partial_block_multiple other` to `63: g_template_only_partial_block_multiple inner` using `46: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -16532,6 +17908,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate21, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate63, Partial, After> {
+    #[doc =
+    "Transition from `63: g_template_only_partial_block_multiple inner` to `65: g_template_only_partial_block_multiple inner` using `49: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -16554,6 +17932,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate63, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate22, Partial, After> {
+    #[doc =
+    "Transition from `22: g_template_only_partial_block_with_text_multiple other` to `67: g_template_only_partial_block_with_text_multiple inner` using `52: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -16599,6 +17979,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate22, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate68, Partial, After> {
+    #[doc =
+    "Transition from `68: g_template_only_partial_block_with_text_multiple other` to `69: g_template_only_partial_block_with_text_multiple other` using `54: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate69,
@@ -16615,6 +17997,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate68, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate67, Partial, After> {
+    #[doc =
+    "Transition from `67: g_template_only_partial_block_with_text_multiple inner` to `70: g_template_only_partial_block_with_text_multiple inner` using `56: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -16660,6 +18044,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate67, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate71, Partial, After> {
+    #[doc =
+    "Transition from `71: g_template_only_partial_block_with_text_multiple other` to `72: g_template_only_partial_block_with_text_multiple other` using `58: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate72,
@@ -16676,6 +18062,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate71, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate23, Partial, After> {
+    #[doc =
+    "Transition from `23: g_template_only_partial_block_with_text other` to `73: g_template_only_partial_block_with_text inner` using `60: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -16716,6 +18104,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate23, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate74, Partial, After> {
+    #[doc =
+    "Transition from `74: g_template_only_partial_block_with_text other` to `75: g_template_only_partial_block_with_text other` using `62: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextTemplate75, Partial,
@@ -16731,6 +18121,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate74, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate24, Partial, After> {
+    #[doc =
+    "Transition from `24: g_template_only_partial_block_with_variable_multiple other` to `76: g_template_only_partial_block_with_variable_multiple inner` using `64: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -16777,6 +18169,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate24, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate77, Partial, After> {
+    #[doc =
+    "Transition from `77: g_template_only_partial_block_with_variable_multiple other` to `78: g_template_only_partial_block_with_variable_multiple other` using `66: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate78,
@@ -16798,6 +18192,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate77, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate76, Partial, After> {
+    #[doc =
+    "Transition from `76: g_template_only_partial_block_with_variable_multiple inner` to `79: g_template_only_partial_block_with_variable_multiple inner` using `68: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -16844,6 +18240,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate76, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate80, Partial, After> {
+    #[doc =
+    "Transition from `80: g_template_only_partial_block_with_variable_multiple other` to `81: g_template_only_partial_block_with_variable_multiple other` using `70: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate81,
@@ -16865,6 +18263,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate80, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate79, Partial, After> {
+    #[doc =
+    "Transition from `79: g_template_only_partial_block_with_variable_multiple inner` to `82: g_template_only_partial_block_with_variable_multiple other` using `72: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate82,
@@ -16881,6 +18281,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate79, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate25, Partial, After> {
+    #[doc =
+    "Transition from `25: g_template_only_partial_block_with_variable other` to `83: g_template_only_partial_block_with_variable inner` using `73: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -16924,6 +18326,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate25, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate84, Partial, After> {
+    #[doc =
+    "Transition from `84: g_template_only_partial_block_with_variable other` to `85: g_template_only_partial_block_with_variable other` using `75: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate85,
@@ -16944,6 +18348,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate84, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate83, Partial, After> {
+    #[doc =
+    "Transition from `83: g_template_only_partial_block_with_variable inner` to `86: g_template_only_partial_block_with_variable other` using `77: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate86,
@@ -16959,6 +18365,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate83, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate26, Partial, After> {
+    #[doc =
+    "Transition from `26: g_template_only_partial_block other` to `87: g_template_only_partial_block inner` using `78: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -16980,6 +18388,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate26, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `89: f_each_two_variables_html other` using `81: [enter_loop] \n    <li>{{title:element}}</li>\n    <li>`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -17000,6 +18410,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate27, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate89, Partial, After> {
+    #[doc =
+    "Transition from `89: f_each_two_variables_html other` to `27: f_each_two_variables_html other` using `82: [] {{content:element}}</li>\n`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -17020,6 +18432,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate89, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `90: f_each_two_variables_html other` using `83: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesHtmlTemplate90, Partial, After>,
@@ -17036,6 +18450,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate27, Partial, After> {
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<EIfElseEmptyTemplate28,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `28: g_only_partial_block other` to `91: g_only_partial_block partial` using `84: [] `"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -17254,6 +18670,8 @@ pub struct EIfElseWithVariablesTemplate90;
 #[must_use]
 pub struct EIfElseWithVariablesTemplate91;
 impl<Partial, After> Template<EIfElseWithVariablesTemplate1, Partial, After> {
+    #[doc =
+    "Transition from `1: b_text other` to `29: b_text other` using `0: [] hello`"]
     pub fn next(self)
         ->
             (Template<BTextTemplate29, Partial, After>,
@@ -17268,6 +18686,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate1, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate2, Partial, After> {
+    #[doc =
+    "Transition from `2: c_element_with_attribute other` to `30: c_element_with_attribute other` using `1: [] <a class=\"test\"></a>`"]
     pub fn next(self)
         ->
             (Template<CElementWithAttributeTemplate30, Partial, After>,
@@ -17285,6 +18705,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate2, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate3, Partial, After> {
+    #[doc =
+    "Transition from `3: c_element_with_content other` to `31: c_element_with_content other` using `2: [] <h1>hi</h1>`"]
     pub fn next(self)
         ->
             (Template<CElementWithContentTemplate31, Partial, After>,
@@ -17299,6 +18721,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate3, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate4, Partial, After> {
+    #[doc =
+    "Transition from `4: c_empty_element other` to `32: c_empty_element other` using `3: [] <h1></h1>`"]
     pub fn next(self)
         ->
             (Template<CEmptyElementTemplate32, Partial, After>,
@@ -17313,6 +18737,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate4, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate5, Partial, After> {
+    #[doc =
+    "Transition from `5: c_self_closing_boolean_attr other` to `33: c_self_closing_boolean_attr other` using `4: [] <!DOCTYPE html>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingBooleanAttrTemplate33, Partial, After>,
@@ -17330,6 +18756,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate5, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate6, Partial, After> {
+    #[doc =
+    "Transition from `6: c_self_closing other` to `34: c_self_closing other` using `5: [] <!DOCTYPE>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingTemplate34, Partial, After>,
@@ -17344,6 +18772,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate6, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate7, Partial, After> {
+    #[doc =
+    "Transition from `7: d_element_with_attribute_and_variables other` to `35: d_element_with_attribute_and_variables other` using `6: [] <a class=\"{{test:attr}}\">`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate35, Partial,
@@ -17366,6 +18796,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate7, Partial, After> {
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate35, Partial, After>
     {
+    #[doc =
+    "Transition from `35: d_element_with_attribute_and_variables other` to `36: d_element_with_attribute_and_variables other` using `7: [] {{var:element}}</a>`"]
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
@@ -17386,6 +18818,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate35, Partial, After>
     }
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate8, Partial, After> {
+    #[doc =
+    "Transition from `8: d_variable other` to `37: d_variable other` using `8: [] <p>{{test:element}}</p>`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate37, Partial, After>,
@@ -17405,6 +18839,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate8, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `9: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -17419,6 +18855,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate9, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `10: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -17434,6 +18872,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate9, Partial, After> {
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate10, Partial, After>
     {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `11: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -17449,6 +18889,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate10, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate10, Partial, After>
     {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `12: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -17464,6 +18906,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate10, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate11, Partial, After>
     {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `13: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -17479,6 +18923,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate11, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate11, Partial, After>
     {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `14: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -17494,6 +18940,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate11, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate12, Partial, After>
     {
+    #[doc =
+    "Transition from `12: e_if_else_with_variables other` to `41: e_if_else_with_variables other` using `15: [] <span>`"]
     pub fn next(self)
         ->
             (Template<EIfElseWithVariablesTemplate41, Partial, After>,
@@ -17509,6 +18957,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate12, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate41, Partial, After>
     {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `16: [true] {{t:element}}</span>`"]
     pub fn t_true(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -17529,6 +18979,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate41, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate41, Partial, After>
     {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `17: [false] {{f:element}}</span>`"]
     pub fn f_false(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -17549,6 +19001,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate41, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate13, Partial, After>
     {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `18: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -17564,6 +19018,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate13, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate13, Partial, After>
     {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `19: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -17579,6 +19035,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate13, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate14, Partial, After>
     {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `14: f_each_empty other` using `20: [enter_loop] `"]
     pub fn next_enter_loop(self)
         ->
             (Template<FEachEmptyTemplate14, Partial, After>,
@@ -17594,6 +19052,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate14, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate14, Partial, After>
     {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `44: f_each_empty other` using `21: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachEmptyTemplate44, Partial, After>,
@@ -17609,6 +19069,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate14, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate15, Partial, After>
     {
+    #[doc =
+    "Transition from `15: f_each_one_variable other` to `45: f_each_one_variable other` using `22: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachOneVariableTemplate45, Partial, After>,
@@ -17624,6 +19086,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate15, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate45, Partial, After>
     {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `45: f_each_one_variable other` using `23: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -17645,6 +19109,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate45, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate45, Partial, After>
     {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `46: f_each_one_variable other` using `24: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachOneVariableTemplate46, Partial, After>,
@@ -17660,6 +19126,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate45, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate16, Partial, After>
     {
+    #[doc =
+    "Transition from `16: f_each_two_variables other` to `47: f_each_two_variables other` using `25: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachTwoVariablesTemplate47, Partial, After>,
@@ -17675,6 +19143,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate16, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate47, Partial, After>
     {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `48: f_each_two_variables other` using `26: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -17696,6 +19166,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate47, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate48, Partial, After>
     {
+    #[doc =
+    "Transition from `48: f_each_two_variables other` to `47: f_each_two_variables other` using `27: [] {{content:element}}`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -17717,6 +19189,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate48, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate47, Partial, After>
     {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `49: f_each_two_variables other` using `28: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesTemplate49, Partial, After>,
@@ -17732,6 +19206,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate47, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate17, Partial, After>
     {
+    #[doc =
+    "Transition from `17: g_empty_template_multiple other` to `50: g_empty_template_multiple inner` using `29: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -17754,6 +19230,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate17, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate50, Partial, After>
     {
+    #[doc =
+    "Transition from `50: g_empty_template_multiple inner` to `52: g_empty_template_multiple inner` using `32: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -17776,6 +19254,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate50, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate18, Partial, After>
     {
+    #[doc =
+    "Transition from `18: g_empty_template other` to `54: g_empty_template inner` using `35: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -17799,6 +19279,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate18, Partial, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<EIfElseWithVariablesTemplate19,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `19: g_partial_block_partial other` to `56: g_partial_block_partial partial` using `38: [] <span>{{before:element}}<p>`"]
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<Partial, (),
@@ -17827,6 +19309,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<EIfElseWithVariablesTemplate56,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `56: g_partial_block_partial partial` to `57: g_partial_block_partial partial` using `39: [] </p><div>`"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -17849,6 +19333,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate57, Partial, After>
     {
+    #[doc =
+    "Transition from `57: g_partial_block_partial partial` to `58: g_partial_block_partial other` using `40: [] </div>{{after:element}}</span>`"]
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate58, Partial, After>,
@@ -17869,6 +19355,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate57, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate20, Partial, After>
     {
+    #[doc =
+    "Transition from `20: g_partial_block other` to `59: g_partial_block inner` using `41: [] <span>hello`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockPartialTemplate19,
@@ -17906,6 +19394,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate20, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate60, Partial, After>
     {
+    #[doc =
+    "Transition from `60: g_partial_block other` to `61: g_partial_block other` using `43: [] childrenstart{{test:element}}childrenend`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate61, Partial, After>,
@@ -17926,6 +19416,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate60, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate59, Partial, After>
     {
+    #[doc =
+    "Transition from `59: g_partial_block inner` to `62: g_partial_block other` using `45: [] world</span>`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockTemplate62, Partial, After>,
@@ -17942,6 +19434,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate59, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate21, Partial, After>
     {
+    #[doc =
+    "Transition from `21: g_template_only_partial_block_multiple other` to `63: g_template_only_partial_block_multiple inner` using `46: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -17965,6 +19459,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate21, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate63, Partial, After>
     {
+    #[doc =
+    "Transition from `63: g_template_only_partial_block_multiple inner` to `65: g_template_only_partial_block_multiple inner` using `49: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -17988,6 +19484,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate63, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate22, Partial, After>
     {
+    #[doc =
+    "Transition from `22: g_template_only_partial_block_with_text_multiple other` to `67: g_template_only_partial_block_with_text_multiple inner` using `52: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -18034,6 +19532,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate22, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate68, Partial, After>
     {
+    #[doc =
+    "Transition from `68: g_template_only_partial_block_with_text_multiple other` to `69: g_template_only_partial_block_with_text_multiple other` using `54: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate69,
@@ -18051,6 +19551,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate68, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate67, Partial, After>
     {
+    #[doc =
+    "Transition from `67: g_template_only_partial_block_with_text_multiple inner` to `70: g_template_only_partial_block_with_text_multiple inner` using `56: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -18097,6 +19599,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate67, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate71, Partial, After>
     {
+    #[doc =
+    "Transition from `71: g_template_only_partial_block_with_text_multiple other` to `72: g_template_only_partial_block_with_text_multiple other` using `58: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate72,
@@ -18114,6 +19618,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate71, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate23, Partial, After>
     {
+    #[doc =
+    "Transition from `23: g_template_only_partial_block_with_text other` to `73: g_template_only_partial_block_with_text inner` using `60: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -18155,6 +19661,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate23, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate74, Partial, After>
     {
+    #[doc =
+    "Transition from `74: g_template_only_partial_block_with_text other` to `75: g_template_only_partial_block_with_text other` using `62: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextTemplate75, Partial,
@@ -18171,6 +19679,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate74, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate24, Partial, After>
     {
+    #[doc =
+    "Transition from `24: g_template_only_partial_block_with_variable_multiple other` to `76: g_template_only_partial_block_with_variable_multiple inner` using `64: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -18218,6 +19728,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate24, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate77, Partial, After>
     {
+    #[doc =
+    "Transition from `77: g_template_only_partial_block_with_variable_multiple other` to `78: g_template_only_partial_block_with_variable_multiple other` using `66: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate78,
@@ -18240,6 +19752,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate77, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate76, Partial, After>
     {
+    #[doc =
+    "Transition from `76: g_template_only_partial_block_with_variable_multiple inner` to `79: g_template_only_partial_block_with_variable_multiple inner` using `68: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -18287,6 +19801,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate76, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate80, Partial, After>
     {
+    #[doc =
+    "Transition from `80: g_template_only_partial_block_with_variable_multiple other` to `81: g_template_only_partial_block_with_variable_multiple other` using `70: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate81,
@@ -18309,6 +19825,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate80, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate79, Partial, After>
     {
+    #[doc =
+    "Transition from `79: g_template_only_partial_block_with_variable_multiple inner` to `82: g_template_only_partial_block_with_variable_multiple other` using `72: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate82,
@@ -18326,6 +19844,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate79, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate25, Partial, After>
     {
+    #[doc =
+    "Transition from `25: g_template_only_partial_block_with_variable other` to `83: g_template_only_partial_block_with_variable inner` using `73: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -18370,6 +19890,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate25, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate84, Partial, After>
     {
+    #[doc =
+    "Transition from `84: g_template_only_partial_block_with_variable other` to `85: g_template_only_partial_block_with_variable other` using `75: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate85,
@@ -18391,6 +19913,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate84, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate83, Partial, After>
     {
+    #[doc =
+    "Transition from `83: g_template_only_partial_block_with_variable inner` to `86: g_template_only_partial_block_with_variable other` using `77: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate86,
@@ -18407,6 +19931,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate83, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate26, Partial, After>
     {
+    #[doc =
+    "Transition from `26: g_template_only_partial_block other` to `87: g_template_only_partial_block inner` using `78: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -18429,6 +19955,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate26, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate27, Partial, After>
     {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `89: f_each_two_variables_html other` using `81: [enter_loop] \n    <li>{{title:element}}</li>\n    <li>`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -18450,6 +19978,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate27, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate89, Partial, After>
     {
+    #[doc =
+    "Transition from `89: f_each_two_variables_html other` to `27: f_each_two_variables_html other` using `82: [] {{content:element}}</li>\n`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -18471,6 +20001,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate89, Partial, After>
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate27, Partial, After>
     {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `90: f_each_two_variables_html other` using `83: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesHtmlTemplate90, Partial, After>,
@@ -18487,6 +20019,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate27, Partial, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<EIfElseWithVariablesTemplate28,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `28: g_only_partial_block other` to `91: g_only_partial_block partial` using `84: [] `"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -18708,6 +20242,8 @@ pub struct EIfElseTemplate90;
 #[must_use]
 pub struct EIfElseTemplate91;
 impl<Partial, After> Template<EIfElseTemplate1, Partial, After> {
+    #[doc =
+    "Transition from `1: b_text other` to `29: b_text other` using `0: [] hello`"]
     pub fn next(self)
         ->
             (Template<BTextTemplate29, Partial, After>,
@@ -18722,6 +20258,8 @@ impl<Partial, After> Template<EIfElseTemplate1, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate2, Partial, After> {
+    #[doc =
+    "Transition from `2: c_element_with_attribute other` to `30: c_element_with_attribute other` using `1: [] <a class=\"test\"></a>`"]
     pub fn next(self)
         ->
             (Template<CElementWithAttributeTemplate30, Partial, After>,
@@ -18739,6 +20277,8 @@ impl<Partial, After> Template<EIfElseTemplate2, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate3, Partial, After> {
+    #[doc =
+    "Transition from `3: c_element_with_content other` to `31: c_element_with_content other` using `2: [] <h1>hi</h1>`"]
     pub fn next(self)
         ->
             (Template<CElementWithContentTemplate31, Partial, After>,
@@ -18753,6 +20293,8 @@ impl<Partial, After> Template<EIfElseTemplate3, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate4, Partial, After> {
+    #[doc =
+    "Transition from `4: c_empty_element other` to `32: c_empty_element other` using `3: [] <h1></h1>`"]
     pub fn next(self)
         ->
             (Template<CEmptyElementTemplate32, Partial, After>,
@@ -18767,6 +20309,8 @@ impl<Partial, After> Template<EIfElseTemplate4, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate5, Partial, After> {
+    #[doc =
+    "Transition from `5: c_self_closing_boolean_attr other` to `33: c_self_closing_boolean_attr other` using `4: [] <!DOCTYPE html>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingBooleanAttrTemplate33, Partial, After>,
@@ -18784,6 +20328,8 @@ impl<Partial, After> Template<EIfElseTemplate5, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate6, Partial, After> {
+    #[doc =
+    "Transition from `6: c_self_closing other` to `34: c_self_closing other` using `5: [] <!DOCTYPE>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingTemplate34, Partial, After>,
@@ -18798,6 +20344,8 @@ impl<Partial, After> Template<EIfElseTemplate6, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate7, Partial, After> {
+    #[doc =
+    "Transition from `7: d_element_with_attribute_and_variables other` to `35: d_element_with_attribute_and_variables other` using `6: [] <a class=\"{{test:attr}}\">`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate35, Partial,
@@ -18819,6 +20367,8 @@ impl<Partial, After> Template<EIfElseTemplate7, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate35, Partial, After> {
+    #[doc =
+    "Transition from `35: d_element_with_attribute_and_variables other` to `36: d_element_with_attribute_and_variables other` using `7: [] {{var:element}}</a>`"]
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
@@ -18839,6 +20389,8 @@ impl<Partial, After> Template<EIfElseTemplate35, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate8, Partial, After> {
+    #[doc =
+    "Transition from `8: d_variable other` to `37: d_variable other` using `8: [] <p>{{test:element}}</p>`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate37, Partial, After>,
@@ -18858,6 +20410,8 @@ impl<Partial, After> Template<EIfElseTemplate8, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `9: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -18872,6 +20426,8 @@ impl<Partial, After> Template<EIfElseTemplate9, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `10: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -18886,6 +20442,8 @@ impl<Partial, After> Template<EIfElseTemplate9, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `11: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -18900,6 +20458,8 @@ impl<Partial, After> Template<EIfElseTemplate10, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `12: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -18914,6 +20474,8 @@ impl<Partial, After> Template<EIfElseTemplate10, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `13: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -18928,6 +20490,8 @@ impl<Partial, After> Template<EIfElseTemplate11, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `14: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -18942,6 +20506,8 @@ impl<Partial, After> Template<EIfElseTemplate11, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate12, Partial, After> {
+    #[doc =
+    "Transition from `12: e_if_else_with_variables other` to `41: e_if_else_with_variables other` using `15: [] <span>`"]
     pub fn next(self)
         ->
             (Template<EIfElseWithVariablesTemplate41, Partial, After>,
@@ -18956,6 +20522,8 @@ impl<Partial, After> Template<EIfElseTemplate12, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `16: [true] {{t:element}}</span>`"]
     pub fn t_true(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -18975,6 +20543,8 @@ impl<Partial, After> Template<EIfElseTemplate41, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `17: [false] {{f:element}}</span>`"]
     pub fn f_false(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -18994,6 +20564,8 @@ impl<Partial, After> Template<EIfElseTemplate41, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `18: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -19008,6 +20580,8 @@ impl<Partial, After> Template<EIfElseTemplate13, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `19: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -19022,6 +20596,8 @@ impl<Partial, After> Template<EIfElseTemplate13, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `14: f_each_empty other` using `20: [enter_loop] `"]
     pub fn next_enter_loop(self)
         ->
             (Template<FEachEmptyTemplate14, Partial, After>,
@@ -19036,6 +20612,8 @@ impl<Partial, After> Template<EIfElseTemplate14, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `44: f_each_empty other` using `21: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachEmptyTemplate44, Partial, After>,
@@ -19050,6 +20628,8 @@ impl<Partial, After> Template<EIfElseTemplate14, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate15, Partial, After> {
+    #[doc =
+    "Transition from `15: f_each_one_variable other` to `45: f_each_one_variable other` using `22: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachOneVariableTemplate45, Partial, After>,
@@ -19064,6 +20644,8 @@ impl<Partial, After> Template<EIfElseTemplate15, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `45: f_each_one_variable other` using `23: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -19084,6 +20666,8 @@ impl<Partial, After> Template<EIfElseTemplate45, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `46: f_each_one_variable other` using `24: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachOneVariableTemplate46, Partial, After>,
@@ -19098,6 +20682,8 @@ impl<Partial, After> Template<EIfElseTemplate45, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate16, Partial, After> {
+    #[doc =
+    "Transition from `16: f_each_two_variables other` to `47: f_each_two_variables other` using `25: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachTwoVariablesTemplate47, Partial, After>,
@@ -19112,6 +20698,8 @@ impl<Partial, After> Template<EIfElseTemplate16, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `48: f_each_two_variables other` using `26: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -19132,6 +20720,8 @@ impl<Partial, After> Template<EIfElseTemplate47, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate48, Partial, After> {
+    #[doc =
+    "Transition from `48: f_each_two_variables other` to `47: f_each_two_variables other` using `27: [] {{content:element}}`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -19152,6 +20742,8 @@ impl<Partial, After> Template<EIfElseTemplate48, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `49: f_each_two_variables other` using `28: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesTemplate49, Partial, After>,
@@ -19166,6 +20758,8 @@ impl<Partial, After> Template<EIfElseTemplate47, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate17, Partial, After> {
+    #[doc =
+    "Transition from `17: g_empty_template_multiple other` to `50: g_empty_template_multiple inner` using `29: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -19187,6 +20781,8 @@ impl<Partial, After> Template<EIfElseTemplate17, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate50, Partial, After> {
+    #[doc =
+    "Transition from `50: g_empty_template_multiple inner` to `52: g_empty_template_multiple inner` using `32: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -19208,6 +20804,8 @@ impl<Partial, After> Template<EIfElseTemplate50, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate18, Partial, After> {
+    #[doc =
+    "Transition from `18: g_empty_template other` to `54: g_empty_template inner` using `35: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -19231,6 +20829,8 @@ impl<Partial, After> Template<EIfElseTemplate18, Partial, After> {
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<EIfElseTemplate19,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `19: g_partial_block_partial other` to `56: g_partial_block_partial partial` using `38: [] <span>{{before:element}}<p>`"]
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<Partial, (),
@@ -19259,6 +20859,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<EIfElseTemplate56,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `56: g_partial_block_partial partial` to `57: g_partial_block_partial partial` using `39: [] </p><div>`"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -19280,6 +20882,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
     }
 }
 impl<Partial, After> Template<EIfElseTemplate57, Partial, After> {
+    #[doc =
+    "Transition from `57: g_partial_block_partial partial` to `58: g_partial_block_partial other` using `40: [] </div>{{after:element}}</span>`"]
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate58, Partial, After>,
@@ -19299,6 +20903,8 @@ impl<Partial, After> Template<EIfElseTemplate57, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate20, Partial, After> {
+    #[doc =
+    "Transition from `20: g_partial_block other` to `59: g_partial_block inner` using `41: [] <span>hello`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockPartialTemplate19,
@@ -19335,6 +20941,8 @@ impl<Partial, After> Template<EIfElseTemplate20, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate60, Partial, After> {
+    #[doc =
+    "Transition from `60: g_partial_block other` to `61: g_partial_block other` using `43: [] childrenstart{{test:element}}childrenend`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate61, Partial, After>,
@@ -19354,6 +20962,8 @@ impl<Partial, After> Template<EIfElseTemplate60, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate59, Partial, After> {
+    #[doc =
+    "Transition from `59: g_partial_block inner` to `62: g_partial_block other` using `45: [] world</span>`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockTemplate62, Partial, After>,
@@ -19369,6 +20979,8 @@ impl<Partial, After> Template<EIfElseTemplate59, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate21, Partial, After> {
+    #[doc =
+    "Transition from `21: g_template_only_partial_block_multiple other` to `63: g_template_only_partial_block_multiple inner` using `46: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -19391,6 +21003,8 @@ impl<Partial, After> Template<EIfElseTemplate21, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate63, Partial, After> {
+    #[doc =
+    "Transition from `63: g_template_only_partial_block_multiple inner` to `65: g_template_only_partial_block_multiple inner` using `49: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -19413,6 +21027,8 @@ impl<Partial, After> Template<EIfElseTemplate63, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate22, Partial, After> {
+    #[doc =
+    "Transition from `22: g_template_only_partial_block_with_text_multiple other` to `67: g_template_only_partial_block_with_text_multiple inner` using `52: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -19458,6 +21074,8 @@ impl<Partial, After> Template<EIfElseTemplate22, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate68, Partial, After> {
+    #[doc =
+    "Transition from `68: g_template_only_partial_block_with_text_multiple other` to `69: g_template_only_partial_block_with_text_multiple other` using `54: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate69,
@@ -19474,6 +21092,8 @@ impl<Partial, After> Template<EIfElseTemplate68, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate67, Partial, After> {
+    #[doc =
+    "Transition from `67: g_template_only_partial_block_with_text_multiple inner` to `70: g_template_only_partial_block_with_text_multiple inner` using `56: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -19519,6 +21139,8 @@ impl<Partial, After> Template<EIfElseTemplate67, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate71, Partial, After> {
+    #[doc =
+    "Transition from `71: g_template_only_partial_block_with_text_multiple other` to `72: g_template_only_partial_block_with_text_multiple other` using `58: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate72,
@@ -19535,6 +21157,8 @@ impl<Partial, After> Template<EIfElseTemplate71, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate23, Partial, After> {
+    #[doc =
+    "Transition from `23: g_template_only_partial_block_with_text other` to `73: g_template_only_partial_block_with_text inner` using `60: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -19575,6 +21199,8 @@ impl<Partial, After> Template<EIfElseTemplate23, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate74, Partial, After> {
+    #[doc =
+    "Transition from `74: g_template_only_partial_block_with_text other` to `75: g_template_only_partial_block_with_text other` using `62: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextTemplate75, Partial,
@@ -19590,6 +21216,8 @@ impl<Partial, After> Template<EIfElseTemplate74, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate24, Partial, After> {
+    #[doc =
+    "Transition from `24: g_template_only_partial_block_with_variable_multiple other` to `76: g_template_only_partial_block_with_variable_multiple inner` using `64: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -19636,6 +21264,8 @@ impl<Partial, After> Template<EIfElseTemplate24, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate77, Partial, After> {
+    #[doc =
+    "Transition from `77: g_template_only_partial_block_with_variable_multiple other` to `78: g_template_only_partial_block_with_variable_multiple other` using `66: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate78,
@@ -19657,6 +21287,8 @@ impl<Partial, After> Template<EIfElseTemplate77, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate76, Partial, After> {
+    #[doc =
+    "Transition from `76: g_template_only_partial_block_with_variable_multiple inner` to `79: g_template_only_partial_block_with_variable_multiple inner` using `68: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -19703,6 +21335,8 @@ impl<Partial, After> Template<EIfElseTemplate76, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate80, Partial, After> {
+    #[doc =
+    "Transition from `80: g_template_only_partial_block_with_variable_multiple other` to `81: g_template_only_partial_block_with_variable_multiple other` using `70: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate81,
@@ -19724,6 +21358,8 @@ impl<Partial, After> Template<EIfElseTemplate80, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate79, Partial, After> {
+    #[doc =
+    "Transition from `79: g_template_only_partial_block_with_variable_multiple inner` to `82: g_template_only_partial_block_with_variable_multiple other` using `72: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate82,
@@ -19740,6 +21376,8 @@ impl<Partial, After> Template<EIfElseTemplate79, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate25, Partial, After> {
+    #[doc =
+    "Transition from `25: g_template_only_partial_block_with_variable other` to `83: g_template_only_partial_block_with_variable inner` using `73: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -19783,6 +21421,8 @@ impl<Partial, After> Template<EIfElseTemplate25, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate84, Partial, After> {
+    #[doc =
+    "Transition from `84: g_template_only_partial_block_with_variable other` to `85: g_template_only_partial_block_with_variable other` using `75: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate85,
@@ -19803,6 +21443,8 @@ impl<Partial, After> Template<EIfElseTemplate84, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate83, Partial, After> {
+    #[doc =
+    "Transition from `83: g_template_only_partial_block_with_variable inner` to `86: g_template_only_partial_block_with_variable other` using `77: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate86,
@@ -19818,6 +21460,8 @@ impl<Partial, After> Template<EIfElseTemplate83, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate26, Partial, After> {
+    #[doc =
+    "Transition from `26: g_template_only_partial_block other` to `87: g_template_only_partial_block inner` using `78: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -19839,6 +21483,8 @@ impl<Partial, After> Template<EIfElseTemplate26, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `89: f_each_two_variables_html other` using `81: [enter_loop] \n    <li>{{title:element}}</li>\n    <li>`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -19859,6 +21505,8 @@ impl<Partial, After> Template<EIfElseTemplate27, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate89, Partial, After> {
+    #[doc =
+    "Transition from `89: f_each_two_variables_html other` to `27: f_each_two_variables_html other` using `82: [] {{content:element}}</li>\n`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -19879,6 +21527,8 @@ impl<Partial, After> Template<EIfElseTemplate89, Partial, After> {
     }
 }
 impl<Partial, After> Template<EIfElseTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `90: f_each_two_variables_html other` using `83: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesHtmlTemplate90, Partial, After>,
@@ -19895,6 +21545,8 @@ impl<Partial, After> Template<EIfElseTemplate27, Partial, After> {
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<EIfElseTemplate28,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `28: g_only_partial_block other` to `91: g_only_partial_block partial` using `84: [] `"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -20113,6 +21765,8 @@ pub struct FEachEmptyTemplate90;
 #[must_use]
 pub struct FEachEmptyTemplate91;
 impl<Partial, After> Template<FEachEmptyTemplate1, Partial, After> {
+    #[doc =
+    "Transition from `1: b_text other` to `29: b_text other` using `0: [] hello`"]
     pub fn next(self)
         ->
             (Template<BTextTemplate29, Partial, After>,
@@ -20127,6 +21781,8 @@ impl<Partial, After> Template<FEachEmptyTemplate1, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate2, Partial, After> {
+    #[doc =
+    "Transition from `2: c_element_with_attribute other` to `30: c_element_with_attribute other` using `1: [] <a class=\"test\"></a>`"]
     pub fn next(self)
         ->
             (Template<CElementWithAttributeTemplate30, Partial, After>,
@@ -20144,6 +21800,8 @@ impl<Partial, After> Template<FEachEmptyTemplate2, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate3, Partial, After> {
+    #[doc =
+    "Transition from `3: c_element_with_content other` to `31: c_element_with_content other` using `2: [] <h1>hi</h1>`"]
     pub fn next(self)
         ->
             (Template<CElementWithContentTemplate31, Partial, After>,
@@ -20158,6 +21816,8 @@ impl<Partial, After> Template<FEachEmptyTemplate3, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate4, Partial, After> {
+    #[doc =
+    "Transition from `4: c_empty_element other` to `32: c_empty_element other` using `3: [] <h1></h1>`"]
     pub fn next(self)
         ->
             (Template<CEmptyElementTemplate32, Partial, After>,
@@ -20172,6 +21832,8 @@ impl<Partial, After> Template<FEachEmptyTemplate4, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate5, Partial, After> {
+    #[doc =
+    "Transition from `5: c_self_closing_boolean_attr other` to `33: c_self_closing_boolean_attr other` using `4: [] <!DOCTYPE html>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingBooleanAttrTemplate33, Partial, After>,
@@ -20189,6 +21851,8 @@ impl<Partial, After> Template<FEachEmptyTemplate5, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate6, Partial, After> {
+    #[doc =
+    "Transition from `6: c_self_closing other` to `34: c_self_closing other` using `5: [] <!DOCTYPE>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingTemplate34, Partial, After>,
@@ -20203,6 +21867,8 @@ impl<Partial, After> Template<FEachEmptyTemplate6, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate7, Partial, After> {
+    #[doc =
+    "Transition from `7: d_element_with_attribute_and_variables other` to `35: d_element_with_attribute_and_variables other` using `6: [] <a class=\"{{test:attr}}\">`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate35, Partial,
@@ -20224,6 +21890,8 @@ impl<Partial, After> Template<FEachEmptyTemplate7, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate35, Partial, After> {
+    #[doc =
+    "Transition from `35: d_element_with_attribute_and_variables other` to `36: d_element_with_attribute_and_variables other` using `7: [] {{var:element}}</a>`"]
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
@@ -20244,6 +21912,8 @@ impl<Partial, After> Template<FEachEmptyTemplate35, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate8, Partial, After> {
+    #[doc =
+    "Transition from `8: d_variable other` to `37: d_variable other` using `8: [] <p>{{test:element}}</p>`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate37, Partial, After>,
@@ -20263,6 +21933,8 @@ impl<Partial, After> Template<FEachEmptyTemplate8, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `9: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -20277,6 +21949,8 @@ impl<Partial, After> Template<FEachEmptyTemplate9, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `10: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -20291,6 +21965,8 @@ impl<Partial, After> Template<FEachEmptyTemplate9, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `11: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -20305,6 +21981,8 @@ impl<Partial, After> Template<FEachEmptyTemplate10, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `12: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -20319,6 +21997,8 @@ impl<Partial, After> Template<FEachEmptyTemplate10, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `13: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -20333,6 +22013,8 @@ impl<Partial, After> Template<FEachEmptyTemplate11, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `14: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -20347,6 +22029,8 @@ impl<Partial, After> Template<FEachEmptyTemplate11, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate12, Partial, After> {
+    #[doc =
+    "Transition from `12: e_if_else_with_variables other` to `41: e_if_else_with_variables other` using `15: [] <span>`"]
     pub fn next(self)
         ->
             (Template<EIfElseWithVariablesTemplate41, Partial, After>,
@@ -20361,6 +22045,8 @@ impl<Partial, After> Template<FEachEmptyTemplate12, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `16: [true] {{t:element}}</span>`"]
     pub fn t_true(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -20380,6 +22066,8 @@ impl<Partial, After> Template<FEachEmptyTemplate41, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `17: [false] {{f:element}}</span>`"]
     pub fn f_false(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -20399,6 +22087,8 @@ impl<Partial, After> Template<FEachEmptyTemplate41, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `18: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -20413,6 +22103,8 @@ impl<Partial, After> Template<FEachEmptyTemplate13, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `19: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -20427,6 +22119,8 @@ impl<Partial, After> Template<FEachEmptyTemplate13, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `14: f_each_empty other` using `20: [enter_loop] `"]
     pub fn next_enter_loop(self)
         ->
             (Template<FEachEmptyTemplate14, Partial, After>,
@@ -20441,6 +22135,8 @@ impl<Partial, After> Template<FEachEmptyTemplate14, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `44: f_each_empty other` using `21: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachEmptyTemplate44, Partial, After>,
@@ -20455,6 +22151,8 @@ impl<Partial, After> Template<FEachEmptyTemplate14, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate15, Partial, After> {
+    #[doc =
+    "Transition from `15: f_each_one_variable other` to `45: f_each_one_variable other` using `22: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachOneVariableTemplate45, Partial, After>,
@@ -20469,6 +22167,8 @@ impl<Partial, After> Template<FEachEmptyTemplate15, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `45: f_each_one_variable other` using `23: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -20489,6 +22189,8 @@ impl<Partial, After> Template<FEachEmptyTemplate45, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `46: f_each_one_variable other` using `24: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachOneVariableTemplate46, Partial, After>,
@@ -20503,6 +22205,8 @@ impl<Partial, After> Template<FEachEmptyTemplate45, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate16, Partial, After> {
+    #[doc =
+    "Transition from `16: f_each_two_variables other` to `47: f_each_two_variables other` using `25: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachTwoVariablesTemplate47, Partial, After>,
@@ -20517,6 +22221,8 @@ impl<Partial, After> Template<FEachEmptyTemplate16, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `48: f_each_two_variables other` using `26: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -20537,6 +22243,8 @@ impl<Partial, After> Template<FEachEmptyTemplate47, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate48, Partial, After> {
+    #[doc =
+    "Transition from `48: f_each_two_variables other` to `47: f_each_two_variables other` using `27: [] {{content:element}}`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -20557,6 +22265,8 @@ impl<Partial, After> Template<FEachEmptyTemplate48, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `49: f_each_two_variables other` using `28: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesTemplate49, Partial, After>,
@@ -20571,6 +22281,8 @@ impl<Partial, After> Template<FEachEmptyTemplate47, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate17, Partial, After> {
+    #[doc =
+    "Transition from `17: g_empty_template_multiple other` to `50: g_empty_template_multiple inner` using `29: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -20592,6 +22304,8 @@ impl<Partial, After> Template<FEachEmptyTemplate17, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate50, Partial, After> {
+    #[doc =
+    "Transition from `50: g_empty_template_multiple inner` to `52: g_empty_template_multiple inner` using `32: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -20613,6 +22327,8 @@ impl<Partial, After> Template<FEachEmptyTemplate50, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate18, Partial, After> {
+    #[doc =
+    "Transition from `18: g_empty_template other` to `54: g_empty_template inner` using `35: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -20636,6 +22352,8 @@ impl<Partial, After> Template<FEachEmptyTemplate18, Partial, After> {
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<FEachEmptyTemplate19,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `19: g_partial_block_partial other` to `56: g_partial_block_partial partial` using `38: [] <span>{{before:element}}<p>`"]
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<Partial, (),
@@ -20664,6 +22382,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<FEachEmptyTemplate56,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `56: g_partial_block_partial partial` to `57: g_partial_block_partial partial` using `39: [] </p><div>`"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -20685,6 +22405,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate57, Partial, After> {
+    #[doc =
+    "Transition from `57: g_partial_block_partial partial` to `58: g_partial_block_partial other` using `40: [] </div>{{after:element}}</span>`"]
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate58, Partial, After>,
@@ -20704,6 +22426,8 @@ impl<Partial, After> Template<FEachEmptyTemplate57, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate20, Partial, After> {
+    #[doc =
+    "Transition from `20: g_partial_block other` to `59: g_partial_block inner` using `41: [] <span>hello`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockPartialTemplate19,
@@ -20740,6 +22464,8 @@ impl<Partial, After> Template<FEachEmptyTemplate20, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate60, Partial, After> {
+    #[doc =
+    "Transition from `60: g_partial_block other` to `61: g_partial_block other` using `43: [] childrenstart{{test:element}}childrenend`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate61, Partial, After>,
@@ -20759,6 +22485,8 @@ impl<Partial, After> Template<FEachEmptyTemplate60, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate59, Partial, After> {
+    #[doc =
+    "Transition from `59: g_partial_block inner` to `62: g_partial_block other` using `45: [] world</span>`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockTemplate62, Partial, After>,
@@ -20774,6 +22502,8 @@ impl<Partial, After> Template<FEachEmptyTemplate59, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate21, Partial, After> {
+    #[doc =
+    "Transition from `21: g_template_only_partial_block_multiple other` to `63: g_template_only_partial_block_multiple inner` using `46: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -20796,6 +22526,8 @@ impl<Partial, After> Template<FEachEmptyTemplate21, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate63, Partial, After> {
+    #[doc =
+    "Transition from `63: g_template_only_partial_block_multiple inner` to `65: g_template_only_partial_block_multiple inner` using `49: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -20818,6 +22550,8 @@ impl<Partial, After> Template<FEachEmptyTemplate63, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate22, Partial, After> {
+    #[doc =
+    "Transition from `22: g_template_only_partial_block_with_text_multiple other` to `67: g_template_only_partial_block_with_text_multiple inner` using `52: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -20863,6 +22597,8 @@ impl<Partial, After> Template<FEachEmptyTemplate22, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate68, Partial, After> {
+    #[doc =
+    "Transition from `68: g_template_only_partial_block_with_text_multiple other` to `69: g_template_only_partial_block_with_text_multiple other` using `54: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate69,
@@ -20879,6 +22615,8 @@ impl<Partial, After> Template<FEachEmptyTemplate68, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate67, Partial, After> {
+    #[doc =
+    "Transition from `67: g_template_only_partial_block_with_text_multiple inner` to `70: g_template_only_partial_block_with_text_multiple inner` using `56: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -20924,6 +22662,8 @@ impl<Partial, After> Template<FEachEmptyTemplate67, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate71, Partial, After> {
+    #[doc =
+    "Transition from `71: g_template_only_partial_block_with_text_multiple other` to `72: g_template_only_partial_block_with_text_multiple other` using `58: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate72,
@@ -20940,6 +22680,8 @@ impl<Partial, After> Template<FEachEmptyTemplate71, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate23, Partial, After> {
+    #[doc =
+    "Transition from `23: g_template_only_partial_block_with_text other` to `73: g_template_only_partial_block_with_text inner` using `60: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -20980,6 +22722,8 @@ impl<Partial, After> Template<FEachEmptyTemplate23, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate74, Partial, After> {
+    #[doc =
+    "Transition from `74: g_template_only_partial_block_with_text other` to `75: g_template_only_partial_block_with_text other` using `62: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextTemplate75, Partial,
@@ -20995,6 +22739,8 @@ impl<Partial, After> Template<FEachEmptyTemplate74, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate24, Partial, After> {
+    #[doc =
+    "Transition from `24: g_template_only_partial_block_with_variable_multiple other` to `76: g_template_only_partial_block_with_variable_multiple inner` using `64: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -21041,6 +22787,8 @@ impl<Partial, After> Template<FEachEmptyTemplate24, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate77, Partial, After> {
+    #[doc =
+    "Transition from `77: g_template_only_partial_block_with_variable_multiple other` to `78: g_template_only_partial_block_with_variable_multiple other` using `66: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate78,
@@ -21062,6 +22810,8 @@ impl<Partial, After> Template<FEachEmptyTemplate77, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate76, Partial, After> {
+    #[doc =
+    "Transition from `76: g_template_only_partial_block_with_variable_multiple inner` to `79: g_template_only_partial_block_with_variable_multiple inner` using `68: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -21108,6 +22858,8 @@ impl<Partial, After> Template<FEachEmptyTemplate76, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate80, Partial, After> {
+    #[doc =
+    "Transition from `80: g_template_only_partial_block_with_variable_multiple other` to `81: g_template_only_partial_block_with_variable_multiple other` using `70: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate81,
@@ -21129,6 +22881,8 @@ impl<Partial, After> Template<FEachEmptyTemplate80, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate79, Partial, After> {
+    #[doc =
+    "Transition from `79: g_template_only_partial_block_with_variable_multiple inner` to `82: g_template_only_partial_block_with_variable_multiple other` using `72: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate82,
@@ -21145,6 +22899,8 @@ impl<Partial, After> Template<FEachEmptyTemplate79, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate25, Partial, After> {
+    #[doc =
+    "Transition from `25: g_template_only_partial_block_with_variable other` to `83: g_template_only_partial_block_with_variable inner` using `73: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -21188,6 +22944,8 @@ impl<Partial, After> Template<FEachEmptyTemplate25, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate84, Partial, After> {
+    #[doc =
+    "Transition from `84: g_template_only_partial_block_with_variable other` to `85: g_template_only_partial_block_with_variable other` using `75: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate85,
@@ -21208,6 +22966,8 @@ impl<Partial, After> Template<FEachEmptyTemplate84, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate83, Partial, After> {
+    #[doc =
+    "Transition from `83: g_template_only_partial_block_with_variable inner` to `86: g_template_only_partial_block_with_variable other` using `77: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate86,
@@ -21223,6 +22983,8 @@ impl<Partial, After> Template<FEachEmptyTemplate83, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate26, Partial, After> {
+    #[doc =
+    "Transition from `26: g_template_only_partial_block other` to `87: g_template_only_partial_block inner` using `78: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -21244,6 +23006,8 @@ impl<Partial, After> Template<FEachEmptyTemplate26, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `89: f_each_two_variables_html other` using `81: [enter_loop] \n    <li>{{title:element}}</li>\n    <li>`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -21264,6 +23028,8 @@ impl<Partial, After> Template<FEachEmptyTemplate27, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate89, Partial, After> {
+    #[doc =
+    "Transition from `89: f_each_two_variables_html other` to `27: f_each_two_variables_html other` using `82: [] {{content:element}}</li>\n`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -21284,6 +23050,8 @@ impl<Partial, After> Template<FEachEmptyTemplate89, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `90: f_each_two_variables_html other` using `83: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesHtmlTemplate90, Partial, After>,
@@ -21300,6 +23068,8 @@ impl<Partial, After> Template<FEachEmptyTemplate27, Partial, After> {
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<FEachEmptyTemplate28,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `28: g_only_partial_block other` to `91: g_only_partial_block partial` using `84: [] `"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -21518,6 +23288,8 @@ pub struct FEachOneVariableTemplate90;
 #[must_use]
 pub struct FEachOneVariableTemplate91;
 impl<Partial, After> Template<FEachOneVariableTemplate1, Partial, After> {
+    #[doc =
+    "Transition from `1: b_text other` to `29: b_text other` using `0: [] hello`"]
     pub fn next(self)
         ->
             (Template<BTextTemplate29, Partial, After>,
@@ -21532,6 +23304,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate1, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate2, Partial, After> {
+    #[doc =
+    "Transition from `2: c_element_with_attribute other` to `30: c_element_with_attribute other` using `1: [] <a class=\"test\"></a>`"]
     pub fn next(self)
         ->
             (Template<CElementWithAttributeTemplate30, Partial, After>,
@@ -21549,6 +23323,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate2, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate3, Partial, After> {
+    #[doc =
+    "Transition from `3: c_element_with_content other` to `31: c_element_with_content other` using `2: [] <h1>hi</h1>`"]
     pub fn next(self)
         ->
             (Template<CElementWithContentTemplate31, Partial, After>,
@@ -21563,6 +23339,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate3, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate4, Partial, After> {
+    #[doc =
+    "Transition from `4: c_empty_element other` to `32: c_empty_element other` using `3: [] <h1></h1>`"]
     pub fn next(self)
         ->
             (Template<CEmptyElementTemplate32, Partial, After>,
@@ -21577,6 +23355,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate4, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate5, Partial, After> {
+    #[doc =
+    "Transition from `5: c_self_closing_boolean_attr other` to `33: c_self_closing_boolean_attr other` using `4: [] <!DOCTYPE html>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingBooleanAttrTemplate33, Partial, After>,
@@ -21594,6 +23374,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate5, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate6, Partial, After> {
+    #[doc =
+    "Transition from `6: c_self_closing other` to `34: c_self_closing other` using `5: [] <!DOCTYPE>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingTemplate34, Partial, After>,
@@ -21608,6 +23390,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate6, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate7, Partial, After> {
+    #[doc =
+    "Transition from `7: d_element_with_attribute_and_variables other` to `35: d_element_with_attribute_and_variables other` using `6: [] <a class=\"{{test:attr}}\">`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate35, Partial,
@@ -21629,6 +23413,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate7, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate35, Partial, After> {
+    #[doc =
+    "Transition from `35: d_element_with_attribute_and_variables other` to `36: d_element_with_attribute_and_variables other` using `7: [] {{var:element}}</a>`"]
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
@@ -21649,6 +23435,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate35, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate8, Partial, After> {
+    #[doc =
+    "Transition from `8: d_variable other` to `37: d_variable other` using `8: [] <p>{{test:element}}</p>`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate37, Partial, After>,
@@ -21668,6 +23456,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate8, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `9: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -21682,6 +23472,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate9, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `10: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -21696,6 +23488,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate9, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `11: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -21710,6 +23504,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate10, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `12: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -21724,6 +23520,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate10, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `13: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -21738,6 +23536,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate11, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `14: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -21752,6 +23552,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate11, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate12, Partial, After> {
+    #[doc =
+    "Transition from `12: e_if_else_with_variables other` to `41: e_if_else_with_variables other` using `15: [] <span>`"]
     pub fn next(self)
         ->
             (Template<EIfElseWithVariablesTemplate41, Partial, After>,
@@ -21766,6 +23568,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate12, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `16: [true] {{t:element}}</span>`"]
     pub fn t_true(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -21785,6 +23589,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate41, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `17: [false] {{f:element}}</span>`"]
     pub fn f_false(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -21804,6 +23610,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate41, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `18: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -21818,6 +23626,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate13, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `19: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -21832,6 +23642,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate13, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `14: f_each_empty other` using `20: [enter_loop] `"]
     pub fn next_enter_loop(self)
         ->
             (Template<FEachEmptyTemplate14, Partial, After>,
@@ -21846,6 +23658,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate14, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `44: f_each_empty other` using `21: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachEmptyTemplate44, Partial, After>,
@@ -21860,6 +23674,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate14, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate15, Partial, After> {
+    #[doc =
+    "Transition from `15: f_each_one_variable other` to `45: f_each_one_variable other` using `22: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachOneVariableTemplate45, Partial, After>,
@@ -21874,6 +23690,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate15, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `45: f_each_one_variable other` using `23: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -21894,6 +23712,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate45, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `46: f_each_one_variable other` using `24: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachOneVariableTemplate46, Partial, After>,
@@ -21908,6 +23728,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate45, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate16, Partial, After> {
+    #[doc =
+    "Transition from `16: f_each_two_variables other` to `47: f_each_two_variables other` using `25: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachTwoVariablesTemplate47, Partial, After>,
@@ -21922,6 +23744,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate16, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `48: f_each_two_variables other` using `26: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -21942,6 +23766,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate47, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate48, Partial, After> {
+    #[doc =
+    "Transition from `48: f_each_two_variables other` to `47: f_each_two_variables other` using `27: [] {{content:element}}`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -21962,6 +23788,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate48, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `49: f_each_two_variables other` using `28: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesTemplate49, Partial, After>,
@@ -21976,6 +23804,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate47, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate17, Partial, After> {
+    #[doc =
+    "Transition from `17: g_empty_template_multiple other` to `50: g_empty_template_multiple inner` using `29: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -21997,6 +23827,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate17, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate50, Partial, After> {
+    #[doc =
+    "Transition from `50: g_empty_template_multiple inner` to `52: g_empty_template_multiple inner` using `32: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -22018,6 +23850,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate50, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate18, Partial, After> {
+    #[doc =
+    "Transition from `18: g_empty_template other` to `54: g_empty_template inner` using `35: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -22041,6 +23875,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate18, Partial, After> {
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<FEachOneVariableTemplate19,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `19: g_partial_block_partial other` to `56: g_partial_block_partial partial` using `38: [] <span>{{before:element}}<p>`"]
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<Partial, (),
@@ -22069,6 +23905,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<FEachOneVariableTemplate56,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `56: g_partial_block_partial partial` to `57: g_partial_block_partial partial` using `39: [] </p><div>`"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -22090,6 +23928,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate57, Partial, After> {
+    #[doc =
+    "Transition from `57: g_partial_block_partial partial` to `58: g_partial_block_partial other` using `40: [] </div>{{after:element}}</span>`"]
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate58, Partial, After>,
@@ -22109,6 +23949,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate57, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate20, Partial, After> {
+    #[doc =
+    "Transition from `20: g_partial_block other` to `59: g_partial_block inner` using `41: [] <span>hello`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockPartialTemplate19,
@@ -22145,6 +23987,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate20, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate60, Partial, After> {
+    #[doc =
+    "Transition from `60: g_partial_block other` to `61: g_partial_block other` using `43: [] childrenstart{{test:element}}childrenend`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate61, Partial, After>,
@@ -22164,6 +24008,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate60, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate59, Partial, After> {
+    #[doc =
+    "Transition from `59: g_partial_block inner` to `62: g_partial_block other` using `45: [] world</span>`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockTemplate62, Partial, After>,
@@ -22179,6 +24025,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate59, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate21, Partial, After> {
+    #[doc =
+    "Transition from `21: g_template_only_partial_block_multiple other` to `63: g_template_only_partial_block_multiple inner` using `46: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -22201,6 +24049,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate21, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate63, Partial, After> {
+    #[doc =
+    "Transition from `63: g_template_only_partial_block_multiple inner` to `65: g_template_only_partial_block_multiple inner` using `49: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -22223,6 +24073,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate63, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate22, Partial, After> {
+    #[doc =
+    "Transition from `22: g_template_only_partial_block_with_text_multiple other` to `67: g_template_only_partial_block_with_text_multiple inner` using `52: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -22268,6 +24120,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate22, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate68, Partial, After> {
+    #[doc =
+    "Transition from `68: g_template_only_partial_block_with_text_multiple other` to `69: g_template_only_partial_block_with_text_multiple other` using `54: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate69,
@@ -22284,6 +24138,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate68, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate67, Partial, After> {
+    #[doc =
+    "Transition from `67: g_template_only_partial_block_with_text_multiple inner` to `70: g_template_only_partial_block_with_text_multiple inner` using `56: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -22329,6 +24185,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate67, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate71, Partial, After> {
+    #[doc =
+    "Transition from `71: g_template_only_partial_block_with_text_multiple other` to `72: g_template_only_partial_block_with_text_multiple other` using `58: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate72,
@@ -22345,6 +24203,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate71, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate23, Partial, After> {
+    #[doc =
+    "Transition from `23: g_template_only_partial_block_with_text other` to `73: g_template_only_partial_block_with_text inner` using `60: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -22385,6 +24245,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate23, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate74, Partial, After> {
+    #[doc =
+    "Transition from `74: g_template_only_partial_block_with_text other` to `75: g_template_only_partial_block_with_text other` using `62: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextTemplate75, Partial,
@@ -22400,6 +24262,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate74, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate24, Partial, After> {
+    #[doc =
+    "Transition from `24: g_template_only_partial_block_with_variable_multiple other` to `76: g_template_only_partial_block_with_variable_multiple inner` using `64: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -22446,6 +24310,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate24, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate77, Partial, After> {
+    #[doc =
+    "Transition from `77: g_template_only_partial_block_with_variable_multiple other` to `78: g_template_only_partial_block_with_variable_multiple other` using `66: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate78,
@@ -22467,6 +24333,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate77, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate76, Partial, After> {
+    #[doc =
+    "Transition from `76: g_template_only_partial_block_with_variable_multiple inner` to `79: g_template_only_partial_block_with_variable_multiple inner` using `68: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -22513,6 +24381,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate76, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate80, Partial, After> {
+    #[doc =
+    "Transition from `80: g_template_only_partial_block_with_variable_multiple other` to `81: g_template_only_partial_block_with_variable_multiple other` using `70: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate81,
@@ -22534,6 +24404,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate80, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate79, Partial, After> {
+    #[doc =
+    "Transition from `79: g_template_only_partial_block_with_variable_multiple inner` to `82: g_template_only_partial_block_with_variable_multiple other` using `72: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate82,
@@ -22550,6 +24422,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate79, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate25, Partial, After> {
+    #[doc =
+    "Transition from `25: g_template_only_partial_block_with_variable other` to `83: g_template_only_partial_block_with_variable inner` using `73: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -22593,6 +24467,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate25, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate84, Partial, After> {
+    #[doc =
+    "Transition from `84: g_template_only_partial_block_with_variable other` to `85: g_template_only_partial_block_with_variable other` using `75: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate85,
@@ -22613,6 +24489,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate84, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate83, Partial, After> {
+    #[doc =
+    "Transition from `83: g_template_only_partial_block_with_variable inner` to `86: g_template_only_partial_block_with_variable other` using `77: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate86,
@@ -22628,6 +24506,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate83, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate26, Partial, After> {
+    #[doc =
+    "Transition from `26: g_template_only_partial_block other` to `87: g_template_only_partial_block inner` using `78: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -22649,6 +24529,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate26, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `89: f_each_two_variables_html other` using `81: [enter_loop] \n    <li>{{title:element}}</li>\n    <li>`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -22669,6 +24551,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate27, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate89, Partial, After> {
+    #[doc =
+    "Transition from `89: f_each_two_variables_html other` to `27: f_each_two_variables_html other` using `82: [] {{content:element}}</li>\n`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -22689,6 +24573,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate89, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `90: f_each_two_variables_html other` using `83: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesHtmlTemplate90, Partial, After>,
@@ -22705,6 +24591,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate27, Partial, After> {
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<FEachOneVariableTemplate28,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `28: g_only_partial_block other` to `91: g_only_partial_block partial` using `84: [] `"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -22926,6 +24814,8 @@ pub struct FEachTwoVariablesTemplate90;
 #[must_use]
 pub struct FEachTwoVariablesTemplate91;
 impl<Partial, After> Template<FEachTwoVariablesTemplate1, Partial, After> {
+    #[doc =
+    "Transition from `1: b_text other` to `29: b_text other` using `0: [] hello`"]
     pub fn next(self)
         ->
             (Template<BTextTemplate29, Partial, After>,
@@ -22940,6 +24830,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate1, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate2, Partial, After> {
+    #[doc =
+    "Transition from `2: c_element_with_attribute other` to `30: c_element_with_attribute other` using `1: [] <a class=\"test\"></a>`"]
     pub fn next(self)
         ->
             (Template<CElementWithAttributeTemplate30, Partial, After>,
@@ -22957,6 +24849,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate2, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate3, Partial, After> {
+    #[doc =
+    "Transition from `3: c_element_with_content other` to `31: c_element_with_content other` using `2: [] <h1>hi</h1>`"]
     pub fn next(self)
         ->
             (Template<CElementWithContentTemplate31, Partial, After>,
@@ -22971,6 +24865,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate3, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate4, Partial, After> {
+    #[doc =
+    "Transition from `4: c_empty_element other` to `32: c_empty_element other` using `3: [] <h1></h1>`"]
     pub fn next(self)
         ->
             (Template<CEmptyElementTemplate32, Partial, After>,
@@ -22985,6 +24881,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate4, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate5, Partial, After> {
+    #[doc =
+    "Transition from `5: c_self_closing_boolean_attr other` to `33: c_self_closing_boolean_attr other` using `4: [] <!DOCTYPE html>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingBooleanAttrTemplate33, Partial, After>,
@@ -23002,6 +24900,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate5, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate6, Partial, After> {
+    #[doc =
+    "Transition from `6: c_self_closing other` to `34: c_self_closing other` using `5: [] <!DOCTYPE>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingTemplate34, Partial, After>,
@@ -23016,6 +24916,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate6, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate7, Partial, After> {
+    #[doc =
+    "Transition from `7: d_element_with_attribute_and_variables other` to `35: d_element_with_attribute_and_variables other` using `6: [] <a class=\"{{test:attr}}\">`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate35, Partial,
@@ -23037,6 +24939,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate7, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate35, Partial, After> {
+    #[doc =
+    "Transition from `35: d_element_with_attribute_and_variables other` to `36: d_element_with_attribute_and_variables other` using `7: [] {{var:element}}</a>`"]
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
@@ -23057,6 +24961,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate35, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate8, Partial, After> {
+    #[doc =
+    "Transition from `8: d_variable other` to `37: d_variable other` using `8: [] <p>{{test:element}}</p>`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate37, Partial, After>,
@@ -23076,6 +24982,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate8, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `9: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -23090,6 +24998,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate9, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `10: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -23104,6 +25014,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate9, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `11: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -23118,6 +25030,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate10, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `12: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -23132,6 +25046,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate10, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `13: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -23146,6 +25062,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate11, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `14: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -23160,6 +25078,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate11, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate12, Partial, After> {
+    #[doc =
+    "Transition from `12: e_if_else_with_variables other` to `41: e_if_else_with_variables other` using `15: [] <span>`"]
     pub fn next(self)
         ->
             (Template<EIfElseWithVariablesTemplate41, Partial, After>,
@@ -23174,6 +25094,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate12, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `16: [true] {{t:element}}</span>`"]
     pub fn t_true(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -23193,6 +25115,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate41, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `17: [false] {{f:element}}</span>`"]
     pub fn f_false(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -23212,6 +25136,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate41, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `18: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -23226,6 +25152,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate13, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `19: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -23240,6 +25168,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate13, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `14: f_each_empty other` using `20: [enter_loop] `"]
     pub fn next_enter_loop(self)
         ->
             (Template<FEachEmptyTemplate14, Partial, After>,
@@ -23254,6 +25184,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate14, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `44: f_each_empty other` using `21: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachEmptyTemplate44, Partial, After>,
@@ -23268,6 +25200,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate14, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate15, Partial, After> {
+    #[doc =
+    "Transition from `15: f_each_one_variable other` to `45: f_each_one_variable other` using `22: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachOneVariableTemplate45, Partial, After>,
@@ -23282,6 +25216,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate15, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `45: f_each_one_variable other` using `23: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -23302,6 +25238,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate45, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `46: f_each_one_variable other` using `24: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachOneVariableTemplate46, Partial, After>,
@@ -23316,6 +25254,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate45, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate16, Partial, After> {
+    #[doc =
+    "Transition from `16: f_each_two_variables other` to `47: f_each_two_variables other` using `25: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachTwoVariablesTemplate47, Partial, After>,
@@ -23330,6 +25270,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate16, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `48: f_each_two_variables other` using `26: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -23350,6 +25292,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate47, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate48, Partial, After> {
+    #[doc =
+    "Transition from `48: f_each_two_variables other` to `47: f_each_two_variables other` using `27: [] {{content:element}}`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -23370,6 +25314,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate48, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `49: f_each_two_variables other` using `28: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesTemplate49, Partial, After>,
@@ -23384,6 +25330,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate47, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate17, Partial, After> {
+    #[doc =
+    "Transition from `17: g_empty_template_multiple other` to `50: g_empty_template_multiple inner` using `29: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -23405,6 +25353,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate17, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate50, Partial, After> {
+    #[doc =
+    "Transition from `50: g_empty_template_multiple inner` to `52: g_empty_template_multiple inner` using `32: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -23426,6 +25376,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate50, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate18, Partial, After> {
+    #[doc =
+    "Transition from `18: g_empty_template other` to `54: g_empty_template inner` using `35: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -23449,6 +25401,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate18, Partial, After> {
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<FEachTwoVariablesTemplate19,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `19: g_partial_block_partial other` to `56: g_partial_block_partial partial` using `38: [] <span>{{before:element}}<p>`"]
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<Partial, (),
@@ -23477,6 +25431,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<FEachTwoVariablesTemplate56,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `56: g_partial_block_partial partial` to `57: g_partial_block_partial partial` using `39: [] </p><div>`"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -23498,6 +25454,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate57, Partial, After> {
+    #[doc =
+    "Transition from `57: g_partial_block_partial partial` to `58: g_partial_block_partial other` using `40: [] </div>{{after:element}}</span>`"]
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate58, Partial, After>,
@@ -23517,6 +25475,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate57, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate20, Partial, After> {
+    #[doc =
+    "Transition from `20: g_partial_block other` to `59: g_partial_block inner` using `41: [] <span>hello`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockPartialTemplate19,
@@ -23553,6 +25513,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate20, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate60, Partial, After> {
+    #[doc =
+    "Transition from `60: g_partial_block other` to `61: g_partial_block other` using `43: [] childrenstart{{test:element}}childrenend`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate61, Partial, After>,
@@ -23572,6 +25534,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate60, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate59, Partial, After> {
+    #[doc =
+    "Transition from `59: g_partial_block inner` to `62: g_partial_block other` using `45: [] world</span>`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockTemplate62, Partial, After>,
@@ -23587,6 +25551,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate59, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate21, Partial, After> {
+    #[doc =
+    "Transition from `21: g_template_only_partial_block_multiple other` to `63: g_template_only_partial_block_multiple inner` using `46: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -23609,6 +25575,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate21, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate63, Partial, After> {
+    #[doc =
+    "Transition from `63: g_template_only_partial_block_multiple inner` to `65: g_template_only_partial_block_multiple inner` using `49: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -23631,6 +25599,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate63, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate22, Partial, After> {
+    #[doc =
+    "Transition from `22: g_template_only_partial_block_with_text_multiple other` to `67: g_template_only_partial_block_with_text_multiple inner` using `52: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -23676,6 +25646,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate22, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate68, Partial, After> {
+    #[doc =
+    "Transition from `68: g_template_only_partial_block_with_text_multiple other` to `69: g_template_only_partial_block_with_text_multiple other` using `54: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate69,
@@ -23692,6 +25664,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate68, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate67, Partial, After> {
+    #[doc =
+    "Transition from `67: g_template_only_partial_block_with_text_multiple inner` to `70: g_template_only_partial_block_with_text_multiple inner` using `56: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -23737,6 +25711,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate67, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate71, Partial, After> {
+    #[doc =
+    "Transition from `71: g_template_only_partial_block_with_text_multiple other` to `72: g_template_only_partial_block_with_text_multiple other` using `58: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate72,
@@ -23753,6 +25729,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate71, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate23, Partial, After> {
+    #[doc =
+    "Transition from `23: g_template_only_partial_block_with_text other` to `73: g_template_only_partial_block_with_text inner` using `60: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -23793,6 +25771,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate23, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate74, Partial, After> {
+    #[doc =
+    "Transition from `74: g_template_only_partial_block_with_text other` to `75: g_template_only_partial_block_with_text other` using `62: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextTemplate75, Partial,
@@ -23808,6 +25788,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate74, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate24, Partial, After> {
+    #[doc =
+    "Transition from `24: g_template_only_partial_block_with_variable_multiple other` to `76: g_template_only_partial_block_with_variable_multiple inner` using `64: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -23854,6 +25836,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate24, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate77, Partial, After> {
+    #[doc =
+    "Transition from `77: g_template_only_partial_block_with_variable_multiple other` to `78: g_template_only_partial_block_with_variable_multiple other` using `66: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate78,
@@ -23875,6 +25859,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate77, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate76, Partial, After> {
+    #[doc =
+    "Transition from `76: g_template_only_partial_block_with_variable_multiple inner` to `79: g_template_only_partial_block_with_variable_multiple inner` using `68: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -23921,6 +25907,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate76, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate80, Partial, After> {
+    #[doc =
+    "Transition from `80: g_template_only_partial_block_with_variable_multiple other` to `81: g_template_only_partial_block_with_variable_multiple other` using `70: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate81,
@@ -23942,6 +25930,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate80, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate79, Partial, After> {
+    #[doc =
+    "Transition from `79: g_template_only_partial_block_with_variable_multiple inner` to `82: g_template_only_partial_block_with_variable_multiple other` using `72: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate82,
@@ -23958,6 +25948,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate79, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate25, Partial, After> {
+    #[doc =
+    "Transition from `25: g_template_only_partial_block_with_variable other` to `83: g_template_only_partial_block_with_variable inner` using `73: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -24001,6 +25993,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate25, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate84, Partial, After> {
+    #[doc =
+    "Transition from `84: g_template_only_partial_block_with_variable other` to `85: g_template_only_partial_block_with_variable other` using `75: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate85,
@@ -24021,6 +26015,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate84, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate83, Partial, After> {
+    #[doc =
+    "Transition from `83: g_template_only_partial_block_with_variable inner` to `86: g_template_only_partial_block_with_variable other` using `77: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate86,
@@ -24036,6 +26032,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate83, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate26, Partial, After> {
+    #[doc =
+    "Transition from `26: g_template_only_partial_block other` to `87: g_template_only_partial_block inner` using `78: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -24057,6 +26055,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate26, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `89: f_each_two_variables_html other` using `81: [enter_loop] \n    <li>{{title:element}}</li>\n    <li>`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -24077,6 +26077,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate27, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate89, Partial, After> {
+    #[doc =
+    "Transition from `89: f_each_two_variables_html other` to `27: f_each_two_variables_html other` using `82: [] {{content:element}}</li>\n`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -24097,6 +26099,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate89, Partial, After> {
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `90: f_each_two_variables_html other` using `83: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesHtmlTemplate90, Partial, After>,
@@ -24113,6 +26117,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate27, Partial, After> {
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<FEachTwoVariablesTemplate28,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `28: g_only_partial_block other` to `91: g_only_partial_block partial` using `84: [] `"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -24335,6 +26341,8 @@ pub struct GEmptyTemplateMultipleTemplate90;
 pub struct GEmptyTemplateMultipleTemplate91;
 impl<Partial, After> Template<GEmptyTemplateMultipleTemplate1, Partial, After>
     {
+    #[doc =
+    "Transition from `1: b_text other` to `29: b_text other` using `0: [] hello`"]
     pub fn next(self)
         ->
             (Template<BTextTemplate29, Partial, After>,
@@ -24350,6 +26358,8 @@ impl<Partial, After> Template<GEmptyTemplateMultipleTemplate1, Partial, After>
 }
 impl<Partial, After> Template<GEmptyTemplateMultipleTemplate2, Partial, After>
     {
+    #[doc =
+    "Transition from `2: c_element_with_attribute other` to `30: c_element_with_attribute other` using `1: [] <a class=\"test\"></a>`"]
     pub fn next(self)
         ->
             (Template<CElementWithAttributeTemplate30, Partial, After>,
@@ -24368,6 +26378,8 @@ impl<Partial, After> Template<GEmptyTemplateMultipleTemplate2, Partial, After>
 }
 impl<Partial, After> Template<GEmptyTemplateMultipleTemplate3, Partial, After>
     {
+    #[doc =
+    "Transition from `3: c_element_with_content other` to `31: c_element_with_content other` using `2: [] <h1>hi</h1>`"]
     pub fn next(self)
         ->
             (Template<CElementWithContentTemplate31, Partial, After>,
@@ -24383,6 +26395,8 @@ impl<Partial, After> Template<GEmptyTemplateMultipleTemplate3, Partial, After>
 }
 impl<Partial, After> Template<GEmptyTemplateMultipleTemplate4, Partial, After>
     {
+    #[doc =
+    "Transition from `4: c_empty_element other` to `32: c_empty_element other` using `3: [] <h1></h1>`"]
     pub fn next(self)
         ->
             (Template<CEmptyElementTemplate32, Partial, After>,
@@ -24398,6 +26412,8 @@ impl<Partial, After> Template<GEmptyTemplateMultipleTemplate4, Partial, After>
 }
 impl<Partial, After> Template<GEmptyTemplateMultipleTemplate5, Partial, After>
     {
+    #[doc =
+    "Transition from `5: c_self_closing_boolean_attr other` to `33: c_self_closing_boolean_attr other` using `4: [] <!DOCTYPE html>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingBooleanAttrTemplate33, Partial, After>,
@@ -24416,6 +26432,8 @@ impl<Partial, After> Template<GEmptyTemplateMultipleTemplate5, Partial, After>
 }
 impl<Partial, After> Template<GEmptyTemplateMultipleTemplate6, Partial, After>
     {
+    #[doc =
+    "Transition from `6: c_self_closing other` to `34: c_self_closing other` using `5: [] <!DOCTYPE>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingTemplate34, Partial, After>,
@@ -24431,6 +26449,8 @@ impl<Partial, After> Template<GEmptyTemplateMultipleTemplate6, Partial, After>
 }
 impl<Partial, After> Template<GEmptyTemplateMultipleTemplate7, Partial, After>
     {
+    #[doc =
+    "Transition from `7: d_element_with_attribute_and_variables other` to `35: d_element_with_attribute_and_variables other` using `6: [] <a class=\"{{test:attr}}\">`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate35, Partial,
@@ -24453,6 +26473,8 @@ impl<Partial, After> Template<GEmptyTemplateMultipleTemplate7, Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate35, Partial, After> {
+    #[doc =
+    "Transition from `35: d_element_with_attribute_and_variables other` to `36: d_element_with_attribute_and_variables other` using `7: [] {{var:element}}</a>`"]
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
@@ -24474,6 +26496,8 @@ impl<Partial, After>
 }
 impl<Partial, After> Template<GEmptyTemplateMultipleTemplate8, Partial, After>
     {
+    #[doc =
+    "Transition from `8: d_variable other` to `37: d_variable other` using `8: [] <p>{{test:element}}</p>`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate37, Partial, After>,
@@ -24494,6 +26518,8 @@ impl<Partial, After> Template<GEmptyTemplateMultipleTemplate8, Partial, After>
 }
 impl<Partial, After> Template<GEmptyTemplateMultipleTemplate9, Partial, After>
     {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `9: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -24509,6 +26535,8 @@ impl<Partial, After> Template<GEmptyTemplateMultipleTemplate9, Partial, After>
 }
 impl<Partial, After> Template<GEmptyTemplateMultipleTemplate9, Partial, After>
     {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `10: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -24524,6 +26552,8 @@ impl<Partial, After> Template<GEmptyTemplateMultipleTemplate9, Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `11: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -24539,6 +26569,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `12: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -24554,6 +26586,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `13: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -24569,6 +26603,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `14: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -24584,6 +26620,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate12, Partial, After> {
+    #[doc =
+    "Transition from `12: e_if_else_with_variables other` to `41: e_if_else_with_variables other` using `15: [] <span>`"]
     pub fn next(self)
         ->
             (Template<EIfElseWithVariablesTemplate41, Partial, After>,
@@ -24599,6 +26637,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `16: [true] {{t:element}}</span>`"]
     pub fn t_true(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -24619,6 +26659,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `17: [false] {{f:element}}</span>`"]
     pub fn f_false(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -24639,6 +26681,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `18: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -24654,6 +26698,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `19: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -24669,6 +26715,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `14: f_each_empty other` using `20: [enter_loop] `"]
     pub fn next_enter_loop(self)
         ->
             (Template<FEachEmptyTemplate14, Partial, After>,
@@ -24684,6 +26732,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `44: f_each_empty other` using `21: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachEmptyTemplate44, Partial, After>,
@@ -24699,6 +26749,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate15, Partial, After> {
+    #[doc =
+    "Transition from `15: f_each_one_variable other` to `45: f_each_one_variable other` using `22: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachOneVariableTemplate45, Partial, After>,
@@ -24714,6 +26766,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `45: f_each_one_variable other` using `23: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -24735,6 +26789,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `46: f_each_one_variable other` using `24: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachOneVariableTemplate46, Partial, After>,
@@ -24750,6 +26806,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate16, Partial, After> {
+    #[doc =
+    "Transition from `16: f_each_two_variables other` to `47: f_each_two_variables other` using `25: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachTwoVariablesTemplate47, Partial, After>,
@@ -24765,6 +26823,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `48: f_each_two_variables other` using `26: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -24786,6 +26846,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate48, Partial, After> {
+    #[doc =
+    "Transition from `48: f_each_two_variables other` to `47: f_each_two_variables other` using `27: [] {{content:element}}`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -24807,6 +26869,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `49: f_each_two_variables other` using `28: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesTemplate49, Partial, After>,
@@ -24822,6 +26886,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate17, Partial, After> {
+    #[doc =
+    "Transition from `17: g_empty_template_multiple other` to `50: g_empty_template_multiple inner` using `29: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -24844,6 +26910,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate50, Partial, After> {
+    #[doc =
+    "Transition from `50: g_empty_template_multiple inner` to `52: g_empty_template_multiple inner` using `32: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -24866,6 +26934,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate18, Partial, After> {
+    #[doc =
+    "Transition from `18: g_empty_template other` to `54: g_empty_template inner` using `35: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -24889,6 +26959,8 @@ impl<Partial, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<GEmptyTemplateMultipleTemplate19,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `19: g_partial_block_partial other` to `56: g_partial_block_partial partial` using `38: [] <span>{{before:element}}<p>`"]
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<Partial, (),
@@ -24917,6 +26989,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<GEmptyTemplateMultipleTemplate56,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `56: g_partial_block_partial partial` to `57: g_partial_block_partial partial` using `39: [] </p><div>`"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -24939,6 +27013,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate57, Partial, After> {
+    #[doc =
+    "Transition from `57: g_partial_block_partial partial` to `58: g_partial_block_partial other` using `40: [] </div>{{after:element}}</span>`"]
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate58, Partial, After>,
@@ -24959,6 +27035,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate20, Partial, After> {
+    #[doc =
+    "Transition from `20: g_partial_block other` to `59: g_partial_block inner` using `41: [] <span>hello`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockPartialTemplate19,
@@ -24996,6 +27074,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate60, Partial, After> {
+    #[doc =
+    "Transition from `60: g_partial_block other` to `61: g_partial_block other` using `43: [] childrenstart{{test:element}}childrenend`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate61, Partial, After>,
@@ -25016,6 +27096,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate59, Partial, After> {
+    #[doc =
+    "Transition from `59: g_partial_block inner` to `62: g_partial_block other` using `45: [] world</span>`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockTemplate62, Partial, After>,
@@ -25032,6 +27114,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate21, Partial, After> {
+    #[doc =
+    "Transition from `21: g_template_only_partial_block_multiple other` to `63: g_template_only_partial_block_multiple inner` using `46: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -25055,6 +27139,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate63, Partial, After> {
+    #[doc =
+    "Transition from `63: g_template_only_partial_block_multiple inner` to `65: g_template_only_partial_block_multiple inner` using `49: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -25078,6 +27164,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate22, Partial, After> {
+    #[doc =
+    "Transition from `22: g_template_only_partial_block_with_text_multiple other` to `67: g_template_only_partial_block_with_text_multiple inner` using `52: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -25124,6 +27212,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate68, Partial, After> {
+    #[doc =
+    "Transition from `68: g_template_only_partial_block_with_text_multiple other` to `69: g_template_only_partial_block_with_text_multiple other` using `54: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate69,
@@ -25141,6 +27231,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate67, Partial, After> {
+    #[doc =
+    "Transition from `67: g_template_only_partial_block_with_text_multiple inner` to `70: g_template_only_partial_block_with_text_multiple inner` using `56: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -25187,6 +27279,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate71, Partial, After> {
+    #[doc =
+    "Transition from `71: g_template_only_partial_block_with_text_multiple other` to `72: g_template_only_partial_block_with_text_multiple other` using `58: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate72,
@@ -25204,6 +27298,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate23, Partial, After> {
+    #[doc =
+    "Transition from `23: g_template_only_partial_block_with_text other` to `73: g_template_only_partial_block_with_text inner` using `60: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -25245,6 +27341,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate74, Partial, After> {
+    #[doc =
+    "Transition from `74: g_template_only_partial_block_with_text other` to `75: g_template_only_partial_block_with_text other` using `62: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextTemplate75, Partial,
@@ -25261,6 +27359,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate24, Partial, After> {
+    #[doc =
+    "Transition from `24: g_template_only_partial_block_with_variable_multiple other` to `76: g_template_only_partial_block_with_variable_multiple inner` using `64: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -25308,6 +27408,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate77, Partial, After> {
+    #[doc =
+    "Transition from `77: g_template_only_partial_block_with_variable_multiple other` to `78: g_template_only_partial_block_with_variable_multiple other` using `66: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate78,
@@ -25330,6 +27432,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate76, Partial, After> {
+    #[doc =
+    "Transition from `76: g_template_only_partial_block_with_variable_multiple inner` to `79: g_template_only_partial_block_with_variable_multiple inner` using `68: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -25377,6 +27481,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate80, Partial, After> {
+    #[doc =
+    "Transition from `80: g_template_only_partial_block_with_variable_multiple other` to `81: g_template_only_partial_block_with_variable_multiple other` using `70: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate81,
@@ -25399,6 +27505,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate79, Partial, After> {
+    #[doc =
+    "Transition from `79: g_template_only_partial_block_with_variable_multiple inner` to `82: g_template_only_partial_block_with_variable_multiple other` using `72: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate82,
@@ -25416,6 +27524,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate25, Partial, After> {
+    #[doc =
+    "Transition from `25: g_template_only_partial_block_with_variable other` to `83: g_template_only_partial_block_with_variable inner` using `73: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -25460,6 +27570,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate84, Partial, After> {
+    #[doc =
+    "Transition from `84: g_template_only_partial_block_with_variable other` to `85: g_template_only_partial_block_with_variable other` using `75: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate85,
@@ -25481,6 +27593,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate83, Partial, After> {
+    #[doc =
+    "Transition from `83: g_template_only_partial_block_with_variable inner` to `86: g_template_only_partial_block_with_variable other` using `77: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate86,
@@ -25497,6 +27611,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate26, Partial, After> {
+    #[doc =
+    "Transition from `26: g_template_only_partial_block other` to `87: g_template_only_partial_block inner` using `78: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -25519,6 +27635,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `89: f_each_two_variables_html other` using `81: [enter_loop] \n    <li>{{title:element}}</li>\n    <li>`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -25540,6 +27658,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate89, Partial, After> {
+    #[doc =
+    "Transition from `89: f_each_two_variables_html other` to `27: f_each_two_variables_html other` using `82: [] {{content:element}}</li>\n`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -25561,6 +27681,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GEmptyTemplateMultipleTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `90: f_each_two_variables_html other` using `83: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesHtmlTemplate90, Partial, After>,
@@ -25577,6 +27699,8 @@ impl<Partial, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<GEmptyTemplateMultipleTemplate28,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `28: g_only_partial_block other` to `91: g_only_partial_block partial` using `84: [] `"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -25798,6 +27922,8 @@ pub struct GEmptyTemplateTemplate90;
 #[must_use]
 pub struct GEmptyTemplateTemplate91;
 impl<Partial, After> Template<GEmptyTemplateTemplate1, Partial, After> {
+    #[doc =
+    "Transition from `1: b_text other` to `29: b_text other` using `0: [] hello`"]
     pub fn next(self)
         ->
             (Template<BTextTemplate29, Partial, After>,
@@ -25812,6 +27938,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate1, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate2, Partial, After> {
+    #[doc =
+    "Transition from `2: c_element_with_attribute other` to `30: c_element_with_attribute other` using `1: [] <a class=\"test\"></a>`"]
     pub fn next(self)
         ->
             (Template<CElementWithAttributeTemplate30, Partial, After>,
@@ -25829,6 +27957,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate2, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate3, Partial, After> {
+    #[doc =
+    "Transition from `3: c_element_with_content other` to `31: c_element_with_content other` using `2: [] <h1>hi</h1>`"]
     pub fn next(self)
         ->
             (Template<CElementWithContentTemplate31, Partial, After>,
@@ -25843,6 +27973,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate3, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate4, Partial, After> {
+    #[doc =
+    "Transition from `4: c_empty_element other` to `32: c_empty_element other` using `3: [] <h1></h1>`"]
     pub fn next(self)
         ->
             (Template<CEmptyElementTemplate32, Partial, After>,
@@ -25857,6 +27989,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate4, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate5, Partial, After> {
+    #[doc =
+    "Transition from `5: c_self_closing_boolean_attr other` to `33: c_self_closing_boolean_attr other` using `4: [] <!DOCTYPE html>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingBooleanAttrTemplate33, Partial, After>,
@@ -25874,6 +28008,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate5, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate6, Partial, After> {
+    #[doc =
+    "Transition from `6: c_self_closing other` to `34: c_self_closing other` using `5: [] <!DOCTYPE>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingTemplate34, Partial, After>,
@@ -25888,6 +28024,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate6, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate7, Partial, After> {
+    #[doc =
+    "Transition from `7: d_element_with_attribute_and_variables other` to `35: d_element_with_attribute_and_variables other` using `6: [] <a class=\"{{test:attr}}\">`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate35, Partial,
@@ -25909,6 +28047,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate7, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate35, Partial, After> {
+    #[doc =
+    "Transition from `35: d_element_with_attribute_and_variables other` to `36: d_element_with_attribute_and_variables other` using `7: [] {{var:element}}</a>`"]
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
@@ -25929,6 +28069,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate35, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate8, Partial, After> {
+    #[doc =
+    "Transition from `8: d_variable other` to `37: d_variable other` using `8: [] <p>{{test:element}}</p>`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate37, Partial, After>,
@@ -25948,6 +28090,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate8, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `9: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -25962,6 +28106,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate9, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `10: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -25976,6 +28122,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate9, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `11: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -25990,6 +28138,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate10, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `12: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -26004,6 +28154,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate10, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `13: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -26018,6 +28170,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate11, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `14: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -26032,6 +28186,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate11, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate12, Partial, After> {
+    #[doc =
+    "Transition from `12: e_if_else_with_variables other` to `41: e_if_else_with_variables other` using `15: [] <span>`"]
     pub fn next(self)
         ->
             (Template<EIfElseWithVariablesTemplate41, Partial, After>,
@@ -26046,6 +28202,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate12, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `16: [true] {{t:element}}</span>`"]
     pub fn t_true(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -26065,6 +28223,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate41, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `17: [false] {{f:element}}</span>`"]
     pub fn f_false(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -26084,6 +28244,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate41, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `18: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -26098,6 +28260,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate13, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `19: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -26112,6 +28276,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate13, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `14: f_each_empty other` using `20: [enter_loop] `"]
     pub fn next_enter_loop(self)
         ->
             (Template<FEachEmptyTemplate14, Partial, After>,
@@ -26126,6 +28292,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate14, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `44: f_each_empty other` using `21: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachEmptyTemplate44, Partial, After>,
@@ -26140,6 +28308,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate14, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate15, Partial, After> {
+    #[doc =
+    "Transition from `15: f_each_one_variable other` to `45: f_each_one_variable other` using `22: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachOneVariableTemplate45, Partial, After>,
@@ -26154,6 +28324,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate15, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `45: f_each_one_variable other` using `23: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -26174,6 +28346,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate45, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `46: f_each_one_variable other` using `24: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachOneVariableTemplate46, Partial, After>,
@@ -26188,6 +28362,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate45, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate16, Partial, After> {
+    #[doc =
+    "Transition from `16: f_each_two_variables other` to `47: f_each_two_variables other` using `25: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachTwoVariablesTemplate47, Partial, After>,
@@ -26202,6 +28378,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate16, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `48: f_each_two_variables other` using `26: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -26222,6 +28400,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate47, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate48, Partial, After> {
+    #[doc =
+    "Transition from `48: f_each_two_variables other` to `47: f_each_two_variables other` using `27: [] {{content:element}}`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -26242,6 +28422,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate48, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `49: f_each_two_variables other` using `28: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesTemplate49, Partial, After>,
@@ -26256,6 +28438,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate47, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate17, Partial, After> {
+    #[doc =
+    "Transition from `17: g_empty_template_multiple other` to `50: g_empty_template_multiple inner` using `29: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -26277,6 +28461,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate17, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate50, Partial, After> {
+    #[doc =
+    "Transition from `50: g_empty_template_multiple inner` to `52: g_empty_template_multiple inner` using `32: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -26298,6 +28484,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate50, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate18, Partial, After> {
+    #[doc =
+    "Transition from `18: g_empty_template other` to `54: g_empty_template inner` using `35: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -26321,6 +28509,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate18, Partial, After> {
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<GEmptyTemplateTemplate19,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `19: g_partial_block_partial other` to `56: g_partial_block_partial partial` using `38: [] <span>{{before:element}}<p>`"]
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<Partial, (),
@@ -26349,6 +28539,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<GEmptyTemplateTemplate56,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `56: g_partial_block_partial partial` to `57: g_partial_block_partial partial` using `39: [] </p><div>`"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -26370,6 +28562,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate57, Partial, After> {
+    #[doc =
+    "Transition from `57: g_partial_block_partial partial` to `58: g_partial_block_partial other` using `40: [] </div>{{after:element}}</span>`"]
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate58, Partial, After>,
@@ -26389,6 +28583,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate57, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate20, Partial, After> {
+    #[doc =
+    "Transition from `20: g_partial_block other` to `59: g_partial_block inner` using `41: [] <span>hello`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockPartialTemplate19,
@@ -26425,6 +28621,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate20, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate60, Partial, After> {
+    #[doc =
+    "Transition from `60: g_partial_block other` to `61: g_partial_block other` using `43: [] childrenstart{{test:element}}childrenend`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate61, Partial, After>,
@@ -26444,6 +28642,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate60, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate59, Partial, After> {
+    #[doc =
+    "Transition from `59: g_partial_block inner` to `62: g_partial_block other` using `45: [] world</span>`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockTemplate62, Partial, After>,
@@ -26459,6 +28659,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate59, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate21, Partial, After> {
+    #[doc =
+    "Transition from `21: g_template_only_partial_block_multiple other` to `63: g_template_only_partial_block_multiple inner` using `46: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -26481,6 +28683,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate21, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate63, Partial, After> {
+    #[doc =
+    "Transition from `63: g_template_only_partial_block_multiple inner` to `65: g_template_only_partial_block_multiple inner` using `49: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -26503,6 +28707,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate63, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate22, Partial, After> {
+    #[doc =
+    "Transition from `22: g_template_only_partial_block_with_text_multiple other` to `67: g_template_only_partial_block_with_text_multiple inner` using `52: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -26548,6 +28754,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate22, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate68, Partial, After> {
+    #[doc =
+    "Transition from `68: g_template_only_partial_block_with_text_multiple other` to `69: g_template_only_partial_block_with_text_multiple other` using `54: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate69,
@@ -26564,6 +28772,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate68, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate67, Partial, After> {
+    #[doc =
+    "Transition from `67: g_template_only_partial_block_with_text_multiple inner` to `70: g_template_only_partial_block_with_text_multiple inner` using `56: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -26609,6 +28819,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate67, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate71, Partial, After> {
+    #[doc =
+    "Transition from `71: g_template_only_partial_block_with_text_multiple other` to `72: g_template_only_partial_block_with_text_multiple other` using `58: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate72,
@@ -26625,6 +28837,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate71, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate23, Partial, After> {
+    #[doc =
+    "Transition from `23: g_template_only_partial_block_with_text other` to `73: g_template_only_partial_block_with_text inner` using `60: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -26665,6 +28879,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate23, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate74, Partial, After> {
+    #[doc =
+    "Transition from `74: g_template_only_partial_block_with_text other` to `75: g_template_only_partial_block_with_text other` using `62: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextTemplate75, Partial,
@@ -26680,6 +28896,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate74, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate24, Partial, After> {
+    #[doc =
+    "Transition from `24: g_template_only_partial_block_with_variable_multiple other` to `76: g_template_only_partial_block_with_variable_multiple inner` using `64: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -26726,6 +28944,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate24, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate77, Partial, After> {
+    #[doc =
+    "Transition from `77: g_template_only_partial_block_with_variable_multiple other` to `78: g_template_only_partial_block_with_variable_multiple other` using `66: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate78,
@@ -26747,6 +28967,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate77, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate76, Partial, After> {
+    #[doc =
+    "Transition from `76: g_template_only_partial_block_with_variable_multiple inner` to `79: g_template_only_partial_block_with_variable_multiple inner` using `68: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -26793,6 +29015,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate76, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate80, Partial, After> {
+    #[doc =
+    "Transition from `80: g_template_only_partial_block_with_variable_multiple other` to `81: g_template_only_partial_block_with_variable_multiple other` using `70: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate81,
@@ -26814,6 +29038,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate80, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate79, Partial, After> {
+    #[doc =
+    "Transition from `79: g_template_only_partial_block_with_variable_multiple inner` to `82: g_template_only_partial_block_with_variable_multiple other` using `72: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate82,
@@ -26830,6 +29056,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate79, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate25, Partial, After> {
+    #[doc =
+    "Transition from `25: g_template_only_partial_block_with_variable other` to `83: g_template_only_partial_block_with_variable inner` using `73: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -26873,6 +29101,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate25, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate84, Partial, After> {
+    #[doc =
+    "Transition from `84: g_template_only_partial_block_with_variable other` to `85: g_template_only_partial_block_with_variable other` using `75: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate85,
@@ -26893,6 +29123,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate84, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate83, Partial, After> {
+    #[doc =
+    "Transition from `83: g_template_only_partial_block_with_variable inner` to `86: g_template_only_partial_block_with_variable other` using `77: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate86,
@@ -26908,6 +29140,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate83, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate26, Partial, After> {
+    #[doc =
+    "Transition from `26: g_template_only_partial_block other` to `87: g_template_only_partial_block inner` using `78: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -26929,6 +29163,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate26, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `89: f_each_two_variables_html other` using `81: [enter_loop] \n    <li>{{title:element}}</li>\n    <li>`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -26949,6 +29185,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate27, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate89, Partial, After> {
+    #[doc =
+    "Transition from `89: f_each_two_variables_html other` to `27: f_each_two_variables_html other` using `82: [] {{content:element}}</li>\n`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -26969,6 +29207,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate89, Partial, After> {
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `90: f_each_two_variables_html other` using `83: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesHtmlTemplate90, Partial, After>,
@@ -26985,6 +29225,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate27, Partial, After> {
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<GEmptyTemplateTemplate28,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `28: g_only_partial_block other` to `91: g_only_partial_block partial` using `84: [] `"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -27203,6 +29445,8 @@ pub struct GPartialBlockPartialTemplate90;
 #[must_use]
 pub struct GPartialBlockPartialTemplate91;
 impl<Partial, After> Template<GPartialBlockPartialTemplate1, Partial, After> {
+    #[doc =
+    "Transition from `1: b_text other` to `29: b_text other` using `0: [] hello`"]
     pub fn next(self)
         ->
             (Template<BTextTemplate29, Partial, After>,
@@ -27217,6 +29461,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate1, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate2, Partial, After> {
+    #[doc =
+    "Transition from `2: c_element_with_attribute other` to `30: c_element_with_attribute other` using `1: [] <a class=\"test\"></a>`"]
     pub fn next(self)
         ->
             (Template<CElementWithAttributeTemplate30, Partial, After>,
@@ -27234,6 +29480,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate2, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate3, Partial, After> {
+    #[doc =
+    "Transition from `3: c_element_with_content other` to `31: c_element_with_content other` using `2: [] <h1>hi</h1>`"]
     pub fn next(self)
         ->
             (Template<CElementWithContentTemplate31, Partial, After>,
@@ -27248,6 +29496,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate3, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate4, Partial, After> {
+    #[doc =
+    "Transition from `4: c_empty_element other` to `32: c_empty_element other` using `3: [] <h1></h1>`"]
     pub fn next(self)
         ->
             (Template<CEmptyElementTemplate32, Partial, After>,
@@ -27262,6 +29512,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate4, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate5, Partial, After> {
+    #[doc =
+    "Transition from `5: c_self_closing_boolean_attr other` to `33: c_self_closing_boolean_attr other` using `4: [] <!DOCTYPE html>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingBooleanAttrTemplate33, Partial, After>,
@@ -27279,6 +29531,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate5, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate6, Partial, After> {
+    #[doc =
+    "Transition from `6: c_self_closing other` to `34: c_self_closing other` using `5: [] <!DOCTYPE>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingTemplate34, Partial, After>,
@@ -27293,6 +29547,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate6, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate7, Partial, After> {
+    #[doc =
+    "Transition from `7: d_element_with_attribute_and_variables other` to `35: d_element_with_attribute_and_variables other` using `6: [] <a class=\"{{test:attr}}\">`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate35, Partial,
@@ -27315,6 +29571,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate7, Partial, After> {
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate35, Partial, After>
     {
+    #[doc =
+    "Transition from `35: d_element_with_attribute_and_variables other` to `36: d_element_with_attribute_and_variables other` using `7: [] {{var:element}}</a>`"]
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
@@ -27335,6 +29593,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate35, Partial, After>
     }
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate8, Partial, After> {
+    #[doc =
+    "Transition from `8: d_variable other` to `37: d_variable other` using `8: [] <p>{{test:element}}</p>`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate37, Partial, After>,
@@ -27354,6 +29614,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate8, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `9: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -27368,6 +29630,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate9, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `10: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -27383,6 +29647,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate9, Partial, After> {
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate10, Partial, After>
     {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `11: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -27398,6 +29664,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate10, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate10, Partial, After>
     {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `12: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -27413,6 +29681,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate10, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate11, Partial, After>
     {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `13: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -27428,6 +29698,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate11, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate11, Partial, After>
     {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `14: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -27443,6 +29715,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate11, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate12, Partial, After>
     {
+    #[doc =
+    "Transition from `12: e_if_else_with_variables other` to `41: e_if_else_with_variables other` using `15: [] <span>`"]
     pub fn next(self)
         ->
             (Template<EIfElseWithVariablesTemplate41, Partial, After>,
@@ -27458,6 +29732,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate12, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate41, Partial, After>
     {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `16: [true] {{t:element}}</span>`"]
     pub fn t_true(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -27478,6 +29754,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate41, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate41, Partial, After>
     {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `17: [false] {{f:element}}</span>`"]
     pub fn f_false(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -27498,6 +29776,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate41, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate13, Partial, After>
     {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `18: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -27513,6 +29793,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate13, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate13, Partial, After>
     {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `19: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -27528,6 +29810,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate13, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate14, Partial, After>
     {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `14: f_each_empty other` using `20: [enter_loop] `"]
     pub fn next_enter_loop(self)
         ->
             (Template<FEachEmptyTemplate14, Partial, After>,
@@ -27543,6 +29827,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate14, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate14, Partial, After>
     {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `44: f_each_empty other` using `21: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachEmptyTemplate44, Partial, After>,
@@ -27558,6 +29844,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate14, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate15, Partial, After>
     {
+    #[doc =
+    "Transition from `15: f_each_one_variable other` to `45: f_each_one_variable other` using `22: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachOneVariableTemplate45, Partial, After>,
@@ -27573,6 +29861,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate15, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate45, Partial, After>
     {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `45: f_each_one_variable other` using `23: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -27594,6 +29884,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate45, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate45, Partial, After>
     {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `46: f_each_one_variable other` using `24: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachOneVariableTemplate46, Partial, After>,
@@ -27609,6 +29901,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate45, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate16, Partial, After>
     {
+    #[doc =
+    "Transition from `16: f_each_two_variables other` to `47: f_each_two_variables other` using `25: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachTwoVariablesTemplate47, Partial, After>,
@@ -27624,6 +29918,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate16, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate47, Partial, After>
     {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `48: f_each_two_variables other` using `26: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -27645,6 +29941,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate47, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate48, Partial, After>
     {
+    #[doc =
+    "Transition from `48: f_each_two_variables other` to `47: f_each_two_variables other` using `27: [] {{content:element}}`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -27666,6 +29964,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate48, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate47, Partial, After>
     {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `49: f_each_two_variables other` using `28: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesTemplate49, Partial, After>,
@@ -27681,6 +29981,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate47, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate17, Partial, After>
     {
+    #[doc =
+    "Transition from `17: g_empty_template_multiple other` to `50: g_empty_template_multiple inner` using `29: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -27703,6 +30005,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate17, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate50, Partial, After>
     {
+    #[doc =
+    "Transition from `50: g_empty_template_multiple inner` to `52: g_empty_template_multiple inner` using `32: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -27725,6 +30029,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate50, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate18, Partial, After>
     {
+    #[doc =
+    "Transition from `18: g_empty_template other` to `54: g_empty_template inner` using `35: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -27748,6 +30054,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate18, Partial, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<GPartialBlockPartialTemplate19,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `19: g_partial_block_partial other` to `56: g_partial_block_partial partial` using `38: [] <span>{{before:element}}<p>`"]
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<Partial, (),
@@ -27776,6 +30084,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<GPartialBlockPartialTemplate56,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `56: g_partial_block_partial partial` to `57: g_partial_block_partial partial` using `39: [] </p><div>`"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -27798,6 +30108,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate57, Partial, After>
     {
+    #[doc =
+    "Transition from `57: g_partial_block_partial partial` to `58: g_partial_block_partial other` using `40: [] </div>{{after:element}}</span>`"]
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate58, Partial, After>,
@@ -27818,6 +30130,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate57, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate20, Partial, After>
     {
+    #[doc =
+    "Transition from `20: g_partial_block other` to `59: g_partial_block inner` using `41: [] <span>hello`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockPartialTemplate19,
@@ -27855,6 +30169,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate20, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate60, Partial, After>
     {
+    #[doc =
+    "Transition from `60: g_partial_block other` to `61: g_partial_block other` using `43: [] childrenstart{{test:element}}childrenend`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate61, Partial, After>,
@@ -27875,6 +30191,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate60, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate59, Partial, After>
     {
+    #[doc =
+    "Transition from `59: g_partial_block inner` to `62: g_partial_block other` using `45: [] world</span>`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockTemplate62, Partial, After>,
@@ -27891,6 +30209,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate59, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate21, Partial, After>
     {
+    #[doc =
+    "Transition from `21: g_template_only_partial_block_multiple other` to `63: g_template_only_partial_block_multiple inner` using `46: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -27914,6 +30234,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate21, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate63, Partial, After>
     {
+    #[doc =
+    "Transition from `63: g_template_only_partial_block_multiple inner` to `65: g_template_only_partial_block_multiple inner` using `49: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -27937,6 +30259,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate63, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate22, Partial, After>
     {
+    #[doc =
+    "Transition from `22: g_template_only_partial_block_with_text_multiple other` to `67: g_template_only_partial_block_with_text_multiple inner` using `52: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -27983,6 +30307,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate22, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate68, Partial, After>
     {
+    #[doc =
+    "Transition from `68: g_template_only_partial_block_with_text_multiple other` to `69: g_template_only_partial_block_with_text_multiple other` using `54: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate69,
@@ -28000,6 +30326,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate68, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate67, Partial, After>
     {
+    #[doc =
+    "Transition from `67: g_template_only_partial_block_with_text_multiple inner` to `70: g_template_only_partial_block_with_text_multiple inner` using `56: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -28046,6 +30374,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate67, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate71, Partial, After>
     {
+    #[doc =
+    "Transition from `71: g_template_only_partial_block_with_text_multiple other` to `72: g_template_only_partial_block_with_text_multiple other` using `58: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate72,
@@ -28063,6 +30393,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate71, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate23, Partial, After>
     {
+    #[doc =
+    "Transition from `23: g_template_only_partial_block_with_text other` to `73: g_template_only_partial_block_with_text inner` using `60: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -28104,6 +30436,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate23, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate74, Partial, After>
     {
+    #[doc =
+    "Transition from `74: g_template_only_partial_block_with_text other` to `75: g_template_only_partial_block_with_text other` using `62: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextTemplate75, Partial,
@@ -28120,6 +30454,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate74, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate24, Partial, After>
     {
+    #[doc =
+    "Transition from `24: g_template_only_partial_block_with_variable_multiple other` to `76: g_template_only_partial_block_with_variable_multiple inner` using `64: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -28167,6 +30503,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate24, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate77, Partial, After>
     {
+    #[doc =
+    "Transition from `77: g_template_only_partial_block_with_variable_multiple other` to `78: g_template_only_partial_block_with_variable_multiple other` using `66: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate78,
@@ -28189,6 +30527,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate77, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate76, Partial, After>
     {
+    #[doc =
+    "Transition from `76: g_template_only_partial_block_with_variable_multiple inner` to `79: g_template_only_partial_block_with_variable_multiple inner` using `68: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -28236,6 +30576,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate76, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate80, Partial, After>
     {
+    #[doc =
+    "Transition from `80: g_template_only_partial_block_with_variable_multiple other` to `81: g_template_only_partial_block_with_variable_multiple other` using `70: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate81,
@@ -28258,6 +30600,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate80, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate79, Partial, After>
     {
+    #[doc =
+    "Transition from `79: g_template_only_partial_block_with_variable_multiple inner` to `82: g_template_only_partial_block_with_variable_multiple other` using `72: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate82,
@@ -28275,6 +30619,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate79, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate25, Partial, After>
     {
+    #[doc =
+    "Transition from `25: g_template_only_partial_block_with_variable other` to `83: g_template_only_partial_block_with_variable inner` using `73: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -28319,6 +30665,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate25, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate84, Partial, After>
     {
+    #[doc =
+    "Transition from `84: g_template_only_partial_block_with_variable other` to `85: g_template_only_partial_block_with_variable other` using `75: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate85,
@@ -28340,6 +30688,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate84, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate83, Partial, After>
     {
+    #[doc =
+    "Transition from `83: g_template_only_partial_block_with_variable inner` to `86: g_template_only_partial_block_with_variable other` using `77: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate86,
@@ -28356,6 +30706,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate83, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate26, Partial, After>
     {
+    #[doc =
+    "Transition from `26: g_template_only_partial_block other` to `87: g_template_only_partial_block inner` using `78: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -28378,6 +30730,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate26, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate27, Partial, After>
     {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `89: f_each_two_variables_html other` using `81: [enter_loop] \n    <li>{{title:element}}</li>\n    <li>`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -28399,6 +30753,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate27, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate89, Partial, After>
     {
+    #[doc =
+    "Transition from `89: f_each_two_variables_html other` to `27: f_each_two_variables_html other` using `82: [] {{content:element}}</li>\n`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -28420,6 +30776,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate89, Partial, After>
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate27, Partial, After>
     {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `90: f_each_two_variables_html other` using `83: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesHtmlTemplate90, Partial, After>,
@@ -28436,6 +30794,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate27, Partial, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<GPartialBlockPartialTemplate28,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `28: g_only_partial_block other` to `91: g_only_partial_block partial` using `84: [] `"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -28657,6 +31017,8 @@ pub struct GPartialBlockTemplate90;
 #[must_use]
 pub struct GPartialBlockTemplate91;
 impl<Partial, After> Template<GPartialBlockTemplate1, Partial, After> {
+    #[doc =
+    "Transition from `1: b_text other` to `29: b_text other` using `0: [] hello`"]
     pub fn next(self)
         ->
             (Template<BTextTemplate29, Partial, After>,
@@ -28671,6 +31033,8 @@ impl<Partial, After> Template<GPartialBlockTemplate1, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate2, Partial, After> {
+    #[doc =
+    "Transition from `2: c_element_with_attribute other` to `30: c_element_with_attribute other` using `1: [] <a class=\"test\"></a>`"]
     pub fn next(self)
         ->
             (Template<CElementWithAttributeTemplate30, Partial, After>,
@@ -28688,6 +31052,8 @@ impl<Partial, After> Template<GPartialBlockTemplate2, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate3, Partial, After> {
+    #[doc =
+    "Transition from `3: c_element_with_content other` to `31: c_element_with_content other` using `2: [] <h1>hi</h1>`"]
     pub fn next(self)
         ->
             (Template<CElementWithContentTemplate31, Partial, After>,
@@ -28702,6 +31068,8 @@ impl<Partial, After> Template<GPartialBlockTemplate3, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate4, Partial, After> {
+    #[doc =
+    "Transition from `4: c_empty_element other` to `32: c_empty_element other` using `3: [] <h1></h1>`"]
     pub fn next(self)
         ->
             (Template<CEmptyElementTemplate32, Partial, After>,
@@ -28716,6 +31084,8 @@ impl<Partial, After> Template<GPartialBlockTemplate4, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate5, Partial, After> {
+    #[doc =
+    "Transition from `5: c_self_closing_boolean_attr other` to `33: c_self_closing_boolean_attr other` using `4: [] <!DOCTYPE html>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingBooleanAttrTemplate33, Partial, After>,
@@ -28733,6 +31103,8 @@ impl<Partial, After> Template<GPartialBlockTemplate5, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate6, Partial, After> {
+    #[doc =
+    "Transition from `6: c_self_closing other` to `34: c_self_closing other` using `5: [] <!DOCTYPE>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingTemplate34, Partial, After>,
@@ -28747,6 +31119,8 @@ impl<Partial, After> Template<GPartialBlockTemplate6, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate7, Partial, After> {
+    #[doc =
+    "Transition from `7: d_element_with_attribute_and_variables other` to `35: d_element_with_attribute_and_variables other` using `6: [] <a class=\"{{test:attr}}\">`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate35, Partial,
@@ -28768,6 +31142,8 @@ impl<Partial, After> Template<GPartialBlockTemplate7, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate35, Partial, After> {
+    #[doc =
+    "Transition from `35: d_element_with_attribute_and_variables other` to `36: d_element_with_attribute_and_variables other` using `7: [] {{var:element}}</a>`"]
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
@@ -28788,6 +31164,8 @@ impl<Partial, After> Template<GPartialBlockTemplate35, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate8, Partial, After> {
+    #[doc =
+    "Transition from `8: d_variable other` to `37: d_variable other` using `8: [] <p>{{test:element}}</p>`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate37, Partial, After>,
@@ -28807,6 +31185,8 @@ impl<Partial, After> Template<GPartialBlockTemplate8, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `9: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -28821,6 +31201,8 @@ impl<Partial, After> Template<GPartialBlockTemplate9, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `10: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -28835,6 +31217,8 @@ impl<Partial, After> Template<GPartialBlockTemplate9, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `11: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -28849,6 +31233,8 @@ impl<Partial, After> Template<GPartialBlockTemplate10, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `12: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -28863,6 +31249,8 @@ impl<Partial, After> Template<GPartialBlockTemplate10, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `13: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -28877,6 +31265,8 @@ impl<Partial, After> Template<GPartialBlockTemplate11, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `14: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -28891,6 +31281,8 @@ impl<Partial, After> Template<GPartialBlockTemplate11, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate12, Partial, After> {
+    #[doc =
+    "Transition from `12: e_if_else_with_variables other` to `41: e_if_else_with_variables other` using `15: [] <span>`"]
     pub fn next(self)
         ->
             (Template<EIfElseWithVariablesTemplate41, Partial, After>,
@@ -28905,6 +31297,8 @@ impl<Partial, After> Template<GPartialBlockTemplate12, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `16: [true] {{t:element}}</span>`"]
     pub fn t_true(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -28924,6 +31318,8 @@ impl<Partial, After> Template<GPartialBlockTemplate41, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `17: [false] {{f:element}}</span>`"]
     pub fn f_false(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -28943,6 +31339,8 @@ impl<Partial, After> Template<GPartialBlockTemplate41, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `18: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -28957,6 +31355,8 @@ impl<Partial, After> Template<GPartialBlockTemplate13, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `19: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -28971,6 +31371,8 @@ impl<Partial, After> Template<GPartialBlockTemplate13, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `14: f_each_empty other` using `20: [enter_loop] `"]
     pub fn next_enter_loop(self)
         ->
             (Template<FEachEmptyTemplate14, Partial, After>,
@@ -28985,6 +31387,8 @@ impl<Partial, After> Template<GPartialBlockTemplate14, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `44: f_each_empty other` using `21: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachEmptyTemplate44, Partial, After>,
@@ -28999,6 +31403,8 @@ impl<Partial, After> Template<GPartialBlockTemplate14, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate15, Partial, After> {
+    #[doc =
+    "Transition from `15: f_each_one_variable other` to `45: f_each_one_variable other` using `22: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachOneVariableTemplate45, Partial, After>,
@@ -29013,6 +31419,8 @@ impl<Partial, After> Template<GPartialBlockTemplate15, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `45: f_each_one_variable other` using `23: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -29033,6 +31441,8 @@ impl<Partial, After> Template<GPartialBlockTemplate45, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `46: f_each_one_variable other` using `24: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachOneVariableTemplate46, Partial, After>,
@@ -29047,6 +31457,8 @@ impl<Partial, After> Template<GPartialBlockTemplate45, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate16, Partial, After> {
+    #[doc =
+    "Transition from `16: f_each_two_variables other` to `47: f_each_two_variables other` using `25: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachTwoVariablesTemplate47, Partial, After>,
@@ -29061,6 +31473,8 @@ impl<Partial, After> Template<GPartialBlockTemplate16, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `48: f_each_two_variables other` using `26: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -29081,6 +31495,8 @@ impl<Partial, After> Template<GPartialBlockTemplate47, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate48, Partial, After> {
+    #[doc =
+    "Transition from `48: f_each_two_variables other` to `47: f_each_two_variables other` using `27: [] {{content:element}}`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -29101,6 +31517,8 @@ impl<Partial, After> Template<GPartialBlockTemplate48, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `49: f_each_two_variables other` using `28: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesTemplate49, Partial, After>,
@@ -29115,6 +31533,8 @@ impl<Partial, After> Template<GPartialBlockTemplate47, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate17, Partial, After> {
+    #[doc =
+    "Transition from `17: g_empty_template_multiple other` to `50: g_empty_template_multiple inner` using `29: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -29136,6 +31556,8 @@ impl<Partial, After> Template<GPartialBlockTemplate17, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate50, Partial, After> {
+    #[doc =
+    "Transition from `50: g_empty_template_multiple inner` to `52: g_empty_template_multiple inner` using `32: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -29157,6 +31579,8 @@ impl<Partial, After> Template<GPartialBlockTemplate50, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate18, Partial, After> {
+    #[doc =
+    "Transition from `18: g_empty_template other` to `54: g_empty_template inner` using `35: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -29180,6 +31604,8 @@ impl<Partial, After> Template<GPartialBlockTemplate18, Partial, After> {
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<GPartialBlockTemplate19,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `19: g_partial_block_partial other` to `56: g_partial_block_partial partial` using `38: [] <span>{{before:element}}<p>`"]
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<Partial, (),
@@ -29208,6 +31634,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<GPartialBlockTemplate56,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `56: g_partial_block_partial partial` to `57: g_partial_block_partial partial` using `39: [] </p><div>`"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -29229,6 +31657,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate57, Partial, After> {
+    #[doc =
+    "Transition from `57: g_partial_block_partial partial` to `58: g_partial_block_partial other` using `40: [] </div>{{after:element}}</span>`"]
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate58, Partial, After>,
@@ -29248,6 +31678,8 @@ impl<Partial, After> Template<GPartialBlockTemplate57, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate20, Partial, After> {
+    #[doc =
+    "Transition from `20: g_partial_block other` to `59: g_partial_block inner` using `41: [] <span>hello`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockPartialTemplate19,
@@ -29284,6 +31716,8 @@ impl<Partial, After> Template<GPartialBlockTemplate20, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate60, Partial, After> {
+    #[doc =
+    "Transition from `60: g_partial_block other` to `61: g_partial_block other` using `43: [] childrenstart{{test:element}}childrenend`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate61, Partial, After>,
@@ -29303,6 +31737,8 @@ impl<Partial, After> Template<GPartialBlockTemplate60, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate59, Partial, After> {
+    #[doc =
+    "Transition from `59: g_partial_block inner` to `62: g_partial_block other` using `45: [] world</span>`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockTemplate62, Partial, After>,
@@ -29318,6 +31754,8 @@ impl<Partial, After> Template<GPartialBlockTemplate59, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate21, Partial, After> {
+    #[doc =
+    "Transition from `21: g_template_only_partial_block_multiple other` to `63: g_template_only_partial_block_multiple inner` using `46: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -29340,6 +31778,8 @@ impl<Partial, After> Template<GPartialBlockTemplate21, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate63, Partial, After> {
+    #[doc =
+    "Transition from `63: g_template_only_partial_block_multiple inner` to `65: g_template_only_partial_block_multiple inner` using `49: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -29362,6 +31802,8 @@ impl<Partial, After> Template<GPartialBlockTemplate63, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate22, Partial, After> {
+    #[doc =
+    "Transition from `22: g_template_only_partial_block_with_text_multiple other` to `67: g_template_only_partial_block_with_text_multiple inner` using `52: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -29407,6 +31849,8 @@ impl<Partial, After> Template<GPartialBlockTemplate22, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate68, Partial, After> {
+    #[doc =
+    "Transition from `68: g_template_only_partial_block_with_text_multiple other` to `69: g_template_only_partial_block_with_text_multiple other` using `54: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate69,
@@ -29423,6 +31867,8 @@ impl<Partial, After> Template<GPartialBlockTemplate68, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate67, Partial, After> {
+    #[doc =
+    "Transition from `67: g_template_only_partial_block_with_text_multiple inner` to `70: g_template_only_partial_block_with_text_multiple inner` using `56: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -29468,6 +31914,8 @@ impl<Partial, After> Template<GPartialBlockTemplate67, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate71, Partial, After> {
+    #[doc =
+    "Transition from `71: g_template_only_partial_block_with_text_multiple other` to `72: g_template_only_partial_block_with_text_multiple other` using `58: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate72,
@@ -29484,6 +31932,8 @@ impl<Partial, After> Template<GPartialBlockTemplate71, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate23, Partial, After> {
+    #[doc =
+    "Transition from `23: g_template_only_partial_block_with_text other` to `73: g_template_only_partial_block_with_text inner` using `60: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -29524,6 +31974,8 @@ impl<Partial, After> Template<GPartialBlockTemplate23, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate74, Partial, After> {
+    #[doc =
+    "Transition from `74: g_template_only_partial_block_with_text other` to `75: g_template_only_partial_block_with_text other` using `62: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextTemplate75, Partial,
@@ -29539,6 +31991,8 @@ impl<Partial, After> Template<GPartialBlockTemplate74, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate24, Partial, After> {
+    #[doc =
+    "Transition from `24: g_template_only_partial_block_with_variable_multiple other` to `76: g_template_only_partial_block_with_variable_multiple inner` using `64: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -29585,6 +32039,8 @@ impl<Partial, After> Template<GPartialBlockTemplate24, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate77, Partial, After> {
+    #[doc =
+    "Transition from `77: g_template_only_partial_block_with_variable_multiple other` to `78: g_template_only_partial_block_with_variable_multiple other` using `66: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate78,
@@ -29606,6 +32062,8 @@ impl<Partial, After> Template<GPartialBlockTemplate77, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate76, Partial, After> {
+    #[doc =
+    "Transition from `76: g_template_only_partial_block_with_variable_multiple inner` to `79: g_template_only_partial_block_with_variable_multiple inner` using `68: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -29652,6 +32110,8 @@ impl<Partial, After> Template<GPartialBlockTemplate76, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate80, Partial, After> {
+    #[doc =
+    "Transition from `80: g_template_only_partial_block_with_variable_multiple other` to `81: g_template_only_partial_block_with_variable_multiple other` using `70: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate81,
@@ -29673,6 +32133,8 @@ impl<Partial, After> Template<GPartialBlockTemplate80, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate79, Partial, After> {
+    #[doc =
+    "Transition from `79: g_template_only_partial_block_with_variable_multiple inner` to `82: g_template_only_partial_block_with_variable_multiple other` using `72: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate82,
@@ -29689,6 +32151,8 @@ impl<Partial, After> Template<GPartialBlockTemplate79, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate25, Partial, After> {
+    #[doc =
+    "Transition from `25: g_template_only_partial_block_with_variable other` to `83: g_template_only_partial_block_with_variable inner` using `73: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -29732,6 +32196,8 @@ impl<Partial, After> Template<GPartialBlockTemplate25, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate84, Partial, After> {
+    #[doc =
+    "Transition from `84: g_template_only_partial_block_with_variable other` to `85: g_template_only_partial_block_with_variable other` using `75: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate85,
@@ -29752,6 +32218,8 @@ impl<Partial, After> Template<GPartialBlockTemplate84, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate83, Partial, After> {
+    #[doc =
+    "Transition from `83: g_template_only_partial_block_with_variable inner` to `86: g_template_only_partial_block_with_variable other` using `77: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate86,
@@ -29767,6 +32235,8 @@ impl<Partial, After> Template<GPartialBlockTemplate83, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate26, Partial, After> {
+    #[doc =
+    "Transition from `26: g_template_only_partial_block other` to `87: g_template_only_partial_block inner` using `78: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -29788,6 +32258,8 @@ impl<Partial, After> Template<GPartialBlockTemplate26, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `89: f_each_two_variables_html other` using `81: [enter_loop] \n    <li>{{title:element}}</li>\n    <li>`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -29808,6 +32280,8 @@ impl<Partial, After> Template<GPartialBlockTemplate27, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate89, Partial, After> {
+    #[doc =
+    "Transition from `89: f_each_two_variables_html other` to `27: f_each_two_variables_html other` using `82: [] {{content:element}}</li>\n`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -29828,6 +32302,8 @@ impl<Partial, After> Template<GPartialBlockTemplate89, Partial, After> {
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `90: f_each_two_variables_html other` using `83: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesHtmlTemplate90, Partial, After>,
@@ -29844,6 +32320,8 @@ impl<Partial, After> Template<GPartialBlockTemplate27, Partial, After> {
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<GPartialBlockTemplate28,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `28: g_only_partial_block other` to `91: g_only_partial_block partial` using `84: [] `"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -30063,6 +32541,8 @@ pub struct GTemplateOnlyPartialBlockMultipleTemplate90;
 pub struct GTemplateOnlyPartialBlockMultipleTemplate91;
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate1, Partial, After> {
+    #[doc =
+    "Transition from `1: b_text other` to `29: b_text other` using `0: [] hello`"]
     pub fn next(self)
         ->
             (Template<BTextTemplate29, Partial, After>,
@@ -30078,6 +32558,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate2, Partial, After> {
+    #[doc =
+    "Transition from `2: c_element_with_attribute other` to `30: c_element_with_attribute other` using `1: [] <a class=\"test\"></a>`"]
     pub fn next(self)
         ->
             (Template<CElementWithAttributeTemplate30, Partial, After>,
@@ -30096,6 +32578,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate3, Partial, After> {
+    #[doc =
+    "Transition from `3: c_element_with_content other` to `31: c_element_with_content other` using `2: [] <h1>hi</h1>`"]
     pub fn next(self)
         ->
             (Template<CElementWithContentTemplate31, Partial, After>,
@@ -30111,6 +32595,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate4, Partial, After> {
+    #[doc =
+    "Transition from `4: c_empty_element other` to `32: c_empty_element other` using `3: [] <h1></h1>`"]
     pub fn next(self)
         ->
             (Template<CEmptyElementTemplate32, Partial, After>,
@@ -30126,6 +32612,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate5, Partial, After> {
+    #[doc =
+    "Transition from `5: c_self_closing_boolean_attr other` to `33: c_self_closing_boolean_attr other` using `4: [] <!DOCTYPE html>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingBooleanAttrTemplate33, Partial, After>,
@@ -30144,6 +32632,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate6, Partial, After> {
+    #[doc =
+    "Transition from `6: c_self_closing other` to `34: c_self_closing other` using `5: [] <!DOCTYPE>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingTemplate34, Partial, After>,
@@ -30159,6 +32649,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate7, Partial, After> {
+    #[doc =
+    "Transition from `7: d_element_with_attribute_and_variables other` to `35: d_element_with_attribute_and_variables other` using `6: [] <a class=\"{{test:attr}}\">`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate35, Partial,
@@ -30181,6 +32673,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate35, Partial, After> {
+    #[doc =
+    "Transition from `35: d_element_with_attribute_and_variables other` to `36: d_element_with_attribute_and_variables other` using `7: [] {{var:element}}</a>`"]
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
@@ -30202,6 +32696,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate8, Partial, After> {
+    #[doc =
+    "Transition from `8: d_variable other` to `37: d_variable other` using `8: [] <p>{{test:element}}</p>`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate37, Partial, After>,
@@ -30222,6 +32718,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `9: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -30237,6 +32735,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `10: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -30252,6 +32752,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `11: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -30267,6 +32769,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `12: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -30282,6 +32786,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `13: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -30297,6 +32803,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `14: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -30312,6 +32820,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate12, Partial, After> {
+    #[doc =
+    "Transition from `12: e_if_else_with_variables other` to `41: e_if_else_with_variables other` using `15: [] <span>`"]
     pub fn next(self)
         ->
             (Template<EIfElseWithVariablesTemplate41, Partial, After>,
@@ -30327,6 +32837,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `16: [true] {{t:element}}</span>`"]
     pub fn t_true(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -30347,6 +32859,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `17: [false] {{f:element}}</span>`"]
     pub fn f_false(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -30367,6 +32881,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `18: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -30382,6 +32898,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `19: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -30397,6 +32915,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `14: f_each_empty other` using `20: [enter_loop] `"]
     pub fn next_enter_loop(self)
         ->
             (Template<FEachEmptyTemplate14, Partial, After>,
@@ -30412,6 +32932,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `44: f_each_empty other` using `21: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachEmptyTemplate44, Partial, After>,
@@ -30427,6 +32949,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate15, Partial, After> {
+    #[doc =
+    "Transition from `15: f_each_one_variable other` to `45: f_each_one_variable other` using `22: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachOneVariableTemplate45, Partial, After>,
@@ -30442,6 +32966,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `45: f_each_one_variable other` using `23: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -30463,6 +32989,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `46: f_each_one_variable other` using `24: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachOneVariableTemplate46, Partial, After>,
@@ -30478,6 +33006,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate16, Partial, After> {
+    #[doc =
+    "Transition from `16: f_each_two_variables other` to `47: f_each_two_variables other` using `25: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachTwoVariablesTemplate47, Partial, After>,
@@ -30493,6 +33023,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `48: f_each_two_variables other` using `26: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -30514,6 +33046,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate48, Partial, After> {
+    #[doc =
+    "Transition from `48: f_each_two_variables other` to `47: f_each_two_variables other` using `27: [] {{content:element}}`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -30535,6 +33069,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `49: f_each_two_variables other` using `28: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesTemplate49, Partial, After>,
@@ -30550,6 +33086,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate17, Partial, After> {
+    #[doc =
+    "Transition from `17: g_empty_template_multiple other` to `50: g_empty_template_multiple inner` using `29: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -30572,6 +33110,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate50, Partial, After> {
+    #[doc =
+    "Transition from `50: g_empty_template_multiple inner` to `52: g_empty_template_multiple inner` using `32: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -30594,6 +33134,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate18, Partial, After> {
+    #[doc =
+    "Transition from `18: g_empty_template other` to `54: g_empty_template inner` using `35: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -30617,6 +33159,8 @@ impl<Partial, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate19,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `19: g_partial_block_partial other` to `56: g_partial_block_partial partial` using `38: [] <span>{{before:element}}<p>`"]
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<Partial, (),
@@ -30645,6 +33189,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate56,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `56: g_partial_block_partial partial` to `57: g_partial_block_partial partial` using `39: [] </p><div>`"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -30667,6 +33213,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate57, Partial, After> {
+    #[doc =
+    "Transition from `57: g_partial_block_partial partial` to `58: g_partial_block_partial other` using `40: [] </div>{{after:element}}</span>`"]
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate58, Partial, After>,
@@ -30687,6 +33235,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate20, Partial, After> {
+    #[doc =
+    "Transition from `20: g_partial_block other` to `59: g_partial_block inner` using `41: [] <span>hello`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockPartialTemplate19,
@@ -30724,6 +33274,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate60, Partial, After> {
+    #[doc =
+    "Transition from `60: g_partial_block other` to `61: g_partial_block other` using `43: [] childrenstart{{test:element}}childrenend`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate61, Partial, After>,
@@ -30744,6 +33296,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate59, Partial, After> {
+    #[doc =
+    "Transition from `59: g_partial_block inner` to `62: g_partial_block other` using `45: [] world</span>`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockTemplate62, Partial, After>,
@@ -30760,6 +33314,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate21, Partial, After> {
+    #[doc =
+    "Transition from `21: g_template_only_partial_block_multiple other` to `63: g_template_only_partial_block_multiple inner` using `46: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -30783,6 +33339,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate63, Partial, After> {
+    #[doc =
+    "Transition from `63: g_template_only_partial_block_multiple inner` to `65: g_template_only_partial_block_multiple inner` using `49: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -30806,6 +33364,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate22, Partial, After> {
+    #[doc =
+    "Transition from `22: g_template_only_partial_block_with_text_multiple other` to `67: g_template_only_partial_block_with_text_multiple inner` using `52: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -30852,6 +33412,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate68, Partial, After> {
+    #[doc =
+    "Transition from `68: g_template_only_partial_block_with_text_multiple other` to `69: g_template_only_partial_block_with_text_multiple other` using `54: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate69,
@@ -30869,6 +33431,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate67, Partial, After> {
+    #[doc =
+    "Transition from `67: g_template_only_partial_block_with_text_multiple inner` to `70: g_template_only_partial_block_with_text_multiple inner` using `56: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -30915,6 +33479,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate71, Partial, After> {
+    #[doc =
+    "Transition from `71: g_template_only_partial_block_with_text_multiple other` to `72: g_template_only_partial_block_with_text_multiple other` using `58: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate72,
@@ -30932,6 +33498,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate23, Partial, After> {
+    #[doc =
+    "Transition from `23: g_template_only_partial_block_with_text other` to `73: g_template_only_partial_block_with_text inner` using `60: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -30973,6 +33541,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate74, Partial, After> {
+    #[doc =
+    "Transition from `74: g_template_only_partial_block_with_text other` to `75: g_template_only_partial_block_with_text other` using `62: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextTemplate75, Partial,
@@ -30989,6 +33559,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate24, Partial, After> {
+    #[doc =
+    "Transition from `24: g_template_only_partial_block_with_variable_multiple other` to `76: g_template_only_partial_block_with_variable_multiple inner` using `64: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -31036,6 +33608,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate77, Partial, After> {
+    #[doc =
+    "Transition from `77: g_template_only_partial_block_with_variable_multiple other` to `78: g_template_only_partial_block_with_variable_multiple other` using `66: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate78,
@@ -31058,6 +33632,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate76, Partial, After> {
+    #[doc =
+    "Transition from `76: g_template_only_partial_block_with_variable_multiple inner` to `79: g_template_only_partial_block_with_variable_multiple inner` using `68: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -31105,6 +33681,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate80, Partial, After> {
+    #[doc =
+    "Transition from `80: g_template_only_partial_block_with_variable_multiple other` to `81: g_template_only_partial_block_with_variable_multiple other` using `70: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate81,
@@ -31127,6 +33705,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate79, Partial, After> {
+    #[doc =
+    "Transition from `79: g_template_only_partial_block_with_variable_multiple inner` to `82: g_template_only_partial_block_with_variable_multiple other` using `72: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate82,
@@ -31144,6 +33724,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate25, Partial, After> {
+    #[doc =
+    "Transition from `25: g_template_only_partial_block_with_variable other` to `83: g_template_only_partial_block_with_variable inner` using `73: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -31188,6 +33770,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate84, Partial, After> {
+    #[doc =
+    "Transition from `84: g_template_only_partial_block_with_variable other` to `85: g_template_only_partial_block_with_variable other` using `75: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate85,
@@ -31209,6 +33793,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate83, Partial, After> {
+    #[doc =
+    "Transition from `83: g_template_only_partial_block_with_variable inner` to `86: g_template_only_partial_block_with_variable other` using `77: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate86,
@@ -31225,6 +33811,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate26, Partial, After> {
+    #[doc =
+    "Transition from `26: g_template_only_partial_block other` to `87: g_template_only_partial_block inner` using `78: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -31247,6 +33835,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `89: f_each_two_variables_html other` using `81: [enter_loop] \n    <li>{{title:element}}</li>\n    <li>`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -31268,6 +33858,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate89, Partial, After> {
+    #[doc =
+    "Transition from `89: f_each_two_variables_html other` to `27: f_each_two_variables_html other` using `82: [] {{content:element}}</li>\n`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -31289,6 +33881,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `90: f_each_two_variables_html other` using `83: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesHtmlTemplate90, Partial, After>,
@@ -31305,6 +33899,8 @@ impl<Partial, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<GTemplateOnlyPartialBlockMultipleTemplate28,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `28: g_only_partial_block other` to `91: g_only_partial_block partial` using `84: [] `"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -31528,6 +34124,8 @@ pub struct GTemplateOnlyPartialBlockWithTextMultipleTemplate91;
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate1, Partial,
     After> {
+    #[doc =
+    "Transition from `1: b_text other` to `29: b_text other` using `0: [] hello`"]
     pub fn next(self)
         ->
             (Template<BTextTemplate29, Partial, After>,
@@ -31544,6 +34142,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate2, Partial,
     After> {
+    #[doc =
+    "Transition from `2: c_element_with_attribute other` to `30: c_element_with_attribute other` using `1: [] <a class=\"test\"></a>`"]
     pub fn next(self)
         ->
             (Template<CElementWithAttributeTemplate30, Partial, After>,
@@ -31563,6 +34163,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate3, Partial,
     After> {
+    #[doc =
+    "Transition from `3: c_element_with_content other` to `31: c_element_with_content other` using `2: [] <h1>hi</h1>`"]
     pub fn next(self)
         ->
             (Template<CElementWithContentTemplate31, Partial, After>,
@@ -31579,6 +34181,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate4, Partial,
     After> {
+    #[doc =
+    "Transition from `4: c_empty_element other` to `32: c_empty_element other` using `3: [] <h1></h1>`"]
     pub fn next(self)
         ->
             (Template<CEmptyElementTemplate32, Partial, After>,
@@ -31595,6 +34199,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate5, Partial,
     After> {
+    #[doc =
+    "Transition from `5: c_self_closing_boolean_attr other` to `33: c_self_closing_boolean_attr other` using `4: [] <!DOCTYPE html>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingBooleanAttrTemplate33, Partial, After>,
@@ -31614,6 +34220,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate6, Partial,
     After> {
+    #[doc =
+    "Transition from `6: c_self_closing other` to `34: c_self_closing other` using `5: [] <!DOCTYPE>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingTemplate34, Partial, After>,
@@ -31630,6 +34238,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate7, Partial,
     After> {
+    #[doc =
+    "Transition from `7: d_element_with_attribute_and_variables other` to `35: d_element_with_attribute_and_variables other` using `6: [] <a class=\"{{test:attr}}\">`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate35, Partial,
@@ -31653,6 +34263,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate35, Partial,
     After> {
+    #[doc =
+    "Transition from `35: d_element_with_attribute_and_variables other` to `36: d_element_with_attribute_and_variables other` using `7: [] {{var:element}}</a>`"]
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
@@ -31675,6 +34287,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate8, Partial,
     After> {
+    #[doc =
+    "Transition from `8: d_variable other` to `37: d_variable other` using `8: [] <p>{{test:element}}</p>`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate37, Partial, After>,
@@ -31696,6 +34310,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate9, Partial,
     After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `9: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -31712,6 +34328,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate9, Partial,
     After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `10: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -31728,6 +34346,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate10, Partial,
     After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `11: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -31744,6 +34364,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate10, Partial,
     After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `12: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -31760,6 +34382,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate11, Partial,
     After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `13: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -31776,6 +34400,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate11, Partial,
     After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `14: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -31792,6 +34418,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate12, Partial,
     After> {
+    #[doc =
+    "Transition from `12: e_if_else_with_variables other` to `41: e_if_else_with_variables other` using `15: [] <span>`"]
     pub fn next(self)
         ->
             (Template<EIfElseWithVariablesTemplate41, Partial, After>,
@@ -31808,6 +34436,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate41, Partial,
     After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `16: [true] {{t:element}}</span>`"]
     pub fn t_true(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -31829,6 +34459,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate41, Partial,
     After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `17: [false] {{f:element}}</span>`"]
     pub fn f_false(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -31850,6 +34482,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate13, Partial,
     After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `18: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -31866,6 +34500,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate13, Partial,
     After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `19: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -31882,6 +34518,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate14, Partial,
     After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `14: f_each_empty other` using `20: [enter_loop] `"]
     pub fn next_enter_loop(self)
         ->
             (Template<FEachEmptyTemplate14, Partial, After>,
@@ -31898,6 +34536,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate14, Partial,
     After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `44: f_each_empty other` using `21: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachEmptyTemplate44, Partial, After>,
@@ -31914,6 +34554,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate15, Partial,
     After> {
+    #[doc =
+    "Transition from `15: f_each_one_variable other` to `45: f_each_one_variable other` using `22: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachOneVariableTemplate45, Partial, After>,
@@ -31930,6 +34572,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate45, Partial,
     After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `45: f_each_one_variable other` using `23: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -31952,6 +34596,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate45, Partial,
     After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `46: f_each_one_variable other` using `24: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachOneVariableTemplate46, Partial, After>,
@@ -31968,6 +34614,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate16, Partial,
     After> {
+    #[doc =
+    "Transition from `16: f_each_two_variables other` to `47: f_each_two_variables other` using `25: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachTwoVariablesTemplate47, Partial, After>,
@@ -31984,6 +34632,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate47, Partial,
     After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `48: f_each_two_variables other` using `26: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -32006,6 +34656,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate48, Partial,
     After> {
+    #[doc =
+    "Transition from `48: f_each_two_variables other` to `47: f_each_two_variables other` using `27: [] {{content:element}}`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -32028,6 +34680,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate47, Partial,
     After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `49: f_each_two_variables other` using `28: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesTemplate49, Partial, After>,
@@ -32044,6 +34698,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate17, Partial,
     After> {
+    #[doc =
+    "Transition from `17: g_empty_template_multiple other` to `50: g_empty_template_multiple inner` using `29: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -32067,6 +34723,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate50, Partial,
     After> {
+    #[doc =
+    "Transition from `50: g_empty_template_multiple inner` to `52: g_empty_template_multiple inner` using `32: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -32090,6 +34748,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate18, Partial,
     After> {
+    #[doc =
+    "Transition from `18: g_empty_template other` to `54: g_empty_template inner` using `35: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -32113,6 +34773,8 @@ impl<Partial, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate19,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `19: g_partial_block_partial other` to `56: g_partial_block_partial partial` using `38: [] <span>{{before:element}}<p>`"]
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<Partial, (),
@@ -32141,6 +34803,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate56,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `56: g_partial_block_partial partial` to `57: g_partial_block_partial partial` using `39: [] </p><div>`"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -32164,6 +34828,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate57, Partial,
     After> {
+    #[doc =
+    "Transition from `57: g_partial_block_partial partial` to `58: g_partial_block_partial other` using `40: [] </div>{{after:element}}</span>`"]
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate58, Partial, After>,
@@ -32185,6 +34851,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate20, Partial,
     After> {
+    #[doc =
+    "Transition from `20: g_partial_block other` to `59: g_partial_block inner` using `41: [] <span>hello`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockPartialTemplate19,
@@ -32223,6 +34891,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate60, Partial,
     After> {
+    #[doc =
+    "Transition from `60: g_partial_block other` to `61: g_partial_block other` using `43: [] childrenstart{{test:element}}childrenend`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate61, Partial, After>,
@@ -32244,6 +34914,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate59, Partial,
     After> {
+    #[doc =
+    "Transition from `59: g_partial_block inner` to `62: g_partial_block other` using `45: [] world</span>`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockTemplate62, Partial, After>,
@@ -32261,6 +34933,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate21, Partial,
     After> {
+    #[doc =
+    "Transition from `21: g_template_only_partial_block_multiple other` to `63: g_template_only_partial_block_multiple inner` using `46: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -32285,6 +34959,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate63, Partial,
     After> {
+    #[doc =
+    "Transition from `63: g_template_only_partial_block_multiple inner` to `65: g_template_only_partial_block_multiple inner` using `49: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -32309,6 +34985,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate22, Partial,
     After> {
+    #[doc =
+    "Transition from `22: g_template_only_partial_block_with_text_multiple other` to `67: g_template_only_partial_block_with_text_multiple inner` using `52: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -32356,6 +35034,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate68, Partial,
     After> {
+    #[doc =
+    "Transition from `68: g_template_only_partial_block_with_text_multiple other` to `69: g_template_only_partial_block_with_text_multiple other` using `54: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate69,
@@ -32374,6 +35054,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate67, Partial,
     After> {
+    #[doc =
+    "Transition from `67: g_template_only_partial_block_with_text_multiple inner` to `70: g_template_only_partial_block_with_text_multiple inner` using `56: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -32421,6 +35103,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate71, Partial,
     After> {
+    #[doc =
+    "Transition from `71: g_template_only_partial_block_with_text_multiple other` to `72: g_template_only_partial_block_with_text_multiple other` using `58: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate72,
@@ -32439,6 +35123,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate23, Partial,
     After> {
+    #[doc =
+    "Transition from `23: g_template_only_partial_block_with_text other` to `73: g_template_only_partial_block_with_text inner` using `60: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -32481,6 +35167,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate74, Partial,
     After> {
+    #[doc =
+    "Transition from `74: g_template_only_partial_block_with_text other` to `75: g_template_only_partial_block_with_text other` using `62: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextTemplate75, Partial,
@@ -32498,6 +35186,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate24, Partial,
     After> {
+    #[doc =
+    "Transition from `24: g_template_only_partial_block_with_variable_multiple other` to `76: g_template_only_partial_block_with_variable_multiple inner` using `64: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -32546,6 +35236,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate77, Partial,
     After> {
+    #[doc =
+    "Transition from `77: g_template_only_partial_block_with_variable_multiple other` to `78: g_template_only_partial_block_with_variable_multiple other` using `66: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate78,
@@ -32569,6 +35261,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate76, Partial,
     After> {
+    #[doc =
+    "Transition from `76: g_template_only_partial_block_with_variable_multiple inner` to `79: g_template_only_partial_block_with_variable_multiple inner` using `68: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -32617,6 +35311,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate80, Partial,
     After> {
+    #[doc =
+    "Transition from `80: g_template_only_partial_block_with_variable_multiple other` to `81: g_template_only_partial_block_with_variable_multiple other` using `70: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate81,
@@ -32640,6 +35336,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate79, Partial,
     After> {
+    #[doc =
+    "Transition from `79: g_template_only_partial_block_with_variable_multiple inner` to `82: g_template_only_partial_block_with_variable_multiple other` using `72: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate82,
@@ -32658,6 +35356,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate25, Partial,
     After> {
+    #[doc =
+    "Transition from `25: g_template_only_partial_block_with_variable other` to `83: g_template_only_partial_block_with_variable inner` using `73: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -32703,6 +35403,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate84, Partial,
     After> {
+    #[doc =
+    "Transition from `84: g_template_only_partial_block_with_variable other` to `85: g_template_only_partial_block_with_variable other` using `75: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate85,
@@ -32725,6 +35427,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate83, Partial,
     After> {
+    #[doc =
+    "Transition from `83: g_template_only_partial_block_with_variable inner` to `86: g_template_only_partial_block_with_variable other` using `77: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate86,
@@ -32742,6 +35446,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate26, Partial,
     After> {
+    #[doc =
+    "Transition from `26: g_template_only_partial_block other` to `87: g_template_only_partial_block inner` using `78: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -32765,6 +35471,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate27, Partial,
     After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `89: f_each_two_variables_html other` using `81: [enter_loop] \n    <li>{{title:element}}</li>\n    <li>`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -32787,6 +35495,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate89, Partial,
     After> {
+    #[doc =
+    "Transition from `89: f_each_two_variables_html other` to `27: f_each_two_variables_html other` using `82: [] {{content:element}}</li>\n`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -32809,6 +35519,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate27, Partial,
     After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `90: f_each_two_variables_html other` using `83: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesHtmlTemplate90, Partial, After>,
@@ -32825,6 +35537,8 @@ impl<Partial, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate28,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `28: g_only_partial_block other` to `91: g_only_partial_block partial` using `84: [] `"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -33049,6 +35763,8 @@ pub struct GTemplateOnlyPartialBlockWithTextTemplate90;
 pub struct GTemplateOnlyPartialBlockWithTextTemplate91;
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate1, Partial, After> {
+    #[doc =
+    "Transition from `1: b_text other` to `29: b_text other` using `0: [] hello`"]
     pub fn next(self)
         ->
             (Template<BTextTemplate29, Partial, After>,
@@ -33064,6 +35780,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate2, Partial, After> {
+    #[doc =
+    "Transition from `2: c_element_with_attribute other` to `30: c_element_with_attribute other` using `1: [] <a class=\"test\"></a>`"]
     pub fn next(self)
         ->
             (Template<CElementWithAttributeTemplate30, Partial, After>,
@@ -33082,6 +35800,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate3, Partial, After> {
+    #[doc =
+    "Transition from `3: c_element_with_content other` to `31: c_element_with_content other` using `2: [] <h1>hi</h1>`"]
     pub fn next(self)
         ->
             (Template<CElementWithContentTemplate31, Partial, After>,
@@ -33097,6 +35817,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate4, Partial, After> {
+    #[doc =
+    "Transition from `4: c_empty_element other` to `32: c_empty_element other` using `3: [] <h1></h1>`"]
     pub fn next(self)
         ->
             (Template<CEmptyElementTemplate32, Partial, After>,
@@ -33112,6 +35834,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate5, Partial, After> {
+    #[doc =
+    "Transition from `5: c_self_closing_boolean_attr other` to `33: c_self_closing_boolean_attr other` using `4: [] <!DOCTYPE html>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingBooleanAttrTemplate33, Partial, After>,
@@ -33130,6 +35854,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate6, Partial, After> {
+    #[doc =
+    "Transition from `6: c_self_closing other` to `34: c_self_closing other` using `5: [] <!DOCTYPE>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingTemplate34, Partial, After>,
@@ -33145,6 +35871,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate7, Partial, After> {
+    #[doc =
+    "Transition from `7: d_element_with_attribute_and_variables other` to `35: d_element_with_attribute_and_variables other` using `6: [] <a class=\"{{test:attr}}\">`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate35, Partial,
@@ -33167,6 +35895,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate35, Partial, After> {
+    #[doc =
+    "Transition from `35: d_element_with_attribute_and_variables other` to `36: d_element_with_attribute_and_variables other` using `7: [] {{var:element}}</a>`"]
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
@@ -33188,6 +35918,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate8, Partial, After> {
+    #[doc =
+    "Transition from `8: d_variable other` to `37: d_variable other` using `8: [] <p>{{test:element}}</p>`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate37, Partial, After>,
@@ -33208,6 +35940,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `9: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -33223,6 +35957,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `10: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -33238,6 +35974,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `11: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -33253,6 +35991,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `12: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -33268,6 +36008,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `13: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -33283,6 +36025,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `14: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -33298,6 +36042,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate12, Partial, After> {
+    #[doc =
+    "Transition from `12: e_if_else_with_variables other` to `41: e_if_else_with_variables other` using `15: [] <span>`"]
     pub fn next(self)
         ->
             (Template<EIfElseWithVariablesTemplate41, Partial, After>,
@@ -33313,6 +36059,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `16: [true] {{t:element}}</span>`"]
     pub fn t_true(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -33333,6 +36081,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `17: [false] {{f:element}}</span>`"]
     pub fn f_false(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -33353,6 +36103,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `18: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -33368,6 +36120,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `19: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -33383,6 +36137,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `14: f_each_empty other` using `20: [enter_loop] `"]
     pub fn next_enter_loop(self)
         ->
             (Template<FEachEmptyTemplate14, Partial, After>,
@@ -33398,6 +36154,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `44: f_each_empty other` using `21: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachEmptyTemplate44, Partial, After>,
@@ -33413,6 +36171,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate15, Partial, After> {
+    #[doc =
+    "Transition from `15: f_each_one_variable other` to `45: f_each_one_variable other` using `22: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachOneVariableTemplate45, Partial, After>,
@@ -33428,6 +36188,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `45: f_each_one_variable other` using `23: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -33449,6 +36211,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `46: f_each_one_variable other` using `24: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachOneVariableTemplate46, Partial, After>,
@@ -33464,6 +36228,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate16, Partial, After> {
+    #[doc =
+    "Transition from `16: f_each_two_variables other` to `47: f_each_two_variables other` using `25: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachTwoVariablesTemplate47, Partial, After>,
@@ -33479,6 +36245,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `48: f_each_two_variables other` using `26: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -33500,6 +36268,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate48, Partial, After> {
+    #[doc =
+    "Transition from `48: f_each_two_variables other` to `47: f_each_two_variables other` using `27: [] {{content:element}}`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -33521,6 +36291,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `49: f_each_two_variables other` using `28: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesTemplate49, Partial, After>,
@@ -33536,6 +36308,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate17, Partial, After> {
+    #[doc =
+    "Transition from `17: g_empty_template_multiple other` to `50: g_empty_template_multiple inner` using `29: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -33558,6 +36332,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate50, Partial, After> {
+    #[doc =
+    "Transition from `50: g_empty_template_multiple inner` to `52: g_empty_template_multiple inner` using `32: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -33580,6 +36356,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate18, Partial, After> {
+    #[doc =
+    "Transition from `18: g_empty_template other` to `54: g_empty_template inner` using `35: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -33603,6 +36381,8 @@ impl<Partial, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate19,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `19: g_partial_block_partial other` to `56: g_partial_block_partial partial` using `38: [] <span>{{before:element}}<p>`"]
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<Partial, (),
@@ -33631,6 +36411,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate56,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `56: g_partial_block_partial partial` to `57: g_partial_block_partial partial` using `39: [] </p><div>`"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -33653,6 +36435,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate57, Partial, After> {
+    #[doc =
+    "Transition from `57: g_partial_block_partial partial` to `58: g_partial_block_partial other` using `40: [] </div>{{after:element}}</span>`"]
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate58, Partial, After>,
@@ -33673,6 +36457,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate20, Partial, After> {
+    #[doc =
+    "Transition from `20: g_partial_block other` to `59: g_partial_block inner` using `41: [] <span>hello`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockPartialTemplate19,
@@ -33710,6 +36496,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate60, Partial, After> {
+    #[doc =
+    "Transition from `60: g_partial_block other` to `61: g_partial_block other` using `43: [] childrenstart{{test:element}}childrenend`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate61, Partial, After>,
@@ -33730,6 +36518,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate59, Partial, After> {
+    #[doc =
+    "Transition from `59: g_partial_block inner` to `62: g_partial_block other` using `45: [] world</span>`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockTemplate62, Partial, After>,
@@ -33746,6 +36536,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate21, Partial, After> {
+    #[doc =
+    "Transition from `21: g_template_only_partial_block_multiple other` to `63: g_template_only_partial_block_multiple inner` using `46: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -33769,6 +36561,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate63, Partial, After> {
+    #[doc =
+    "Transition from `63: g_template_only_partial_block_multiple inner` to `65: g_template_only_partial_block_multiple inner` using `49: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -33792,6 +36586,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate22, Partial, After> {
+    #[doc =
+    "Transition from `22: g_template_only_partial_block_with_text_multiple other` to `67: g_template_only_partial_block_with_text_multiple inner` using `52: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -33838,6 +36634,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate68, Partial, After> {
+    #[doc =
+    "Transition from `68: g_template_only_partial_block_with_text_multiple other` to `69: g_template_only_partial_block_with_text_multiple other` using `54: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate69,
@@ -33855,6 +36653,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate67, Partial, After> {
+    #[doc =
+    "Transition from `67: g_template_only_partial_block_with_text_multiple inner` to `70: g_template_only_partial_block_with_text_multiple inner` using `56: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -33901,6 +36701,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate71, Partial, After> {
+    #[doc =
+    "Transition from `71: g_template_only_partial_block_with_text_multiple other` to `72: g_template_only_partial_block_with_text_multiple other` using `58: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate72,
@@ -33918,6 +36720,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate23, Partial, After> {
+    #[doc =
+    "Transition from `23: g_template_only_partial_block_with_text other` to `73: g_template_only_partial_block_with_text inner` using `60: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -33959,6 +36763,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate74, Partial, After> {
+    #[doc =
+    "Transition from `74: g_template_only_partial_block_with_text other` to `75: g_template_only_partial_block_with_text other` using `62: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextTemplate75, Partial,
@@ -33975,6 +36781,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate24, Partial, After> {
+    #[doc =
+    "Transition from `24: g_template_only_partial_block_with_variable_multiple other` to `76: g_template_only_partial_block_with_variable_multiple inner` using `64: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -34022,6 +36830,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate77, Partial, After> {
+    #[doc =
+    "Transition from `77: g_template_only_partial_block_with_variable_multiple other` to `78: g_template_only_partial_block_with_variable_multiple other` using `66: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate78,
@@ -34044,6 +36854,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate76, Partial, After> {
+    #[doc =
+    "Transition from `76: g_template_only_partial_block_with_variable_multiple inner` to `79: g_template_only_partial_block_with_variable_multiple inner` using `68: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -34091,6 +36903,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate80, Partial, After> {
+    #[doc =
+    "Transition from `80: g_template_only_partial_block_with_variable_multiple other` to `81: g_template_only_partial_block_with_variable_multiple other` using `70: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate81,
@@ -34113,6 +36927,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate79, Partial, After> {
+    #[doc =
+    "Transition from `79: g_template_only_partial_block_with_variable_multiple inner` to `82: g_template_only_partial_block_with_variable_multiple other` using `72: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate82,
@@ -34130,6 +36946,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate25, Partial, After> {
+    #[doc =
+    "Transition from `25: g_template_only_partial_block_with_variable other` to `83: g_template_only_partial_block_with_variable inner` using `73: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -34174,6 +36992,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate84, Partial, After> {
+    #[doc =
+    "Transition from `84: g_template_only_partial_block_with_variable other` to `85: g_template_only_partial_block_with_variable other` using `75: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate85,
@@ -34195,6 +37015,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate83, Partial, After> {
+    #[doc =
+    "Transition from `83: g_template_only_partial_block_with_variable inner` to `86: g_template_only_partial_block_with_variable other` using `77: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate86,
@@ -34211,6 +37033,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate26, Partial, After> {
+    #[doc =
+    "Transition from `26: g_template_only_partial_block other` to `87: g_template_only_partial_block inner` using `78: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -34233,6 +37057,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `89: f_each_two_variables_html other` using `81: [enter_loop] \n    <li>{{title:element}}</li>\n    <li>`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -34254,6 +37080,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate89, Partial, After> {
+    #[doc =
+    "Transition from `89: f_each_two_variables_html other` to `27: f_each_two_variables_html other` using `82: [] {{content:element}}</li>\n`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -34275,6 +37103,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `90: f_each_two_variables_html other` using `83: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesHtmlTemplate90, Partial, After>,
@@ -34291,6 +37121,8 @@ impl<Partial, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<GTemplateOnlyPartialBlockWithTextTemplate28,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `28: g_only_partial_block other` to `91: g_only_partial_block partial` using `84: [] `"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -34514,6 +37346,8 @@ pub struct GTemplateOnlyPartialBlockWithVariableMultipleTemplate91;
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate1, Partial,
     After> {
+    #[doc =
+    "Transition from `1: b_text other` to `29: b_text other` using `0: [] hello`"]
     pub fn next(self)
         ->
             (Template<BTextTemplate29, Partial, After>,
@@ -34530,6 +37364,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate2, Partial,
     After> {
+    #[doc =
+    "Transition from `2: c_element_with_attribute other` to `30: c_element_with_attribute other` using `1: [] <a class=\"test\"></a>`"]
     pub fn next(self)
         ->
             (Template<CElementWithAttributeTemplate30, Partial, After>,
@@ -34549,6 +37385,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate3, Partial,
     After> {
+    #[doc =
+    "Transition from `3: c_element_with_content other` to `31: c_element_with_content other` using `2: [] <h1>hi</h1>`"]
     pub fn next(self)
         ->
             (Template<CElementWithContentTemplate31, Partial, After>,
@@ -34565,6 +37403,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate4, Partial,
     After> {
+    #[doc =
+    "Transition from `4: c_empty_element other` to `32: c_empty_element other` using `3: [] <h1></h1>`"]
     pub fn next(self)
         ->
             (Template<CEmptyElementTemplate32, Partial, After>,
@@ -34581,6 +37421,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate5, Partial,
     After> {
+    #[doc =
+    "Transition from `5: c_self_closing_boolean_attr other` to `33: c_self_closing_boolean_attr other` using `4: [] <!DOCTYPE html>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingBooleanAttrTemplate33, Partial, After>,
@@ -34600,6 +37442,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate6, Partial,
     After> {
+    #[doc =
+    "Transition from `6: c_self_closing other` to `34: c_self_closing other` using `5: [] <!DOCTYPE>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingTemplate34, Partial, After>,
@@ -34616,6 +37460,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate7, Partial,
     After> {
+    #[doc =
+    "Transition from `7: d_element_with_attribute_and_variables other` to `35: d_element_with_attribute_and_variables other` using `6: [] <a class=\"{{test:attr}}\">`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate35, Partial,
@@ -34639,6 +37485,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate35, Partial,
     After> {
+    #[doc =
+    "Transition from `35: d_element_with_attribute_and_variables other` to `36: d_element_with_attribute_and_variables other` using `7: [] {{var:element}}</a>`"]
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
@@ -34661,6 +37509,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate8, Partial,
     After> {
+    #[doc =
+    "Transition from `8: d_variable other` to `37: d_variable other` using `8: [] <p>{{test:element}}</p>`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate37, Partial, After>,
@@ -34682,6 +37532,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate9, Partial,
     After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `9: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -34698,6 +37550,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate9, Partial,
     After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `10: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -34714,6 +37568,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate10, Partial,
     After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `11: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -34730,6 +37586,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate10, Partial,
     After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `12: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -34746,6 +37604,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate11, Partial,
     After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `13: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -34762,6 +37622,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate11, Partial,
     After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `14: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -34778,6 +37640,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate12, Partial,
     After> {
+    #[doc =
+    "Transition from `12: e_if_else_with_variables other` to `41: e_if_else_with_variables other` using `15: [] <span>`"]
     pub fn next(self)
         ->
             (Template<EIfElseWithVariablesTemplate41, Partial, After>,
@@ -34794,6 +37658,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate41, Partial,
     After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `16: [true] {{t:element}}</span>`"]
     pub fn t_true(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -34815,6 +37681,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate41, Partial,
     After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `17: [false] {{f:element}}</span>`"]
     pub fn f_false(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -34836,6 +37704,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate13, Partial,
     After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `18: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -34852,6 +37722,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate13, Partial,
     After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `19: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -34868,6 +37740,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate14, Partial,
     After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `14: f_each_empty other` using `20: [enter_loop] `"]
     pub fn next_enter_loop(self)
         ->
             (Template<FEachEmptyTemplate14, Partial, After>,
@@ -34884,6 +37758,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate14, Partial,
     After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `44: f_each_empty other` using `21: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachEmptyTemplate44, Partial, After>,
@@ -34900,6 +37776,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate15, Partial,
     After> {
+    #[doc =
+    "Transition from `15: f_each_one_variable other` to `45: f_each_one_variable other` using `22: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachOneVariableTemplate45, Partial, After>,
@@ -34916,6 +37794,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate45, Partial,
     After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `45: f_each_one_variable other` using `23: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -34938,6 +37818,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate45, Partial,
     After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `46: f_each_one_variable other` using `24: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachOneVariableTemplate46, Partial, After>,
@@ -34954,6 +37836,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate16, Partial,
     After> {
+    #[doc =
+    "Transition from `16: f_each_two_variables other` to `47: f_each_two_variables other` using `25: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachTwoVariablesTemplate47, Partial, After>,
@@ -34970,6 +37854,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate47, Partial,
     After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `48: f_each_two_variables other` using `26: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -34992,6 +37878,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate48, Partial,
     After> {
+    #[doc =
+    "Transition from `48: f_each_two_variables other` to `47: f_each_two_variables other` using `27: [] {{content:element}}`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -35014,6 +37902,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate47, Partial,
     After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `49: f_each_two_variables other` using `28: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesTemplate49, Partial, After>,
@@ -35030,6 +37920,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate17, Partial,
     After> {
+    #[doc =
+    "Transition from `17: g_empty_template_multiple other` to `50: g_empty_template_multiple inner` using `29: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -35053,6 +37945,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate50, Partial,
     After> {
+    #[doc =
+    "Transition from `50: g_empty_template_multiple inner` to `52: g_empty_template_multiple inner` using `32: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -35076,6 +37970,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate18, Partial,
     After> {
+    #[doc =
+    "Transition from `18: g_empty_template other` to `54: g_empty_template inner` using `35: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -35099,6 +37995,8 @@ impl<Partial, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate19,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `19: g_partial_block_partial other` to `56: g_partial_block_partial partial` using `38: [] <span>{{before:element}}<p>`"]
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<Partial, (),
@@ -35127,6 +38025,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate56,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `56: g_partial_block_partial partial` to `57: g_partial_block_partial partial` using `39: [] </p><div>`"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -35150,6 +38050,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate57, Partial,
     After> {
+    #[doc =
+    "Transition from `57: g_partial_block_partial partial` to `58: g_partial_block_partial other` using `40: [] </div>{{after:element}}</span>`"]
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate58, Partial, After>,
@@ -35171,6 +38073,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate20, Partial,
     After> {
+    #[doc =
+    "Transition from `20: g_partial_block other` to `59: g_partial_block inner` using `41: [] <span>hello`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockPartialTemplate19,
@@ -35209,6 +38113,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate60, Partial,
     After> {
+    #[doc =
+    "Transition from `60: g_partial_block other` to `61: g_partial_block other` using `43: [] childrenstart{{test:element}}childrenend`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate61, Partial, After>,
@@ -35230,6 +38136,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate59, Partial,
     After> {
+    #[doc =
+    "Transition from `59: g_partial_block inner` to `62: g_partial_block other` using `45: [] world</span>`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockTemplate62, Partial, After>,
@@ -35247,6 +38155,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate21, Partial,
     After> {
+    #[doc =
+    "Transition from `21: g_template_only_partial_block_multiple other` to `63: g_template_only_partial_block_multiple inner` using `46: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -35271,6 +38181,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate63, Partial,
     After> {
+    #[doc =
+    "Transition from `63: g_template_only_partial_block_multiple inner` to `65: g_template_only_partial_block_multiple inner` using `49: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -35295,6 +38207,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate22, Partial,
     After> {
+    #[doc =
+    "Transition from `22: g_template_only_partial_block_with_text_multiple other` to `67: g_template_only_partial_block_with_text_multiple inner` using `52: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -35342,6 +38256,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate68, Partial,
     After> {
+    #[doc =
+    "Transition from `68: g_template_only_partial_block_with_text_multiple other` to `69: g_template_only_partial_block_with_text_multiple other` using `54: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate69,
@@ -35360,6 +38276,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate67, Partial,
     After> {
+    #[doc =
+    "Transition from `67: g_template_only_partial_block_with_text_multiple inner` to `70: g_template_only_partial_block_with_text_multiple inner` using `56: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -35407,6 +38325,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate71, Partial,
     After> {
+    #[doc =
+    "Transition from `71: g_template_only_partial_block_with_text_multiple other` to `72: g_template_only_partial_block_with_text_multiple other` using `58: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate72,
@@ -35425,6 +38345,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate23, Partial,
     After> {
+    #[doc =
+    "Transition from `23: g_template_only_partial_block_with_text other` to `73: g_template_only_partial_block_with_text inner` using `60: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -35467,6 +38389,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate74, Partial,
     After> {
+    #[doc =
+    "Transition from `74: g_template_only_partial_block_with_text other` to `75: g_template_only_partial_block_with_text other` using `62: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextTemplate75, Partial,
@@ -35484,6 +38408,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate24, Partial,
     After> {
+    #[doc =
+    "Transition from `24: g_template_only_partial_block_with_variable_multiple other` to `76: g_template_only_partial_block_with_variable_multiple inner` using `64: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -35532,6 +38458,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate77, Partial,
     After> {
+    #[doc =
+    "Transition from `77: g_template_only_partial_block_with_variable_multiple other` to `78: g_template_only_partial_block_with_variable_multiple other` using `66: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate78,
@@ -35555,6 +38483,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate76, Partial,
     After> {
+    #[doc =
+    "Transition from `76: g_template_only_partial_block_with_variable_multiple inner` to `79: g_template_only_partial_block_with_variable_multiple inner` using `68: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -35603,6 +38533,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate80, Partial,
     After> {
+    #[doc =
+    "Transition from `80: g_template_only_partial_block_with_variable_multiple other` to `81: g_template_only_partial_block_with_variable_multiple other` using `70: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate81,
@@ -35626,6 +38558,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate79, Partial,
     After> {
+    #[doc =
+    "Transition from `79: g_template_only_partial_block_with_variable_multiple inner` to `82: g_template_only_partial_block_with_variable_multiple other` using `72: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate82,
@@ -35644,6 +38578,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate25, Partial,
     After> {
+    #[doc =
+    "Transition from `25: g_template_only_partial_block_with_variable other` to `83: g_template_only_partial_block_with_variable inner` using `73: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -35689,6 +38625,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate84, Partial,
     After> {
+    #[doc =
+    "Transition from `84: g_template_only_partial_block_with_variable other` to `85: g_template_only_partial_block_with_variable other` using `75: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate85,
@@ -35711,6 +38649,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate83, Partial,
     After> {
+    #[doc =
+    "Transition from `83: g_template_only_partial_block_with_variable inner` to `86: g_template_only_partial_block_with_variable other` using `77: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate86,
@@ -35728,6 +38668,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate26, Partial,
     After> {
+    #[doc =
+    "Transition from `26: g_template_only_partial_block other` to `87: g_template_only_partial_block inner` using `78: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -35751,6 +38693,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate27, Partial,
     After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `89: f_each_two_variables_html other` using `81: [enter_loop] \n    <li>{{title:element}}</li>\n    <li>`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -35773,6 +38717,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate89, Partial,
     After> {
+    #[doc =
+    "Transition from `89: f_each_two_variables_html other` to `27: f_each_two_variables_html other` using `82: [] {{content:element}}</li>\n`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -35795,6 +38741,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate27, Partial,
     After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `90: f_each_two_variables_html other` using `83: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesHtmlTemplate90, Partial, After>,
@@ -35811,6 +38759,8 @@ impl<Partial, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate28,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `28: g_only_partial_block other` to `91: g_only_partial_block partial` using `84: [] `"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -36035,6 +38985,8 @@ pub struct GTemplateOnlyPartialBlockWithVariableTemplate90;
 pub struct GTemplateOnlyPartialBlockWithVariableTemplate91;
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate1, Partial, After> {
+    #[doc =
+    "Transition from `1: b_text other` to `29: b_text other` using `0: [] hello`"]
     pub fn next(self)
         ->
             (Template<BTextTemplate29, Partial, After>,
@@ -36050,6 +39002,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate2, Partial, After> {
+    #[doc =
+    "Transition from `2: c_element_with_attribute other` to `30: c_element_with_attribute other` using `1: [] <a class=\"test\"></a>`"]
     pub fn next(self)
         ->
             (Template<CElementWithAttributeTemplate30, Partial, After>,
@@ -36068,6 +39022,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate3, Partial, After> {
+    #[doc =
+    "Transition from `3: c_element_with_content other` to `31: c_element_with_content other` using `2: [] <h1>hi</h1>`"]
     pub fn next(self)
         ->
             (Template<CElementWithContentTemplate31, Partial, After>,
@@ -36083,6 +39039,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate4, Partial, After> {
+    #[doc =
+    "Transition from `4: c_empty_element other` to `32: c_empty_element other` using `3: [] <h1></h1>`"]
     pub fn next(self)
         ->
             (Template<CEmptyElementTemplate32, Partial, After>,
@@ -36098,6 +39056,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate5, Partial, After> {
+    #[doc =
+    "Transition from `5: c_self_closing_boolean_attr other` to `33: c_self_closing_boolean_attr other` using `4: [] <!DOCTYPE html>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingBooleanAttrTemplate33, Partial, After>,
@@ -36116,6 +39076,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate6, Partial, After> {
+    #[doc =
+    "Transition from `6: c_self_closing other` to `34: c_self_closing other` using `5: [] <!DOCTYPE>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingTemplate34, Partial, After>,
@@ -36131,6 +39093,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate7, Partial, After> {
+    #[doc =
+    "Transition from `7: d_element_with_attribute_and_variables other` to `35: d_element_with_attribute_and_variables other` using `6: [] <a class=\"{{test:attr}}\">`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate35, Partial,
@@ -36154,6 +39118,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate35, Partial, After>
     {
+    #[doc =
+    "Transition from `35: d_element_with_attribute_and_variables other` to `36: d_element_with_attribute_and_variables other` using `7: [] {{var:element}}</a>`"]
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
@@ -36175,6 +39141,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate8, Partial, After> {
+    #[doc =
+    "Transition from `8: d_variable other` to `37: d_variable other` using `8: [] <p>{{test:element}}</p>`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate37, Partial, After>,
@@ -36195,6 +39163,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `9: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -36210,6 +39180,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `10: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -36226,6 +39198,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate10, Partial, After>
     {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `11: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -36242,6 +39216,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate10, Partial, After>
     {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `12: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -36258,6 +39234,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate11, Partial, After>
     {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `13: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -36274,6 +39252,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate11, Partial, After>
     {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `14: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -36290,6 +39270,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate12, Partial, After>
     {
+    #[doc =
+    "Transition from `12: e_if_else_with_variables other` to `41: e_if_else_with_variables other` using `15: [] <span>`"]
     pub fn next(self)
         ->
             (Template<EIfElseWithVariablesTemplate41, Partial, After>,
@@ -36306,6 +39288,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate41, Partial, After>
     {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `16: [true] {{t:element}}</span>`"]
     pub fn t_true(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -36327,6 +39311,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate41, Partial, After>
     {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `17: [false] {{f:element}}</span>`"]
     pub fn f_false(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -36348,6 +39334,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate13, Partial, After>
     {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `18: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -36364,6 +39352,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate13, Partial, After>
     {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `19: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -36380,6 +39370,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate14, Partial, After>
     {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `14: f_each_empty other` using `20: [enter_loop] `"]
     pub fn next_enter_loop(self)
         ->
             (Template<FEachEmptyTemplate14, Partial, After>,
@@ -36396,6 +39388,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate14, Partial, After>
     {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `44: f_each_empty other` using `21: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachEmptyTemplate44, Partial, After>,
@@ -36412,6 +39406,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate15, Partial, After>
     {
+    #[doc =
+    "Transition from `15: f_each_one_variable other` to `45: f_each_one_variable other` using `22: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachOneVariableTemplate45, Partial, After>,
@@ -36428,6 +39424,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate45, Partial, After>
     {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `45: f_each_one_variable other` using `23: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -36450,6 +39448,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate45, Partial, After>
     {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `46: f_each_one_variable other` using `24: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachOneVariableTemplate46, Partial, After>,
@@ -36466,6 +39466,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate16, Partial, After>
     {
+    #[doc =
+    "Transition from `16: f_each_two_variables other` to `47: f_each_two_variables other` using `25: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachTwoVariablesTemplate47, Partial, After>,
@@ -36482,6 +39484,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate47, Partial, After>
     {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `48: f_each_two_variables other` using `26: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -36504,6 +39508,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate48, Partial, After>
     {
+    #[doc =
+    "Transition from `48: f_each_two_variables other` to `47: f_each_two_variables other` using `27: [] {{content:element}}`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -36526,6 +39532,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate47, Partial, After>
     {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `49: f_each_two_variables other` using `28: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesTemplate49, Partial, After>,
@@ -36542,6 +39550,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate17, Partial, After>
     {
+    #[doc =
+    "Transition from `17: g_empty_template_multiple other` to `50: g_empty_template_multiple inner` using `29: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -36565,6 +39575,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate50, Partial, After>
     {
+    #[doc =
+    "Transition from `50: g_empty_template_multiple inner` to `52: g_empty_template_multiple inner` using `32: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -36588,6 +39600,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate18, Partial, After>
     {
+    #[doc =
+    "Transition from `18: g_empty_template other` to `54: g_empty_template inner` using `35: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -36611,6 +39625,8 @@ impl<Partial, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate19,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `19: g_partial_block_partial other` to `56: g_partial_block_partial partial` using `38: [] <span>{{before:element}}<p>`"]
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<Partial, (),
@@ -36639,6 +39655,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate56,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `56: g_partial_block_partial partial` to `57: g_partial_block_partial partial` using `39: [] </p><div>`"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -36662,6 +39680,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate57, Partial, After>
     {
+    #[doc =
+    "Transition from `57: g_partial_block_partial partial` to `58: g_partial_block_partial other` using `40: [] </div>{{after:element}}</span>`"]
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate58, Partial, After>,
@@ -36683,6 +39703,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate20, Partial, After>
     {
+    #[doc =
+    "Transition from `20: g_partial_block other` to `59: g_partial_block inner` using `41: [] <span>hello`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockPartialTemplate19,
@@ -36721,6 +39743,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate60, Partial, After>
     {
+    #[doc =
+    "Transition from `60: g_partial_block other` to `61: g_partial_block other` using `43: [] childrenstart{{test:element}}childrenend`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate61, Partial, After>,
@@ -36742,6 +39766,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate59, Partial, After>
     {
+    #[doc =
+    "Transition from `59: g_partial_block inner` to `62: g_partial_block other` using `45: [] world</span>`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockTemplate62, Partial, After>,
@@ -36759,6 +39785,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate21, Partial, After>
     {
+    #[doc =
+    "Transition from `21: g_template_only_partial_block_multiple other` to `63: g_template_only_partial_block_multiple inner` using `46: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -36783,6 +39811,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate63, Partial, After>
     {
+    #[doc =
+    "Transition from `63: g_template_only_partial_block_multiple inner` to `65: g_template_only_partial_block_multiple inner` using `49: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -36807,6 +39837,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate22, Partial, After>
     {
+    #[doc =
+    "Transition from `22: g_template_only_partial_block_with_text_multiple other` to `67: g_template_only_partial_block_with_text_multiple inner` using `52: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -36854,6 +39886,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate68, Partial, After>
     {
+    #[doc =
+    "Transition from `68: g_template_only_partial_block_with_text_multiple other` to `69: g_template_only_partial_block_with_text_multiple other` using `54: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate69,
@@ -36872,6 +39906,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate67, Partial, After>
     {
+    #[doc =
+    "Transition from `67: g_template_only_partial_block_with_text_multiple inner` to `70: g_template_only_partial_block_with_text_multiple inner` using `56: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -36919,6 +39955,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate71, Partial, After>
     {
+    #[doc =
+    "Transition from `71: g_template_only_partial_block_with_text_multiple other` to `72: g_template_only_partial_block_with_text_multiple other` using `58: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate72,
@@ -36937,6 +39975,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate23, Partial, After>
     {
+    #[doc =
+    "Transition from `23: g_template_only_partial_block_with_text other` to `73: g_template_only_partial_block_with_text inner` using `60: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -36979,6 +40019,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate74, Partial, After>
     {
+    #[doc =
+    "Transition from `74: g_template_only_partial_block_with_text other` to `75: g_template_only_partial_block_with_text other` using `62: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextTemplate75, Partial,
@@ -36996,6 +40038,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate24, Partial, After>
     {
+    #[doc =
+    "Transition from `24: g_template_only_partial_block_with_variable_multiple other` to `76: g_template_only_partial_block_with_variable_multiple inner` using `64: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -37044,6 +40088,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate77, Partial, After>
     {
+    #[doc =
+    "Transition from `77: g_template_only_partial_block_with_variable_multiple other` to `78: g_template_only_partial_block_with_variable_multiple other` using `66: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate78,
@@ -37067,6 +40113,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate76, Partial, After>
     {
+    #[doc =
+    "Transition from `76: g_template_only_partial_block_with_variable_multiple inner` to `79: g_template_only_partial_block_with_variable_multiple inner` using `68: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -37115,6 +40163,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate80, Partial, After>
     {
+    #[doc =
+    "Transition from `80: g_template_only_partial_block_with_variable_multiple other` to `81: g_template_only_partial_block_with_variable_multiple other` using `70: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate81,
@@ -37138,6 +40188,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate79, Partial, After>
     {
+    #[doc =
+    "Transition from `79: g_template_only_partial_block_with_variable_multiple inner` to `82: g_template_only_partial_block_with_variable_multiple other` using `72: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate82,
@@ -37156,6 +40208,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate25, Partial, After>
     {
+    #[doc =
+    "Transition from `25: g_template_only_partial_block_with_variable other` to `83: g_template_only_partial_block_with_variable inner` using `73: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -37201,6 +40255,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate84, Partial, After>
     {
+    #[doc =
+    "Transition from `84: g_template_only_partial_block_with_variable other` to `85: g_template_only_partial_block_with_variable other` using `75: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate85,
@@ -37223,6 +40279,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate83, Partial, After>
     {
+    #[doc =
+    "Transition from `83: g_template_only_partial_block_with_variable inner` to `86: g_template_only_partial_block_with_variable other` using `77: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate86,
@@ -37240,6 +40298,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate26, Partial, After>
     {
+    #[doc =
+    "Transition from `26: g_template_only_partial_block other` to `87: g_template_only_partial_block inner` using `78: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -37263,6 +40323,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate27, Partial, After>
     {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `89: f_each_two_variables_html other` using `81: [enter_loop] \n    <li>{{title:element}}</li>\n    <li>`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -37285,6 +40347,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate89, Partial, After>
     {
+    #[doc =
+    "Transition from `89: f_each_two_variables_html other` to `27: f_each_two_variables_html other` using `82: [] {{content:element}}</li>\n`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -37307,6 +40371,8 @@ impl<Partial, After>
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate27, Partial, After>
     {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `90: f_each_two_variables_html other` using `83: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesHtmlTemplate90, Partial, After>,
@@ -37323,6 +40389,8 @@ impl<Partial, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<GTemplateOnlyPartialBlockWithVariableTemplate28,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `28: g_only_partial_block other` to `91: g_only_partial_block partial` using `84: [] `"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -37546,6 +40614,8 @@ pub struct GTemplateOnlyPartialBlockTemplate90;
 pub struct GTemplateOnlyPartialBlockTemplate91;
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate1, Partial, After> {
+    #[doc =
+    "Transition from `1: b_text other` to `29: b_text other` using `0: [] hello`"]
     pub fn next(self)
         ->
             (Template<BTextTemplate29, Partial, After>,
@@ -37561,6 +40631,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate2, Partial, After> {
+    #[doc =
+    "Transition from `2: c_element_with_attribute other` to `30: c_element_with_attribute other` using `1: [] <a class=\"test\"></a>`"]
     pub fn next(self)
         ->
             (Template<CElementWithAttributeTemplate30, Partial, After>,
@@ -37579,6 +40651,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate3, Partial, After> {
+    #[doc =
+    "Transition from `3: c_element_with_content other` to `31: c_element_with_content other` using `2: [] <h1>hi</h1>`"]
     pub fn next(self)
         ->
             (Template<CElementWithContentTemplate31, Partial, After>,
@@ -37594,6 +40668,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate4, Partial, After> {
+    #[doc =
+    "Transition from `4: c_empty_element other` to `32: c_empty_element other` using `3: [] <h1></h1>`"]
     pub fn next(self)
         ->
             (Template<CEmptyElementTemplate32, Partial, After>,
@@ -37609,6 +40685,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate5, Partial, After> {
+    #[doc =
+    "Transition from `5: c_self_closing_boolean_attr other` to `33: c_self_closing_boolean_attr other` using `4: [] <!DOCTYPE html>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingBooleanAttrTemplate33, Partial, After>,
@@ -37627,6 +40705,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate6, Partial, After> {
+    #[doc =
+    "Transition from `6: c_self_closing other` to `34: c_self_closing other` using `5: [] <!DOCTYPE>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingTemplate34, Partial, After>,
@@ -37642,6 +40722,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate7, Partial, After> {
+    #[doc =
+    "Transition from `7: d_element_with_attribute_and_variables other` to `35: d_element_with_attribute_and_variables other` using `6: [] <a class=\"{{test:attr}}\">`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate35, Partial,
@@ -37664,6 +40746,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate35, Partial, After> {
+    #[doc =
+    "Transition from `35: d_element_with_attribute_and_variables other` to `36: d_element_with_attribute_and_variables other` using `7: [] {{var:element}}</a>`"]
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
@@ -37685,6 +40769,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate8, Partial, After> {
+    #[doc =
+    "Transition from `8: d_variable other` to `37: d_variable other` using `8: [] <p>{{test:element}}</p>`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate37, Partial, After>,
@@ -37705,6 +40791,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `9: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -37720,6 +40808,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `10: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -37735,6 +40825,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `11: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -37750,6 +40842,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `12: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -37765,6 +40859,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `13: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -37780,6 +40876,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `14: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -37795,6 +40893,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate12, Partial, After> {
+    #[doc =
+    "Transition from `12: e_if_else_with_variables other` to `41: e_if_else_with_variables other` using `15: [] <span>`"]
     pub fn next(self)
         ->
             (Template<EIfElseWithVariablesTemplate41, Partial, After>,
@@ -37810,6 +40910,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `16: [true] {{t:element}}</span>`"]
     pub fn t_true(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -37830,6 +40932,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `17: [false] {{f:element}}</span>`"]
     pub fn f_false(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -37850,6 +40954,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `18: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -37865,6 +40971,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `19: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -37880,6 +40988,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `14: f_each_empty other` using `20: [enter_loop] `"]
     pub fn next_enter_loop(self)
         ->
             (Template<FEachEmptyTemplate14, Partial, After>,
@@ -37895,6 +41005,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `44: f_each_empty other` using `21: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachEmptyTemplate44, Partial, After>,
@@ -37910,6 +41022,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate15, Partial, After> {
+    #[doc =
+    "Transition from `15: f_each_one_variable other` to `45: f_each_one_variable other` using `22: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachOneVariableTemplate45, Partial, After>,
@@ -37925,6 +41039,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `45: f_each_one_variable other` using `23: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -37946,6 +41062,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `46: f_each_one_variable other` using `24: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachOneVariableTemplate46, Partial, After>,
@@ -37961,6 +41079,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate16, Partial, After> {
+    #[doc =
+    "Transition from `16: f_each_two_variables other` to `47: f_each_two_variables other` using `25: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachTwoVariablesTemplate47, Partial, After>,
@@ -37976,6 +41096,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `48: f_each_two_variables other` using `26: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -37997,6 +41119,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate48, Partial, After> {
+    #[doc =
+    "Transition from `48: f_each_two_variables other` to `47: f_each_two_variables other` using `27: [] {{content:element}}`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -38018,6 +41142,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `49: f_each_two_variables other` using `28: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesTemplate49, Partial, After>,
@@ -38033,6 +41159,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate17, Partial, After> {
+    #[doc =
+    "Transition from `17: g_empty_template_multiple other` to `50: g_empty_template_multiple inner` using `29: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -38055,6 +41183,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate50, Partial, After> {
+    #[doc =
+    "Transition from `50: g_empty_template_multiple inner` to `52: g_empty_template_multiple inner` using `32: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -38077,6 +41207,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate18, Partial, After> {
+    #[doc =
+    "Transition from `18: g_empty_template other` to `54: g_empty_template inner` using `35: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -38100,6 +41232,8 @@ impl<Partial, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<GTemplateOnlyPartialBlockTemplate19,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `19: g_partial_block_partial other` to `56: g_partial_block_partial partial` using `38: [] <span>{{before:element}}<p>`"]
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<Partial, (),
@@ -38128,6 +41262,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<GTemplateOnlyPartialBlockTemplate56,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `56: g_partial_block_partial partial` to `57: g_partial_block_partial partial` using `39: [] </p><div>`"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -38150,6 +41286,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate57, Partial, After> {
+    #[doc =
+    "Transition from `57: g_partial_block_partial partial` to `58: g_partial_block_partial other` using `40: [] </div>{{after:element}}</span>`"]
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate58, Partial, After>,
@@ -38170,6 +41308,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate20, Partial, After> {
+    #[doc =
+    "Transition from `20: g_partial_block other` to `59: g_partial_block inner` using `41: [] <span>hello`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockPartialTemplate19,
@@ -38207,6 +41347,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate60, Partial, After> {
+    #[doc =
+    "Transition from `60: g_partial_block other` to `61: g_partial_block other` using `43: [] childrenstart{{test:element}}childrenend`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate61, Partial, After>,
@@ -38227,6 +41369,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate59, Partial, After> {
+    #[doc =
+    "Transition from `59: g_partial_block inner` to `62: g_partial_block other` using `45: [] world</span>`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockTemplate62, Partial, After>,
@@ -38243,6 +41387,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate21, Partial, After> {
+    #[doc =
+    "Transition from `21: g_template_only_partial_block_multiple other` to `63: g_template_only_partial_block_multiple inner` using `46: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -38266,6 +41412,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate63, Partial, After> {
+    #[doc =
+    "Transition from `63: g_template_only_partial_block_multiple inner` to `65: g_template_only_partial_block_multiple inner` using `49: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -38289,6 +41437,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate22, Partial, After> {
+    #[doc =
+    "Transition from `22: g_template_only_partial_block_with_text_multiple other` to `67: g_template_only_partial_block_with_text_multiple inner` using `52: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -38335,6 +41485,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate68, Partial, After> {
+    #[doc =
+    "Transition from `68: g_template_only_partial_block_with_text_multiple other` to `69: g_template_only_partial_block_with_text_multiple other` using `54: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate69,
@@ -38352,6 +41504,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate67, Partial, After> {
+    #[doc =
+    "Transition from `67: g_template_only_partial_block_with_text_multiple inner` to `70: g_template_only_partial_block_with_text_multiple inner` using `56: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -38398,6 +41552,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate71, Partial, After> {
+    #[doc =
+    "Transition from `71: g_template_only_partial_block_with_text_multiple other` to `72: g_template_only_partial_block_with_text_multiple other` using `58: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate72,
@@ -38415,6 +41571,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate23, Partial, After> {
+    #[doc =
+    "Transition from `23: g_template_only_partial_block_with_text other` to `73: g_template_only_partial_block_with_text inner` using `60: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -38456,6 +41614,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate74, Partial, After> {
+    #[doc =
+    "Transition from `74: g_template_only_partial_block_with_text other` to `75: g_template_only_partial_block_with_text other` using `62: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextTemplate75, Partial,
@@ -38472,6 +41632,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate24, Partial, After> {
+    #[doc =
+    "Transition from `24: g_template_only_partial_block_with_variable_multiple other` to `76: g_template_only_partial_block_with_variable_multiple inner` using `64: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -38519,6 +41681,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate77, Partial, After> {
+    #[doc =
+    "Transition from `77: g_template_only_partial_block_with_variable_multiple other` to `78: g_template_only_partial_block_with_variable_multiple other` using `66: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate78,
@@ -38541,6 +41705,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate76, Partial, After> {
+    #[doc =
+    "Transition from `76: g_template_only_partial_block_with_variable_multiple inner` to `79: g_template_only_partial_block_with_variable_multiple inner` using `68: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -38588,6 +41754,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate80, Partial, After> {
+    #[doc =
+    "Transition from `80: g_template_only_partial_block_with_variable_multiple other` to `81: g_template_only_partial_block_with_variable_multiple other` using `70: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate81,
@@ -38610,6 +41778,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate79, Partial, After> {
+    #[doc =
+    "Transition from `79: g_template_only_partial_block_with_variable_multiple inner` to `82: g_template_only_partial_block_with_variable_multiple other` using `72: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate82,
@@ -38627,6 +41797,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate25, Partial, After> {
+    #[doc =
+    "Transition from `25: g_template_only_partial_block_with_variable other` to `83: g_template_only_partial_block_with_variable inner` using `73: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -38671,6 +41843,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate84, Partial, After> {
+    #[doc =
+    "Transition from `84: g_template_only_partial_block_with_variable other` to `85: g_template_only_partial_block_with_variable other` using `75: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate85,
@@ -38692,6 +41866,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate83, Partial, After> {
+    #[doc =
+    "Transition from `83: g_template_only_partial_block_with_variable inner` to `86: g_template_only_partial_block_with_variable other` using `77: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate86,
@@ -38708,6 +41884,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate26, Partial, After> {
+    #[doc =
+    "Transition from `26: g_template_only_partial_block other` to `87: g_template_only_partial_block inner` using `78: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -38730,6 +41908,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `89: f_each_two_variables_html other` using `81: [enter_loop] \n    <li>{{title:element}}</li>\n    <li>`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -38751,6 +41931,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate89, Partial, After> {
+    #[doc =
+    "Transition from `89: f_each_two_variables_html other` to `27: f_each_two_variables_html other` using `82: [] {{content:element}}</li>\n`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -38772,6 +41954,8 @@ impl<Partial, After>
 }
 impl<Partial, After>
     Template<GTemplateOnlyPartialBlockTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `90: f_each_two_variables_html other` using `83: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesHtmlTemplate90, Partial, After>,
@@ -38788,6 +41972,8 @@ impl<Partial, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<GTemplateOnlyPartialBlockTemplate28,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `28: g_only_partial_block other` to `91: g_only_partial_block partial` using `84: [] `"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -39010,6 +42196,8 @@ pub struct FEachTwoVariablesHtmlTemplate90;
 pub struct FEachTwoVariablesHtmlTemplate91;
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate1, Partial, After>
     {
+    #[doc =
+    "Transition from `1: b_text other` to `29: b_text other` using `0: [] hello`"]
     pub fn next(self)
         ->
             (Template<BTextTemplate29, Partial, After>,
@@ -39025,6 +42213,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate1, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate2, Partial, After>
     {
+    #[doc =
+    "Transition from `2: c_element_with_attribute other` to `30: c_element_with_attribute other` using `1: [] <a class=\"test\"></a>`"]
     pub fn next(self)
         ->
             (Template<CElementWithAttributeTemplate30, Partial, After>,
@@ -39043,6 +42233,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate2, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate3, Partial, After>
     {
+    #[doc =
+    "Transition from `3: c_element_with_content other` to `31: c_element_with_content other` using `2: [] <h1>hi</h1>`"]
     pub fn next(self)
         ->
             (Template<CElementWithContentTemplate31, Partial, After>,
@@ -39058,6 +42250,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate3, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate4, Partial, After>
     {
+    #[doc =
+    "Transition from `4: c_empty_element other` to `32: c_empty_element other` using `3: [] <h1></h1>`"]
     pub fn next(self)
         ->
             (Template<CEmptyElementTemplate32, Partial, After>,
@@ -39073,6 +42267,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate4, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate5, Partial, After>
     {
+    #[doc =
+    "Transition from `5: c_self_closing_boolean_attr other` to `33: c_self_closing_boolean_attr other` using `4: [] <!DOCTYPE html>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingBooleanAttrTemplate33, Partial, After>,
@@ -39091,6 +42287,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate5, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate6, Partial, After>
     {
+    #[doc =
+    "Transition from `6: c_self_closing other` to `34: c_self_closing other` using `5: [] <!DOCTYPE>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingTemplate34, Partial, After>,
@@ -39106,6 +42304,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate6, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate7, Partial, After>
     {
+    #[doc =
+    "Transition from `7: d_element_with_attribute_and_variables other` to `35: d_element_with_attribute_and_variables other` using `6: [] <a class=\"{{test:attr}}\">`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate35, Partial,
@@ -39128,6 +42328,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate7, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate35, Partial, After>
     {
+    #[doc =
+    "Transition from `35: d_element_with_attribute_and_variables other` to `36: d_element_with_attribute_and_variables other` using `7: [] {{var:element}}</a>`"]
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
@@ -39149,6 +42351,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate35, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate8, Partial, After>
     {
+    #[doc =
+    "Transition from `8: d_variable other` to `37: d_variable other` using `8: [] <p>{{test:element}}</p>`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate37, Partial, After>,
@@ -39169,6 +42373,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate8, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate9, Partial, After>
     {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `9: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -39184,6 +42390,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate9, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate9, Partial, After>
     {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `10: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -39199,6 +42407,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate9, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate10, Partial, After>
     {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `11: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -39214,6 +42424,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate10, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate10, Partial, After>
     {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `12: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -39229,6 +42441,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate10, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate11, Partial, After>
     {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `13: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -39244,6 +42458,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate11, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate11, Partial, After>
     {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `14: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -39259,6 +42475,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate11, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate12, Partial, After>
     {
+    #[doc =
+    "Transition from `12: e_if_else_with_variables other` to `41: e_if_else_with_variables other` using `15: [] <span>`"]
     pub fn next(self)
         ->
             (Template<EIfElseWithVariablesTemplate41, Partial, After>,
@@ -39274,6 +42492,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate12, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate41, Partial, After>
     {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `16: [true] {{t:element}}</span>`"]
     pub fn t_true(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -39294,6 +42514,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate41, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate41, Partial, After>
     {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `17: [false] {{f:element}}</span>`"]
     pub fn f_false(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -39314,6 +42536,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate41, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate13, Partial, After>
     {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `18: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -39329,6 +42553,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate13, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate13, Partial, After>
     {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `19: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -39344,6 +42570,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate13, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate14, Partial, After>
     {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `14: f_each_empty other` using `20: [enter_loop] `"]
     pub fn next_enter_loop(self)
         ->
             (Template<FEachEmptyTemplate14, Partial, After>,
@@ -39359,6 +42587,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate14, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate14, Partial, After>
     {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `44: f_each_empty other` using `21: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachEmptyTemplate44, Partial, After>,
@@ -39374,6 +42604,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate14, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate15, Partial, After>
     {
+    #[doc =
+    "Transition from `15: f_each_one_variable other` to `45: f_each_one_variable other` using `22: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachOneVariableTemplate45, Partial, After>,
@@ -39389,6 +42621,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate15, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate45, Partial, After>
     {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `45: f_each_one_variable other` using `23: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -39410,6 +42644,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate45, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate45, Partial, After>
     {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `46: f_each_one_variable other` using `24: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachOneVariableTemplate46, Partial, After>,
@@ -39425,6 +42661,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate45, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate16, Partial, After>
     {
+    #[doc =
+    "Transition from `16: f_each_two_variables other` to `47: f_each_two_variables other` using `25: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachTwoVariablesTemplate47, Partial, After>,
@@ -39440,6 +42678,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate16, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate47, Partial, After>
     {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `48: f_each_two_variables other` using `26: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -39461,6 +42701,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate47, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate48, Partial, After>
     {
+    #[doc =
+    "Transition from `48: f_each_two_variables other` to `47: f_each_two_variables other` using `27: [] {{content:element}}`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -39482,6 +42724,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate48, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate47, Partial, After>
     {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `49: f_each_two_variables other` using `28: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesTemplate49, Partial, After>,
@@ -39497,6 +42741,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate47, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate17, Partial, After>
     {
+    #[doc =
+    "Transition from `17: g_empty_template_multiple other` to `50: g_empty_template_multiple inner` using `29: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -39519,6 +42765,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate17, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate50, Partial, After>
     {
+    #[doc =
+    "Transition from `50: g_empty_template_multiple inner` to `52: g_empty_template_multiple inner` using `32: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -39541,6 +42789,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate50, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate18, Partial, After>
     {
+    #[doc =
+    "Transition from `18: g_empty_template other` to `54: g_empty_template inner` using `35: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -39564,6 +42814,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate18, Partial, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<FEachTwoVariablesHtmlTemplate19,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `19: g_partial_block_partial other` to `56: g_partial_block_partial partial` using `38: [] <span>{{before:element}}<p>`"]
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<Partial, (),
@@ -39592,6 +42844,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<FEachTwoVariablesHtmlTemplate56,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `56: g_partial_block_partial partial` to `57: g_partial_block_partial partial` using `39: [] </p><div>`"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -39614,6 +42868,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate57, Partial, After>
     {
+    #[doc =
+    "Transition from `57: g_partial_block_partial partial` to `58: g_partial_block_partial other` using `40: [] </div>{{after:element}}</span>`"]
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate58, Partial, After>,
@@ -39634,6 +42890,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate57, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate20, Partial, After>
     {
+    #[doc =
+    "Transition from `20: g_partial_block other` to `59: g_partial_block inner` using `41: [] <span>hello`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockPartialTemplate19,
@@ -39671,6 +42929,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate20, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate60, Partial, After>
     {
+    #[doc =
+    "Transition from `60: g_partial_block other` to `61: g_partial_block other` using `43: [] childrenstart{{test:element}}childrenend`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate61, Partial, After>,
@@ -39691,6 +42951,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate60, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate59, Partial, After>
     {
+    #[doc =
+    "Transition from `59: g_partial_block inner` to `62: g_partial_block other` using `45: [] world</span>`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockTemplate62, Partial, After>,
@@ -39707,6 +42969,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate59, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate21, Partial, After>
     {
+    #[doc =
+    "Transition from `21: g_template_only_partial_block_multiple other` to `63: g_template_only_partial_block_multiple inner` using `46: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -39730,6 +42994,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate21, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate63, Partial, After>
     {
+    #[doc =
+    "Transition from `63: g_template_only_partial_block_multiple inner` to `65: g_template_only_partial_block_multiple inner` using `49: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -39753,6 +43019,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate63, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate22, Partial, After>
     {
+    #[doc =
+    "Transition from `22: g_template_only_partial_block_with_text_multiple other` to `67: g_template_only_partial_block_with_text_multiple inner` using `52: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -39799,6 +43067,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate22, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate68, Partial, After>
     {
+    #[doc =
+    "Transition from `68: g_template_only_partial_block_with_text_multiple other` to `69: g_template_only_partial_block_with_text_multiple other` using `54: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate69,
@@ -39816,6 +43086,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate68, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate67, Partial, After>
     {
+    #[doc =
+    "Transition from `67: g_template_only_partial_block_with_text_multiple inner` to `70: g_template_only_partial_block_with_text_multiple inner` using `56: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -39862,6 +43134,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate67, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate71, Partial, After>
     {
+    #[doc =
+    "Transition from `71: g_template_only_partial_block_with_text_multiple other` to `72: g_template_only_partial_block_with_text_multiple other` using `58: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate72,
@@ -39879,6 +43153,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate71, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate23, Partial, After>
     {
+    #[doc =
+    "Transition from `23: g_template_only_partial_block_with_text other` to `73: g_template_only_partial_block_with_text inner` using `60: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -39920,6 +43196,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate23, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate74, Partial, After>
     {
+    #[doc =
+    "Transition from `74: g_template_only_partial_block_with_text other` to `75: g_template_only_partial_block_with_text other` using `62: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextTemplate75, Partial,
@@ -39936,6 +43214,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate74, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate24, Partial, After>
     {
+    #[doc =
+    "Transition from `24: g_template_only_partial_block_with_variable_multiple other` to `76: g_template_only_partial_block_with_variable_multiple inner` using `64: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -39983,6 +43263,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate24, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate77, Partial, After>
     {
+    #[doc =
+    "Transition from `77: g_template_only_partial_block_with_variable_multiple other` to `78: g_template_only_partial_block_with_variable_multiple other` using `66: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate78,
@@ -40005,6 +43287,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate77, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate76, Partial, After>
     {
+    #[doc =
+    "Transition from `76: g_template_only_partial_block_with_variable_multiple inner` to `79: g_template_only_partial_block_with_variable_multiple inner` using `68: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -40052,6 +43336,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate76, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate80, Partial, After>
     {
+    #[doc =
+    "Transition from `80: g_template_only_partial_block_with_variable_multiple other` to `81: g_template_only_partial_block_with_variable_multiple other` using `70: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate81,
@@ -40074,6 +43360,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate80, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate79, Partial, After>
     {
+    #[doc =
+    "Transition from `79: g_template_only_partial_block_with_variable_multiple inner` to `82: g_template_only_partial_block_with_variable_multiple other` using `72: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate82,
@@ -40091,6 +43379,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate79, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate25, Partial, After>
     {
+    #[doc =
+    "Transition from `25: g_template_only_partial_block_with_variable other` to `83: g_template_only_partial_block_with_variable inner` using `73: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -40135,6 +43425,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate25, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate84, Partial, After>
     {
+    #[doc =
+    "Transition from `84: g_template_only_partial_block_with_variable other` to `85: g_template_only_partial_block_with_variable other` using `75: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate85,
@@ -40156,6 +43448,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate84, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate83, Partial, After>
     {
+    #[doc =
+    "Transition from `83: g_template_only_partial_block_with_variable inner` to `86: g_template_only_partial_block_with_variable other` using `77: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate86,
@@ -40172,6 +43466,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate83, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate26, Partial, After>
     {
+    #[doc =
+    "Transition from `26: g_template_only_partial_block other` to `87: g_template_only_partial_block inner` using `78: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -40194,6 +43490,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate26, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate27, Partial, After>
     {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `89: f_each_two_variables_html other` using `81: [enter_loop] \n    <li>{{title:element}}</li>\n    <li>`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -40215,6 +43513,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate27, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate89, Partial, After>
     {
+    #[doc =
+    "Transition from `89: f_each_two_variables_html other` to `27: f_each_two_variables_html other` using `82: [] {{content:element}}</li>\n`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -40236,6 +43536,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate89, Partial, After>
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate27, Partial, After>
     {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `90: f_each_two_variables_html other` using `83: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesHtmlTemplate90, Partial, After>,
@@ -40252,6 +43554,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate27, Partial, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<FEachTwoVariablesHtmlTemplate28,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `28: g_only_partial_block other` to `91: g_only_partial_block partial` using `84: [] `"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -40473,6 +43777,8 @@ pub struct GOnlyPartialBlockTemplate90;
 #[must_use]
 pub struct GOnlyPartialBlockTemplate91;
 impl<Partial, After> Template<GOnlyPartialBlockTemplate1, Partial, After> {
+    #[doc =
+    "Transition from `1: b_text other` to `29: b_text other` using `0: [] hello`"]
     pub fn next(self)
         ->
             (Template<BTextTemplate29, Partial, After>,
@@ -40487,6 +43793,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate1, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate2, Partial, After> {
+    #[doc =
+    "Transition from `2: c_element_with_attribute other` to `30: c_element_with_attribute other` using `1: [] <a class=\"test\"></a>`"]
     pub fn next(self)
         ->
             (Template<CElementWithAttributeTemplate30, Partial, After>,
@@ -40504,6 +43812,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate2, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate3, Partial, After> {
+    #[doc =
+    "Transition from `3: c_element_with_content other` to `31: c_element_with_content other` using `2: [] <h1>hi</h1>`"]
     pub fn next(self)
         ->
             (Template<CElementWithContentTemplate31, Partial, After>,
@@ -40518,6 +43828,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate3, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate4, Partial, After> {
+    #[doc =
+    "Transition from `4: c_empty_element other` to `32: c_empty_element other` using `3: [] <h1></h1>`"]
     pub fn next(self)
         ->
             (Template<CEmptyElementTemplate32, Partial, After>,
@@ -40532,6 +43844,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate4, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate5, Partial, After> {
+    #[doc =
+    "Transition from `5: c_self_closing_boolean_attr other` to `33: c_self_closing_boolean_attr other` using `4: [] <!DOCTYPE html>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingBooleanAttrTemplate33, Partial, After>,
@@ -40549,6 +43863,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate5, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate6, Partial, After> {
+    #[doc =
+    "Transition from `6: c_self_closing other` to `34: c_self_closing other` using `5: [] <!DOCTYPE>`"]
     pub fn next(self)
         ->
             (Template<CSelfClosingTemplate34, Partial, After>,
@@ -40563,6 +43879,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate6, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate7, Partial, After> {
+    #[doc =
+    "Transition from `7: d_element_with_attribute_and_variables other` to `35: d_element_with_attribute_and_variables other` using `6: [] <a class=\"{{test:attr}}\">`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate35, Partial,
@@ -40584,6 +43902,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate7, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate35, Partial, After> {
+    #[doc =
+    "Transition from `35: d_element_with_attribute_and_variables other` to `36: d_element_with_attribute_and_variables other` using `7: [] {{var:element}}</a>`"]
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
@@ -40604,6 +43924,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate35, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate8, Partial, After> {
+    #[doc =
+    "Transition from `8: d_variable other` to `37: d_variable other` using `8: [] <p>{{test:element}}</p>`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate37, Partial, After>,
@@ -40623,6 +43945,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate8, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `9: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -40637,6 +43961,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate9, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate9, Partial, After> {
+    #[doc =
+    "Transition from `9: e_if_else_empty_false other` to `38: e_if_else_empty_false other` using `10: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyFalseTemplate38, Partial, After>,
@@ -40651,6 +43977,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate9, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `11: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -40665,6 +43993,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate10, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate10, Partial, After> {
+    #[doc =
+    "Transition from `10: e_if_else_empty_true other` to `39: e_if_else_empty_true other` using `12: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTrueTemplate39, Partial, After>,
@@ -40679,6 +44009,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate10, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `13: [true] `"]
     pub fn next_true(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -40693,6 +44025,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate11, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate11, Partial, After> {
+    #[doc =
+    "Transition from `11: e_if_else_empty other` to `40: e_if_else_empty other` using `14: [false] `"]
     pub fn next_false(self)
         ->
             (Template<EIfElseEmptyTemplate40, Partial, After>,
@@ -40707,6 +44041,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate11, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate12, Partial, After> {
+    #[doc =
+    "Transition from `12: e_if_else_with_variables other` to `41: e_if_else_with_variables other` using `15: [] <span>`"]
     pub fn next(self)
         ->
             (Template<EIfElseWithVariablesTemplate41, Partial, After>,
@@ -40721,6 +44057,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate12, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `16: [true] {{t:element}}</span>`"]
     pub fn t_true(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -40740,6 +44078,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate41, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate41, Partial, After> {
+    #[doc =
+    "Transition from `41: e_if_else_with_variables other` to `42: e_if_else_with_variables other` using `17: [false] {{f:element}}</span>`"]
     pub fn f_false(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate42, Partial, After>,
@@ -40759,6 +44099,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate41, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `18: [true] true`"]
     pub fn next_true(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -40773,6 +44115,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate13, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate13, Partial, After> {
+    #[doc =
+    "Transition from `13: e_if_else other` to `43: e_if_else other` using `19: [false] false`"]
     pub fn next_false(self)
         ->
             (Template<EIfElseTemplate43, Partial, After>,
@@ -40787,6 +44131,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate13, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `14: f_each_empty other` using `20: [enter_loop] `"]
     pub fn next_enter_loop(self)
         ->
             (Template<FEachEmptyTemplate14, Partial, After>,
@@ -40801,6 +44147,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate14, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate14, Partial, After> {
+    #[doc =
+    "Transition from `14: f_each_empty other` to `44: f_each_empty other` using `21: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachEmptyTemplate44, Partial, After>,
@@ -40815,6 +44163,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate14, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate15, Partial, After> {
+    #[doc =
+    "Transition from `15: f_each_one_variable other` to `45: f_each_one_variable other` using `22: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachOneVariableTemplate45, Partial, After>,
@@ -40829,6 +44179,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate15, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `45: f_each_one_variable other` using `23: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -40849,6 +44201,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate45, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate45, Partial, After> {
+    #[doc =
+    "Transition from `45: f_each_one_variable other` to `46: f_each_one_variable other` using `24: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachOneVariableTemplate46, Partial, After>,
@@ -40863,6 +44217,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate45, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate16, Partial, After> {
+    #[doc =
+    "Transition from `16: f_each_two_variables other` to `47: f_each_two_variables other` using `25: [] <span>`"]
     pub fn next(self)
         ->
             (Template<FEachTwoVariablesTemplate47, Partial, After>,
@@ -40877,6 +44233,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate16, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `48: f_each_two_variables other` using `26: [enter_loop] {{title:element}}`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -40897,6 +44255,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate47, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate48, Partial, After> {
+    #[doc =
+    "Transition from `48: f_each_two_variables other` to `47: f_each_two_variables other` using `27: [] {{content:element}}`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -40917,6 +44277,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate48, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate47, Partial, After> {
+    #[doc =
+    "Transition from `47: f_each_two_variables other` to `49: f_each_two_variables other` using `28: [end_loop] </span>`"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesTemplate49, Partial, After>,
@@ -40931,6 +44293,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate47, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate17, Partial, After> {
+    #[doc =
+    "Transition from `17: g_empty_template_multiple other` to `50: g_empty_template_multiple inner` using `29: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -40952,6 +44316,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate17, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate50, Partial, After> {
+    #[doc =
+    "Transition from `50: g_empty_template_multiple inner` to `52: g_empty_template_multiple inner` using `32: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -40973,6 +44339,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate50, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate18, Partial, After> {
+    #[doc =
+    "Transition from `18: g_empty_template other` to `54: g_empty_template inner` using `35: [] `"]
     pub fn next(self)
         ->
             (Template<AEmptyTemplate0, (),
@@ -40996,6 +44364,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate18, Partial, After> {
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<GOnlyPartialBlockTemplate19,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `19: g_partial_block_partial other` to `56: g_partial_block_partial partial` using `38: [] <span>{{before:element}}<p>`"]
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<Partial, (),
@@ -41024,6 +44394,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<GOnlyPartialBlockTemplate56,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `56: g_partial_block_partial partial` to `57: g_partial_block_partial partial` using `39: [] </p><div>`"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -41045,6 +44417,8 @@ impl<Partial, PartialPartial, PartialAfter, After>
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate57, Partial, After> {
+    #[doc =
+    "Transition from `57: g_partial_block_partial partial` to `58: g_partial_block_partial other` using `40: [] </div>{{after:element}}</span>`"]
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate58, Partial, After>,
@@ -41064,6 +44438,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate57, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate20, Partial, After> {
+    #[doc =
+    "Transition from `20: g_partial_block other` to `59: g_partial_block inner` using `41: [] <span>hello`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockPartialTemplate19,
@@ -41100,6 +44476,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate20, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate60, Partial, After> {
+    #[doc =
+    "Transition from `60: g_partial_block other` to `61: g_partial_block other` using `43: [] childrenstart{{test:element}}childrenend`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate61, Partial, After>,
@@ -41119,6 +44497,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate60, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate59, Partial, After> {
+    #[doc =
+    "Transition from `59: g_partial_block inner` to `62: g_partial_block other` using `45: [] world</span>`"]
     pub fn next(self)
         ->
             (Template<GPartialBlockTemplate62, Partial, After>,
@@ -41134,6 +44514,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate59, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate21, Partial, After> {
+    #[doc =
+    "Transition from `21: g_template_only_partial_block_multiple other` to `63: g_template_only_partial_block_multiple inner` using `46: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -41156,6 +44538,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate21, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate63, Partial, After> {
+    #[doc =
+    "Transition from `63: g_template_only_partial_block_multiple inner` to `65: g_template_only_partial_block_multiple inner` using `49: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -41178,6 +44562,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate63, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate22, Partial, After> {
+    #[doc =
+    "Transition from `22: g_template_only_partial_block_with_text_multiple other` to `67: g_template_only_partial_block_with_text_multiple inner` using `52: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -41223,6 +44609,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate22, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate68, Partial, After> {
+    #[doc =
+    "Transition from `68: g_template_only_partial_block_with_text_multiple other` to `69: g_template_only_partial_block_with_text_multiple other` using `54: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate69,
@@ -41239,6 +44627,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate68, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate67, Partial, After> {
+    #[doc =
+    "Transition from `67: g_template_only_partial_block_with_text_multiple inner` to `70: g_template_only_partial_block_with_text_multiple inner` using `56: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -41284,6 +44674,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate67, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate71, Partial, After> {
+    #[doc =
+    "Transition from `71: g_template_only_partial_block_with_text_multiple other` to `72: g_template_only_partial_block_with_text_multiple other` using `58: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextMultipleTemplate72,
@@ -41300,6 +44692,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate71, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate23, Partial, After> {
+    #[doc =
+    "Transition from `23: g_template_only_partial_block_with_text other` to `73: g_template_only_partial_block_with_text inner` using `60: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -41340,6 +44734,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate23, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate74, Partial, After> {
+    #[doc =
+    "Transition from `74: g_template_only_partial_block_with_text other` to `75: g_template_only_partial_block_with_text other` using `62: [] test`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithTextTemplate75, Partial,
@@ -41355,6 +44751,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate74, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate24, Partial, After> {
+    #[doc =
+    "Transition from `24: g_template_only_partial_block_with_variable_multiple other` to `76: g_template_only_partial_block_with_variable_multiple inner` using `64: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -41401,6 +44799,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate24, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate77, Partial, After> {
+    #[doc =
+    "Transition from `77: g_template_only_partial_block_with_variable_multiple other` to `78: g_template_only_partial_block_with_variable_multiple other` using `66: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate78,
@@ -41422,6 +44822,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate77, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate76, Partial, After> {
+    #[doc =
+    "Transition from `76: g_template_only_partial_block_with_variable_multiple inner` to `79: g_template_only_partial_block_with_variable_multiple inner` using `68: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -41468,6 +44870,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate76, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate80, Partial, After> {
+    #[doc =
+    "Transition from `80: g_template_only_partial_block_with_variable_multiple other` to `81: g_template_only_partial_block_with_variable_multiple other` using `70: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate81,
@@ -41489,6 +44893,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate80, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate79, Partial, After> {
+    #[doc =
+    "Transition from `79: g_template_only_partial_block_with_variable_multiple inner` to `82: g_template_only_partial_block_with_variable_multiple other` using `72: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableMultipleTemplate82,
@@ -41505,6 +44911,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate79, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate25, Partial, After> {
+    #[doc =
+    "Transition from `25: g_template_only_partial_block_with_variable other` to `83: g_template_only_partial_block_with_variable inner` using `73: [] <span>`"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28,
@@ -41548,6 +44956,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate25, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate84, Partial, After> {
+    #[doc =
+    "Transition from `84: g_template_only_partial_block_with_variable other` to `85: g_template_only_partial_block_with_variable other` using `75: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate85,
@@ -41568,6 +44978,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate84, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate83, Partial, After> {
+    #[doc =
+    "Transition from `83: g_template_only_partial_block_with_variable inner` to `86: g_template_only_partial_block_with_variable other` using `77: [] </span>`"]
     pub fn next(self)
         ->
             (Template<GTemplateOnlyPartialBlockWithVariableTemplate86,
@@ -41583,6 +44995,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate83, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate26, Partial, After> {
+    #[doc =
+    "Transition from `26: g_template_only_partial_block other` to `87: g_template_only_partial_block inner` using `78: [] `"]
     pub fn next(self)
         ->
             (Template<GOnlyPartialBlockTemplate28, (),
@@ -41604,6 +45018,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate26, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `89: f_each_two_variables_html other` using `81: [enter_loop] \n    <li>{{title:element}}</li>\n    <li>`"]
     pub fn title_enter_loop(self,
         title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -41624,6 +45040,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate27, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate89, Partial, After> {
+    #[doc =
+    "Transition from `89: f_each_two_variables_html other` to `27: f_each_two_variables_html other` using `82: [] {{content:element}}</li>\n`"]
     pub fn content(self,
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
@@ -41644,6 +45062,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate89, Partial, After> {
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate27, Partial, After> {
+    #[doc =
+    "Transition from `27: f_each_two_variables_html other` to `90: f_each_two_variables_html other` using `83: [end_loop] `"]
     pub fn next_end_loop(self)
         ->
             (Template<FEachTwoVariablesHtmlTemplate90, Partial, After>,
@@ -41660,6 +45080,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate27, Partial, After> {
 impl<Partial, PartialPartial, PartialAfter, After>
     Template<GOnlyPartialBlockTemplate28,
     Template<Partial, PartialPartial, PartialAfter>, After> {
+    #[doc =
+    "Transition from `28: g_only_partial_block other` to `91: g_only_partial_block partial` using `84: [] `"]
     pub fn next(self)
         ->
             (Template<Partial, (),
@@ -41712,7 +45134,7 @@ pub async gen fn test() -> Cow<'static, str> {
         };
     let template =
         {
-            let expr = template.start("start");
+            let expr = template.next();
             let ret = expr.0;
             let mut iter =
                 ::core::pin::Pin::<&mut _> { pointer: &mut { expr.1 } };
@@ -41725,7 +45147,20 @@ pub async gen fn test() -> Cow<'static, str> {
         };
     let template =
         {
-            let expr = template.before("before");
+            let expr = template.before("test");
+            let ret = expr.0;
+            let mut iter =
+                ::core::pin::Pin::<&mut _> { pointer: &mut { expr.1 } };
+            while let Some(v) =
+                    ::zero_cost_templating::async_iterator_extension::AsyncIterExt::next(&mut iter).await
+                {
+                yield v;
+            }
+            ret
+        };
+    let template =
+        {
+            let expr = template.test("test");
             let ret = expr.0;
             let mut iter =
                 ::core::pin::Pin::<&mut _> { pointer: &mut { expr.1 } };

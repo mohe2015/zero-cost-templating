@@ -114,7 +114,7 @@ use std::path::PathBuf;
 use itertools::peek_nth;
 use petgraph::dot::{Config, Dot};
 use petgraph::stable_graph::StableGraph;
-use petgraph::visit::NodeRef;
+use petgraph::visit::{EdgeRef, NodeRef};
 use quote::quote;
 use syn::punctuated::Punctuated;
 use syn::{parse_macro_input, Item, LitStr, Token};
@@ -246,34 +246,40 @@ pub fn template_stream(
                 &|_, er| match er.weight().inner {
                     IntermediateAstElementInner::InnerTemplate => {
                         format!(
-                            "label = \"{}\" style = dashed color = blue",
+                            "label = \"{}: {}\" style = dashed color = blue",
+                            er.id().index(),
                             er.weight().to_string().replace('\"', "\\\"")
                         )
                     }
                     IntermediateAstElementInner::PartialBlockPartial => {
                         format!(
-                            "label = \"{}\" style = dashed color = orange",
+                            "label = \"{}: {}\" style = dashed color = orange",
+                            er.id().index(),
                             er.weight().to_string().replace('\"', "\\\"")
                         )
                     }
                     _ => {
                         format!(
-                            "label = \"{}\" color = red",
+                            "label = \"{}: {}\" color = red",
+                            er.id().index(),
                             er.weight().to_string().replace('\"', "\\\"")
                         )
                     }
                 },
                 &|_, nr| match nr.weight().node_type {
                     NodeType::PartialBlock => format!(
-                        "label = \"{}\" color = orange",
+                        "label = \"{}: {}\" color = orange",
+                        nr.id().index(),
                         nr.weight().to_string().replace('\"', "\\\"")
                     ),
                     NodeType::InnerTemplate => format!(
-                        "label = \"{}\" color = blue",
+                        "label = \"{}: {}\" color = blue",
+                        nr.id().index(),
                         nr.weight().to_string().replace('\"', "\\\"")
                     ),
                     NodeType::Other => format!(
-                        "label = \"{}\" color = red",
+                        "label = \"{}: {}\" color = red",
+                        nr.id().index(),
                         nr.weight().to_string().replace('\"', "\\\"")
                     ),
                 },
