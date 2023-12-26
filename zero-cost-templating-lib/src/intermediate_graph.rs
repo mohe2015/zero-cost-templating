@@ -197,61 +197,86 @@ pub fn connect_edges_to_node(
 pub fn add_edge_maybe_with_node(
     graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
     mut tmp: Vec<(NodeIndex, Option<IntermediateAstElement>)>,
-    edge_type: IntermediateAstElement,
-    node: TemplateNode,
+    new_edge: IntermediateAstElement,
+    to: TemplateNode,
 ) -> Vec<(NodeIndex, Option<IntermediateAstElement>)> {
     //let new_node = None;
-    for (from, edge) in tmp.iter_mut() {
-        todo!();
-        /*
-        match (&node.node_type, current, edge_type) {
+    for (from, current_edge) in tmp.iter_mut() {
+        match (graph[*from].node_type, current_edge, new_edge) {
             (
                 NodeType::Other,
-                IntermediateAstElement::Text(old),
-                IntermediateAstElement::Variable {
-                    before,
-                    variable_name,
-                    escaping_fun,
-                    after,
+                Some(IntermediateAstElement {
+                    tag,
+                    inner: IntermediateAstElementInner::Text(old),
+                }),
+                IntermediateAstElement {
+                    tag,
+                    inner:
+                        IntermediateAstElementInner::Variable {
+                            before,
+                            variable_name,
+                            escaping_fun,
+                            after,
+                        },
                 },
             ) => (
                 last,
-                IntermediateAstElement::Variable {
-                    before: old + &before,
-                    variable_name,
-                    escaping_fun,
-                    after,
+                IntermediateAstElement {
+                    tag,
+                    inner: IntermediateAstElementInner::Variable {
+                        before: old + &before,
+                        variable_name,
+                        escaping_fun,
+                        after,
+                    },
                 },
             ),
             (
                 NodeType::Other,
-                IntermediateAstElement::Variable {
-                    before,
-                    variable_name,
-                    escaping_fun,
-                    after,
+                Some(IntermediateAstElement {
+                    tag,
+                    inner:
+                        IntermediateAstElementInner::Variable {
+                            before,
+                            variable_name,
+                            escaping_fun,
+                            after,
+                        },
+                }),
+                IntermediateAstElement {
+                    tag,
+                    inner: IntermediateAstElementInner::Text(new),
                 },
-                IntermediateAstElement::Text(new),
             ) => (
                 last,
-                IntermediateAstElement::Variable {
-                    before,
-                    variable_name,
-                    escaping_fun,
-                    after: after + &new,
+                IntermediateAstElement {
+                    tag,
+                    inner: IntermediateAstElementInner::Variable {
+                        before,
+                        variable_name,
+                        escaping_fun,
+                        after: after + &new,
+                    },
                 },
             ),
-            (NodeType::Other, IntermediateAstElement::Text(old),
-            IntermediateAstElement::Text(new)) => {
-                (last, IntermediateAstElement::Text(old + &new))
-            }
-            (NodeType::Other, IntermediateAstElement::Noop, edge_type) => (last, edge_type),
+            (
+                NodeType::Other,
+                Some(IntermediateAstElement {
+                    tag,
+                    inner: IntermediateAstElementInner::Text(old),
+                }),
+                IntermediateAstElement {
+                    tag,
+                    inner: IntermediateAstElementInner::Text(new),
+                },
+            ) => (last, IntermediateAstElementInner::Text(old + &new)),
+            (NodeType::Other, None, edge_type) => (last, edge_type),
             (_, current, edge_type) => {
-                let current_node = graph.add_node(node);
+                let current_node = graph.add_node(to);
                 graph.add_edge(last, current_node, current);
                 (current_node, edge_type)
             }
-        }*/
+        }
     }
     tmp
 }
