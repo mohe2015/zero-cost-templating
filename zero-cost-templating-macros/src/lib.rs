@@ -111,18 +111,17 @@ use std::fs::{self, File};
 use std::io::Write;
 use std::path::PathBuf;
 
-use itertools::{peek_nth, Itertools};
+use itertools::peek_nth;
 use petgraph::dot::{Config, Dot};
 use petgraph::stable_graph::StableGraph;
-use petgraph::visit::{EdgeRef, NodeRef};
+use petgraph::visit::NodeRef;
 use quote::quote;
 use syn::punctuated::Punctuated;
 use syn::{parse_macro_input, Item, LitStr, Token};
 use zero_cost_templating_lib::codegen::{codegen, TemplateCodegen};
 use zero_cost_templating_lib::html_recursive_descent::parse_children;
 use zero_cost_templating_lib::intermediate_graph::{
-    children_to_ast, flush_with_node, IntermediateAstElement, IntermediateAstElementInner,
-    NodeType, TemplateNode,
+    children_to_ast, flush_with_node, IntermediateAstElementInner, NodeType, TemplateNode,
 };
 
 // https://veykril.github.io/posts/ide-proc-macros/

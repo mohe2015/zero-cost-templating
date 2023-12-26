@@ -201,7 +201,7 @@ pub fn connect_edges_to_node(
 /// If adding the edge requires a new node, it adds the node of the specified type.
 pub fn add_edge_maybe_with_node(
     graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
-    mut tmp: Vec<(NodeIndex, Option<IntermediateAstElement>)>,
+    tmp: Vec<(NodeIndex, Option<IntermediateAstElement>)>,
     next_edge: IntermediateAstElement,
     to: TemplateNode,
 ) -> Vec<(NodeIndex, Option<IntermediateAstElement>)> {

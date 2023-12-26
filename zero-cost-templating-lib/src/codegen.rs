@@ -272,9 +272,29 @@ pub fn calculate_edge(
 ) -> proc_macro2::TokenStream {
     // TODO FIXME only add number when multiple outgoing edges
     // (add the number to documentation to aid in debugging)
+
     let function_name = edge.weight().variable_name().as_ref().map_or_else(
-        || format_ident!("next{}", edge.id().index()),
-        |variable| format_ident!("{}{}", variable, edge.id().index()),
+        || {
+            format_ident!(
+                "next{}",
+                if edge.weight().tag.is_empty() {
+                    String::new()
+                } else {
+                    "_".to_owned() + &edge.weight().tag
+                }
+            )
+        },
+        |variable| {
+            format_ident!(
+                "{}{}",
+                variable,
+                if edge.weight().tag.is_empty() {
+                    String::new()
+                } else {
+                    "_".to_owned() + &edge.weight().tag
+                }
+            )
+        },
     );
     let variable_name = edge
         .weight()
@@ -353,6 +373,10 @@ pub fn calculate_edges<'a>(
 ) -> impl Iterator<Item = proc_macro2::TokenStream> + 'a {
     graph
         .edge_references()
+        .filter(|edge| {
+            edge.weight().inner != IntermediateAstElementInner::PartialBlockPartial
+                && edge.weight().inner != IntermediateAstElementInner::InnerTemplate
+        })
         .map(|edge| calculate_edge(graph, template_codegen, edge))
 }
 
@@ -363,11 +387,7 @@ pub fn codegen_template_codegen(
 ) -> proc_macro2::TokenStream {
     let instructions = calculate_nodes(graph, template_codegen);
     let edges = calculate_edges(graph, template_codegen);
-    let ident = format_ident!(
-        "{}{}",
-        template_codegen.template_name,
-        template_codegen.first.index()
-    );
+    let ident = format_ident!("{}", template_codegen.template_name,);
     let template_struct = node_type(
         graph,
         template_codegen.first,

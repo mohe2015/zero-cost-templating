@@ -11,6 +11,7 @@ use zero_cost_templating::{template_stream, yields};
 // export RUSTFLAGS="-Z proc-macro-backtrace"
 // cargo build
 // cargo expand --package zero-cost-templating --bin simple
+// cargo expand --package zero-cost-templating --bin simple > zero-cost-templating/src/bin/test.rs
 // cargo run --release --bin simple
 
 // RUSTFLAGS="-Zprint-type-sizes" cargo run --release --bin simple > type-sizes.txt
@@ -19,9 +20,9 @@ use zero_cost_templating::{template_stream, yields};
 
 #[template_stream("templates")]
 pub async gen fn test() -> Cow<'static, str> {
-    let template = yields!(only_template0());
-    let template = yields!(template.start0("start"));
-    let template = yields!(template.before5("before"));
+    let template = yields!(g_partial_block());
+    let template = yields!(template.start("start"));
+    let template = yields!(template.before("before"));
 }
 
 pub fn main() {}
