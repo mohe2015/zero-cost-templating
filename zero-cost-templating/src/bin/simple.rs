@@ -2,9 +2,9 @@
 
 extern crate alloc;
 
-use std::borrow::Cow;
+use std::{borrow::Cow, pin::pin};
 
-use zero_cost_templating::{template_stream, yields};
+use zero_cost_templating::{async_iterator_extension::AsyncIterExt, template_stream, yields};
 
 // https://github.com/dtolnay/cargo-expand
 
@@ -30,4 +30,12 @@ pub async gen fn test() -> Cow<'static, str> {
     yields!(template.next());
 }
 
-pub fn main() {}
+#[tokio::main]
+pub async fn main() {
+    let mut async_iterator = pin!(test());
+    let mut output = String::new();
+    while let Some(value) = async_iterator.next().await {
+        output.push_str(&value);
+    }
+    print!("{}", output);
+}
