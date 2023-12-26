@@ -11,6 +11,13 @@ use quote::{format_ident, quote, quote_spanned};
 
 use crate::intermediate_graph::{EscapingFunction, IntermediateAstElement, NodeType, TemplateNode};
 
+/// design: all nodes have a struct type so you can go too all nodes
+/// partial block works by going inside on the incoming edge and the outgoing edge goes back to the partial node.
+/// this makes it possible to directly use an if after the partial block or another partial block without special casing
+
+/// multiple partial blocks after each other should work
+
+/// partial is only the type of the node itself (maybe we could change this to be a full node type (with Template::?))
 fn node_partial_block_type(
     graph: &StableGraph<TemplateNode, IntermediateAstElement>,
     node_index: NodeIndex,
@@ -27,29 +34,24 @@ fn node_partial_block_type(
     let partial_type = &partial.0;
     let partial_create = &partial.1;
 
-    // this needs to be an ordinary node
-    let inner_after = graph
-        .edges_directed(node_index, Direction::Outgoing)
-        .exactly_one()
-        .unwrap();
-    let inner_after = node_type(
+    let partial_after = node_type(
         graph,
-        inner_after.target(),
-        &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
+        node_index,
+        &(quote_spanned! {span=> () }, quote_spanned! {span=> () }), // I think we need to keep the partial?
         after,
         span,
     );
-    let inner_after_type = inner_after.0;
-    let inner_after_create = inner_after.1;
+    let partial_after_type = partial_after.0;
+    let partial_after_create = partial_after.1;
 
     let common = quote_spanned! {span=>
-    Template::<#partial_type, (), #inner_after_type>
+        Template::<#partial_type, (), #partial_after_type>
     };
     let create = quote_spanned! {span=>
     {
         r#type: #partial_create.r#type,
         partial: (),
-        after: #inner_after_create
+        after: #partial_after_create
     }
     };
 
@@ -61,6 +63,8 @@ fn node_partial_block_type(
     )
 }
 
+/// the same design for inner template: the node itself will be visited when going out of the inner template
+
 fn node_inner_template_type(
     graph: &StableGraph<TemplateNode, IntermediateAstElement>,
     node_index: NodeIndex,
@@ -71,17 +75,10 @@ fn node_inner_template_type(
         NodeType::InnerTemplate,
         "must be NodeType::InnerTemplate"
     );
-    let inner_after = graph
-        .edges_directed(node_index, Direction::Outgoing)
-        .filter(|edge| {
-            *edge.weight() != IntermediateAstElement::InnerTemplate
-                && *edge.weight() != IntermediateAstElement::PartialBlockPartial
-        })
-        .exactly_one()
-        .unwrap();
+    
     let inner_after = node_type(
         graph,
-        inner_after.target(),
+        node_index,
         &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
         &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
         span,
@@ -114,6 +111,7 @@ fn node_inner_template_type(
         .filter(|edge| *edge.weight() == IntermediateAstElement::InnerTemplate)
         .exactly_one()
         .unwrap();
+
     node_type(
         graph,
         inner_template.target(),
