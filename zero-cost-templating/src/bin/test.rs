@@ -1,6 +1,6 @@
 #![feature(prelude_import)]
-#![feature(unsafe_pin_internals)]
 #![feature(print_internals)]
+#![feature(unsafe_pin_internals)]
 #![feature(async_closure, async_iterator, coroutines, gen_blocks, noop_waker)]
 #[prelude_import]
 use std::prelude::rust_2024::*;
@@ -26,8 +26,10 @@ use zero_cost_templating::{
 // RUSTFLAGS="-Zprint-type-sizes" cargo run --release --bin simple > type-sizes.txt
 // search for
 // `{async gen block@
+// `{async gen fn body@
 // `{static coroutine@
 
+// Don't use Cow because it is so big?
 #[must_use]
 pub struct Template<Type, Partial, After> {
     r#type: Type,
@@ -60603,8 +60605,7 @@ pub async gen fn test() -> Cow<'static, str> {
         {
             let expr = g_partial_block();
             let ret = expr.0;
-            let mut iter =
-                ::core::pin::Pin::<&mut _> { pointer: &mut { expr.1 } };
+            let mut iter = Box::pin(expr.1);
             while let Some(v) =
                     ::zero_cost_templating::async_iterator_extension::AsyncIterExt::next(&mut iter).await
                 {
@@ -60616,8 +60617,7 @@ pub async gen fn test() -> Cow<'static, str> {
         {
             let expr = template.next();
             let ret = expr.0;
-            let mut iter =
-                ::core::pin::Pin::<&mut _> { pointer: &mut { expr.1 } };
+            let mut iter = Box::pin(expr.1);
             while let Some(v) =
                     ::zero_cost_templating::async_iterator_extension::AsyncIterExt::next(&mut iter).await
                 {
@@ -60629,8 +60629,7 @@ pub async gen fn test() -> Cow<'static, str> {
         {
             let expr = template.before("before");
             let ret = expr.0;
-            let mut iter =
-                ::core::pin::Pin::<&mut _> { pointer: &mut { expr.1 } };
+            let mut iter = Box::pin(expr.1);
             while let Some(v) =
                     ::zero_cost_templating::async_iterator_extension::AsyncIterExt::next(&mut iter).await
                 {
@@ -60642,8 +60641,7 @@ pub async gen fn test() -> Cow<'static, str> {
         {
             let expr = template.test("test");
             let ret = expr.0;
-            let mut iter =
-                ::core::pin::Pin::<&mut _> { pointer: &mut { expr.1 } };
+            let mut iter = Box::pin(expr.1);
             while let Some(v) =
                     ::zero_cost_templating::async_iterator_extension::AsyncIterExt::next(&mut iter).await
                 {
@@ -60655,8 +60653,7 @@ pub async gen fn test() -> Cow<'static, str> {
         {
             let expr = template.next();
             let ret = expr.0;
-            let mut iter =
-                ::core::pin::Pin::<&mut _> { pointer: &mut { expr.1 } };
+            let mut iter = Box::pin(expr.1);
             while let Some(v) =
                     ::zero_cost_templating::async_iterator_extension::AsyncIterExt::next(&mut iter).await
                 {
@@ -60668,8 +60665,7 @@ pub async gen fn test() -> Cow<'static, str> {
         {
             let expr = template.test("test");
             let ret = expr.0;
-            let mut iter =
-                ::core::pin::Pin::<&mut _> { pointer: &mut { expr.1 } };
+            let mut iter = Box::pin(expr.1);
             while let Some(v) =
                     ::zero_cost_templating::async_iterator_extension::AsyncIterExt::next(&mut iter).await
                 {
@@ -60681,8 +60677,7 @@ pub async gen fn test() -> Cow<'static, str> {
         {
             let expr = template.after("after");
             let ret = expr.0;
-            let mut iter =
-                ::core::pin::Pin::<&mut _> { pointer: &mut { expr.1 } };
+            let mut iter = Box::pin(expr.1);
             while let Some(v) =
                     ::zero_cost_templating::async_iterator_extension::AsyncIterExt::next(&mut iter).await
                 {
@@ -60693,8 +60688,7 @@ pub async gen fn test() -> Cow<'static, str> {
     {
         let expr = template.next();
         let ret = expr.0;
-        let mut iter =
-            ::core::pin::Pin::<&mut _> { pointer: &mut { expr.1 } };
+        let mut iter = Box::pin(expr.1);
         while let Some(v) =
                 ::zero_cost_templating::async_iterator_extension::AsyncIterExt::next(&mut iter).await
             {

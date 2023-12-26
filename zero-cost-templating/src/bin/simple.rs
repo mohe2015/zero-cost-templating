@@ -11,12 +11,14 @@ use zero_cost_templating::{async_iterator_extension::AsyncIterExt, template_stre
 // export RUSTFLAGS="-Z proc-macro-backtrace"
 // cargo build
 // cargo expand --package zero-cost-templating --bin simple
-// cargo expand --package zero-cost-templating --bin simple > zero-cost-templating/src/bin/test.rs
+// echo "#![feature(print_internals)] #![feature(unsafe_pin_internals)] " > zero-cost-templating/src/bin/test.rs
+// cargo expand --package zero-cost-templating --bin simple >> zero-cost-templating/src/bin/test.rs
 // cargo run --release --bin simple
 
 // RUSTFLAGS="-Zprint-type-sizes" cargo run --release --bin simple > type-sizes.txt
 // search for
 // `{async gen block@
+// `{async gen fn body@
 // `{static coroutine@
 
 // Don't use Cow because it is so big?
