@@ -246,7 +246,7 @@ pub fn children_to_ast(
                 tmp = element_to_ast(first_nodes, template_name, graph, tmp, element);
             }
             Child::Each(_identifier, children) => {
-                tmp = add_node_with_edge(
+                let loop_start = add_node_with_edge(
                     graph,
                     tmp,
                     None,
@@ -255,13 +255,18 @@ pub fn children_to_ast(
                         node_type: NodeType::Other,
                     },
                 );
-                let loop_start = tmp;
-                tmp = children_to_ast(first_nodes, template_name, graph, tmp, children, parent);
+                let loop_end = children_to_ast(
+                    first_nodes,
+                    template_name,
+                    graph,
+                    loop_start,
+                    children,
+                    parent,
+                );
 
-                graph.add_edge(last, loop_start, current);
-                current = IntermediateAstElement::Noop;
+                connect_nodes(graph, loop_end, None, loop_start);
 
-                last = loop_start;
+                tmp = loop_start;
             }
             Child::PartialBlock(name, children) => {
                 tmp = add_node_with_edge(
