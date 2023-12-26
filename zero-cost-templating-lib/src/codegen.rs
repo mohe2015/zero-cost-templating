@@ -27,7 +27,7 @@ fn node_partial_block_type(
     graph: &StableGraph<TemplateNode, IntermediateAstElement>,
     node_index: NodeIndex,
     span: Span,
-    partial: &(TokenStream, TokenStream),
+    partial: &(TokenStream, TokenStream), // this parameter here should be special?
     after: &(TokenStream, TokenStream),
 ) -> (TokenStream, TokenStream) {
     assert_eq!(
@@ -198,7 +198,7 @@ fn node_type(
 ) -> (TokenStream, TokenStream) {
     let node = &graph[node_index];
     match node.node_type {
-        NodeType::PartialBlock => node_partial_block_type(graph, node_index, span, partial, after),
+        NodeType::PartialBlock => panic!(),
         NodeType::InnerTemplate => node_inner_template_type(graph, node_index, span),
         NodeType::Other => node_other_type(graph, node_index, span, partial, after),
     }
@@ -316,15 +316,7 @@ pub fn calculate_edge(
             , #variable: impl Into<::alloc::borrow::Cow<'static, str>>
         }
     });
-    let r#return = node_type(
-        graph,
-        edge.target(),
-        Span::call_site(),
-        &(quote! { Partial }, quote! { self.partial }),
-        &(quote! { After }, quote! { self.after }),
-    );
-    let return_type = r#return.0;
-    let return_create = r#return.1;
+
     let impl_template_name = format_ident!(
         "{}Template{}",
         template_codegen.template_name.to_upper_camel_case(),
@@ -345,6 +337,15 @@ pub fn calculate_edge(
         &graph[edge.target()].node_type,
     ) {
         (_, NodeType::PartialBlock) => Some({
+            let r#return = node_partial_block_type(
+                graph,
+                edge.target(),
+                Span::call_site(),
+                &(quote! { Partial }, quote! { self.partial }),
+                &(quote! { After }, quote! { self.after }),
+            );
+            let return_type = r#return.0;
+            let return_create = r#return.1;
             quote! {
                 impl<Partial,
                     PartialPartial,
@@ -367,22 +368,33 @@ pub fn calculate_edge(
                 }
             }
         }),
-        (_, NodeType::InnerTemplate | NodeType::Other) => Some({
-            quote! {
-                impl<Partial, After>
-                    Template<#impl_template_name, Partial, After> {
+        (_, NodeType::InnerTemplate | NodeType::Other) => {
+            let r#return = node_type(
+                graph,
+                edge.target(),
+                Span::call_site(),
+                &(quote! { Partial }, quote! { self.partial }),
+                &(quote! { After }, quote! { self.after }),
+            );
+            let return_type = r#return.0;
+            let return_create = r#return.1;
+            Some({
+                quote! {
+                    impl<Partial, After>
+                        Template<#impl_template_name, Partial, After> {
 
-                    #[doc = #documentation]
-                    pub fn #function_name(self #parameter) -> (#return_type,
-                            impl ::std::async_iter::AsyncIterator<Item =
-                                ::alloc::borrow::Cow<'static, str>>) {
-                        (#return_create, async gen {
-                            #to_yield
-                        })
+                        #[doc = #documentation]
+                        pub fn #function_name(self #parameter) -> (#return_type,
+                                impl ::std::async_iter::AsyncIterator<Item =
+                                    ::alloc::borrow::Cow<'static, str>>) {
+                            (#return_create, async gen {
+                                #to_yield
+                            })
+                        }
                     }
                 }
-            }
-        }),
+            })
+        }
     };
     quote! {
         #impl_func
