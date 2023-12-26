@@ -15,6 +15,8 @@ fn node_partial_block_type(graph: &StableGraph<TemplateNode, IntermediateAstElem
     node_index: NodeIndex,partial: &(TokenStream, TokenStream),
     after: &(TokenStream, TokenStream),
     span: Span,) -> (TokenStream, TokenStream){
+        assert_eq!(graph[node_index].node_type, NodeType::PartialBlock, "must be NodeType::PartialBlock");
+
         let partial_type = &partial.0;
         let partial_create = &partial.1;
     
@@ -53,7 +55,83 @@ fn node_partial_block_type(graph: &StableGraph<TemplateNode, IntermediateAstElem
     )
 }
 
-#[expect(clippy::too_many_lines, reason = "tmp")]
+fn node_inner_template_type(graph: &StableGraph<TemplateNode, IntermediateAstElement>, node_index: NodeIndex, span: Span) -> (TokenStream, TokenStream) {
+    assert_eq!(graph[node_index].node_type, NodeType::InnerTemplate, "must be NodeType::InnerTemplate");
+    let inner_after = graph
+        .edges_directed(node_index, Direction::Outgoing)
+        .filter(|edge| {
+            *edge.weight() != IntermediateAstElement::InnerTemplate
+                && *edge.weight() != IntermediateAstElement::PartialBlockPartial
+        })
+        .exactly_one()
+        .unwrap();
+    let inner_after = node_type(
+        graph,
+        inner_after.target(),
+        &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
+        &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
+        span,
+    );
+
+    let inner_partial = graph
+        .edges_directed(node_index, Direction::Outgoing)
+        .filter(|edge| *edge.weight() == IntermediateAstElement::PartialBlockPartial)
+        .exactly_one()
+        .unwrap();
+
+    let inner_partial_empty = graph
+        .edges_directed(inner_partial.target(), Direction::Outgoing)
+        .next()
+        .is_none();
+    let inner_partial = if inner_partial_empty {
+        (quote_spanned! {span=> () }, quote_spanned! {span=> () })
+    } else {
+        node_type(
+            graph,
+            inner_partial.target(),
+            &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
+            &inner_after,
+            span,
+        )
+    };
+
+    let inner_template = graph
+        .edges_directed(node_index, Direction::Outgoing)
+        .filter(|edge| *edge.weight() == IntermediateAstElement::InnerTemplate)
+        .exactly_one()
+        .unwrap();
+    node_type(
+        graph,
+        inner_template.target(),
+        &inner_partial,
+        &inner_after,
+        span,
+    )
+}
+
+fn node_other_type(node: &TemplateNode, node_index: NodeIndex, span: Span, partial_type: &TokenStream, after_type: &TokenStream, partial_create: &TokenStream, after_create: &TokenStream) -> (TokenStream, TokenStream) {
+    assert_eq!(node.node_type, NodeType::Other, "must be NodeType::Other");
+    let ident = format_ident!(
+        "{}Template{}",
+        node.template_name.to_upper_camel_case(),
+        node_index.index().to_string(),
+        span = span
+    );
+    let common = quote_spanned! {span=>
+        Template::<#ident, #partial_type, #after_type>
+    };
+    let create = quote_spanned! {span=>
+        { r#type: #ident, partial: #partial_create, after: #after_create }
+    };
+    (
+        common.clone(),
+        quote_spanned! {span=>
+            #common #create
+        },
+    )
+}
+
+
 /// return.0 is type and return.1 is create expression
 /// This method's only responsibility is to convert the node type to a type and creation TokenStream.
 // TODO FIXME probably extract the match out of here as not all parameters are used in all cases?
@@ -76,76 +154,10 @@ fn node_type(
             node_partial_block_type(graph, node_index, partial, after, span)
         }
         NodeType::InnerTemplate => {
-            let inner_after = graph
-                .edges_directed(node_index, Direction::Outgoing)
-                .filter(|edge| {
-                    *edge.weight() != IntermediateAstElement::InnerTemplate
-                        && *edge.weight() != IntermediateAstElement::PartialBlockPartial
-                })
-                .exactly_one()
-                .unwrap();
-            let inner_after = node_type(
-                graph,
-                inner_after.target(),
-                &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
-                &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
-                span,
-            );
-
-            let inner_partial = graph
-                .edges_directed(node_index, Direction::Outgoing)
-                .filter(|edge| *edge.weight() == IntermediateAstElement::PartialBlockPartial)
-                .exactly_one()
-                .unwrap();
-
-            let inner_partial_empty = graph
-                .edges_directed(inner_partial.target(), Direction::Outgoing)
-                .next()
-                .is_none();
-            let inner_partial = if inner_partial_empty {
-                (quote_spanned! {span=> () }, quote_spanned! {span=> () })
-            } else {
-                node_type(
-                    graph,
-                    inner_partial.target(),
-                    &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
-                    &inner_after,
-                    span,
-                )
-            };
-
-            let inner_template = graph
-                .edges_directed(node_index, Direction::Outgoing)
-                .filter(|edge| *edge.weight() == IntermediateAstElement::InnerTemplate)
-                .exactly_one()
-                .unwrap();
-            node_type(
-                graph,
-                inner_template.target(),
-                &inner_partial,
-                &inner_after,
-                span,
-            )
+            node_inner_template_type(graph, node_index, span)
         }
         NodeType::Other => {
-            let ident = format_ident!(
-                "{}Template{}",
-                node.template_name.to_upper_camel_case(),
-                node_index.index().to_string(),
-                span = span
-            );
-            let common = quote_spanned! {span=>
-                Template::<#ident, #partial_type, #after_type>
-            };
-            let create = quote_spanned! {span=>
-                { r#type: #ident, partial: #partial_create, after: #after_create }
-            };
-            (
-                common.clone(),
-                quote_spanned! {span=>
-                    #common #create
-                },
-            )
+            node_other_type(node, node_index, span, partial_type, after_type, partial_create, after_create)
         }
     }
 }

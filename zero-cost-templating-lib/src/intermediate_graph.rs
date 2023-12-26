@@ -97,7 +97,7 @@ impl Display for IntermediateAstElement {
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub enum NodeType {
     PartialBlock,
     InnerTemplate,
