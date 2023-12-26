@@ -11,27 +11,33 @@ use quote::{format_ident, quote, quote_spanned};
 
 use crate::intermediate_graph::{EscapingFunction, IntermediateAstElement, NodeType, TemplateNode};
 
-fn node_partial_block_type(graph: &StableGraph<TemplateNode, IntermediateAstElement>,
-    node_index: NodeIndex,partial: &(TokenStream, TokenStream),
+fn node_partial_block_type(
+    graph: &StableGraph<TemplateNode, IntermediateAstElement>,
+    node_index: NodeIndex,
+    partial: &(TokenStream, TokenStream),
     after: &(TokenStream, TokenStream),
-    span: Span,) -> (TokenStream, TokenStream){
-        assert_eq!(graph[node_index].node_type, NodeType::PartialBlock, "must be NodeType::PartialBlock");
+    span: Span,
+) -> (TokenStream, TokenStream) {
+    assert_eq!(
+        graph[node_index].node_type,
+        NodeType::PartialBlock,
+        "must be NodeType::PartialBlock"
+    );
 
-        let partial_type = &partial.0;
-        let partial_create = &partial.1;
-    
+    let partial_type = &partial.0;
+    let partial_create = &partial.1;
 
     // this needs to be an ordinary node
     let inner_after = graph
-    .edges_directed(node_index, Direction::Outgoing)
-    .exactly_one()
-    .unwrap();
+        .edges_directed(node_index, Direction::Outgoing)
+        .exactly_one()
+        .unwrap();
     let inner_after = node_type(
-    graph,
-    inner_after.target(),
-    &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
-    after,
-    span,
+        graph,
+        inner_after.target(),
+        &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
+        after,
+        span,
     );
     let inner_after_type = inner_after.0;
     let inner_after_create = inner_after.1;
@@ -48,15 +54,23 @@ fn node_partial_block_type(graph: &StableGraph<TemplateNode, IntermediateAstElem
     };
 
     (
-    common.clone(),
-    quote_spanned! {span=>
-        #common #create
-    },
+        common.clone(),
+        quote_spanned! {span=>
+            #common #create
+        },
     )
 }
 
-fn node_inner_template_type(graph: &StableGraph<TemplateNode, IntermediateAstElement>, node_index: NodeIndex, span: Span) -> (TokenStream, TokenStream) {
-    assert_eq!(graph[node_index].node_type, NodeType::InnerTemplate, "must be NodeType::InnerTemplate");
+fn node_inner_template_type(
+    graph: &StableGraph<TemplateNode, IntermediateAstElement>,
+    node_index: NodeIndex,
+    span: Span,
+) -> (TokenStream, TokenStream) {
+    assert_eq!(
+        graph[node_index].node_type,
+        NodeType::InnerTemplate,
+        "must be NodeType::InnerTemplate"
+    );
     let inner_after = graph
         .edges_directed(node_index, Direction::Outgoing)
         .filter(|edge| {
@@ -109,7 +123,15 @@ fn node_inner_template_type(graph: &StableGraph<TemplateNode, IntermediateAstEle
     )
 }
 
-fn node_other_type(node: &TemplateNode, node_index: NodeIndex, span: Span, partial_type: &TokenStream, after_type: &TokenStream, partial_create: &TokenStream, after_create: &TokenStream) -> (TokenStream, TokenStream) {
+fn node_other_type(
+    node: &TemplateNode,
+    node_index: NodeIndex,
+    span: Span,
+    partial_type: &TokenStream,
+    after_type: &TokenStream,
+    partial_create: &TokenStream,
+    after_create: &TokenStream,
+) -> (TokenStream, TokenStream) {
     assert_eq!(node.node_type, NodeType::Other, "must be NodeType::Other");
     let ident = format_ident!(
         "{}Template{}",
@@ -131,9 +153,8 @@ fn node_other_type(node: &TemplateNode, node_index: NodeIndex, span: Span, parti
     )
 }
 
-
 /// return.0 is type and return.1 is create expression
-/// This method's only responsibility is to convert the node type to a type and creation TokenStream.
+/// This method's only responsibility is to convert the node to a type and creation ``TokenStream``.
 // TODO FIXME probably extract the match out of here as not all parameters are used in all cases?
 fn node_type(
     graph: &StableGraph<TemplateNode, IntermediateAstElement>,
@@ -150,15 +171,17 @@ fn node_type(
 
     let node = &graph[node_index];
     match node.node_type {
-        NodeType::PartialBlock => {
-            node_partial_block_type(graph, node_index, partial, after, span)
-        }
-        NodeType::InnerTemplate => {
-            node_inner_template_type(graph, node_index, span)
-        }
-        NodeType::Other => {
-            node_other_type(node, node_index, span, partial_type, after_type, partial_create, after_create)
-        }
+        NodeType::PartialBlock => node_partial_block_type(graph, node_index, partial, after, span),
+        NodeType::InnerTemplate => node_inner_template_type(graph, node_index, span),
+        NodeType::Other => node_other_type(
+            node,
+            node_index,
+            span,
+            partial_type,
+            after_type,
+            partial_create,
+            after_create,
+        ),
     }
 }
 
@@ -174,19 +197,17 @@ pub fn calculate_nodes<'a>(
     graph: &'a StableGraph<TemplateNode, IntermediateAstElement>,
     template_codegen: &'a TemplateCodegen,
 ) -> impl Iterator<Item = proc_macro2::TokenStream> + 'a {
-    graph
-        .node_references()
-        .map(|(node_index, _)|  {
-            let template_struct = format_ident!(
-                "{}Template{}",
-                template_codegen.template_name.to_upper_camel_case(),
-                node_index.index().to_string(),
-            );
-            quote! {
-                #[must_use]
-                pub struct #template_struct;
-            }
- } )
+    graph.node_references().map(|(node_index, _)| {
+        let template_struct = format_ident!(
+            "{}Template{}",
+            template_codegen.template_name.to_upper_camel_case(),
+            node_index.index().to_string(),
+        );
+        quote! {
+            #[must_use]
+            pub struct #template_struct;
+        }
+    })
 }
 
 #[must_use]
@@ -225,7 +246,9 @@ pub fn element_to_yield(
                 yield ::alloc::borrow::Cow::from(#text);
             }
         }
-        IntermediateAstElement::Noop | IntermediateAstElement::InnerTemplate | IntermediateAstElement::PartialBlockPartial => {
+        IntermediateAstElement::Noop
+        | IntermediateAstElement::InnerTemplate
+        | IntermediateAstElement::PartialBlockPartial => {
             quote! {}
         }
     }
@@ -238,15 +261,10 @@ pub fn calculate_edge(
     template_codegen: &TemplateCodegen,
     edge: petgraph::stable_graph::EdgeReference<'_, IntermediateAstElement>,
 ) -> proc_macro2::TokenStream {
+    // TODO FIXME only add number when multiple outgoing edges
     let function_name = edge.weight().variable_name().as_ref().map_or_else(
-        || format_ident!("next{}", edge.id().index()), // TODO FIXME only add number when multiple outgoing edges
-        |variable| {
-            format_ident!(
-                "{}{}",
-                variable,
-                edge.id().index() // TODO FIXME only add nubmer when multiple outgoing edges
-            )
-        },
+        || format_ident!("next{}", edge.id().index()),
+        |variable| format_ident!("{}{}", variable, edge.id().index()),
     );
     let variable_name = edge
         .weight()
@@ -289,44 +307,44 @@ pub fn calculate_edge(
             let return2_type = r#return2.0;
             let return2_create = r#return2.1;
             Some({
-            quote! {
-                impl<Partial,
-                    PartialPartial,
-                    PartialAfter,
-                    After
-                    >
-                    Template<
-                            #impl_template_name,
-                            Template<Partial, PartialPartial, PartialAfter>,
-                            After
-                            > {
-                    pub fn #function_name(self #parameter) -> (#return_type,
-                            impl ::std::async_iter::AsyncIterator<Item =
-                                ::alloc::borrow::Cow<'static, str>>) {
-                        (#return_create, async gen {
-                            #to_yield
-                        })
+                quote! {
+                    impl<Partial,
+                        PartialPartial,
+                        PartialAfter,
+                        After
+                        >
+                        Template<
+                                #impl_template_name,
+                                Template<Partial, PartialPartial, PartialAfter>,
+                                After
+                                > {
+                        pub fn #function_name(self #parameter) -> (#return_type,
+                                impl ::std::async_iter::AsyncIterator<Item =
+                                    ::alloc::borrow::Cow<'static, str>>) {
+                            (#return_create, async gen {
+                                #to_yield
+                            })
+                        }
                     }
-                }
 
-                impl<After
-                    >
-                    Template<
-                            #impl_template_name,
-                            (),
-                            After
-                            > {
-                    pub fn #function_name(self #parameter) -> (#return2_type,
-                            impl ::std::async_iter::AsyncIterator<Item =
-                                ::alloc::borrow::Cow<'static, str>>) {
-                        (#return2_create, async gen {
-                            #to_yield
-                        })
+                    impl<After
+                        >
+                        Template<
+                                #impl_template_name,
+                                (),
+                                After
+                                > {
+                        pub fn #function_name(self #parameter) -> (#return2_type,
+                                impl ::std::async_iter::AsyncIterator<Item =
+                                    ::alloc::borrow::Cow<'static, str>>) {
+                            (#return2_create, async gen {
+                                #to_yield
+                            })
+                        }
                     }
                 }
-            }
-        })
-    },
+            })
+        }
         (NodeType::Other, NodeType::InnerTemplate | NodeType::Other) => Some({
             // maybe change something here?
             quote! {
