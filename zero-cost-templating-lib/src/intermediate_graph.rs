@@ -200,91 +200,92 @@ pub fn add_edge_maybe_with_node(
     next_edge: IntermediateAstElement,
     to: TemplateNode,
 ) -> Vec<(NodeIndex, Option<IntermediateAstElement>)> {
-    let new_node = None;
-    for (from, current_edge) in tmp {
-        match (graph[from].node_type, current_edge, next_edge) {
-            (
-                NodeType::Other,
-                Some(IntermediateAstElement {
-                    tag: current_tag,
-                    inner: IntermediateAstElementInner::Text(old),
-                }),
-                IntermediateAstElement {
-                    tag: next_tag,
-                    inner:
-                        IntermediateAstElementInner::Variable {
-                            before,
+    let mut new_node = None;
+    tmp.into_iter()
+        .map(
+            |(from, current_edge)| match (graph[from].node_type, current_edge, next_edge) {
+                (
+                    NodeType::Other,
+                    Some(IntermediateAstElement {
+                        tag: current_tag,
+                        inner: IntermediateAstElementInner::Text(old),
+                    }),
+                    IntermediateAstElement {
+                        tag: next_tag,
+                        inner:
+                            IntermediateAstElementInner::Variable {
+                                before,
+                                variable_name,
+                                escaping_fun,
+                                after,
+                            },
+                    },
+                ) => (
+                    from,
+                    Some(IntermediateAstElement {
+                        tag: current_tag + &next_tag,
+                        inner: IntermediateAstElementInner::Variable {
+                            before: old + &before,
                             variable_name,
                             escaping_fun,
                             after,
                         },
-                },
-            ) => (
-                from,
-                IntermediateAstElement {
-                    tag: current_tag + &next_tag,
-                    inner: IntermediateAstElementInner::Variable {
-                        before: old + &before,
-                        variable_name,
-                        escaping_fun,
-                        after,
+                    }),
+                ),
+                (
+                    NodeType::Other,
+                    Some(IntermediateAstElement {
+                        tag: current_tag,
+                        inner:
+                            IntermediateAstElementInner::Variable {
+                                before,
+                                variable_name,
+                                escaping_fun,
+                                after,
+                            },
+                    }),
+                    IntermediateAstElement {
+                        tag: next_tag,
+                        inner: IntermediateAstElementInner::Text(new),
                     },
-                },
-            ),
-            (
-                NodeType::Other,
-                Some(IntermediateAstElement {
-                    tag: current_tag,
-                    inner:
-                        IntermediateAstElementInner::Variable {
+                ) => (
+                    from,
+                    Some(IntermediateAstElement {
+                        tag: current_tag + &next_tag,
+                        inner: IntermediateAstElementInner::Variable {
                             before,
                             variable_name,
                             escaping_fun,
-                            after,
+                            after: after + &new,
                         },
-                }),
-                IntermediateAstElement {
-                    tag: next_tag,
-                    inner: IntermediateAstElementInner::Text(new),
-                },
-            ) => (
-                from,
-                IntermediateAstElement {
-                    tag: current_tag + &next_tag,
-                    inner: IntermediateAstElementInner::Variable {
-                        before,
-                        variable_name,
-                        escaping_fun,
-                        after: after + &new,
+                    }),
+                ),
+                (
+                    NodeType::Other,
+                    Some(IntermediateAstElement {
+                        tag: current_tag,
+                        inner: IntermediateAstElementInner::Text(old),
+                    }),
+                    IntermediateAstElement {
+                        tag: next_tag,
+                        inner: IntermediateAstElementInner::Text(new),
                     },
-                },
-            ),
-            (
-                NodeType::Other,
-                Some(IntermediateAstElement {
-                    tag: current_tag,
-                    inner: IntermediateAstElementInner::Text(old),
-                }),
-                IntermediateAstElement {
-                    tag: next_tag,
-                    inner: IntermediateAstElementInner::Text(new),
-                },
-            ) => (
-                from,
-                IntermediateAstElement {
-                    tag: current_tag + &next_tag,
-                    inner: IntermediateAstElementInner::Text(old + &new),
-                },
-            ),
-            (_, None, edge_type) => (from, edge_type),
-            (_, Some(current), edge_type) => {
-                let to = new_node.get_or_insert_with(|| graph.add_node(to));
-                graph.add_edge(from, *to, current);
-                (*to, edge_type)
-            }
-        }
-    }
-    tmp
+                ) => (
+                    from,
+                    Some(IntermediateAstElement {
+                        tag: current_tag + &next_tag,
+                        inner: IntermediateAstElementInner::Text(old + &new),
+                    }),
+                ),
+                (_, None, edge_type) => (from, Some(edge_type)),
+                (_, Some(current), edge_type) => {
+                    let to = new_node.get_or_insert_with(|| graph.add_node(to));
+                    graph.add_edge(from, *to, current);
+                    (*to, Some(edge_type))
+                }
+            },
+        )
+        .collect()
 }
 
 #[must_use]
