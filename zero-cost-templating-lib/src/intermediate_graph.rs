@@ -280,14 +280,14 @@ pub fn children_to_ast(
                     first_nodes,
                     template_name,
                     graph,
-                    vec![loop_start.clone()],
+                    vec![(loop_start.clone(), None)],
                     children,
                     parent,
                 );
 
                 connect_edges_to_node(graph, loop_end, loop_start.clone());
 
-                tmp = vec![loop_start];
+                tmp = vec![(loop_start, None)];
             }
             Child::PartialBlock(name, children) => {
                 let inner_template_tmp = flush_with_node(
@@ -303,7 +303,7 @@ pub fn children_to_ast(
                 // TODO create an add_edge function that enforces that a new node is not needed.
                 let mut partial_block_partial_tmp = add_edge_maybe_with_node(
                     graph,
-                    vec![inner_template_tmp.clone()],
+                    vec![(inner_template_tmp.clone(), None)],
                     IntermediateAstElement::PartialBlockPartial,
                     TemplateNode {
                         template_name: template_name.to_owned(),
@@ -332,7 +332,7 @@ pub fn children_to_ast(
                     .unwrap_or_else(|| panic!("unknown inner template {name}"));
 
                 
-                let inner_template_template_tmp = add_edge_maybe_with_node(graph, vec![inner_template_tmp.clone()], 
+                let inner_template_template_tmp = add_edge_maybe_with_node(graph, vec![(inner_template_tmp.clone(), None)], 
                     IntermediateAstElement::InnerTemplate,
                     TemplateNode {
                         template_name: name.to_owned(),
@@ -343,20 +343,20 @@ pub fn children_to_ast(
                 connect_edges_to_node(
                     graph,
                     inner_template_template_tmp,
-                    (inner_template_target, None),
+                    inner_template_target,
                 );
 
-                tmp = vec![inner_template_tmp];
+                tmp = vec![(inner_template_tmp, None)];
             }
             Child::PartialBlockPartial => {
-                tmp = vec![flush_with_node(
+                tmp = vec![(flush_with_node(
                     graph,
                     tmp,
                     TemplateNode {
                         template_name: template_name.to_owned(),
                         node_type: NodeType::PartialBlock,
                     },
-                )];
+                ), None)];
             }
             Child::If(_variable, if_children, else_children) => {
                 let if_start = flush_with_node(
@@ -369,13 +369,13 @@ pub fn children_to_ast(
                 );
 
                 let true_tmp =
-                    children_to_ast(first_nodes, template_name, graph, vec![if_start.clone()], if_children, parent);
+                    children_to_ast(first_nodes, template_name, graph, vec![(if_start.clone(), None)], if_children, parent);
 
                 let mut false_tmp = children_to_ast(
                     first_nodes,
                     template_name,
                     graph,
-                    vec![if_start],
+                    vec![(if_start, None)],
                     else_children,
                     parent,
                 );
