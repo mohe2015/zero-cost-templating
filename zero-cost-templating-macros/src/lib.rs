@@ -210,7 +210,14 @@ pub fn template_stream(
                 }
             };
             let first = first_nodes.get(template_name).unwrap();
-            let tmp = children_to_ast(&first_nodes, template_name, graph, vec![], dom, "root");
+            let tmp = children_to_ast(
+                &first_nodes,
+                template_name,
+                graph,
+                vec![(*first, None)],
+                dom,
+                "root",
+            );
             let last = flush_with_node(
                 graph,
                 tmp,
