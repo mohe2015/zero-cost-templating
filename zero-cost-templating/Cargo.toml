@@ -22,33 +22,33 @@ iai-callgrind = "0.8"
 #name = "my_benchmark"
 #harness = false
 
-[[bin]]
-name = "initial_unexpected_parameter"
-path = "tests/ui/compile_fail/initial_unexpected_parameter.rs"
+#[[bin]]
+#name = "initial_unexpected_parameter"
+#path = "tests/ui/compile_fail/initial_unexpected_parameter.rs"
 
-[[bin]]
-name = "mismatched_types_unit"
-path = "tests/ui/compile_fail/mismatched_types_unit.rs"
+#[[bin]]
+#name = "mismatched_types_unit"
+#path = "tests/ui/compile_fail/mismatched_types_unit.rs"
 
-[[bin]]
-name = "missing_variable_value"
-path = "tests/ui/compile_fail/missing_variable_value.rs"
+#[[bin]]
+#name = "missing_variable_value"
+#path = "tests/ui/compile_fail/missing_variable_value.rs"
 
-[[bin]]
-name = "moved_value"
-path = "tests/ui/compile_fail/moved_value.rs"
+#[[bin]]
+#name = "moved_value"
+#path = "tests/ui/compile_fail/moved_value.rs"
 
-[[bin]]
-name = "must_use"
-path = "tests/ui/compile_fail/must_use.rs"
+#[[bin]]
+#name = "must_use"
+#path = "tests/ui/compile_fail/must_use.rs"
 
-[[bin]]
-name = "type_mismatch_because_missing_call"
-path = "tests/ui/compile_fail/type_mismatch_because_missing_call.rs"
+#[[bin]]
+#name = "type_mismatch_because_missing_call"
+#path = "tests/ui/compile_fail/type_mismatch_because_missing_call.rs"
 
-[[bin]]
-name = "wrong_type"
-path = "tests/ui/compile_fail/wrong_type.rs"
+#[[bin]]
+#name = "wrong_type"
+#path = "tests/ui/compile_fail/wrong_type.rs"
 
 [[bin]]
 name = "if_else"
