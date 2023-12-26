@@ -13,6 +13,8 @@ use crate::intermediate_graph::{EscapingFunction, IntermediateAstElement, NodeTy
 
 #[expect(clippy::too_many_lines, reason = "tmp")]
 /// return.0 is type and return.1 is create expression
+/// This method's only responsibility is to convert the node type to a type and creation TokenStream.
+// TODO FIXME probably extract the match out of here as not all parameters are used in all cases?
 fn node_type(
     graph: &StableGraph<TemplateNode, IntermediateAstElement>,
     node_index: NodeIndex,
@@ -20,14 +22,6 @@ fn node_type(
     after: &(TokenStream, TokenStream),
     span: Span,
 ) -> (TokenStream, TokenStream) {
-    let last_node = graph
-        .edges_directed(node_index, Direction::Outgoing)
-        .next()
-        .is_none();
-    if last_node {
-        return after.clone();
-    }
-
     let partial_type = &partial.0;
     let partial_create = &partial.1;
 
@@ -262,20 +256,15 @@ pub fn calculate_edge(
     ) {
         (NodeType::InnerTemplate | NodeType::PartialBlock, _) => None, // TODO
         (NodeType::Other, NodeType::PartialBlock) => {
-            let after_partial_block = graph
-            .edges_directed(edge.target(), Direction::Outgoing)
-            .exactly_one()
-            .unwrap();
-            let after_partial_block = node_type(
+            let r#return2 = node_type(
                 graph,
-                after_partial_block.target(),
+                edge.target(),
                 &(quote! { () }, quote! { () }),
                 &(quote! { After }, quote! { self.after }),
                 Span::call_site(),
             );
-            let after_partial_block_type = after_partial_block.0;
-            let after_partial_block_create = after_partial_block.1;
-
+            let return2_type = r#return2.0;
+            let return2_create = r#return2.1;
             Some({
             quote! {
                 impl<Partial,
@@ -304,10 +293,10 @@ pub fn calculate_edge(
                             (),
                             After
                             > {
-                    pub fn #function_name(self #parameter) -> (#after_partial_block_type,
+                    pub fn #function_name(self #parameter) -> (#return2_type,
                             impl ::std::async_iter::AsyncIterator<Item =
                                 ::alloc::borrow::Cow<'static, str>>) {
-                        (#after_partial_block_create, async gen {
+                        (#return2_create, async gen {
                             #to_yield
                         })
                     }
