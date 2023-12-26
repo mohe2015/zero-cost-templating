@@ -177,16 +177,30 @@ pub fn element_to_yield(
     intermediate_ast_element: &IntermediateAstElement,
 ) -> proc_macro2::TokenStream {
     match intermediate_ast_element {
-        IntermediateAstElement::Variable(variable_name, EscapingFunction::HtmlAttribute) => {
+        IntermediateAstElement::Variable {
+            before,
+            variable_name,
+            escaping_fun: EscapingFunction::HtmlAttribute,
+            after,
+        } => {
             let variable_name = format_ident!("{}", variable_name);
             quote! {
+                yield ::alloc::borrow::Cow::from(#before);
                 yield zero_cost_templating::encode_double_quoted_attribute(#variable_name);
+                yield ::alloc::borrow::Cow::from(#after);
             }
         }
-        IntermediateAstElement::Variable(variable_name, EscapingFunction::HtmlElementInner) => {
+        IntermediateAstElement::Variable {
+            before,
+            variable_name,
+            escaping_fun: EscapingFunction::HtmlElementInner,
+            after,
+        } => {
             let variable_name = format_ident!("{}", variable_name);
             quote! {
+                yield ::alloc::borrow::Cow::from(#before);
                 yield zero_cost_templating::encode_element_text(#variable_name);
+                yield ::alloc::borrow::Cow::from(#after);
             }
         }
         IntermediateAstElement::Text(text) => {

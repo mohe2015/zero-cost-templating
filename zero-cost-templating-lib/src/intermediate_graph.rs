@@ -23,7 +23,12 @@ impl Display for EscapingFunction {
 // first variable then text, so we can print as much as possible
 #[derive(Debug, PartialEq, Eq, Hash, PartialOrd, Ord, Clone)]
 pub enum IntermediateAstElement {
-    Variable(String, EscapingFunction),
+    Variable {
+        before: String,
+        variable_name: String,
+        escaping_fun: EscapingFunction,
+        after: String,
+    },
     Text(String),
     Noop,
     /// The part we want to render when a partial block occurs.
@@ -35,8 +40,13 @@ pub enum IntermediateAstElement {
 impl IntermediateAstElement {
     #[must_use]
     pub const fn variable(&self) -> Option<(&String, &EscapingFunction)> {
-        if let Self::Variable(name, escaping_fun) = self {
-            Some((name, escaping_fun))
+        if let Self::Variable {
+            variable_name,
+            escaping_fun,
+            ..
+        } = self
+        {
+            Some((variable_name, escaping_fun))
         } else {
             None
         }
@@ -44,8 +54,8 @@ impl IntermediateAstElement {
 
     #[must_use]
     pub const fn variable_name(&self) -> Option<&String> {
-        if let Self::Variable(name, _) = self {
-            Some(name)
+        if let Self::Variable { variable_name, .. } = self {
+            Some(variable_name)
         } else {
             None
         }
@@ -64,8 +74,16 @@ impl IntermediateAstElement {
 impl Display for IntermediateAstElement {
     fn fmt(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         match self {
-            Self::Variable(variable, escaping_fun) => {
-                write!(formatter, "{{{{{variable}:{escaping_fun}}}}}")
+            Self::Variable {
+                before,
+                variable_name,
+                escaping_fun,
+                after,
+            } => {
+                write!(
+                    formatter,
+                    "{before}{{{{{variable_name}:{escaping_fun}}}}}{after}"
+                )
             }
             Self::Text(text) => {
                 write!(formatter, "{text}")
@@ -116,6 +134,42 @@ pub fn add_node_with_edge(
     edge_type: IntermediateAstElement,
 ) -> (NodeIndex, IntermediateAstElement) {
     match (&node.node_type, current, edge_type) {
+        (
+            NodeType::Other,
+            IntermediateAstElement::Text(old),
+            IntermediateAstElement::Variable {
+                before,
+                variable_name,
+                escaping_fun,
+                after,
+            },
+        ) => (
+            last,
+            IntermediateAstElement::Variable {
+                before: old + &before,
+                variable_name,
+                escaping_fun,
+                after,
+            },
+        ),
+        (
+            NodeType::Other,
+            IntermediateAstElement::Variable {
+                before,
+                variable_name,
+                escaping_fun,
+                after,
+            },
+            IntermediateAstElement::Text(new),
+        ) => (
+            last,
+            IntermediateAstElement::Variable {
+                before,
+                variable_name,
+                escaping_fun,
+                after: after + &new,
+            },
+        ),
         (NodeType::Other, IntermediateAstElement::Text(old), IntermediateAstElement::Text(new)) => {
             (last, IntermediateAstElement::Text(old + &new))
         }
@@ -136,7 +190,7 @@ pub fn flush_pending_edge(
 ) -> (NodeIndex, IntermediateAstElement) {
     match current {
         IntermediateAstElement::Noop => (last, IntermediateAstElement::Noop),
-        current @ (IntermediateAstElement::Variable(..)
+        current @ (IntermediateAstElement::Variable { .. }
         | IntermediateAstElement::Text(_)
         | IntermediateAstElement::PartialBlockPartial
         | IntermediateAstElement::InnerTemplate) => {
@@ -175,7 +229,12 @@ pub fn children_to_ast(
                         template_name: template_name.to_owned(),
                         node_type: NodeType::Other,
                     },
-                    IntermediateAstElement::Variable(next_variable, escaping_fun),
+                    IntermediateAstElement::Variable {
+                        before: String::new(),
+                        variable_name: next_variable,
+                        escaping_fun,
+                        after: String::new(),
+                    },
                 );
             }
             Child::Literal(string) => {
@@ -448,7 +507,12 @@ pub fn element_to_ast(
                                 template_name: template_name.to_owned(),
                                 node_type: NodeType::Other,
                             },
-                            IntermediateAstElement::Variable(next_variable, escaping_fun),
+                            IntermediateAstElement::Variable {
+                                before: String::new(),
+                                variable_name: next_variable,
+                                escaping_fun,
+                                after: String::new(),
+                            },
                         );
                     }
                     AttributeValuePart::Literal(string) => {
