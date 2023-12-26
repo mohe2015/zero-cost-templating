@@ -171,12 +171,13 @@ pub fn flush_with_node(
     tmp: Vec<(NodeIndex, Option<IntermediateAstElement>)>,
     node: TemplateNode,
 ) -> NodeIndex {
-    if tmp.len() == 1 && graph[tmp[0].0].node_type == node.node_type {
+    // NodeType::InnerTemplate can produce None as edge but then its only one node.
+    if tmp.len() == 1 && (graph[tmp[0].0].node_type == node.node_type || node.node_type == NodeType::Other) {
         return tmp[0].0;
     }
-    let to = graph.add_node(node);
+    let to = graph.add_node(node.clone());
     for (from, edge) in tmp {
-        graph.add_edge(from, to, edge.unwrap());
+        graph.add_edge(from, to, edge.unwrap_or_else(|| panic!("flush in {} failed", node.template_name)));
     }
     to
 }
