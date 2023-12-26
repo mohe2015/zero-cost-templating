@@ -30,7 +30,6 @@ pub enum IntermediateAstElement {
         after: String,
     },
     Text(String),
-    Noop,
     /// The part we want to render when a partial block occurs.
     PartialBlockPartial,
     /// The inner template that we want to render
@@ -87,9 +86,6 @@ impl Display for IntermediateAstElement {
             }
             Self::Text(text) => {
                 write!(formatter, "{text}")
-            }
-            Self::Noop => {
-                write!(formatter, "noop")
             }
             Self::PartialBlockPartial => write!(formatter, "partial"),
             Self::InnerTemplate => write!(formatter, "template"),

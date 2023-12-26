@@ -74,7 +74,7 @@ fn node_inner_template_type(
         "must be NodeType::InnerTemplate"
     );
     
-    let inner_after = node_type(
+    let inner_after = node_raw_type(
         graph, node_index, span,
         &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
         &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
@@ -235,10 +235,9 @@ pub fn element_to_yield(
                 yield ::alloc::borrow::Cow::from(#text);
             }
         }
-        IntermediateAstElement::Noop
-        | IntermediateAstElement::InnerTemplate
+        IntermediateAstElement::InnerTemplate
         | IntermediateAstElement::PartialBlockPartial => {
-            quote! {}
+            unreachable!()
         }
     }
 }
