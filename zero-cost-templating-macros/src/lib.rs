@@ -254,15 +254,25 @@ pub fn template_stream(
                     }
                     _ => {
                         format!(
-                            "label = \"{}\"",
+                            "label = \"{}\" color = blue",
                             er.weight().to_string().replace('\"', "\\\"")
                         )
                     }
                 },
-                &|_, nr| format!(
-                    "label = \"{}\"",
-                    nr.weight().to_string().replace('\"', "\\\"")
-                ),
+                &|_, nr| match nr.weight().node_type {
+                    NodeType::PartialBlock => format!(
+                        "label = \"{}\" color = red",
+                        nr.weight().to_string().replace('\"', "\\\"")
+                    ),
+                    NodeType::InnerTemplate => format!(
+                        "label = \"{}\" color = blue",
+                        nr.weight().to_string().replace('\"', "\\\"")
+                    ),
+                    NodeType::Other => format!(
+                        "label = \"{}\"",
+                        nr.weight().to_string().replace('\"', "\\\"")
+                    ),
+                },
             )
         )
         .as_bytes(),

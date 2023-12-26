@@ -174,6 +174,9 @@ pub fn flush_with_node(
     if tmp.len() == 1 && tmp[0].1.is_none() && node.node_type == NodeType::Other {
         return tmp[0].0;
     }
+    // TODO FIXME don't flush if .e.g. compatible two text nodes.
+    // maybe check if length == 1 then maybe no new node, otherwise always new node
+
     let to = graph.add_node(node.clone());
     for (from, edge) in tmp {
         graph.add_edge(from, to, edge.unwrap_or_else(|| IntermediateAstElement {
@@ -351,40 +354,38 @@ pub fn children_to_ast(
                 tmp = element_to_ast(first_nodes, template_name, graph, tmp, element);
             }
             Child::Each(_identifier, children) => {
-                if !children.is_empty() {
-                    let loop_start = flush_with_node(
-                        graph,
-                        tmp,
-                        TemplateNode {
-                            template_name: template_name.to_owned(),
-                            node_type: NodeType::Other,
-                        },
-                    );
-                    let loop_end = children_to_ast(
-                        first_nodes,
-                        template_name,
-                        graph,
-                        vec![(
-                            loop_start,
-                            Some(IntermediateAstElement {
-                                tag: "enter_loop".to_owned(),
-                                inner: IntermediateAstElementInner::Text(String::new()),
-                            }),
-                        )],
-                        children,
-                        parent,
-                    );
-
-                    connect_edges_to_node(graph, loop_end, loop_start);
-
-                    tmp = vec![(
+                let loop_start = flush_with_node(
+                    graph,
+                    tmp,
+                    TemplateNode {
+                        template_name: template_name.to_owned(),
+                        node_type: NodeType::Other,
+                    },
+                );
+                let loop_end = children_to_ast(
+                    first_nodes,
+                    template_name,
+                    graph,
+                    vec![(
                         loop_start,
                         Some(IntermediateAstElement {
-                            tag: "end_loop".to_owned(),
+                            tag: "enter_loop".to_owned(),
                             inner: IntermediateAstElementInner::Text(String::new()),
                         }),
-                    )];
-                }
+                    )],
+                    children,
+                    parent,
+                );
+
+                connect_edges_to_node(graph, loop_end, loop_start);
+
+                tmp = vec![(
+                    loop_start,
+                    Some(IntermediateAstElement {
+                        tag: "end_loop".to_owned(),
+                        inner: IntermediateAstElementInner::Text(String::new()),
+                    }),
+                )];
             }
             Child::PartialBlock(name, children) => {
                 let inner_template_tmp = flush_with_node(
