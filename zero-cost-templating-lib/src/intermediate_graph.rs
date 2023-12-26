@@ -168,7 +168,7 @@ impl Display for TemplateNode {
 // Two partials after each other...
 pub fn flush_with_node(
     graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
-    tmp: Vec<(NodeIndex, IntermediateAstElement)>,
+    tmp: Vec<(NodeIndex, Option<IntermediateAstElement>)>,
     node: TemplateNode,
 ) -> NodeIndex {
     assert!(!tmp.is_empty());
@@ -177,18 +177,18 @@ pub fn flush_with_node(
     }
     let to = graph.add_node(node);
     for (from, edge) in tmp {
-        graph.add_edge(from, to, edge);
+        graph.add_edge(from, to, edge.unwrap());
     }
     to
 }
 
 pub fn connect_edges_to_node(
     graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
-    tmp: Vec<(NodeIndex, IntermediateAstElement)>,
+    tmp: Vec<(NodeIndex, Option<IntermediateAstElement>)>,
     to: NodeIndex,
 ) {
     for (from, edge) in tmp {
-        graph.add_edge(from, to, edge);
+        graph.add_edge(from, to, edge.unwrap());
     }
 }
 
@@ -196,10 +196,10 @@ pub fn connect_edges_to_node(
 /// If adding the edge requires a new node, it adds the node of the specified type.
 pub fn add_edge_maybe_with_node(
     graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
-    mut tmp: Vec<(NodeIndex, IntermediateAstElement)>,
+    mut tmp: Vec<(NodeIndex, Option<IntermediateAstElement>)>,
     edge_type: IntermediateAstElement,
     node: TemplateNode,
-) -> Vec<(NodeIndex, IntermediateAstElement)> {
+) -> Vec<(NodeIndex, Option<IntermediateAstElement>)> {
     //let new_node = None;
     for (from, edge) in tmp.iter_mut() {
         todo!();
@@ -262,10 +262,10 @@ pub fn children_to_ast(
     first_nodes: &HashMap<String, NodeIndex>,
     template_name: &str,
     graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
-    mut tmp: Vec<(NodeIndex, IntermediateAstElement)>,
+    mut tmp: Vec<(NodeIndex, Option<IntermediateAstElement>)>,
     input: Vec<Child>,
     parent: &str,
-) -> Vec<(NodeIndex, IntermediateAstElement)> {
+) -> Vec<(NodeIndex, Option<IntermediateAstElement>)> {
     for child in input {
         match child {
             Child::Variable(next_variable) => {
@@ -330,10 +330,10 @@ pub fn children_to_ast(
                         graph,
                         vec![(
                             loop_start,
-                            IntermediateAstElement {
+                            Some(IntermediateAstElement {
                                 tag: "enter_loop".to_owned(),
                                 inner: IntermediateAstElementInner::Text(String::new()),
-                            },
+                            }),
                         )],
                         children,
                         parent,
@@ -343,10 +343,10 @@ pub fn children_to_ast(
 
                     tmp = vec![(
                         loop_start,
-                        IntermediateAstElement {
+                        Some(IntermediateAstElement {
                             tag: "end_loop".to_owned(),
                             inner: IntermediateAstElementInner::Text(String::new()),
-                        },
+                        }),
                     )];
                 }
             }
@@ -364,10 +364,10 @@ pub fn children_to_ast(
                 // TODO create an add_edge function that enforces that a new node is not needed.
                 let mut partial_block_partial_tmp = vec![(
                     inner_template_tmp,
-                    IntermediateAstElement {
+                    Some(IntermediateAstElement {
                         tag: String::new(),
                         inner: IntermediateAstElementInner::PartialBlockPartial,
-                    },
+                    }),
                 )];
                 partial_block_partial_tmp = children_to_ast(
                     first_nodes,
@@ -392,10 +392,10 @@ pub fn children_to_ast(
 
                 let inner_template_template_tmp = vec![(
                     inner_template_tmp,
-                    IntermediateAstElement {
+                    Some(IntermediateAstElement {
                         tag: String::new(),
                         inner: IntermediateAstElementInner::InnerTemplate,
-                    },
+                    }),
                 )];
 
                 connect_edges_to_node(graph, inner_template_template_tmp, inner_template_target);
@@ -431,10 +431,10 @@ pub fn children_to_ast(
                     graph,
                     vec![(
                         if_start,
-                        IntermediateAstElement {
+                        Some(IntermediateAstElement {
                             tag: "true".to_owned(),
                             inner: IntermediateAstElementInner::Text(String::new()),
-                        },
+                        }),
                     )],
                     if_children,
                     parent,
@@ -446,10 +446,10 @@ pub fn children_to_ast(
                     graph,
                     vec![(
                         if_start,
-                        IntermediateAstElement {
+                        Some(IntermediateAstElement {
                             tag: "false".to_owned(),
                             inner: IntermediateAstElementInner::Text(String::new()),
-                        },
+                        }),
                     )],
                     else_children,
                     parent,
@@ -469,9 +469,9 @@ pub fn element_to_ast(
     first_nodes: &HashMap<String, NodeIndex>,
     template_name: &str,
     graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
-    mut tmp: Vec<(NodeIndex, IntermediateAstElement)>,
+    mut tmp: Vec<(NodeIndex, Option<IntermediateAstElement>)>,
     input: Element,
-) -> Vec<(NodeIndex, IntermediateAstElement)> {
+) -> Vec<(NodeIndex, Option<IntermediateAstElement>)> {
     let name = input.name;
     tmp = add_edge_maybe_with_node(
         graph,
