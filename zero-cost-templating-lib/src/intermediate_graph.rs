@@ -210,7 +210,7 @@ pub fn add_edge_maybe_with_node(
         .map(
             |(from, current_edge)| match (&graph[from].node_type, current_edge, &next_edge) {
                 (
-                    NodeType::Other,
+                    _,
                     Some(IntermediateAstElement {
                         tag: current_tag,
                         inner: IntermediateAstElementInner::Text(old),
@@ -238,7 +238,7 @@ pub fn add_edge_maybe_with_node(
                     }),
                 ),
                 (
-                    NodeType::Other,
+                    _,
                     Some(IntermediateAstElement {
                         tag: current_tag,
                         inner:
@@ -266,7 +266,7 @@ pub fn add_edge_maybe_with_node(
                     }),
                 ),
                 (
-                    NodeType::Other,
+                    _,
                     Some(IntermediateAstElement {
                         tag: current_tag,
                         inner: IntermediateAstElementInner::Text(old),
