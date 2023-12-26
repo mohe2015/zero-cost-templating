@@ -17,7 +17,7 @@ use zero_cost_templating::{template_stream, yields};
 // search for
 // `{static coroutine@
 
-#[template_stream("only_template.html.hbs", "partial_block_partial.html.hbs")]
+#[template_stream("templates")]
 pub async gen fn test() -> Cow<'static, str> {
     let template = yields!(only_template0());
     let template = yields!(template.start0("start"));

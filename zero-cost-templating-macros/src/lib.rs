@@ -107,7 +107,7 @@
 #![feature(proc_macro_span)]
 
 use std::collections::HashMap;
-use std::fs::File;
+use std::fs::{self, File};
 use std::io::Write;
 use std::path::PathBuf;
 
@@ -138,7 +138,7 @@ pub fn template_stream(
     attributes: proc_macro::TokenStream,
     item: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
-    let input_paths = parse_macro_input!(attributes
+    let input_directories = parse_macro_input!(attributes
         with Punctuated::<LitStr, Token![,]>::parse_separated_nonempty);
     // https://github.com/dtolnay/trybuild/issues/202
     let cargo_manifest_dir = std::env::var_os("CARGO_MANIFEST_DIR_OVERRIDE")
@@ -147,11 +147,16 @@ pub fn template_stream(
 
     let root = PathBuf::from(&cargo_manifest_dir);
 
-    let inputs: Vec<_> = input_paths
+    let inputs: Vec<_> = input_directories
         .iter()
+        .flat_map(|directory| {
+            let path = root.join(directory.value());
+            fs::read_dir(path)
+                .unwrap()
+                .map(core::result::Result::unwrap)
+        })
         .map(|file| {
-            let path = root.join(file.value());
-
+            let path = file.path();
             let file_name = path.file_name().unwrap().to_string_lossy().to_string();
 
             let template_name = file_name.trim_end_matches(".html.hbs");
