@@ -197,20 +197,20 @@ pub fn connect_edges_to_node(
 pub fn add_edge_maybe_with_node(
     graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
     mut tmp: Vec<(NodeIndex, Option<IntermediateAstElement>)>,
-    new_edge: IntermediateAstElement,
+    next_edge: IntermediateAstElement,
     to: TemplateNode,
 ) -> Vec<(NodeIndex, Option<IntermediateAstElement>)> {
     //let new_node = None;
-    for (from, current_edge) in tmp.iter_mut() {
-        match (graph[*from].node_type, current_edge, new_edge) {
+    for (from, current_edge) in tmp {
+        match (graph[from].node_type, current_edge, next_edge) {
             (
                 NodeType::Other,
                 Some(IntermediateAstElement {
-                    tag,
+                    tag: current_tag,
                     inner: IntermediateAstElementInner::Text(old),
                 }),
                 IntermediateAstElement {
-                    tag,
+                    tag: next_tag,
                     inner:
                         IntermediateAstElementInner::Variable {
                             before,
@@ -220,9 +220,9 @@ pub fn add_edge_maybe_with_node(
                         },
                 },
             ) => (
-                last,
+                from,
                 IntermediateAstElement {
-                    tag,
+                    tag: current_tag + &next_tag,
                     inner: IntermediateAstElementInner::Variable {
                         before: old + &before,
                         variable_name,
@@ -234,7 +234,7 @@ pub fn add_edge_maybe_with_node(
             (
                 NodeType::Other,
                 Some(IntermediateAstElement {
-                    tag,
+                    tag: current_tag,
                     inner:
                         IntermediateAstElementInner::Variable {
                             before,
@@ -244,13 +244,13 @@ pub fn add_edge_maybe_with_node(
                         },
                 }),
                 IntermediateAstElement {
-                    tag,
+                    tag: next_tag,
                     inner: IntermediateAstElementInner::Text(new),
                 },
             ) => (
-                last,
+                from,
                 IntermediateAstElement {
-                    tag,
+                    tag: current_tag + &next_tag,
                     inner: IntermediateAstElementInner::Variable {
                         before,
                         variable_name,
@@ -262,18 +262,24 @@ pub fn add_edge_maybe_with_node(
             (
                 NodeType::Other,
                 Some(IntermediateAstElement {
-                    tag,
+                    tag: current_tag,
                     inner: IntermediateAstElementInner::Text(old),
                 }),
                 IntermediateAstElement {
-                    tag,
+                    tag: next_tag,
                     inner: IntermediateAstElementInner::Text(new),
                 },
-            ) => (last, IntermediateAstElementInner::Text(old + &new)),
-            (NodeType::Other, None, edge_type) => (last, edge_type),
+            ) => (
+                from,
+                IntermediateAstElement {
+                    tag: current_tag + &next_tag,
+                    inner: IntermediateAstElementInner::Text(old + &new),
+                },
+            ),
+            (NodeType::Other, None, edge_type) => (from, edge_type),
             (_, current, edge_type) => {
                 let current_node = graph.add_node(to);
-                graph.add_edge(last, current_node, current);
+                graph.add_edge(from, current_node, current);
                 (current_node, edge_type)
             }
         }
