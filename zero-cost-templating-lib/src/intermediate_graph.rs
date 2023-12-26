@@ -122,6 +122,27 @@ impl Display for TemplateNode {
     }
 }
 
+/// Adds the edge in all cases.
+/// Enforces that no new node is needed. doesn't work at the start of the template because there may not be any node.
+pub fn add_edge(
+    graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
+    tmp: Vec<(NodeIndex, Option<IntermediateAstElement>)>,
+    edge_type: Option<IntermediateAstElement>,
+) -> Vec<(NodeIndex, Option<IntermediateAstElement>)> {
+    todo!();
+}
+
+/// Adds the node in all cases.
+/// Will always return `(NodeIndex, None)`
+pub fn add_node(
+    graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
+    tmp: Vec<(NodeIndex, Option<IntermediateAstElement>)>,
+    node: TemplateNode,
+) -> (NodeIndex, Option<IntermediateAstElement>) {
+    todo!();
+}
+
+#[deprecated]
 pub fn add_node_with_edge(
     graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
     tmp: Vec<(NodeIndex, Option<IntermediateAstElement>)>,
