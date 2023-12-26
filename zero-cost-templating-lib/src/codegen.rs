@@ -159,15 +159,6 @@ pub fn calculate_nodes<'a>(
             quote! {
                 #[must_use]
                 pub struct #template_struct;
-
-                impl<Partial, After>
-                    Template<#template_struct, Partial, After> {
-                    pub fn up(self) -> (After,
-                            impl ::std::async_iter::AsyncIterator<Item =
-                                ::alloc::borrow::Cow<'static, str>>) {
-                        (self.after, async gen {})
-                    }
-                }
             }
         })
 }
@@ -216,6 +207,7 @@ pub fn element_to_yield(
 }
 
 #[must_use]
+#[expect(clippy::too_many_lines, reason = "tmp")]
 pub fn calculate_edge(
     graph: &StableGraph<TemplateNode, IntermediateAstElement>,
     template_codegen: &TemplateCodegen,
@@ -231,19 +223,12 @@ pub fn calculate_edge(
     let return_type = r#return.0;
     let return_create = r#return.1;
     let function_name = edge.weight().variable_name().as_ref().map_or_else(
-        || {
-            format_ident!(
-                "{}_template{}",
-                template_codegen.template_name,
-                edge.id().index()
-            )
-        },
+        || format_ident!("next{}", edge.id().index()), // TODO FIXME only add number when multiple outgoing edges
         |variable| {
             format_ident!(
-                "{}_{}{}",
-                template_codegen.template_name,
+                "{}{}",
                 variable,
-                edge.id().index()
+                edge.id().index() // TODO FIXME only add nubmer when multiple outgoing edges
             )
         },
     );
@@ -286,17 +271,6 @@ pub fn calculate_edge(
                             impl ::std::async_iter::AsyncIterator<Item =
                                 ::alloc::borrow::Cow<'static, str>>) {
                         (#return_create, async gen {
-                            #to_yield
-                        })
-                    }
-                }
-
-                // empty partial
-                impl<After> Template<#impl_template_name, (), After> {
-                    pub fn #function_name(self #parameter) -> (After,
-                            impl ::std::async_iter::AsyncIterator<Item =
-                                ::alloc::borrow::Cow<'static, str>>) {
-                        (self.after, async gen {
                             #to_yield
                         })
                     }
@@ -348,7 +322,7 @@ pub fn codegen_template_codegen(
     let instructions = calculate_nodes(graph, template_codegen);
     let edges = calculate_edges(graph, template_codegen);
     let ident = format_ident!(
-        "{}_initial{}",
+        "{}{}",
         template_codegen.template_name,
         template_codegen.first.index()
     );

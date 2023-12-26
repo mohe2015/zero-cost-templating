@@ -19,26 +19,26 @@ mod if_else_true {
 
     #[template_stream("if_else.html.hbs")]
     pub async gen fn test_true() -> Cow<'static, str> {
-        let template = yields!(if_else_initial0());
+        let template = yields!(if_else0());
         let template = if true {
-            let template = yields!(template.if_else_template0());
-            yields!(template.if_else_template2())
+            let template = yields!(template.next0());
+            yields!(template.next2())
         } else {
-            let template = yields!(template.if_else_template1());
-            yields!(template.if_else_template3())
+            let template = yields!(template.next1());
+            yields!(template.next3())
         };
     }
 }
 
 #[template_stream("if_else.html.hbs")]
 pub async gen fn test_false() -> Cow<'static, str> {
-    let template = yields!(if_else_initial0());
+    let template = yields!(if_else0());
     let template = if false {
-        let template = yields!(template.if_else_template0());
-        yields!(template.if_else_template2())
+        let template = yields!(template.next0()); // TODO FIXME these methods should have a label (maybe we can enforce different labels at a control flow split and then don't need the number)
+        yields!(template.next2())
     } else {
-        let template = yields!(template.if_else_template1());
-        yields!(template.if_else_template3())
+        let template = yields!(template.next1());
+        yields!(template.next3())
     };
 }
 
