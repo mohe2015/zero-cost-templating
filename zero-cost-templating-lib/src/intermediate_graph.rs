@@ -122,8 +122,12 @@ impl Display for TemplateNode {
     }
 }
 
+// Normal use of the library should create few nodes and few necessary calls. But edge cases should not all be optimized if it makes the code ugly etc.
+// Maybe in some future version add the full path to the graph including inner template stuff? maybe for inner templates add an edge layer or something like that for edges that don't exist for all users
+
 /// Adds the node in all cases if it is not NodeType::Other.
 /// If it is NodeType::Other only adds it if there are pending outgoing edges (even not added if current node type is not NodeType::Other).
+// Two partials after each other...
 pub fn flush_with_node(
     graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
     tmp: Vec<(NodeIndex, Option<IntermediateAstElement>)>,
@@ -213,8 +217,6 @@ pub fn add_edge_maybe_with_node(
     */
 }
 
-/// If `input` is nonempty, so nonempty excluding empty each and empty if this will never return a None
-// I think a pre-pass should remove these so you as the caller already know that this is not the case.
 #[must_use]
 #[expect(clippy::too_many_lines, reason = "tmp")]
 pub fn children_to_ast(
