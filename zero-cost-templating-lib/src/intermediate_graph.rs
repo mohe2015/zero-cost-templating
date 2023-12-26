@@ -92,6 +92,7 @@ impl Display for IntermediateAstElement {
     fn fmt(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         match self {
             Self {
+                tag,
                 inner:
                     IntermediateAstElementInner::Variable {
                         before,
@@ -99,27 +100,26 @@ impl Display for IntermediateAstElement {
                         escaping_fun,
                         after,
                     },
-                ..
             } => {
                 write!(
                     formatter,
-                    "{before}{{{{{variable_name}:{escaping_fun}}}}}{after}"
+                    "[{tag}] {before}{{{{{variable_name}:{escaping_fun}}}}}{after}"
                 )
             }
             Self {
+                tag,
                 inner: IntermediateAstElementInner::Text(text),
-                ..
             } => {
-                write!(formatter, "{text}")
+                write!(formatter, "[{tag}] {text}")
             }
             Self {
+                tag,
                 inner: IntermediateAstElementInner::PartialBlockPartial,
-                ..
-            } => write!(formatter, "partial"),
+            } => write!(formatter, "[{tag}] partial"),
             Self {
+                tag,
                 inner: IntermediateAstElementInner::InnerTemplate,
-                ..
-            } => write!(formatter, "template"),
+            } => write!(formatter, "[{tag}] template"),
         }
     }
 }

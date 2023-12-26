@@ -248,22 +248,19 @@ pub fn template_stream(
                     IntermediateAstElementInner::InnerTemplate
                     | IntermediateAstElementInner::PartialBlockPartial => {
                         format!(
-                            "label = \"{} {}\" style = dotted",
-                            er.id().index(),
+                            "label = \"{}\" style = dotted",
                             er.weight().to_string().replace('\"', "\\\"")
                         )
                     }
                     _ => {
                         format!(
-                            "label = \"{} {}\"",
-                            er.id().index(),
+                            "label = \"{}\"",
                             er.weight().to_string().replace('\"', "\\\"")
                         )
                     }
                 },
                 &|_, nr| format!(
-                    "label = \"{} {}\"",
-                    nr.id().index(),
+                    "label = \"{}\"",
                     nr.weight().to_string().replace('\"', "\\\"")
                 ),
             )
