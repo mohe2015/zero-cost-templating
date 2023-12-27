@@ -30,10 +30,9 @@ pub struct IntermediateAstElement {
 #[derive(Debug, PartialEq, Eq, Hash, PartialOrd, Ord, Clone)]
 pub enum IntermediateAstElementInner {
     Variable {
-        // no before text so it does not store the caller provided value across yield points
+        // don't yield text before or after, so we don't need to store the caller provided value across yield points
         variable_name: String,
         escaping_fun: EscapingFunction,
-        after: String,
     },
     Text(String),
     /// The part we want to render when a partial block occurs.
@@ -97,12 +96,11 @@ impl Display for IntermediateAstElement {
                     IntermediateAstElementInner::Variable {
                         variable_name,
                         escaping_fun,
-                        after,
                     },
             } => {
                 write!(
                     formatter,
-                    "[{tag}] {{{{{variable_name}:{escaping_fun}}}}}{after}"
+                    "[{tag}] {{{{{variable_name}:{escaping_fun}}}}}"
                 )
             }
             Self {
@@ -212,32 +210,6 @@ pub fn add_edge_maybe_with_node(
                     _,
                     Some(IntermediateAstElement {
                         tag: current_tag,
-                        inner:
-                            IntermediateAstElementInner::Variable {
-                                variable_name,
-                                escaping_fun,
-                                after,
-                            },
-                    }),
-                    IntermediateAstElement {
-                        tag: next_tag,
-                        inner: IntermediateAstElementInner::Text(new),
-                    },
-                ) => (
-                    from,
-                    Some(IntermediateAstElement {
-                        tag: current_tag + &next_tag,
-                        inner: IntermediateAstElementInner::Variable {
-                            variable_name,
-                            escaping_fun,
-                            after: after + &new,
-                        },
-                    }),
-                ),
-                (
-                    _,
-                    Some(IntermediateAstElement {
-                        tag: current_tag,
                         inner: IntermediateAstElementInner::Text(old),
                     }),
                     IntermediateAstElement {
@@ -291,7 +263,6 @@ pub fn children_to_ast(
                         inner: IntermediateAstElementInner::Variable {
                             variable_name: next_variable,
                             escaping_fun,
-                            after: String::new(),
                         },
                     },
                     TemplateNode {
@@ -524,7 +495,6 @@ pub fn element_to_ast(
                                 inner: IntermediateAstElementInner::Variable {
                                     variable_name: next_variable,
                                     escaping_fun,
-                                    after: String::new(),
                                 },
                             },
                             TemplateNode {

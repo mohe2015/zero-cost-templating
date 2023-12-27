@@ -233,23 +233,19 @@ pub fn element_to_yield(
         IntermediateAstElementInner::Variable {
             variable_name,
             escaping_fun: EscapingFunction::HtmlAttribute,
-            after,
         } => {
             let variable_name = format_ident!("{}", variable_name);
             quote! {
                 yield zero_cost_templating::encode_double_quoted_attribute(#variable_name);
-                yield ::alloc::borrow::Cow::from(#after);
             }
         }
         IntermediateAstElementInner::Variable {
             variable_name,
             escaping_fun: EscapingFunction::HtmlElementInner,
-            after,
         } => {
             let variable_name = format_ident!("{}", variable_name);
             quote! {
                 yield zero_cost_templating::encode_element_text(#variable_name);
-                yield ::alloc::borrow::Cow::from(#after);
             }
         }
         IntermediateAstElementInner::Text(text) => {
