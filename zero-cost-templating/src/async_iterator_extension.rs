@@ -6,26 +6,23 @@ use std::{
 };
 
 pub trait AsyncIterExt {
-    fn next(&mut self) -> Next<'_, Self>;
+    fn next(self) -> Next<Self>;
 }
 
 impl<T> AsyncIterExt for T {
-    fn next(&mut self) -> Next<'_, Self> {
+    fn next(self) -> Next<Self> {
         Next { s: self }
     }
 }
 
-pub struct Next<'s, S: ?Sized> {
-    s: &'s mut S,
+pub struct Next<S: ?Sized> {
+    s: S,
 }
 
-impl<'s, S: AsyncIterator> Future for Next<'s, S>
-where
-    S: Unpin,
-{
+impl<S: AsyncIterator + Unpin> Future for &mut Next<S> {
     type Output = Option<S::Item>;
 
     fn poll(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Option<S::Item>> {
-        Pin::new(&mut *self.s).poll_next(cx)
+        Pin::new(&mut self.s).poll_next(cx)
     }
 }

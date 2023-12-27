@@ -37,10 +37,11 @@ pub async gen fn test() -> Cow<'static, str> {
 #[tokio::main]
 pub async fn main() {
     let mut async_iterator = test();
-    println!("size: {}", std::mem::size_of_val(&async_iterator));
-    let mut async_iterator = pin!(async_iterator);
+    println!("size: {}", std::mem::size_of_val(&async_iterator)); // 264
+    let async_iterator = pin!(async_iterator);
+    let mut async_iterator = async_iterator.next();
     let mut output = String::new();
-    while let Some(value) = async_iterator.next().await {
+    while let Some(value) = (&mut async_iterator).await {
         output.push_str(&value);
     }
     print!("{}", output);
