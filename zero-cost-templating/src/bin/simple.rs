@@ -41,12 +41,13 @@ pub gen fn test() -> Cow<'static, str> {
     let template = yieldi!(template.next());
     let template = yieldi!(template.next());
     let template = yieldv!(template.after("after"));
+    let template = yieldi!(template.next());
     yieldi!(template.next());
 }
 
 #[tokio::main]
 pub async fn main() {
-    let mut async_iterator = test();
+    let async_iterator = test();
     println!("size of &str: {}", std::mem::size_of::<&str>());
     println!("size of Cow: {}", std::mem::size_of::<Cow<'static, str>>());
     println!("size of String: {}", std::mem::size_of::<String>());
@@ -55,7 +56,7 @@ pub async fn main() {
         std::mem::size_of_val(&async_iterator)
     );
     let mut output = String::new();
-    while let Some(value) = async_iterator.next() {
+    for value in async_iterator {
         output.push_str(&value);
     }
     print!("{}", output);
