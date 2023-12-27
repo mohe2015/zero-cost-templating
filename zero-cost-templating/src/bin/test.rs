@@ -10,7 +10,7 @@ extern crate alloc;
 
 use std::borrow::Cow;
 
-use zero_cost_templating::{template_stream, yields};
+use zero_cost_templating::{template_stream, yieldi, yieldv};
 
 // https://github.com/dtolnay/cargo-expand
 
@@ -29,7 +29,6 @@ search for
 `{static coroutine@
 */
 
-// Don't use Cow because it is so big?
 #[must_use]
 pub struct Template<Type, Partial, After> {
     r#type: Type,
@@ -1146,19 +1145,13 @@ impl<Partial, After> Template<AEmptyTemplate35, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate36, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate36,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen {
-                yield
-                    zero_cost_templating::encode_double_quoted_attribute(test);
-            })
+            }, zero_cost_templating::encode_double_quoted_attribute(test))
     }
 }
 impl<Partial, After> Template<AEmptyTemplate36, Partial, After> {
@@ -1184,15 +1177,13 @@ impl<Partial, After> Template<AEmptyTemplate37, Partial, After> {
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate38, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate38, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate38,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(var); })
+            }, zero_cost_templating::encode_element_text(var))
     }
 }
 impl<Partial, After> Template<AEmptyTemplate38, Partial, After> {
@@ -1228,14 +1219,13 @@ impl<Partial, After> Template<AEmptyTemplate40, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate41, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<DVariableTemplate41, Partial,
                 After> {
                 r#type: DVariableTemplate41,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<AEmptyTemplate41, Partial, After> {
@@ -1369,14 +1359,13 @@ impl<Partial, After> Template<AEmptyTemplate47, Partial, After> {
     pub fn t(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(t); })
+            }, zero_cost_templating::encode_element_text(t))
     }
 }
 impl<Partial, After> Template<AEmptyTemplate48, Partial, After> {
@@ -1385,14 +1374,13 @@ impl<Partial, After> Template<AEmptyTemplate48, Partial, After> {
     pub fn f(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(f); })
+            }, zero_cost_templating::encode_element_text(f))
     }
 }
 impl<Partial, After> Template<AEmptyTemplate49, Partial, After> {
@@ -1493,15 +1481,13 @@ impl<Partial, After> Template<AEmptyTemplate54, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachOneVariableTemplate53, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachOneVariableTemplate53, Partial,
                 After> {
                 r#type: FEachOneVariableTemplate53,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<AEmptyTemplate53, Partial, After> {
@@ -1553,15 +1539,13 @@ impl<Partial, After> Template<AEmptyTemplate57, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate58, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate58, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate58,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<AEmptyTemplate58, Partial, After> {
@@ -1571,15 +1555,13 @@ impl<Partial, After> Template<AEmptyTemplate58, Partial, After> {
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate56, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate56, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate56,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<AEmptyTemplate56, Partial, After> {
@@ -1663,15 +1645,13 @@ impl<Partial, After> Template<AEmptyTemplate66, Partial, After> {
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate67, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate67, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate67,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(before); })
+            }, zero_cost_templating::encode_element_text(before))
     }
 }
 impl<PartialName: Copy, PartialPartial, PartialAfter, After>
@@ -1752,15 +1732,13 @@ impl<Partial, After> Template<AEmptyTemplate70, Partial, After> {
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate71, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate71, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate71,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(after); })
+            }, zero_cost_templating::encode_element_text(after))
     }
 }
 impl<Partial, After> Template<AEmptyTemplate71, Partial, After> {
@@ -1834,14 +1812,13 @@ impl<Partial, After> Template<AEmptyTemplate75, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate76, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockTemplate76, Partial,
                 After> {
                 r#type: GPartialBlockTemplate76,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<AEmptyTemplate76, Partial, After> {
@@ -2152,12 +2129,8 @@ impl<Partial, After> Template<AEmptyTemplate93, Partial, After> {
     #[doc =
     "Transition from `93: g_template_only_partial_block_with_variable_multiple other` to `94: g_template_only_partial_block_with_variable_multiple other` using `82: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<AEmptyTemplate92, Partial, After> {
@@ -2212,12 +2185,8 @@ impl<Partial, After> Template<AEmptyTemplate96, Partial, After> {
     #[doc =
     "Transition from `96: g_template_only_partial_block_with_variable_multiple other` to `97: g_template_only_partial_block_with_variable_multiple other` using `86: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<AEmptyTemplate95, Partial, After> {
@@ -2280,12 +2249,8 @@ impl<Partial, After> Template<AEmptyTemplate100, Partial, After> {
     #[doc =
     "Transition from `100: g_template_only_partial_block_with_variable other` to `101: g_template_only_partial_block_with_variable other` using `91: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<AEmptyTemplate99, Partial, After> {
@@ -2351,15 +2316,13 @@ impl<Partial, After> Template<AEmptyTemplate105, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate106, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate106, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate106,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<AEmptyTemplate106, Partial, After> {
@@ -2385,15 +2348,13 @@ impl<Partial, After> Template<AEmptyTemplate107, Partial, After> {
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate108, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate108, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate108,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<AEmptyTemplate108, Partial, After> {
@@ -3553,19 +3514,13 @@ impl<Partial, After> Template<BTextTemplate35, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate36, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate36,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen {
-                yield
-                    zero_cost_templating::encode_double_quoted_attribute(test);
-            })
+            }, zero_cost_templating::encode_double_quoted_attribute(test))
     }
 }
 impl<Partial, After> Template<BTextTemplate36, Partial, After> {
@@ -3591,15 +3546,13 @@ impl<Partial, After> Template<BTextTemplate37, Partial, After> {
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate38, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate38, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate38,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(var); })
+            }, zero_cost_templating::encode_element_text(var))
     }
 }
 impl<Partial, After> Template<BTextTemplate38, Partial, After> {
@@ -3635,14 +3588,13 @@ impl<Partial, After> Template<BTextTemplate40, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate41, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<DVariableTemplate41, Partial,
                 After> {
                 r#type: DVariableTemplate41,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<BTextTemplate41, Partial, After> {
@@ -3776,14 +3728,13 @@ impl<Partial, After> Template<BTextTemplate47, Partial, After> {
     pub fn t(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(t); })
+            }, zero_cost_templating::encode_element_text(t))
     }
 }
 impl<Partial, After> Template<BTextTemplate48, Partial, After> {
@@ -3792,14 +3743,13 @@ impl<Partial, After> Template<BTextTemplate48, Partial, After> {
     pub fn f(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(f); })
+            }, zero_cost_templating::encode_element_text(f))
     }
 }
 impl<Partial, After> Template<BTextTemplate49, Partial, After> {
@@ -3900,15 +3850,13 @@ impl<Partial, After> Template<BTextTemplate54, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachOneVariableTemplate53, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachOneVariableTemplate53, Partial,
                 After> {
                 r#type: FEachOneVariableTemplate53,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<BTextTemplate53, Partial, After> {
@@ -3960,15 +3908,13 @@ impl<Partial, After> Template<BTextTemplate57, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate58, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate58, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate58,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<BTextTemplate58, Partial, After> {
@@ -3978,15 +3924,13 @@ impl<Partial, After> Template<BTextTemplate58, Partial, After> {
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate56, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate56, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate56,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<BTextTemplate56, Partial, After> {
@@ -4070,15 +4014,13 @@ impl<Partial, After> Template<BTextTemplate66, Partial, After> {
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate67, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate67, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate67,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(before); })
+            }, zero_cost_templating::encode_element_text(before))
     }
 }
 impl<PartialName: Copy, PartialPartial, PartialAfter, After>
@@ -4159,15 +4101,13 @@ impl<Partial, After> Template<BTextTemplate70, Partial, After> {
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate71, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate71, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate71,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(after); })
+            }, zero_cost_templating::encode_element_text(after))
     }
 }
 impl<Partial, After> Template<BTextTemplate71, Partial, After> {
@@ -4241,14 +4181,13 @@ impl<Partial, After> Template<BTextTemplate75, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate76, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockTemplate76, Partial,
                 After> {
                 r#type: GPartialBlockTemplate76,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<BTextTemplate76, Partial, After> {
@@ -4559,12 +4498,8 @@ impl<Partial, After> Template<BTextTemplate93, Partial, After> {
     #[doc =
     "Transition from `93: g_template_only_partial_block_with_variable_multiple other` to `94: g_template_only_partial_block_with_variable_multiple other` using `82: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<BTextTemplate92, Partial, After> {
@@ -4619,12 +4554,8 @@ impl<Partial, After> Template<BTextTemplate96, Partial, After> {
     #[doc =
     "Transition from `96: g_template_only_partial_block_with_variable_multiple other` to `97: g_template_only_partial_block_with_variable_multiple other` using `86: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<BTextTemplate95, Partial, After> {
@@ -4687,12 +4618,8 @@ impl<Partial, After> Template<BTextTemplate100, Partial, After> {
     #[doc =
     "Transition from `100: g_template_only_partial_block_with_variable other` to `101: g_template_only_partial_block_with_variable other` using `91: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<BTextTemplate99, Partial, After> {
@@ -4758,15 +4685,13 @@ impl<Partial, After> Template<BTextTemplate105, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate106, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate106, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate106,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<BTextTemplate106, Partial, After> {
@@ -4792,15 +4717,13 @@ impl<Partial, After> Template<BTextTemplate107, Partial, After> {
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate108, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate108, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate108,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<BTextTemplate108, Partial, After> {
@@ -5969,19 +5892,13 @@ impl<Partial, After> Template<CElementWithAttributeTemplate35, Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate36, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate36,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen {
-                yield
-                    zero_cost_templating::encode_double_quoted_attribute(test);
-            })
+            }, zero_cost_templating::encode_double_quoted_attribute(test))
     }
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate36, Partial, After>
@@ -6009,15 +5926,13 @@ impl<Partial, After> Template<CElementWithAttributeTemplate37, Partial, After>
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate38, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate38, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate38,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(var); })
+            }, zero_cost_templating::encode_element_text(var))
     }
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate38, Partial, After>
@@ -6056,14 +5971,13 @@ impl<Partial, After> Template<CElementWithAttributeTemplate40, Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate41, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<DVariableTemplate41, Partial,
                 After> {
                 r#type: DVariableTemplate41,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate41, Partial, After>
@@ -6208,14 +6122,13 @@ impl<Partial, After> Template<CElementWithAttributeTemplate47, Partial, After>
     pub fn t(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(t); })
+            }, zero_cost_templating::encode_element_text(t))
     }
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate48, Partial, After>
@@ -6225,14 +6138,13 @@ impl<Partial, After> Template<CElementWithAttributeTemplate48, Partial, After>
     pub fn f(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(f); })
+            }, zero_cost_templating::encode_element_text(f))
     }
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate49, Partial, After>
@@ -6341,15 +6253,13 @@ impl<Partial, After> Template<CElementWithAttributeTemplate54, Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachOneVariableTemplate53, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachOneVariableTemplate53, Partial,
                 After> {
                 r#type: FEachOneVariableTemplate53,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate53, Partial, After>
@@ -6405,15 +6315,13 @@ impl<Partial, After> Template<CElementWithAttributeTemplate57, Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate58, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate58, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate58,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate58, Partial, After>
@@ -6424,15 +6332,13 @@ impl<Partial, After> Template<CElementWithAttributeTemplate58, Partial, After>
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate56, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate56, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate56,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate56, Partial, After>
@@ -6522,15 +6428,13 @@ impl<Partial, After> Template<CElementWithAttributeTemplate66, Partial, After>
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate67, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate67, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate67,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(before); })
+            }, zero_cost_templating::encode_element_text(before))
     }
 }
 impl<PartialName: Copy, PartialPartial, PartialAfter, After>
@@ -6613,15 +6517,13 @@ impl<Partial, After> Template<CElementWithAttributeTemplate70, Partial, After>
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate71, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate71, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate71,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(after); })
+            }, zero_cost_templating::encode_element_text(after))
     }
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate71, Partial, After>
@@ -6699,14 +6601,13 @@ impl<Partial, After> Template<CElementWithAttributeTemplate75, Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate76, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockTemplate76, Partial,
                 After> {
                 r#type: GPartialBlockTemplate76,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate76, Partial, After>
@@ -7029,12 +6930,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate93, Partial, After>
     #[doc =
     "Transition from `93: g_template_only_partial_block_with_variable_multiple other` to `94: g_template_only_partial_block_with_variable_multiple other` using `82: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate92, Partial, After>
@@ -7091,12 +6988,8 @@ impl<Partial, After> Template<CElementWithAttributeTemplate96, Partial, After>
     #[doc =
     "Transition from `96: g_template_only_partial_block_with_variable_multiple other` to `97: g_template_only_partial_block_with_variable_multiple other` using `86: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate95, Partial, After>
@@ -7162,12 +7055,8 @@ impl<Partial, After>
     #[doc =
     "Transition from `100: g_template_only_partial_block_with_variable other` to `101: g_template_only_partial_block_with_variable other` using `91: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<CElementWithAttributeTemplate99, Partial, After>
@@ -7237,15 +7126,13 @@ impl<Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate106, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate106, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate106,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After>
@@ -7273,15 +7160,13 @@ impl<Partial, After>
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate108, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate108, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate108,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After>
@@ -8449,19 +8334,13 @@ impl<Partial, After> Template<CElementWithContentTemplate35, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate36, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate36,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen {
-                yield
-                    zero_cost_templating::encode_double_quoted_attribute(test);
-            })
+            }, zero_cost_templating::encode_double_quoted_attribute(test))
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate36, Partial, After> {
@@ -8487,15 +8366,13 @@ impl<Partial, After> Template<CElementWithContentTemplate37, Partial, After> {
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate38, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate38, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate38,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(var); })
+            }, zero_cost_templating::encode_element_text(var))
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate38, Partial, After> {
@@ -8531,14 +8408,13 @@ impl<Partial, After> Template<CElementWithContentTemplate40, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate41, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<DVariableTemplate41, Partial,
                 After> {
                 r#type: DVariableTemplate41,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate41, Partial, After> {
@@ -8672,14 +8548,13 @@ impl<Partial, After> Template<CElementWithContentTemplate47, Partial, After> {
     pub fn t(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(t); })
+            }, zero_cost_templating::encode_element_text(t))
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate48, Partial, After> {
@@ -8688,14 +8563,13 @@ impl<Partial, After> Template<CElementWithContentTemplate48, Partial, After> {
     pub fn f(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(f); })
+            }, zero_cost_templating::encode_element_text(f))
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate49, Partial, After> {
@@ -8796,15 +8670,13 @@ impl<Partial, After> Template<CElementWithContentTemplate54, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachOneVariableTemplate53, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachOneVariableTemplate53, Partial,
                 After> {
                 r#type: FEachOneVariableTemplate53,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate53, Partial, After> {
@@ -8856,15 +8728,13 @@ impl<Partial, After> Template<CElementWithContentTemplate57, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate58, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate58, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate58,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate58, Partial, After> {
@@ -8874,15 +8744,13 @@ impl<Partial, After> Template<CElementWithContentTemplate58, Partial, After> {
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate56, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate56, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate56,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate56, Partial, After> {
@@ -8966,15 +8834,13 @@ impl<Partial, After> Template<CElementWithContentTemplate66, Partial, After> {
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate67, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate67, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate67,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(before); })
+            }, zero_cost_templating::encode_element_text(before))
     }
 }
 impl<PartialName: Copy, PartialPartial, PartialAfter, After>
@@ -9055,15 +8921,13 @@ impl<Partial, After> Template<CElementWithContentTemplate70, Partial, After> {
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate71, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate71, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate71,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(after); })
+            }, zero_cost_templating::encode_element_text(after))
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate71, Partial, After> {
@@ -9137,14 +9001,13 @@ impl<Partial, After> Template<CElementWithContentTemplate75, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate76, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockTemplate76, Partial,
                 After> {
                 r#type: GPartialBlockTemplate76,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate76, Partial, After> {
@@ -9455,12 +9318,8 @@ impl<Partial, After> Template<CElementWithContentTemplate93, Partial, After> {
     #[doc =
     "Transition from `93: g_template_only_partial_block_with_variable_multiple other` to `94: g_template_only_partial_block_with_variable_multiple other` using `82: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate92, Partial, After> {
@@ -9515,12 +9374,8 @@ impl<Partial, After> Template<CElementWithContentTemplate96, Partial, After> {
     #[doc =
     "Transition from `96: g_template_only_partial_block_with_variable_multiple other` to `97: g_template_only_partial_block_with_variable_multiple other` using `86: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate95, Partial, After> {
@@ -9584,12 +9439,8 @@ impl<Partial, After> Template<CElementWithContentTemplate100, Partial, After>
     #[doc =
     "Transition from `100: g_template_only_partial_block_with_variable other` to `101: g_template_only_partial_block_with_variable other` using `91: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate99, Partial, After> {
@@ -9656,15 +9507,13 @@ impl<Partial, After> Template<CElementWithContentTemplate105, Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate106, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate106, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate106,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate106, Partial, After>
@@ -9692,15 +9541,13 @@ impl<Partial, After> Template<CElementWithContentTemplate107, Partial, After>
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate108, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate108, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate108,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<CElementWithContentTemplate108, Partial, After>
@@ -10866,19 +10713,13 @@ impl<Partial, After> Template<CEmptyElementTemplate35, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate36, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate36,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen {
-                yield
-                    zero_cost_templating::encode_double_quoted_attribute(test);
-            })
+            }, zero_cost_templating::encode_double_quoted_attribute(test))
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate36, Partial, After> {
@@ -10904,15 +10745,13 @@ impl<Partial, After> Template<CEmptyElementTemplate37, Partial, After> {
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate38, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate38, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate38,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(var); })
+            }, zero_cost_templating::encode_element_text(var))
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate38, Partial, After> {
@@ -10948,14 +10787,13 @@ impl<Partial, After> Template<CEmptyElementTemplate40, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate41, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<DVariableTemplate41, Partial,
                 After> {
                 r#type: DVariableTemplate41,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate41, Partial, After> {
@@ -11089,14 +10927,13 @@ impl<Partial, After> Template<CEmptyElementTemplate47, Partial, After> {
     pub fn t(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(t); })
+            }, zero_cost_templating::encode_element_text(t))
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate48, Partial, After> {
@@ -11105,14 +10942,13 @@ impl<Partial, After> Template<CEmptyElementTemplate48, Partial, After> {
     pub fn f(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(f); })
+            }, zero_cost_templating::encode_element_text(f))
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate49, Partial, After> {
@@ -11213,15 +11049,13 @@ impl<Partial, After> Template<CEmptyElementTemplate54, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachOneVariableTemplate53, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachOneVariableTemplate53, Partial,
                 After> {
                 r#type: FEachOneVariableTemplate53,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate53, Partial, After> {
@@ -11273,15 +11107,13 @@ impl<Partial, After> Template<CEmptyElementTemplate57, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate58, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate58, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate58,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate58, Partial, After> {
@@ -11291,15 +11123,13 @@ impl<Partial, After> Template<CEmptyElementTemplate58, Partial, After> {
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate56, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate56, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate56,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate56, Partial, After> {
@@ -11383,15 +11213,13 @@ impl<Partial, After> Template<CEmptyElementTemplate66, Partial, After> {
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate67, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate67, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate67,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(before); })
+            }, zero_cost_templating::encode_element_text(before))
     }
 }
 impl<PartialName: Copy, PartialPartial, PartialAfter, After>
@@ -11472,15 +11300,13 @@ impl<Partial, After> Template<CEmptyElementTemplate70, Partial, After> {
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate71, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate71, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate71,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(after); })
+            }, zero_cost_templating::encode_element_text(after))
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate71, Partial, After> {
@@ -11554,14 +11380,13 @@ impl<Partial, After> Template<CEmptyElementTemplate75, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate76, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockTemplate76, Partial,
                 After> {
                 r#type: GPartialBlockTemplate76,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate76, Partial, After> {
@@ -11872,12 +11697,8 @@ impl<Partial, After> Template<CEmptyElementTemplate93, Partial, After> {
     #[doc =
     "Transition from `93: g_template_only_partial_block_with_variable_multiple other` to `94: g_template_only_partial_block_with_variable_multiple other` using `82: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate92, Partial, After> {
@@ -11932,12 +11753,8 @@ impl<Partial, After> Template<CEmptyElementTemplate96, Partial, After> {
     #[doc =
     "Transition from `96: g_template_only_partial_block_with_variable_multiple other` to `97: g_template_only_partial_block_with_variable_multiple other` using `86: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate95, Partial, After> {
@@ -12000,12 +11817,8 @@ impl<Partial, After> Template<CEmptyElementTemplate100, Partial, After> {
     #[doc =
     "Transition from `100: g_template_only_partial_block_with_variable other` to `101: g_template_only_partial_block_with_variable other` using `91: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate99, Partial, After> {
@@ -12071,15 +11884,13 @@ impl<Partial, After> Template<CEmptyElementTemplate105, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate106, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate106, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate106,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate106, Partial, After> {
@@ -12105,15 +11916,13 @@ impl<Partial, After> Template<CEmptyElementTemplate107, Partial, After> {
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate108, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate108, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate108,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<CEmptyElementTemplate108, Partial, After> {
@@ -13283,19 +13092,13 @@ impl<Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate36, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate36,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen {
-                yield
-                    zero_cost_templating::encode_double_quoted_attribute(test);
-            })
+            }, zero_cost_templating::encode_double_quoted_attribute(test))
     }
 }
 impl<Partial, After>
@@ -13323,15 +13126,13 @@ impl<Partial, After>
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate38, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate38, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate38,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(var); })
+            }, zero_cost_templating::encode_element_text(var))
     }
 }
 impl<Partial, After>
@@ -13370,14 +13171,13 @@ impl<Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate41, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<DVariableTemplate41, Partial,
                 After> {
                 r#type: DVariableTemplate41,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -13522,14 +13322,13 @@ impl<Partial, After>
     pub fn t(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(t); })
+            }, zero_cost_templating::encode_element_text(t))
     }
 }
 impl<Partial, After>
@@ -13539,14 +13338,13 @@ impl<Partial, After>
     pub fn f(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(f); })
+            }, zero_cost_templating::encode_element_text(f))
     }
 }
 impl<Partial, After>
@@ -13655,15 +13453,13 @@ impl<Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachOneVariableTemplate53, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachOneVariableTemplate53, Partial,
                 After> {
                 r#type: FEachOneVariableTemplate53,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After>
@@ -13719,15 +13515,13 @@ impl<Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate58, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate58, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate58,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After>
@@ -13738,15 +13532,13 @@ impl<Partial, After>
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate56, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate56, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate56,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After>
@@ -13836,15 +13628,13 @@ impl<Partial, After>
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate67, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate67, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate67,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(before); })
+            }, zero_cost_templating::encode_element_text(before))
     }
 }
 impl<PartialName: Copy, PartialPartial, PartialAfter, After>
@@ -13927,15 +13717,13 @@ impl<Partial, After>
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate71, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate71, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate71,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(after); })
+            }, zero_cost_templating::encode_element_text(after))
     }
 }
 impl<Partial, After>
@@ -14013,14 +13801,13 @@ impl<Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate76, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockTemplate76, Partial,
                 After> {
                 r#type: GPartialBlockTemplate76,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -14343,12 +14130,8 @@ impl<Partial, After>
     #[doc =
     "Transition from `93: g_template_only_partial_block_with_variable_multiple other` to `94: g_template_only_partial_block_with_variable_multiple other` using `82: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -14405,12 +14188,8 @@ impl<Partial, After>
     #[doc =
     "Transition from `96: g_template_only_partial_block_with_variable_multiple other` to `97: g_template_only_partial_block_with_variable_multiple other` using `86: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -14476,12 +14255,8 @@ impl<Partial, After>
     #[doc =
     "Transition from `100: g_template_only_partial_block_with_variable other` to `101: g_template_only_partial_block_with_variable other` using `91: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -14551,15 +14326,13 @@ impl<Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate106, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate106, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate106,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After>
@@ -14587,15 +14360,13 @@ impl<Partial, After>
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate108, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate108, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate108,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After>
@@ -15763,19 +15534,13 @@ impl<Partial, After> Template<CSelfClosingTemplate35, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate36, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate36,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen {
-                yield
-                    zero_cost_templating::encode_double_quoted_attribute(test);
-            })
+            }, zero_cost_templating::encode_double_quoted_attribute(test))
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate36, Partial, After> {
@@ -15801,15 +15566,13 @@ impl<Partial, After> Template<CSelfClosingTemplate37, Partial, After> {
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate38, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate38, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate38,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(var); })
+            }, zero_cost_templating::encode_element_text(var))
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate38, Partial, After> {
@@ -15845,14 +15608,13 @@ impl<Partial, After> Template<CSelfClosingTemplate40, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate41, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<DVariableTemplate41, Partial,
                 After> {
                 r#type: DVariableTemplate41,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate41, Partial, After> {
@@ -15986,14 +15748,13 @@ impl<Partial, After> Template<CSelfClosingTemplate47, Partial, After> {
     pub fn t(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(t); })
+            }, zero_cost_templating::encode_element_text(t))
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate48, Partial, After> {
@@ -16002,14 +15763,13 @@ impl<Partial, After> Template<CSelfClosingTemplate48, Partial, After> {
     pub fn f(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(f); })
+            }, zero_cost_templating::encode_element_text(f))
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate49, Partial, After> {
@@ -16110,15 +15870,13 @@ impl<Partial, After> Template<CSelfClosingTemplate54, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachOneVariableTemplate53, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachOneVariableTemplate53, Partial,
                 After> {
                 r#type: FEachOneVariableTemplate53,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate53, Partial, After> {
@@ -16170,15 +15928,13 @@ impl<Partial, After> Template<CSelfClosingTemplate57, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate58, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate58, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate58,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate58, Partial, After> {
@@ -16188,15 +15944,13 @@ impl<Partial, After> Template<CSelfClosingTemplate58, Partial, After> {
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate56, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate56, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate56,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate56, Partial, After> {
@@ -16280,15 +16034,13 @@ impl<Partial, After> Template<CSelfClosingTemplate66, Partial, After> {
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate67, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate67, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate67,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(before); })
+            }, zero_cost_templating::encode_element_text(before))
     }
 }
 impl<PartialName: Copy, PartialPartial, PartialAfter, After>
@@ -16369,15 +16121,13 @@ impl<Partial, After> Template<CSelfClosingTemplate70, Partial, After> {
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate71, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate71, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate71,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(after); })
+            }, zero_cost_templating::encode_element_text(after))
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate71, Partial, After> {
@@ -16451,14 +16201,13 @@ impl<Partial, After> Template<CSelfClosingTemplate75, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate76, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockTemplate76, Partial,
                 After> {
                 r#type: GPartialBlockTemplate76,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate76, Partial, After> {
@@ -16769,12 +16518,8 @@ impl<Partial, After> Template<CSelfClosingTemplate93, Partial, After> {
     #[doc =
     "Transition from `93: g_template_only_partial_block_with_variable_multiple other` to `94: g_template_only_partial_block_with_variable_multiple other` using `82: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate92, Partial, After> {
@@ -16829,12 +16574,8 @@ impl<Partial, After> Template<CSelfClosingTemplate96, Partial, After> {
     #[doc =
     "Transition from `96: g_template_only_partial_block_with_variable_multiple other` to `97: g_template_only_partial_block_with_variable_multiple other` using `86: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate95, Partial, After> {
@@ -16897,12 +16638,8 @@ impl<Partial, After> Template<CSelfClosingTemplate100, Partial, After> {
     #[doc =
     "Transition from `100: g_template_only_partial_block_with_variable other` to `101: g_template_only_partial_block_with_variable other` using `91: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate99, Partial, After> {
@@ -16968,15 +16705,13 @@ impl<Partial, After> Template<CSelfClosingTemplate105, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate106, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate106, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate106,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate106, Partial, After> {
@@ -17002,15 +16737,13 @@ impl<Partial, After> Template<CSelfClosingTemplate107, Partial, After> {
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate108, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate108, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate108,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<CSelfClosingTemplate108, Partial, After> {
@@ -18180,19 +17913,13 @@ impl<Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate36, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate36,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen {
-                yield
-                    zero_cost_templating::encode_double_quoted_attribute(test);
-            })
+            }, zero_cost_templating::encode_double_quoted_attribute(test))
     }
 }
 impl<Partial, After>
@@ -18220,15 +17947,13 @@ impl<Partial, After>
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate38, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate38, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate38,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(var); })
+            }, zero_cost_templating::encode_element_text(var))
     }
 }
 impl<Partial, After>
@@ -18267,14 +17992,13 @@ impl<Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate41, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<DVariableTemplate41, Partial,
                 After> {
                 r#type: DVariableTemplate41,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -18419,14 +18143,13 @@ impl<Partial, After>
     pub fn t(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(t); })
+            }, zero_cost_templating::encode_element_text(t))
     }
 }
 impl<Partial, After>
@@ -18436,14 +18159,13 @@ impl<Partial, After>
     pub fn f(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(f); })
+            }, zero_cost_templating::encode_element_text(f))
     }
 }
 impl<Partial, After>
@@ -18552,15 +18274,13 @@ impl<Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachOneVariableTemplate53, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachOneVariableTemplate53, Partial,
                 After> {
                 r#type: FEachOneVariableTemplate53,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After>
@@ -18616,15 +18336,13 @@ impl<Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate58, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate58, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate58,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After>
@@ -18635,15 +18353,13 @@ impl<Partial, After>
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate56, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate56, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate56,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After>
@@ -18733,15 +18449,13 @@ impl<Partial, After>
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate67, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate67, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate67,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(before); })
+            }, zero_cost_templating::encode_element_text(before))
     }
 }
 impl<PartialName: Copy, PartialPartial, PartialAfter, After>
@@ -18824,15 +18538,13 @@ impl<Partial, After>
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate71, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate71, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate71,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(after); })
+            }, zero_cost_templating::encode_element_text(after))
     }
 }
 impl<Partial, After>
@@ -18910,14 +18622,13 @@ impl<Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate76, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockTemplate76, Partial,
                 After> {
                 r#type: GPartialBlockTemplate76,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -19240,12 +18951,8 @@ impl<Partial, After>
     #[doc =
     "Transition from `93: g_template_only_partial_block_with_variable_multiple other` to `94: g_template_only_partial_block_with_variable_multiple other` using `82: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -19302,12 +19009,8 @@ impl<Partial, After>
     #[doc =
     "Transition from `96: g_template_only_partial_block_with_variable_multiple other` to `97: g_template_only_partial_block_with_variable_multiple other` using `86: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -19373,12 +19076,8 @@ impl<Partial, After>
     #[doc =
     "Transition from `100: g_template_only_partial_block_with_variable other` to `101: g_template_only_partial_block_with_variable other` using `91: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -19448,15 +19147,13 @@ impl<Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate106, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate106, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate106,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After>
@@ -19484,15 +19181,13 @@ impl<Partial, After>
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate108, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate108, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate108,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After>
@@ -20660,19 +20355,13 @@ impl<Partial, After> Template<DVariableTemplate35, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate36, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate36,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen {
-                yield
-                    zero_cost_templating::encode_double_quoted_attribute(test);
-            })
+            }, zero_cost_templating::encode_double_quoted_attribute(test))
     }
 }
 impl<Partial, After> Template<DVariableTemplate36, Partial, After> {
@@ -20698,15 +20387,13 @@ impl<Partial, After> Template<DVariableTemplate37, Partial, After> {
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate38, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate38, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate38,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(var); })
+            }, zero_cost_templating::encode_element_text(var))
     }
 }
 impl<Partial, After> Template<DVariableTemplate38, Partial, After> {
@@ -20742,14 +20429,13 @@ impl<Partial, After> Template<DVariableTemplate40, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate41, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<DVariableTemplate41, Partial,
                 After> {
                 r#type: DVariableTemplate41,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<DVariableTemplate41, Partial, After> {
@@ -20883,14 +20569,13 @@ impl<Partial, After> Template<DVariableTemplate47, Partial, After> {
     pub fn t(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(t); })
+            }, zero_cost_templating::encode_element_text(t))
     }
 }
 impl<Partial, After> Template<DVariableTemplate48, Partial, After> {
@@ -20899,14 +20584,13 @@ impl<Partial, After> Template<DVariableTemplate48, Partial, After> {
     pub fn f(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(f); })
+            }, zero_cost_templating::encode_element_text(f))
     }
 }
 impl<Partial, After> Template<DVariableTemplate49, Partial, After> {
@@ -21007,15 +20691,13 @@ impl<Partial, After> Template<DVariableTemplate54, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachOneVariableTemplate53, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachOneVariableTemplate53, Partial,
                 After> {
                 r#type: FEachOneVariableTemplate53,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<DVariableTemplate53, Partial, After> {
@@ -21067,15 +20749,13 @@ impl<Partial, After> Template<DVariableTemplate57, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate58, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate58, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate58,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<DVariableTemplate58, Partial, After> {
@@ -21085,15 +20765,13 @@ impl<Partial, After> Template<DVariableTemplate58, Partial, After> {
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate56, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate56, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate56,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<DVariableTemplate56, Partial, After> {
@@ -21177,15 +20855,13 @@ impl<Partial, After> Template<DVariableTemplate66, Partial, After> {
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate67, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate67, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate67,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(before); })
+            }, zero_cost_templating::encode_element_text(before))
     }
 }
 impl<PartialName: Copy, PartialPartial, PartialAfter, After>
@@ -21266,15 +20942,13 @@ impl<Partial, After> Template<DVariableTemplate70, Partial, After> {
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate71, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate71, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate71,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(after); })
+            }, zero_cost_templating::encode_element_text(after))
     }
 }
 impl<Partial, After> Template<DVariableTemplate71, Partial, After> {
@@ -21348,14 +21022,13 @@ impl<Partial, After> Template<DVariableTemplate75, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate76, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockTemplate76, Partial,
                 After> {
                 r#type: GPartialBlockTemplate76,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<DVariableTemplate76, Partial, After> {
@@ -21666,12 +21339,8 @@ impl<Partial, After> Template<DVariableTemplate93, Partial, After> {
     #[doc =
     "Transition from `93: g_template_only_partial_block_with_variable_multiple other` to `94: g_template_only_partial_block_with_variable_multiple other` using `82: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<DVariableTemplate92, Partial, After> {
@@ -21726,12 +21395,8 @@ impl<Partial, After> Template<DVariableTemplate96, Partial, After> {
     #[doc =
     "Transition from `96: g_template_only_partial_block_with_variable_multiple other` to `97: g_template_only_partial_block_with_variable_multiple other` using `86: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<DVariableTemplate95, Partial, After> {
@@ -21794,12 +21459,8 @@ impl<Partial, After> Template<DVariableTemplate100, Partial, After> {
     #[doc =
     "Transition from `100: g_template_only_partial_block_with_variable other` to `101: g_template_only_partial_block_with_variable other` using `91: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<DVariableTemplate99, Partial, After> {
@@ -21865,15 +21526,13 @@ impl<Partial, After> Template<DVariableTemplate105, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate106, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate106, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate106,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<DVariableTemplate106, Partial, After> {
@@ -21899,15 +21558,13 @@ impl<Partial, After> Template<DVariableTemplate107, Partial, After> {
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate108, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate108, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate108,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<DVariableTemplate108, Partial, After> {
@@ -23069,19 +22726,13 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate35, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate36, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate36,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen {
-                yield
-                    zero_cost_templating::encode_double_quoted_attribute(test);
-            })
+            }, zero_cost_templating::encode_double_quoted_attribute(test))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate36, Partial, After> {
@@ -23107,15 +22758,13 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate37, Partial, After> {
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate38, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate38, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate38,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(var); })
+            }, zero_cost_templating::encode_element_text(var))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate38, Partial, After> {
@@ -23151,14 +22800,13 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate40, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate41, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<DVariableTemplate41, Partial,
                 After> {
                 r#type: DVariableTemplate41,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate41, Partial, After> {
@@ -23292,14 +22940,13 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate47, Partial, After> {
     pub fn t(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(t); })
+            }, zero_cost_templating::encode_element_text(t))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate48, Partial, After> {
@@ -23308,14 +22955,13 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate48, Partial, After> {
     pub fn f(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(f); })
+            }, zero_cost_templating::encode_element_text(f))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate49, Partial, After> {
@@ -23416,15 +23062,13 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate54, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachOneVariableTemplate53, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachOneVariableTemplate53, Partial,
                 After> {
                 r#type: FEachOneVariableTemplate53,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate53, Partial, After> {
@@ -23476,15 +23120,13 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate57, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate58, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate58, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate58,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate58, Partial, After> {
@@ -23494,15 +23136,13 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate58, Partial, After> {
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate56, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate56, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate56,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate56, Partial, After> {
@@ -23586,15 +23226,13 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate66, Partial, After> {
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate67, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate67, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate67,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(before); })
+            }, zero_cost_templating::encode_element_text(before))
     }
 }
 impl<PartialName: Copy, PartialPartial, PartialAfter, After>
@@ -23675,15 +23313,13 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate70, Partial, After> {
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate71, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate71, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate71,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(after); })
+            }, zero_cost_templating::encode_element_text(after))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate71, Partial, After> {
@@ -23757,14 +23393,13 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate75, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate76, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockTemplate76, Partial,
                 After> {
                 r#type: GPartialBlockTemplate76,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate76, Partial, After> {
@@ -24075,12 +23710,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate93, Partial, After> {
     #[doc =
     "Transition from `93: g_template_only_partial_block_with_variable_multiple other` to `94: g_template_only_partial_block_with_variable_multiple other` using `82: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate92, Partial, After> {
@@ -24135,12 +23766,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate96, Partial, After> {
     #[doc =
     "Transition from `96: g_template_only_partial_block_with_variable_multiple other` to `97: g_template_only_partial_block_with_variable_multiple other` using `86: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate95, Partial, After> {
@@ -24203,12 +23830,8 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate100, Partial, After> {
     #[doc =
     "Transition from `100: g_template_only_partial_block_with_variable other` to `101: g_template_only_partial_block_with_variable other` using `91: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate99, Partial, After> {
@@ -24274,15 +23897,13 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate105, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate106, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate106, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate106,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate106, Partial, After> {
@@ -24308,15 +23929,13 @@ impl<Partial, After> Template<EIfElseEmptyFalseTemplate107, Partial, After> {
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate108, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate108, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate108,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyFalseTemplate108, Partial, After> {
@@ -25482,19 +25101,13 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate35, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate36, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate36,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen {
-                yield
-                    zero_cost_templating::encode_double_quoted_attribute(test);
-            })
+            }, zero_cost_templating::encode_double_quoted_attribute(test))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate36, Partial, After> {
@@ -25520,15 +25133,13 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate37, Partial, After> {
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate38, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate38, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate38,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(var); })
+            }, zero_cost_templating::encode_element_text(var))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate38, Partial, After> {
@@ -25564,14 +25175,13 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate40, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate41, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<DVariableTemplate41, Partial,
                 After> {
                 r#type: DVariableTemplate41,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate41, Partial, After> {
@@ -25705,14 +25315,13 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate47, Partial, After> {
     pub fn t(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(t); })
+            }, zero_cost_templating::encode_element_text(t))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate48, Partial, After> {
@@ -25721,14 +25330,13 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate48, Partial, After> {
     pub fn f(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(f); })
+            }, zero_cost_templating::encode_element_text(f))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate49, Partial, After> {
@@ -25829,15 +25437,13 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate54, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachOneVariableTemplate53, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachOneVariableTemplate53, Partial,
                 After> {
                 r#type: FEachOneVariableTemplate53,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate53, Partial, After> {
@@ -25889,15 +25495,13 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate57, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate58, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate58, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate58,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate58, Partial, After> {
@@ -25907,15 +25511,13 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate58, Partial, After> {
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate56, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate56, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate56,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate56, Partial, After> {
@@ -25999,15 +25601,13 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate66, Partial, After> {
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate67, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate67, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate67,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(before); })
+            }, zero_cost_templating::encode_element_text(before))
     }
 }
 impl<PartialName: Copy, PartialPartial, PartialAfter, After>
@@ -26088,15 +25688,13 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate70, Partial, After> {
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate71, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate71, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate71,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(after); })
+            }, zero_cost_templating::encode_element_text(after))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate71, Partial, After> {
@@ -26170,14 +25768,13 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate75, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate76, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockTemplate76, Partial,
                 After> {
                 r#type: GPartialBlockTemplate76,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate76, Partial, After> {
@@ -26488,12 +26085,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate93, Partial, After> {
     #[doc =
     "Transition from `93: g_template_only_partial_block_with_variable_multiple other` to `94: g_template_only_partial_block_with_variable_multiple other` using `82: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate92, Partial, After> {
@@ -26548,12 +26141,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate96, Partial, After> {
     #[doc =
     "Transition from `96: g_template_only_partial_block_with_variable_multiple other` to `97: g_template_only_partial_block_with_variable_multiple other` using `86: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate95, Partial, After> {
@@ -26616,12 +26205,8 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate100, Partial, After> {
     #[doc =
     "Transition from `100: g_template_only_partial_block_with_variable other` to `101: g_template_only_partial_block_with_variable other` using `91: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate99, Partial, After> {
@@ -26687,15 +26272,13 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate105, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate106, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate106, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate106,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate106, Partial, After> {
@@ -26721,15 +26304,13 @@ impl<Partial, After> Template<EIfElseEmptyTrueTemplate107, Partial, After> {
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate108, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate108, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate108,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTrueTemplate108, Partial, After> {
@@ -27895,19 +27476,13 @@ impl<Partial, After> Template<EIfElseEmptyTemplate35, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate36, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate36,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen {
-                yield
-                    zero_cost_templating::encode_double_quoted_attribute(test);
-            })
+            }, zero_cost_templating::encode_double_quoted_attribute(test))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate36, Partial, After> {
@@ -27933,15 +27508,13 @@ impl<Partial, After> Template<EIfElseEmptyTemplate37, Partial, After> {
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate38, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate38, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate38,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(var); })
+            }, zero_cost_templating::encode_element_text(var))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate38, Partial, After> {
@@ -27977,14 +27550,13 @@ impl<Partial, After> Template<EIfElseEmptyTemplate40, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate41, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<DVariableTemplate41, Partial,
                 After> {
                 r#type: DVariableTemplate41,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate41, Partial, After> {
@@ -28118,14 +27690,13 @@ impl<Partial, After> Template<EIfElseEmptyTemplate47, Partial, After> {
     pub fn t(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(t); })
+            }, zero_cost_templating::encode_element_text(t))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate48, Partial, After> {
@@ -28134,14 +27705,13 @@ impl<Partial, After> Template<EIfElseEmptyTemplate48, Partial, After> {
     pub fn f(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(f); })
+            }, zero_cost_templating::encode_element_text(f))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate49, Partial, After> {
@@ -28242,15 +27812,13 @@ impl<Partial, After> Template<EIfElseEmptyTemplate54, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachOneVariableTemplate53, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachOneVariableTemplate53, Partial,
                 After> {
                 r#type: FEachOneVariableTemplate53,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate53, Partial, After> {
@@ -28302,15 +27870,13 @@ impl<Partial, After> Template<EIfElseEmptyTemplate57, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate58, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate58, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate58,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate58, Partial, After> {
@@ -28320,15 +27886,13 @@ impl<Partial, After> Template<EIfElseEmptyTemplate58, Partial, After> {
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate56, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate56, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate56,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate56, Partial, After> {
@@ -28412,15 +27976,13 @@ impl<Partial, After> Template<EIfElseEmptyTemplate66, Partial, After> {
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate67, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate67, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate67,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(before); })
+            }, zero_cost_templating::encode_element_text(before))
     }
 }
 impl<PartialName: Copy, PartialPartial, PartialAfter, After>
@@ -28501,15 +28063,13 @@ impl<Partial, After> Template<EIfElseEmptyTemplate70, Partial, After> {
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate71, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate71, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate71,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(after); })
+            }, zero_cost_templating::encode_element_text(after))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate71, Partial, After> {
@@ -28583,14 +28143,13 @@ impl<Partial, After> Template<EIfElseEmptyTemplate75, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate76, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockTemplate76, Partial,
                 After> {
                 r#type: GPartialBlockTemplate76,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate76, Partial, After> {
@@ -28901,12 +28460,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate93, Partial, After> {
     #[doc =
     "Transition from `93: g_template_only_partial_block_with_variable_multiple other` to `94: g_template_only_partial_block_with_variable_multiple other` using `82: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate92, Partial, After> {
@@ -28961,12 +28516,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate96, Partial, After> {
     #[doc =
     "Transition from `96: g_template_only_partial_block_with_variable_multiple other` to `97: g_template_only_partial_block_with_variable_multiple other` using `86: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate95, Partial, After> {
@@ -29029,12 +28580,8 @@ impl<Partial, After> Template<EIfElseEmptyTemplate100, Partial, After> {
     #[doc =
     "Transition from `100: g_template_only_partial_block_with_variable other` to `101: g_template_only_partial_block_with_variable other` using `91: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate99, Partial, After> {
@@ -29100,15 +28647,13 @@ impl<Partial, After> Template<EIfElseEmptyTemplate105, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate106, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate106, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate106,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate106, Partial, After> {
@@ -29134,15 +28679,13 @@ impl<Partial, After> Template<EIfElseEmptyTemplate107, Partial, After> {
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate108, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate108, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate108,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<EIfElseEmptyTemplate108, Partial, After> {
@@ -30306,19 +29849,13 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate35, Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate36, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate36,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen {
-                yield
-                    zero_cost_templating::encode_double_quoted_attribute(test);
-            })
+            }, zero_cost_templating::encode_double_quoted_attribute(test))
     }
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate36, Partial, After>
@@ -30346,15 +29883,13 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate37, Partial, After>
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate38, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate38, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate38,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(var); })
+            }, zero_cost_templating::encode_element_text(var))
     }
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate38, Partial, After>
@@ -30392,14 +29927,13 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate40, Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate41, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<DVariableTemplate41, Partial,
                 After> {
                 r#type: DVariableTemplate41,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate41, Partial, After>
@@ -30542,14 +30076,13 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate47, Partial, After>
     pub fn t(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(t); })
+            }, zero_cost_templating::encode_element_text(t))
     }
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate48, Partial, After>
@@ -30559,14 +30092,13 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate48, Partial, After>
     pub fn f(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(f); })
+            }, zero_cost_templating::encode_element_text(f))
     }
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate49, Partial, After>
@@ -30675,15 +30207,13 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate54, Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachOneVariableTemplate53, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachOneVariableTemplate53, Partial,
                 After> {
                 r#type: FEachOneVariableTemplate53,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate53, Partial, After>
@@ -30739,15 +30269,13 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate57, Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate58, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate58, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate58,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate58, Partial, After>
@@ -30758,15 +30286,13 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate58, Partial, After>
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate56, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate56, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate56,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate56, Partial, After>
@@ -30856,15 +30382,13 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate66, Partial, After>
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate67, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate67, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate67,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(before); })
+            }, zero_cost_templating::encode_element_text(before))
     }
 }
 impl<PartialName: Copy, PartialPartial, PartialAfter, After>
@@ -30947,15 +30471,13 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate70, Partial, After>
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate71, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate71, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate71,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(after); })
+            }, zero_cost_templating::encode_element_text(after))
     }
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate71, Partial, After>
@@ -31033,14 +30555,13 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate75, Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate76, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockTemplate76, Partial,
                 After> {
                 r#type: GPartialBlockTemplate76,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate76, Partial, After>
@@ -31363,12 +30884,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate93, Partial, After>
     #[doc =
     "Transition from `93: g_template_only_partial_block_with_variable_multiple other` to `94: g_template_only_partial_block_with_variable_multiple other` using `82: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate92, Partial, After>
@@ -31425,12 +30942,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate96, Partial, After>
     #[doc =
     "Transition from `96: g_template_only_partial_block_with_variable_multiple other` to `97: g_template_only_partial_block_with_variable_multiple other` using `86: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate95, Partial, After>
@@ -31496,12 +31009,8 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate100, Partial, After>
     #[doc =
     "Transition from `100: g_template_only_partial_block_with_variable other` to `101: g_template_only_partial_block_with_variable other` using `91: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate99, Partial, After>
@@ -31571,15 +31080,13 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate105, Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate106, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate106, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate106,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate106, Partial, After>
@@ -31607,15 +31114,13 @@ impl<Partial, After> Template<EIfElseWithVariablesTemplate107, Partial, After>
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate108, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate108, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate108,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<EIfElseWithVariablesTemplate108, Partial, After>
@@ -32783,19 +32288,13 @@ impl<Partial, After> Template<EIfElseTemplate35, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate36, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate36,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen {
-                yield
-                    zero_cost_templating::encode_double_quoted_attribute(test);
-            })
+            }, zero_cost_templating::encode_double_quoted_attribute(test))
     }
 }
 impl<Partial, After> Template<EIfElseTemplate36, Partial, After> {
@@ -32821,15 +32320,13 @@ impl<Partial, After> Template<EIfElseTemplate37, Partial, After> {
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate38, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate38, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate38,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(var); })
+            }, zero_cost_templating::encode_element_text(var))
     }
 }
 impl<Partial, After> Template<EIfElseTemplate38, Partial, After> {
@@ -32865,14 +32362,13 @@ impl<Partial, After> Template<EIfElseTemplate40, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate41, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<DVariableTemplate41, Partial,
                 After> {
                 r#type: DVariableTemplate41,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<EIfElseTemplate41, Partial, After> {
@@ -33006,14 +32502,13 @@ impl<Partial, After> Template<EIfElseTemplate47, Partial, After> {
     pub fn t(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(t); })
+            }, zero_cost_templating::encode_element_text(t))
     }
 }
 impl<Partial, After> Template<EIfElseTemplate48, Partial, After> {
@@ -33022,14 +32517,13 @@ impl<Partial, After> Template<EIfElseTemplate48, Partial, After> {
     pub fn f(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(f); })
+            }, zero_cost_templating::encode_element_text(f))
     }
 }
 impl<Partial, After> Template<EIfElseTemplate49, Partial, After> {
@@ -33130,15 +32624,13 @@ impl<Partial, After> Template<EIfElseTemplate54, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachOneVariableTemplate53, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachOneVariableTemplate53, Partial,
                 After> {
                 r#type: FEachOneVariableTemplate53,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<EIfElseTemplate53, Partial, After> {
@@ -33190,15 +32682,13 @@ impl<Partial, After> Template<EIfElseTemplate57, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate58, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate58, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate58,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<EIfElseTemplate58, Partial, After> {
@@ -33208,15 +32698,13 @@ impl<Partial, After> Template<EIfElseTemplate58, Partial, After> {
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate56, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate56, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate56,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<EIfElseTemplate56, Partial, After> {
@@ -33300,15 +32788,13 @@ impl<Partial, After> Template<EIfElseTemplate66, Partial, After> {
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate67, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate67, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate67,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(before); })
+            }, zero_cost_templating::encode_element_text(before))
     }
 }
 impl<PartialName: Copy, PartialPartial, PartialAfter, After>
@@ -33389,15 +32875,13 @@ impl<Partial, After> Template<EIfElseTemplate70, Partial, After> {
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate71, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate71, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate71,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(after); })
+            }, zero_cost_templating::encode_element_text(after))
     }
 }
 impl<Partial, After> Template<EIfElseTemplate71, Partial, After> {
@@ -33471,14 +32955,13 @@ impl<Partial, After> Template<EIfElseTemplate75, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate76, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockTemplate76, Partial,
                 After> {
                 r#type: GPartialBlockTemplate76,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<EIfElseTemplate76, Partial, After> {
@@ -33789,12 +33272,8 @@ impl<Partial, After> Template<EIfElseTemplate93, Partial, After> {
     #[doc =
     "Transition from `93: g_template_only_partial_block_with_variable_multiple other` to `94: g_template_only_partial_block_with_variable_multiple other` using `82: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<EIfElseTemplate92, Partial, After> {
@@ -33849,12 +33328,8 @@ impl<Partial, After> Template<EIfElseTemplate96, Partial, After> {
     #[doc =
     "Transition from `96: g_template_only_partial_block_with_variable_multiple other` to `97: g_template_only_partial_block_with_variable_multiple other` using `86: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<EIfElseTemplate95, Partial, After> {
@@ -33917,12 +33392,8 @@ impl<Partial, After> Template<EIfElseTemplate100, Partial, After> {
     #[doc =
     "Transition from `100: g_template_only_partial_block_with_variable other` to `101: g_template_only_partial_block_with_variable other` using `91: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<EIfElseTemplate99, Partial, After> {
@@ -33988,15 +33459,13 @@ impl<Partial, After> Template<EIfElseTemplate105, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate106, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate106, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate106,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<EIfElseTemplate106, Partial, After> {
@@ -34022,15 +33491,13 @@ impl<Partial, After> Template<EIfElseTemplate107, Partial, After> {
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate108, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate108, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate108,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<EIfElseTemplate108, Partial, After> {
@@ -35192,19 +34659,13 @@ impl<Partial, After> Template<FEachEmptyTemplate35, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate36, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate36,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen {
-                yield
-                    zero_cost_templating::encode_double_quoted_attribute(test);
-            })
+            }, zero_cost_templating::encode_double_quoted_attribute(test))
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate36, Partial, After> {
@@ -35230,15 +34691,13 @@ impl<Partial, After> Template<FEachEmptyTemplate37, Partial, After> {
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate38, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate38, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate38,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(var); })
+            }, zero_cost_templating::encode_element_text(var))
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate38, Partial, After> {
@@ -35274,14 +34733,13 @@ impl<Partial, After> Template<FEachEmptyTemplate40, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate41, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<DVariableTemplate41, Partial,
                 After> {
                 r#type: DVariableTemplate41,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate41, Partial, After> {
@@ -35415,14 +34873,13 @@ impl<Partial, After> Template<FEachEmptyTemplate47, Partial, After> {
     pub fn t(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(t); })
+            }, zero_cost_templating::encode_element_text(t))
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate48, Partial, After> {
@@ -35431,14 +34888,13 @@ impl<Partial, After> Template<FEachEmptyTemplate48, Partial, After> {
     pub fn f(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(f); })
+            }, zero_cost_templating::encode_element_text(f))
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate49, Partial, After> {
@@ -35539,15 +34995,13 @@ impl<Partial, After> Template<FEachEmptyTemplate54, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachOneVariableTemplate53, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachOneVariableTemplate53, Partial,
                 After> {
                 r#type: FEachOneVariableTemplate53,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate53, Partial, After> {
@@ -35599,15 +35053,13 @@ impl<Partial, After> Template<FEachEmptyTemplate57, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate58, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate58, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate58,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate58, Partial, After> {
@@ -35617,15 +35069,13 @@ impl<Partial, After> Template<FEachEmptyTemplate58, Partial, After> {
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate56, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate56, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate56,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate56, Partial, After> {
@@ -35709,15 +35159,13 @@ impl<Partial, After> Template<FEachEmptyTemplate66, Partial, After> {
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate67, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate67, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate67,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(before); })
+            }, zero_cost_templating::encode_element_text(before))
     }
 }
 impl<PartialName: Copy, PartialPartial, PartialAfter, After>
@@ -35798,15 +35246,13 @@ impl<Partial, After> Template<FEachEmptyTemplate70, Partial, After> {
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate71, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate71, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate71,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(after); })
+            }, zero_cost_templating::encode_element_text(after))
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate71, Partial, After> {
@@ -35880,14 +35326,13 @@ impl<Partial, After> Template<FEachEmptyTemplate75, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate76, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockTemplate76, Partial,
                 After> {
                 r#type: GPartialBlockTemplate76,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate76, Partial, After> {
@@ -36198,12 +35643,8 @@ impl<Partial, After> Template<FEachEmptyTemplate93, Partial, After> {
     #[doc =
     "Transition from `93: g_template_only_partial_block_with_variable_multiple other` to `94: g_template_only_partial_block_with_variable_multiple other` using `82: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate92, Partial, After> {
@@ -36258,12 +35699,8 @@ impl<Partial, After> Template<FEachEmptyTemplate96, Partial, After> {
     #[doc =
     "Transition from `96: g_template_only_partial_block_with_variable_multiple other` to `97: g_template_only_partial_block_with_variable_multiple other` using `86: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate95, Partial, After> {
@@ -36326,12 +35763,8 @@ impl<Partial, After> Template<FEachEmptyTemplate100, Partial, After> {
     #[doc =
     "Transition from `100: g_template_only_partial_block_with_variable other` to `101: g_template_only_partial_block_with_variable other` using `91: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate99, Partial, After> {
@@ -36397,15 +35830,13 @@ impl<Partial, After> Template<FEachEmptyTemplate105, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate106, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate106, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate106,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate106, Partial, After> {
@@ -36431,15 +35862,13 @@ impl<Partial, After> Template<FEachEmptyTemplate107, Partial, After> {
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate108, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate108, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate108,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<FEachEmptyTemplate108, Partial, After> {
@@ -37602,19 +37031,13 @@ impl<Partial, After> Template<FEachOneVariableTemplate35, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate36, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate36,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen {
-                yield
-                    zero_cost_templating::encode_double_quoted_attribute(test);
-            })
+            }, zero_cost_templating::encode_double_quoted_attribute(test))
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate36, Partial, After> {
@@ -37640,15 +37063,13 @@ impl<Partial, After> Template<FEachOneVariableTemplate37, Partial, After> {
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate38, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate38, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate38,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(var); })
+            }, zero_cost_templating::encode_element_text(var))
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate38, Partial, After> {
@@ -37684,14 +37105,13 @@ impl<Partial, After> Template<FEachOneVariableTemplate40, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate41, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<DVariableTemplate41, Partial,
                 After> {
                 r#type: DVariableTemplate41,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate41, Partial, After> {
@@ -37825,14 +37245,13 @@ impl<Partial, After> Template<FEachOneVariableTemplate47, Partial, After> {
     pub fn t(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(t); })
+            }, zero_cost_templating::encode_element_text(t))
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate48, Partial, After> {
@@ -37841,14 +37260,13 @@ impl<Partial, After> Template<FEachOneVariableTemplate48, Partial, After> {
     pub fn f(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(f); })
+            }, zero_cost_templating::encode_element_text(f))
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate49, Partial, After> {
@@ -37949,15 +37367,13 @@ impl<Partial, After> Template<FEachOneVariableTemplate54, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachOneVariableTemplate53, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachOneVariableTemplate53, Partial,
                 After> {
                 r#type: FEachOneVariableTemplate53,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate53, Partial, After> {
@@ -38009,15 +37425,13 @@ impl<Partial, After> Template<FEachOneVariableTemplate57, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate58, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate58, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate58,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate58, Partial, After> {
@@ -38027,15 +37441,13 @@ impl<Partial, After> Template<FEachOneVariableTemplate58, Partial, After> {
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate56, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate56, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate56,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate56, Partial, After> {
@@ -38119,15 +37531,13 @@ impl<Partial, After> Template<FEachOneVariableTemplate66, Partial, After> {
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate67, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate67, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate67,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(before); })
+            }, zero_cost_templating::encode_element_text(before))
     }
 }
 impl<PartialName: Copy, PartialPartial, PartialAfter, After>
@@ -38208,15 +37618,13 @@ impl<Partial, After> Template<FEachOneVariableTemplate70, Partial, After> {
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate71, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate71, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate71,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(after); })
+            }, zero_cost_templating::encode_element_text(after))
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate71, Partial, After> {
@@ -38290,14 +37698,13 @@ impl<Partial, After> Template<FEachOneVariableTemplate75, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate76, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockTemplate76, Partial,
                 After> {
                 r#type: GPartialBlockTemplate76,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate76, Partial, After> {
@@ -38608,12 +38015,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate93, Partial, After> {
     #[doc =
     "Transition from `93: g_template_only_partial_block_with_variable_multiple other` to `94: g_template_only_partial_block_with_variable_multiple other` using `82: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate92, Partial, After> {
@@ -38668,12 +38071,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate96, Partial, After> {
     #[doc =
     "Transition from `96: g_template_only_partial_block_with_variable_multiple other` to `97: g_template_only_partial_block_with_variable_multiple other` using `86: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate95, Partial, After> {
@@ -38736,12 +38135,8 @@ impl<Partial, After> Template<FEachOneVariableTemplate100, Partial, After> {
     #[doc =
     "Transition from `100: g_template_only_partial_block_with_variable other` to `101: g_template_only_partial_block_with_variable other` using `91: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate99, Partial, After> {
@@ -38807,15 +38202,13 @@ impl<Partial, After> Template<FEachOneVariableTemplate105, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate106, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate106, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate106,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate106, Partial, After> {
@@ -38841,15 +38234,13 @@ impl<Partial, After> Template<FEachOneVariableTemplate107, Partial, After> {
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate108, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate108, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate108,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<FEachOneVariableTemplate108, Partial, After> {
@@ -40015,19 +39406,13 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate35, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate36, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate36,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen {
-                yield
-                    zero_cost_templating::encode_double_quoted_attribute(test);
-            })
+            }, zero_cost_templating::encode_double_quoted_attribute(test))
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate36, Partial, After> {
@@ -40053,15 +39438,13 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate37, Partial, After> {
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate38, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate38, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate38,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(var); })
+            }, zero_cost_templating::encode_element_text(var))
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate38, Partial, After> {
@@ -40097,14 +39480,13 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate40, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate41, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<DVariableTemplate41, Partial,
                 After> {
                 r#type: DVariableTemplate41,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate41, Partial, After> {
@@ -40238,14 +39620,13 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate47, Partial, After> {
     pub fn t(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(t); })
+            }, zero_cost_templating::encode_element_text(t))
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate48, Partial, After> {
@@ -40254,14 +39635,13 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate48, Partial, After> {
     pub fn f(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(f); })
+            }, zero_cost_templating::encode_element_text(f))
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate49, Partial, After> {
@@ -40362,15 +39742,13 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate54, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachOneVariableTemplate53, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachOneVariableTemplate53, Partial,
                 After> {
                 r#type: FEachOneVariableTemplate53,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate53, Partial, After> {
@@ -40422,15 +39800,13 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate57, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate58, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate58, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate58,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate58, Partial, After> {
@@ -40440,15 +39816,13 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate58, Partial, After> {
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate56, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate56, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate56,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate56, Partial, After> {
@@ -40532,15 +39906,13 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate66, Partial, After> {
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate67, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate67, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate67,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(before); })
+            }, zero_cost_templating::encode_element_text(before))
     }
 }
 impl<PartialName: Copy, PartialPartial, PartialAfter, After>
@@ -40621,15 +39993,13 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate70, Partial, After> {
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate71, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate71, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate71,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(after); })
+            }, zero_cost_templating::encode_element_text(after))
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate71, Partial, After> {
@@ -40703,14 +40073,13 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate75, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate76, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockTemplate76, Partial,
                 After> {
                 r#type: GPartialBlockTemplate76,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate76, Partial, After> {
@@ -41021,12 +40390,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate93, Partial, After> {
     #[doc =
     "Transition from `93: g_template_only_partial_block_with_variable_multiple other` to `94: g_template_only_partial_block_with_variable_multiple other` using `82: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate92, Partial, After> {
@@ -41081,12 +40446,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate96, Partial, After> {
     #[doc =
     "Transition from `96: g_template_only_partial_block_with_variable_multiple other` to `97: g_template_only_partial_block_with_variable_multiple other` using `86: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate95, Partial, After> {
@@ -41149,12 +40510,8 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate100, Partial, After> {
     #[doc =
     "Transition from `100: g_template_only_partial_block_with_variable other` to `101: g_template_only_partial_block_with_variable other` using `91: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate99, Partial, After> {
@@ -41220,15 +40577,13 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate105, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate106, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate106, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate106,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate106, Partial, After> {
@@ -41254,15 +40609,13 @@ impl<Partial, After> Template<FEachTwoVariablesTemplate107, Partial, After> {
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate108, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate108, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate108,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesTemplate108, Partial, After> {
@@ -42436,19 +41789,13 @@ impl<Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate36, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate36,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen {
-                yield
-                    zero_cost_templating::encode_double_quoted_attribute(test);
-            })
+            }, zero_cost_templating::encode_double_quoted_attribute(test))
     }
 }
 impl<Partial, After>
@@ -42476,15 +41823,13 @@ impl<Partial, After>
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate38, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate38, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate38,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(var); })
+            }, zero_cost_templating::encode_element_text(var))
     }
 }
 impl<Partial, After>
@@ -42523,14 +41868,13 @@ impl<Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate41, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<DVariableTemplate41, Partial,
                 After> {
                 r#type: DVariableTemplate41,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -42675,14 +42019,13 @@ impl<Partial, After>
     pub fn t(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(t); })
+            }, zero_cost_templating::encode_element_text(t))
     }
 }
 impl<Partial, After>
@@ -42692,14 +42035,13 @@ impl<Partial, After>
     pub fn f(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(f); })
+            }, zero_cost_templating::encode_element_text(f))
     }
 }
 impl<Partial, After>
@@ -42808,15 +42150,13 @@ impl<Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachOneVariableTemplate53, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachOneVariableTemplate53, Partial,
                 After> {
                 r#type: FEachOneVariableTemplate53,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After>
@@ -42872,15 +42212,13 @@ impl<Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate58, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate58, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate58,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After>
@@ -42891,15 +42229,13 @@ impl<Partial, After>
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate56, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate56, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate56,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After>
@@ -42989,15 +42325,13 @@ impl<Partial, After>
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate67, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate67, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate67,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(before); })
+            }, zero_cost_templating::encode_element_text(before))
     }
 }
 impl<PartialName: Copy, PartialPartial, PartialAfter, After>
@@ -43080,15 +42414,13 @@ impl<Partial, After>
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate71, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate71, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate71,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(after); })
+            }, zero_cost_templating::encode_element_text(after))
     }
 }
 impl<Partial, After>
@@ -43166,14 +42498,13 @@ impl<Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate76, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockTemplate76, Partial,
                 After> {
                 r#type: GPartialBlockTemplate76,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -43496,12 +42827,8 @@ impl<Partial, After>
     #[doc =
     "Transition from `93: g_template_only_partial_block_with_variable_multiple other` to `94: g_template_only_partial_block_with_variable_multiple other` using `82: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -43558,12 +42885,8 @@ impl<Partial, After>
     #[doc =
     "Transition from `96: g_template_only_partial_block_with_variable_multiple other` to `97: g_template_only_partial_block_with_variable_multiple other` using `86: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -43629,12 +42952,8 @@ impl<Partial, After>
     #[doc =
     "Transition from `100: g_template_only_partial_block_with_variable other` to `101: g_template_only_partial_block_with_variable other` using `91: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -43704,15 +43023,13 @@ impl<Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate106, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate106, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate106,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After>
@@ -43740,15 +43057,13 @@ impl<Partial, After>
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate108, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate108, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate108,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After>
@@ -44916,19 +44231,13 @@ impl<Partial, After> Template<GEmptyTemplateTemplate35, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate36, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate36,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen {
-                yield
-                    zero_cost_templating::encode_double_quoted_attribute(test);
-            })
+            }, zero_cost_templating::encode_double_quoted_attribute(test))
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate36, Partial, After> {
@@ -44954,15 +44263,13 @@ impl<Partial, After> Template<GEmptyTemplateTemplate37, Partial, After> {
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate38, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate38, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate38,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(var); })
+            }, zero_cost_templating::encode_element_text(var))
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate38, Partial, After> {
@@ -44998,14 +44305,13 @@ impl<Partial, After> Template<GEmptyTemplateTemplate40, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate41, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<DVariableTemplate41, Partial,
                 After> {
                 r#type: DVariableTemplate41,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate41, Partial, After> {
@@ -45139,14 +44445,13 @@ impl<Partial, After> Template<GEmptyTemplateTemplate47, Partial, After> {
     pub fn t(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(t); })
+            }, zero_cost_templating::encode_element_text(t))
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate48, Partial, After> {
@@ -45155,14 +44460,13 @@ impl<Partial, After> Template<GEmptyTemplateTemplate48, Partial, After> {
     pub fn f(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(f); })
+            }, zero_cost_templating::encode_element_text(f))
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate49, Partial, After> {
@@ -45263,15 +44567,13 @@ impl<Partial, After> Template<GEmptyTemplateTemplate54, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachOneVariableTemplate53, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachOneVariableTemplate53, Partial,
                 After> {
                 r#type: FEachOneVariableTemplate53,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate53, Partial, After> {
@@ -45323,15 +44625,13 @@ impl<Partial, After> Template<GEmptyTemplateTemplate57, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate58, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate58, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate58,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate58, Partial, After> {
@@ -45341,15 +44641,13 @@ impl<Partial, After> Template<GEmptyTemplateTemplate58, Partial, After> {
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate56, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate56, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate56,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate56, Partial, After> {
@@ -45433,15 +44731,13 @@ impl<Partial, After> Template<GEmptyTemplateTemplate66, Partial, After> {
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate67, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate67, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate67,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(before); })
+            }, zero_cost_templating::encode_element_text(before))
     }
 }
 impl<PartialName: Copy, PartialPartial, PartialAfter, After>
@@ -45522,15 +44818,13 @@ impl<Partial, After> Template<GEmptyTemplateTemplate70, Partial, After> {
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate71, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate71, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate71,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(after); })
+            }, zero_cost_templating::encode_element_text(after))
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate71, Partial, After> {
@@ -45604,14 +44898,13 @@ impl<Partial, After> Template<GEmptyTemplateTemplate75, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate76, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockTemplate76, Partial,
                 After> {
                 r#type: GPartialBlockTemplate76,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate76, Partial, After> {
@@ -45922,12 +45215,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate93, Partial, After> {
     #[doc =
     "Transition from `93: g_template_only_partial_block_with_variable_multiple other` to `94: g_template_only_partial_block_with_variable_multiple other` using `82: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate92, Partial, After> {
@@ -45982,12 +45271,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate96, Partial, After> {
     #[doc =
     "Transition from `96: g_template_only_partial_block_with_variable_multiple other` to `97: g_template_only_partial_block_with_variable_multiple other` using `86: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate95, Partial, After> {
@@ -46050,12 +45335,8 @@ impl<Partial, After> Template<GEmptyTemplateTemplate100, Partial, After> {
     #[doc =
     "Transition from `100: g_template_only_partial_block_with_variable other` to `101: g_template_only_partial_block_with_variable other` using `91: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate99, Partial, After> {
@@ -46121,15 +45402,13 @@ impl<Partial, After> Template<GEmptyTemplateTemplate105, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate106, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate106, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate106,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate106, Partial, After> {
@@ -46155,15 +45434,13 @@ impl<Partial, After> Template<GEmptyTemplateTemplate107, Partial, After> {
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate108, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate108, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate108,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<GEmptyTemplateTemplate108, Partial, After> {
@@ -47327,19 +46604,13 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate35, Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate36, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate36,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen {
-                yield
-                    zero_cost_templating::encode_double_quoted_attribute(test);
-            })
+            }, zero_cost_templating::encode_double_quoted_attribute(test))
     }
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate36, Partial, After>
@@ -47367,15 +46638,13 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate37, Partial, After>
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate38, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate38, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate38,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(var); })
+            }, zero_cost_templating::encode_element_text(var))
     }
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate38, Partial, After>
@@ -47413,14 +46682,13 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate40, Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate41, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<DVariableTemplate41, Partial,
                 After> {
                 r#type: DVariableTemplate41,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate41, Partial, After>
@@ -47563,14 +46831,13 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate47, Partial, After>
     pub fn t(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(t); })
+            }, zero_cost_templating::encode_element_text(t))
     }
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate48, Partial, After>
@@ -47580,14 +46847,13 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate48, Partial, After>
     pub fn f(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(f); })
+            }, zero_cost_templating::encode_element_text(f))
     }
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate49, Partial, After>
@@ -47696,15 +46962,13 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate54, Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachOneVariableTemplate53, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachOneVariableTemplate53, Partial,
                 After> {
                 r#type: FEachOneVariableTemplate53,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate53, Partial, After>
@@ -47760,15 +47024,13 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate57, Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate58, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate58, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate58,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate58, Partial, After>
@@ -47779,15 +47041,13 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate58, Partial, After>
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate56, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate56, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate56,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate56, Partial, After>
@@ -47877,15 +47137,13 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate66, Partial, After>
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate67, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate67, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate67,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(before); })
+            }, zero_cost_templating::encode_element_text(before))
     }
 }
 impl<PartialName: Copy, PartialPartial, PartialAfter, After>
@@ -47968,15 +47226,13 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate70, Partial, After>
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate71, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate71, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate71,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(after); })
+            }, zero_cost_templating::encode_element_text(after))
     }
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate71, Partial, After>
@@ -48054,14 +47310,13 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate75, Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate76, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockTemplate76, Partial,
                 After> {
                 r#type: GPartialBlockTemplate76,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate76, Partial, After>
@@ -48384,12 +47639,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate93, Partial, After>
     #[doc =
     "Transition from `93: g_template_only_partial_block_with_variable_multiple other` to `94: g_template_only_partial_block_with_variable_multiple other` using `82: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate92, Partial, After>
@@ -48446,12 +47697,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate96, Partial, After>
     #[doc =
     "Transition from `96: g_template_only_partial_block_with_variable_multiple other` to `97: g_template_only_partial_block_with_variable_multiple other` using `86: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate95, Partial, After>
@@ -48517,12 +47764,8 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate100, Partial, After>
     #[doc =
     "Transition from `100: g_template_only_partial_block_with_variable other` to `101: g_template_only_partial_block_with_variable other` using `91: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate99, Partial, After>
@@ -48592,15 +47835,13 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate105, Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate106, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate106, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate106,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate106, Partial, After>
@@ -48628,15 +47869,13 @@ impl<Partial, After> Template<GPartialBlockPartialTemplate107, Partial, After>
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate108, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate108, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate108,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<GPartialBlockPartialTemplate108, Partial, After>
@@ -49804,19 +49043,13 @@ impl<Partial, After> Template<GPartialBlockTemplate35, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate36, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate36,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen {
-                yield
-                    zero_cost_templating::encode_double_quoted_attribute(test);
-            })
+            }, zero_cost_templating::encode_double_quoted_attribute(test))
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate36, Partial, After> {
@@ -49842,15 +49075,13 @@ impl<Partial, After> Template<GPartialBlockTemplate37, Partial, After> {
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate38, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate38, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate38,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(var); })
+            }, zero_cost_templating::encode_element_text(var))
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate38, Partial, After> {
@@ -49886,14 +49117,13 @@ impl<Partial, After> Template<GPartialBlockTemplate40, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate41, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<DVariableTemplate41, Partial,
                 After> {
                 r#type: DVariableTemplate41,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate41, Partial, After> {
@@ -50027,14 +49257,13 @@ impl<Partial, After> Template<GPartialBlockTemplate47, Partial, After> {
     pub fn t(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(t); })
+            }, zero_cost_templating::encode_element_text(t))
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate48, Partial, After> {
@@ -50043,14 +49272,13 @@ impl<Partial, After> Template<GPartialBlockTemplate48, Partial, After> {
     pub fn f(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(f); })
+            }, zero_cost_templating::encode_element_text(f))
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate49, Partial, After> {
@@ -50151,15 +49379,13 @@ impl<Partial, After> Template<GPartialBlockTemplate54, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachOneVariableTemplate53, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachOneVariableTemplate53, Partial,
                 After> {
                 r#type: FEachOneVariableTemplate53,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate53, Partial, After> {
@@ -50211,15 +49437,13 @@ impl<Partial, After> Template<GPartialBlockTemplate57, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate58, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate58, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate58,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate58, Partial, After> {
@@ -50229,15 +49453,13 @@ impl<Partial, After> Template<GPartialBlockTemplate58, Partial, After> {
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate56, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate56, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate56,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate56, Partial, After> {
@@ -50321,15 +49543,13 @@ impl<Partial, After> Template<GPartialBlockTemplate66, Partial, After> {
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate67, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate67, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate67,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(before); })
+            }, zero_cost_templating::encode_element_text(before))
     }
 }
 impl<PartialName: Copy, PartialPartial, PartialAfter, After>
@@ -50410,15 +49630,13 @@ impl<Partial, After> Template<GPartialBlockTemplate70, Partial, After> {
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate71, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate71, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate71,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(after); })
+            }, zero_cost_templating::encode_element_text(after))
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate71, Partial, After> {
@@ -50492,14 +49710,13 @@ impl<Partial, After> Template<GPartialBlockTemplate75, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate76, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockTemplate76, Partial,
                 After> {
                 r#type: GPartialBlockTemplate76,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate76, Partial, After> {
@@ -50810,12 +50027,8 @@ impl<Partial, After> Template<GPartialBlockTemplate93, Partial, After> {
     #[doc =
     "Transition from `93: g_template_only_partial_block_with_variable_multiple other` to `94: g_template_only_partial_block_with_variable_multiple other` using `82: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate92, Partial, After> {
@@ -50870,12 +50083,8 @@ impl<Partial, After> Template<GPartialBlockTemplate96, Partial, After> {
     #[doc =
     "Transition from `96: g_template_only_partial_block_with_variable_multiple other` to `97: g_template_only_partial_block_with_variable_multiple other` using `86: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate95, Partial, After> {
@@ -50938,12 +50147,8 @@ impl<Partial, After> Template<GPartialBlockTemplate100, Partial, After> {
     #[doc =
     "Transition from `100: g_template_only_partial_block_with_variable other` to `101: g_template_only_partial_block_with_variable other` using `91: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate99, Partial, After> {
@@ -51009,15 +50214,13 @@ impl<Partial, After> Template<GPartialBlockTemplate105, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate106, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate106, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate106,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate106, Partial, After> {
@@ -51043,15 +50246,13 @@ impl<Partial, After> Template<GPartialBlockTemplate107, Partial, After> {
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate108, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate108, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate108,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<GPartialBlockTemplate108, Partial, After> {
@@ -52222,19 +51423,13 @@ impl<Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate36, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate36,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen {
-                yield
-                    zero_cost_templating::encode_double_quoted_attribute(test);
-            })
+            }, zero_cost_templating::encode_double_quoted_attribute(test))
     }
 }
 impl<Partial, After>
@@ -52262,15 +51457,13 @@ impl<Partial, After>
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate38, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate38, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate38,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(var); })
+            }, zero_cost_templating::encode_element_text(var))
     }
 }
 impl<Partial, After>
@@ -52309,14 +51502,13 @@ impl<Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate41, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<DVariableTemplate41, Partial,
                 After> {
                 r#type: DVariableTemplate41,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -52461,14 +51653,13 @@ impl<Partial, After>
     pub fn t(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(t); })
+            }, zero_cost_templating::encode_element_text(t))
     }
 }
 impl<Partial, After>
@@ -52478,14 +51669,13 @@ impl<Partial, After>
     pub fn f(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(f); })
+            }, zero_cost_templating::encode_element_text(f))
     }
 }
 impl<Partial, After>
@@ -52594,15 +51784,13 @@ impl<Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachOneVariableTemplate53, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachOneVariableTemplate53, Partial,
                 After> {
                 r#type: FEachOneVariableTemplate53,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After>
@@ -52658,15 +51846,13 @@ impl<Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate58, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate58, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate58,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After>
@@ -52677,15 +51863,13 @@ impl<Partial, After>
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate56, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate56, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate56,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After>
@@ -52775,15 +51959,13 @@ impl<Partial, After>
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate67, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate67, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate67,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(before); })
+            }, zero_cost_templating::encode_element_text(before))
     }
 }
 impl<PartialName: Copy, PartialPartial, PartialAfter, After>
@@ -52866,15 +52048,13 @@ impl<Partial, After>
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate71, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate71, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate71,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(after); })
+            }, zero_cost_templating::encode_element_text(after))
     }
 }
 impl<Partial, After>
@@ -52952,14 +52132,13 @@ impl<Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate76, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockTemplate76, Partial,
                 After> {
                 r#type: GPartialBlockTemplate76,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -53282,12 +52461,8 @@ impl<Partial, After>
     #[doc =
     "Transition from `93: g_template_only_partial_block_with_variable_multiple other` to `94: g_template_only_partial_block_with_variable_multiple other` using `82: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -53344,12 +52519,8 @@ impl<Partial, After>
     #[doc =
     "Transition from `96: g_template_only_partial_block_with_variable_multiple other` to `97: g_template_only_partial_block_with_variable_multiple other` using `86: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -53415,12 +52586,8 @@ impl<Partial, After>
     #[doc =
     "Transition from `100: g_template_only_partial_block_with_variable other` to `101: g_template_only_partial_block_with_variable other` using `91: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -53490,15 +52657,13 @@ impl<Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate106, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate106, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate106,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After>
@@ -53526,15 +52691,13 @@ impl<Partial, After>
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate108, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate108, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate108,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After>
@@ -55273,19 +54436,13 @@ impl<Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate36, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate36,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen {
-                yield
-                    zero_cost_templating::encode_double_quoted_attribute(test);
-            })
+            }, zero_cost_templating::encode_double_quoted_attribute(test))
     }
 }
 impl<Partial, After>
@@ -55315,15 +54472,13 @@ impl<Partial, After>
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate38, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate38, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate38,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(var); })
+            }, zero_cost_templating::encode_element_text(var))
     }
 }
 impl<Partial, After>
@@ -55365,14 +54520,13 @@ impl<Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate41, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<DVariableTemplate41, Partial,
                 After> {
                 r#type: DVariableTemplate41,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -55528,14 +54682,13 @@ impl<Partial, After>
     pub fn t(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(t); })
+            }, zero_cost_templating::encode_element_text(t))
     }
 }
 impl<Partial, After>
@@ -55546,14 +54699,13 @@ impl<Partial, After>
     pub fn f(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(f); })
+            }, zero_cost_templating::encode_element_text(f))
     }
 }
 impl<Partial, After>
@@ -55670,15 +54822,13 @@ impl<Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachOneVariableTemplate53, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachOneVariableTemplate53, Partial,
                 After> {
                 r#type: FEachOneVariableTemplate53,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After>
@@ -55738,15 +54888,13 @@ impl<Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate58, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate58, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate58,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After>
@@ -55758,15 +54906,13 @@ impl<Partial, After>
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate56, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate56, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate56,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After>
@@ -55862,15 +55008,13 @@ impl<Partial, After>
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate67, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate67, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate67,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(before); })
+            }, zero_cost_templating::encode_element_text(before))
     }
 }
 impl<PartialName: Copy, PartialPartial, PartialAfter, After>
@@ -55955,15 +55099,13 @@ impl<Partial, After>
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate71, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate71, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate71,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(after); })
+            }, zero_cost_templating::encode_element_text(after))
     }
 }
 impl<Partial, After>
@@ -56045,14 +55187,13 @@ impl<Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate76, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockTemplate76, Partial,
                 After> {
                 r#type: GPartialBlockTemplate76,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -56387,12 +55528,8 @@ impl<Partial, After>
     #[doc =
     "Transition from `93: g_template_only_partial_block_with_variable_multiple other` to `94: g_template_only_partial_block_with_variable_multiple other` using `82: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -56451,12 +55588,8 @@ impl<Partial, After>
     #[doc =
     "Transition from `96: g_template_only_partial_block_with_variable_multiple other` to `97: g_template_only_partial_block_with_variable_multiple other` using `86: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -56525,12 +55658,8 @@ impl<Partial, After>
     #[doc =
     "Transition from `100: g_template_only_partial_block_with_variable other` to `101: g_template_only_partial_block_with_variable other` using `91: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -56604,15 +55733,13 @@ impl<Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate106, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate106, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate106,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After>
@@ -56642,15 +55769,13 @@ impl<Partial, After>
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate108, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate108, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate108,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After>
@@ -57830,19 +56955,13 @@ impl<Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate36, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate36,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen {
-                yield
-                    zero_cost_templating::encode_double_quoted_attribute(test);
-            })
+            }, zero_cost_templating::encode_double_quoted_attribute(test))
     }
 }
 impl<Partial, After>
@@ -57870,15 +56989,13 @@ impl<Partial, After>
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate38, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate38, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate38,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(var); })
+            }, zero_cost_templating::encode_element_text(var))
     }
 }
 impl<Partial, After>
@@ -57917,14 +57034,13 @@ impl<Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate41, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<DVariableTemplate41, Partial,
                 After> {
                 r#type: DVariableTemplate41,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -58069,14 +57185,13 @@ impl<Partial, After>
     pub fn t(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(t); })
+            }, zero_cost_templating::encode_element_text(t))
     }
 }
 impl<Partial, After>
@@ -58086,14 +57201,13 @@ impl<Partial, After>
     pub fn f(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(f); })
+            }, zero_cost_templating::encode_element_text(f))
     }
 }
 impl<Partial, After>
@@ -58202,15 +57316,13 @@ impl<Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachOneVariableTemplate53, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachOneVariableTemplate53, Partial,
                 After> {
                 r#type: FEachOneVariableTemplate53,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After>
@@ -58266,15 +57378,13 @@ impl<Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate58, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate58, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate58,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After>
@@ -58285,15 +57395,13 @@ impl<Partial, After>
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate56, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate56, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate56,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After>
@@ -58383,15 +57491,13 @@ impl<Partial, After>
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate67, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate67, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate67,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(before); })
+            }, zero_cost_templating::encode_element_text(before))
     }
 }
 impl<PartialName: Copy, PartialPartial, PartialAfter, After>
@@ -58474,15 +57580,13 @@ impl<Partial, After>
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate71, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate71, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate71,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(after); })
+            }, zero_cost_templating::encode_element_text(after))
     }
 }
 impl<Partial, After>
@@ -58560,14 +57664,13 @@ impl<Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate76, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockTemplate76, Partial,
                 After> {
                 r#type: GPartialBlockTemplate76,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -58890,12 +57993,8 @@ impl<Partial, After>
     #[doc =
     "Transition from `93: g_template_only_partial_block_with_variable_multiple other` to `94: g_template_only_partial_block_with_variable_multiple other` using `82: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -58952,12 +58051,8 @@ impl<Partial, After>
     #[doc =
     "Transition from `96: g_template_only_partial_block_with_variable_multiple other` to `97: g_template_only_partial_block_with_variable_multiple other` using `86: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -59023,12 +58118,8 @@ impl<Partial, After>
     #[doc =
     "Transition from `100: g_template_only_partial_block_with_variable other` to `101: g_template_only_partial_block_with_variable other` using `91: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -59098,15 +58189,13 @@ impl<Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate106, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate106, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate106,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After>
@@ -59134,15 +58223,13 @@ impl<Partial, After>
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate108, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate108, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate108,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After>
@@ -60992,19 +60079,13 @@ impl<Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate36, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate36,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen {
-                yield
-                    zero_cost_templating::encode_double_quoted_attribute(test);
-            })
+            }, zero_cost_templating::encode_double_quoted_attribute(test))
     }
 }
 impl<Partial, After>
@@ -61034,15 +60115,13 @@ impl<Partial, After>
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate38, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate38, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate38,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(var); })
+            }, zero_cost_templating::encode_element_text(var))
     }
 }
 impl<Partial, After>
@@ -61084,14 +60163,13 @@ impl<Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate41, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<DVariableTemplate41, Partial,
                 After> {
                 r#type: DVariableTemplate41,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -61247,14 +60325,13 @@ impl<Partial, After>
     pub fn t(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(t); })
+            }, zero_cost_templating::encode_element_text(t))
     }
 }
 impl<Partial, After>
@@ -61265,14 +60342,13 @@ impl<Partial, After>
     pub fn f(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(f); })
+            }, zero_cost_templating::encode_element_text(f))
     }
 }
 impl<Partial, After>
@@ -61389,15 +60465,13 @@ impl<Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachOneVariableTemplate53, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachOneVariableTemplate53, Partial,
                 After> {
                 r#type: FEachOneVariableTemplate53,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After>
@@ -61457,15 +60531,13 @@ impl<Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate58, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate58, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate58,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After>
@@ -61477,15 +60549,13 @@ impl<Partial, After>
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate56, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate56, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate56,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After>
@@ -61581,15 +60651,13 @@ impl<Partial, After>
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate67, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate67, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate67,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(before); })
+            }, zero_cost_templating::encode_element_text(before))
     }
 }
 impl<PartialName: Copy, PartialPartial, PartialAfter, After>
@@ -61674,15 +60742,13 @@ impl<Partial, After>
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate71, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate71, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate71,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(after); })
+            }, zero_cost_templating::encode_element_text(after))
     }
 }
 impl<Partial, After>
@@ -61764,14 +60830,13 @@ impl<Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate76, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockTemplate76, Partial,
                 After> {
                 r#type: GPartialBlockTemplate76,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -62106,12 +61171,8 @@ impl<Partial, After>
     #[doc =
     "Transition from `93: g_template_only_partial_block_with_variable_multiple other` to `94: g_template_only_partial_block_with_variable_multiple other` using `82: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -62170,12 +61231,8 @@ impl<Partial, After>
     #[doc =
     "Transition from `96: g_template_only_partial_block_with_variable_multiple other` to `97: g_template_only_partial_block_with_variable_multiple other` using `86: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -62244,12 +61301,8 @@ impl<Partial, After>
     #[doc =
     "Transition from `100: g_template_only_partial_block_with_variable other` to `101: g_template_only_partial_block_with_variable other` using `91: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -62323,15 +61376,13 @@ impl<Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate106, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate106, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate106,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After>
@@ -62361,15 +61412,13 @@ impl<Partial, After>
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate108, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate108, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate108,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After>
@@ -64085,19 +63134,13 @@ impl<Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate36, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate36,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen {
-                yield
-                    zero_cost_templating::encode_double_quoted_attribute(test);
-            })
+            }, zero_cost_templating::encode_double_quoted_attribute(test))
     }
 }
 impl<Partial, After>
@@ -64127,15 +63170,13 @@ impl<Partial, After>
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate38, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate38, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate38,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(var); })
+            }, zero_cost_templating::encode_element_text(var))
     }
 }
 impl<Partial, After>
@@ -64176,14 +63217,13 @@ impl<Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate41, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<DVariableTemplate41, Partial,
                 After> {
                 r#type: DVariableTemplate41,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -64337,14 +63377,13 @@ impl<Partial, After>
     pub fn t(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(t); })
+            }, zero_cost_templating::encode_element_text(t))
     }
 }
 impl<Partial, After>
@@ -64355,14 +63394,13 @@ impl<Partial, After>
     pub fn f(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(f); })
+            }, zero_cost_templating::encode_element_text(f))
     }
 }
 impl<Partial, After>
@@ -64479,15 +63517,13 @@ impl<Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachOneVariableTemplate53, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachOneVariableTemplate53, Partial,
                 After> {
                 r#type: FEachOneVariableTemplate53,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After>
@@ -64547,15 +63583,13 @@ impl<Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate58, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate58, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate58,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After>
@@ -64567,15 +63601,13 @@ impl<Partial, After>
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate56, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate56, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate56,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After>
@@ -64671,15 +63703,13 @@ impl<Partial, After>
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate67, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate67, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate67,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(before); })
+            }, zero_cost_templating::encode_element_text(before))
     }
 }
 impl<PartialName: Copy, PartialPartial, PartialAfter, After>
@@ -64764,15 +63794,13 @@ impl<Partial, After>
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate71, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate71, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate71,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(after); })
+            }, zero_cost_templating::encode_element_text(after))
     }
 }
 impl<Partial, After>
@@ -64854,14 +63882,13 @@ impl<Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate76, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockTemplate76, Partial,
                 After> {
                 r#type: GPartialBlockTemplate76,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -65196,12 +64223,8 @@ impl<Partial, After>
     #[doc =
     "Transition from `93: g_template_only_partial_block_with_variable_multiple other` to `94: g_template_only_partial_block_with_variable_multiple other` using `82: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -65260,12 +64283,8 @@ impl<Partial, After>
     #[doc =
     "Transition from `96: g_template_only_partial_block_with_variable_multiple other` to `97: g_template_only_partial_block_with_variable_multiple other` using `86: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -65334,12 +64353,8 @@ impl<Partial, After>
     #[doc =
     "Transition from `100: g_template_only_partial_block_with_variable other` to `101: g_template_only_partial_block_with_variable other` using `91: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -65413,15 +64428,13 @@ impl<Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate106, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate106, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate106,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After>
@@ -65451,15 +64464,13 @@ impl<Partial, After>
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate108, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate108, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate108,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After>
@@ -66638,19 +65649,13 @@ impl<Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate36, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate36,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen {
-                yield
-                    zero_cost_templating::encode_double_quoted_attribute(test);
-            })
+            }, zero_cost_templating::encode_double_quoted_attribute(test))
     }
 }
 impl<Partial, After>
@@ -66678,15 +65683,13 @@ impl<Partial, After>
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate38, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate38, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate38,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(var); })
+            }, zero_cost_templating::encode_element_text(var))
     }
 }
 impl<Partial, After>
@@ -66725,14 +65728,13 @@ impl<Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate41, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<DVariableTemplate41, Partial,
                 After> {
                 r#type: DVariableTemplate41,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -66877,14 +65879,13 @@ impl<Partial, After>
     pub fn t(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(t); })
+            }, zero_cost_templating::encode_element_text(t))
     }
 }
 impl<Partial, After>
@@ -66894,14 +65895,13 @@ impl<Partial, After>
     pub fn f(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(f); })
+            }, zero_cost_templating::encode_element_text(f))
     }
 }
 impl<Partial, After>
@@ -67010,15 +66010,13 @@ impl<Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachOneVariableTemplate53, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachOneVariableTemplate53, Partial,
                 After> {
                 r#type: FEachOneVariableTemplate53,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After>
@@ -67074,15 +66072,13 @@ impl<Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate58, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate58, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate58,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After>
@@ -67093,15 +66089,13 @@ impl<Partial, After>
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate56, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate56, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate56,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After>
@@ -67191,15 +66185,13 @@ impl<Partial, After>
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate67, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate67, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate67,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(before); })
+            }, zero_cost_templating::encode_element_text(before))
     }
 }
 impl<PartialName: Copy, PartialPartial, PartialAfter, After>
@@ -67282,15 +66274,13 @@ impl<Partial, After>
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate71, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate71, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate71,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(after); })
+            }, zero_cost_templating::encode_element_text(after))
     }
 }
 impl<Partial, After>
@@ -67368,14 +66358,13 @@ impl<Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate76, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockTemplate76, Partial,
                 After> {
                 r#type: GPartialBlockTemplate76,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -67698,12 +66687,8 @@ impl<Partial, After>
     #[doc =
     "Transition from `93: g_template_only_partial_block_with_variable_multiple other` to `94: g_template_only_partial_block_with_variable_multiple other` using `82: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -67760,12 +66745,8 @@ impl<Partial, After>
     #[doc =
     "Transition from `96: g_template_only_partial_block_with_variable_multiple other` to `97: g_template_only_partial_block_with_variable_multiple other` using `86: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -67831,12 +66812,8 @@ impl<Partial, After>
     #[doc =
     "Transition from `100: g_template_only_partial_block_with_variable other` to `101: g_template_only_partial_block_with_variable other` using `91: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After>
@@ -67906,15 +66883,13 @@ impl<Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate106, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate106, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate106,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After>
@@ -67942,15 +66917,13 @@ impl<Partial, After>
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate108, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate108, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate108,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After>
@@ -69126,19 +68099,13 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate35, Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate36, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate36,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen {
-                yield
-                    zero_cost_templating::encode_double_quoted_attribute(test);
-            })
+            }, zero_cost_templating::encode_double_quoted_attribute(test))
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate36, Partial, After>
@@ -69166,15 +68133,13 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate37, Partial, After>
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate38, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate38, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate38,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(var); })
+            }, zero_cost_templating::encode_element_text(var))
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate38, Partial, After>
@@ -69213,14 +68178,13 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate40, Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate41, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<DVariableTemplate41, Partial,
                 After> {
                 r#type: DVariableTemplate41,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate41, Partial, After>
@@ -69365,14 +68329,13 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate47, Partial, After>
     pub fn t(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(t); })
+            }, zero_cost_templating::encode_element_text(t))
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate48, Partial, After>
@@ -69382,14 +68345,13 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate48, Partial, After>
     pub fn f(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(f); })
+            }, zero_cost_templating::encode_element_text(f))
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate49, Partial, After>
@@ -69498,15 +68460,13 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate54, Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachOneVariableTemplate53, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachOneVariableTemplate53, Partial,
                 After> {
                 r#type: FEachOneVariableTemplate53,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate53, Partial, After>
@@ -69562,15 +68522,13 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate57, Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate58, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate58, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate58,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate58, Partial, After>
@@ -69581,15 +68539,13 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate58, Partial, After>
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate56, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate56, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate56,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate56, Partial, After>
@@ -69679,15 +68635,13 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate66, Partial, After>
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate67, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate67, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate67,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(before); })
+            }, zero_cost_templating::encode_element_text(before))
     }
 }
 impl<PartialName: Copy, PartialPartial, PartialAfter, After>
@@ -69770,15 +68724,13 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate70, Partial, After>
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate71, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate71, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate71,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(after); })
+            }, zero_cost_templating::encode_element_text(after))
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate71, Partial, After>
@@ -69856,14 +68808,13 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate75, Partial, After>
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate76, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockTemplate76, Partial,
                 After> {
                 r#type: GPartialBlockTemplate76,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate76, Partial, After>
@@ -70186,12 +69137,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate93, Partial, After>
     #[doc =
     "Transition from `93: g_template_only_partial_block_with_variable_multiple other` to `94: g_template_only_partial_block_with_variable_multiple other` using `82: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate92, Partial, After>
@@ -70248,12 +69195,8 @@ impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate96, Partial, After>
     #[doc =
     "Transition from `96: g_template_only_partial_block_with_variable_multiple other` to `97: g_template_only_partial_block_with_variable_multiple other` using `86: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate95, Partial, After>
@@ -70319,12 +69262,8 @@ impl<Partial, After>
     #[doc =
     "Transition from `100: g_template_only_partial_block_with_variable other` to `101: g_template_only_partial_block_with_variable other` using `91: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<FEachTwoVariablesHtmlTemplate99, Partial, After>
@@ -70394,15 +69333,13 @@ impl<Partial, After>
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate106, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate106, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate106,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After>
@@ -70430,15 +69367,13 @@ impl<Partial, After>
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate108, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate108, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate108,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After>
@@ -71606,19 +70541,13 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate35, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate36, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate36, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate36,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen {
-                yield
-                    zero_cost_templating::encode_double_quoted_attribute(test);
-            })
+            }, zero_cost_templating::encode_double_quoted_attribute(test))
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate36, Partial, After> {
@@ -71644,15 +70573,13 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate37, Partial, After> {
     pub fn var(self, var: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DElementWithAttributeAndVariablesTemplate38, Partial,
-            After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            After>, ::alloc::borrow::Cow<'static, str>) {
         (Template::<DElementWithAttributeAndVariablesTemplate38, Partial,
                 After> {
                 r#type: DElementWithAttributeAndVariablesTemplate38,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(var); })
+            }, zero_cost_templating::encode_element_text(var))
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate38, Partial, After> {
@@ -71688,14 +70615,13 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate40, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<DVariableTemplate41, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<DVariableTemplate41, Partial,
                 After> {
                 r#type: DVariableTemplate41,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate41, Partial, After> {
@@ -71829,14 +70755,13 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate47, Partial, After> {
     pub fn t(self, t: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(t); })
+            }, zero_cost_templating::encode_element_text(t))
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate48, Partial, After> {
@@ -71845,14 +70770,13 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate48, Partial, After> {
     pub fn f(self, f: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<EIfElseWithVariablesTemplate49, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<EIfElseWithVariablesTemplate49, Partial,
                 After> {
                 r#type: EIfElseWithVariablesTemplate49,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(f); })
+            }, zero_cost_templating::encode_element_text(f))
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate49, Partial, After> {
@@ -71953,15 +70877,13 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate54, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachOneVariableTemplate53, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachOneVariableTemplate53, Partial,
                 After> {
                 r#type: FEachOneVariableTemplate53,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate53, Partial, After> {
@@ -72013,15 +70935,13 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate57, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate58, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate58, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate58,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate58, Partial, After> {
@@ -72031,15 +70951,13 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate58, Partial, After> {
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesTemplate56, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesTemplate56, Partial,
                 After> {
                 r#type: FEachTwoVariablesTemplate56,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate56, Partial, After> {
@@ -72123,15 +71041,13 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate66, Partial, After> {
     pub fn before(self, before: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate67, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate67, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate67,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(before); })
+            }, zero_cost_templating::encode_element_text(before))
     }
 }
 impl<PartialName: Copy, PartialPartial, PartialAfter, After>
@@ -72212,15 +71128,13 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate70, Partial, After> {
     pub fn after(self, after: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockPartialTemplate71, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockPartialTemplate71, Partial,
                 After> {
                 r#type: GPartialBlockPartialTemplate71,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(after); })
+            }, zero_cost_templating::encode_element_text(after))
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate71, Partial, After> {
@@ -72294,14 +71208,13 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate75, Partial, After> {
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<GPartialBlockTemplate76, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<GPartialBlockTemplate76, Partial,
                 After> {
                 r#type: GPartialBlockTemplate76,
                 partial: self.partial,
                 after: self.after,
-            }, gen { yield zero_cost_templating::encode_element_text(test); })
+            }, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate76, Partial, After> {
@@ -72612,12 +71525,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate93, Partial, After> {
     #[doc =
     "Transition from `93: g_template_only_partial_block_with_variable_multiple other` to `94: g_template_only_partial_block_with_variable_multiple other` using `82: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate92, Partial, After> {
@@ -72672,12 +71581,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate96, Partial, After> {
     #[doc =
     "Transition from `96: g_template_only_partial_block_with_variable_multiple other` to `97: g_template_only_partial_block_with_variable_multiple other` using `86: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate95, Partial, After> {
@@ -72740,12 +71645,8 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate100, Partial, After> {
     #[doc =
     "Transition from `100: g_template_only_partial_block_with_variable other` to `101: g_template_only_partial_block_with_variable other` using `91: [] {{test:element}}`"]
     pub fn test(self, test: impl Into<::alloc::borrow::Cow<'static, str>>)
-        ->
-            (After,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
-        (self.after,
-            gen { yield zero_cost_templating::encode_element_text(test); })
+        -> (After, ::alloc::borrow::Cow<'static, str>) {
+        (self.after, zero_cost_templating::encode_element_text(test))
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate99, Partial, After> {
@@ -72811,15 +71712,13 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate105, Partial, After> {
     pub fn title(self, title: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate106, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate106, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate106,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(title); })
+            }, zero_cost_templating::encode_element_text(title))
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate106, Partial, After> {
@@ -72845,15 +71744,13 @@ impl<Partial, After> Template<GOnlyPartialBlockTemplate107, Partial, After> {
         content: impl Into<::alloc::borrow::Cow<'static, str>>)
         ->
             (Template<FEachTwoVariablesHtmlTemplate108, Partial, After>,
-            impl ::std::iter::Iterator<Item =
-            ::alloc::borrow::Cow<'static, str>>) {
+            ::alloc::borrow::Cow<'static, str>) {
         (Template::<FEachTwoVariablesHtmlTemplate108, Partial,
                 After> {
                 r#type: FEachTwoVariablesHtmlTemplate108,
                 partial: self.partial,
                 after: self.after,
-            },
-            gen { yield zero_cost_templating::encode_element_text(content); })
+            }, zero_cost_templating::encode_element_text(content))
     }
 }
 impl<Partial, After> Template<GOnlyPartialBlockTemplate108, Partial, After> {
@@ -72929,6 +71826,7 @@ const _g_only_partial_block_FORCE_RECOMPILE: &'static str =
     "{{>@partial-block}}";
 pub gen fn test() -> Cow<'static, str> {
     let template =
+
         // 264
         {
             let expr = g_partial_block();
@@ -72974,43 +71872,9 @@ pub gen fn test() -> Cow<'static, str> {
     let template =
         {
             let expr = template.before("before");
-            let mut iterator = expr.1;
+            let value = expr.1;
             let ret = expr.0;
-            loop {
-                let value = ::std::iter::Iterator::next(&mut iterator);
-                if value.is_some() {
-                        let value = value.unwrap();
-                        yield value;
-                    } else { break; }
-            }
-            ret
-        };
-    let template =
-        {
-            let expr = template.next();
-            let mut iterator = expr.1;
-            let ret = expr.0;
-            loop {
-                let value = ::std::iter::Iterator::next(&mut iterator);
-                if value.is_some() {
-                        let value = value.unwrap();
-                        yield value;
-                    } else { break; }
-            }
-            ret
-        };
-    let template =
-        {
-            let expr = template.test("test");
-            let mut iterator = expr.1;
-            let ret = expr.0;
-            loop {
-                let value = ::std::iter::Iterator::next(&mut iterator);
-                if value.is_some() {
-                        let value = value.unwrap();
-                        yield value;
-                    } else { break; }
-            }
+            yield value;
             ret
         };
     let template =
@@ -73044,6 +71908,64 @@ pub gen fn test() -> Cow<'static, str> {
     let template =
         {
             let expr = template.test("test");
+            let value = expr.1;
+            let ret = expr.0;
+            yield value;
+            ret
+        };
+    let template =
+        {
+            let expr = template.next();
+            let mut iterator = expr.1;
+            let ret = expr.0;
+            loop {
+                let value = ::std::iter::Iterator::next(&mut iterator);
+                if value.is_some() {
+                        let value = value.unwrap();
+                        yield value;
+                    } else { break; }
+            }
+            ret
+        };
+    let template =
+        {
+            let expr = template.next();
+            let mut iterator = expr.1;
+            let ret = expr.0;
+            loop {
+                let value = ::std::iter::Iterator::next(&mut iterator);
+                if value.is_some() {
+                        let value = value.unwrap();
+                        yield value;
+                    } else { break; }
+            }
+            ret
+        };
+    let template =
+        {
+            let expr = template.next();
+            let mut iterator = expr.1;
+            let ret = expr.0;
+            loop {
+                let value = ::std::iter::Iterator::next(&mut iterator);
+                if value.is_some() {
+                        let value = value.unwrap();
+                        yield value;
+                    } else { break; }
+            }
+            ret
+        };
+    let template =
+        {
+            let expr = template.test("test");
+            let value = expr.1;
+            let ret = expr.0;
+            yield value;
+            ret
+        };
+    let template =
+        {
+            let expr = template.next();
             let mut iterator = expr.1;
             let ret = expr.0;
             loop {
@@ -73072,15 +71994,9 @@ pub gen fn test() -> Cow<'static, str> {
     let template =
         {
             let expr = template.after("after");
-            let mut iterator = expr.1;
+            let value = expr.1;
             let ret = expr.0;
-            loop {
-                let value = ::std::iter::Iterator::next(&mut iterator);
-                if value.is_some() {
-                        let value = value.unwrap();
-                        yield value;
-                    } else { break; }
-            }
+            yield value;
             ret
         };
     {
@@ -73114,7 +72030,7 @@ pub fn main() {
                         std::mem::size_of::<String>()));
             };
             {
-                ::std::io::_print(format_args!("size: {0}\n",
+                ::std::io::_print(format_args!("size of iterator: {0}\n",
                         std::mem::size_of_val(&async_iterator)));
             };
             let mut output = String::new();

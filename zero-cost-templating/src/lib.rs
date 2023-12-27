@@ -117,8 +117,21 @@ pub use futures::Stream;
 use regex::Captures;
 pub use zero_cost_templating_macros::template_stream;
 
+// Yield a value.
 #[macro_export]
-macro_rules! yields {
+macro_rules! yieldv {
+    ($e: expr) => {{
+        let expr = $e;
+        let value = expr.1;
+        let ret = expr.0;
+        yield value;
+        ret
+    }};
+}
+
+/// Yield an iterator.
+#[macro_export]
+macro_rules! yieldi {
     ($e: expr) => {{
         let expr = $e;
         let mut iterator = expr.1;

@@ -227,7 +227,7 @@ pub fn calculate_nodes<'a>(
 #[must_use]
 pub fn element_to_yield(
     intermediate_ast_element: &IntermediateAstElement,
-) -> proc_macro2::TokenStream {
+) -> (proc_macro2::TokenStream, proc_macro2::TokenStream) {
     // TODO FIXME check for empty string yielding in production
     match &intermediate_ast_element.inner {
         IntermediateAstElementInner::Variable {
@@ -235,28 +235,42 @@ pub fn element_to_yield(
             escaping_fun: EscapingFunction::HtmlAttribute,
         } => {
             let variable_name = format_ident!("{}", variable_name);
-            quote! {
-                yield zero_cost_templating::encode_double_quoted_attribute(#variable_name);
-            }
+            (
+                quote! { ::alloc::borrow::Cow<'static, str> },
+                quote! {
+                    zero_cost_templating::encode_double_quoted_attribute(#variable_name)
+                },
+            )
         }
         IntermediateAstElementInner::Variable {
             variable_name,
             escaping_fun: EscapingFunction::HtmlElementInner,
         } => {
             let variable_name = format_ident!("{}", variable_name);
-            quote! {
-                yield zero_cost_templating::encode_element_text(#variable_name);
-            }
+            (
+                quote! { ::alloc::borrow::Cow<'static, str> },
+                quote! {
+                    zero_cost_templating::encode_element_text(#variable_name)
+                },
+            )
         }
-        IntermediateAstElementInner::Text(text) => {
+        IntermediateAstElementInner::Text(text) => (
+            quote! { impl ::std::iter::Iterator<Item = ::alloc::borrow::Cow<'static, str>> },
             quote! {
-                yield ::alloc::borrow::Cow::from(#text);
-            }
-        }
+                gen {
+                    yield ::alloc::borrow::Cow::from(#text);
+                }
+            },
+        ),
         IntermediateAstElementInner::InnerTemplate
-        | IntermediateAstElementInner::PartialBlockPartial => {
-            quote! {}
-        }
+        | IntermediateAstElementInner::PartialBlockPartial => (
+            quote! { impl ::std::iter::Iterator<Item = ::alloc::borrow::Cow<'static, str>> },
+            quote! {
+                gen {
+
+                }
+            },
+        ),
     }
 }
 
@@ -309,7 +323,7 @@ pub fn calculate_edge(
         template_codegen.template_name.to_upper_camel_case(),
         edge.source().index().to_string(),
     );
-    let to_yield = element_to_yield(edge.weight());
+    let (yield_return_type, yield_value) = element_to_yield(edge.weight());
     let documentation = format!(
         "Transition from `{}: {}` to `{}: {}` using `{}: {}`",
         edge.source().index(),
@@ -350,11 +364,8 @@ pub fn calculate_edge(
                             > {
                     #[doc = #documentation]
                     pub fn #function_name(self #parameter) -> (#return_type,
-                            impl ::std::iter::Iterator<Item =
-                                ::alloc::borrow::Cow<'static, str>>) {
-                        (#return_create, gen {
-                            #to_yield
-                        })
+                            #yield_return_type) {
+                        (#return_create, #yield_value)
                     }
                 }
             }
@@ -376,11 +387,8 @@ pub fn calculate_edge(
 
                         #[doc = #documentation]
                         pub fn #function_name(self #parameter) -> (#return_type,
-                                impl ::std::iter::Iterator<Item =
-                                    ::alloc::borrow::Cow<'static, str>>) {
-                            (#return_create, gen {
-                                #to_yield
-                            })
+                                #yield_return_type) {
+                            (#return_create, #yield_value)
                         }
                     }
                 }

@@ -4,7 +4,7 @@ extern crate alloc;
 
 use std::borrow::Cow;
 
-use zero_cost_templating::{template_stream, yields};
+use zero_cost_templating::{template_stream, yieldi, yieldv};
 
 // https://github.com/dtolnay/cargo-expand
 
@@ -23,25 +23,23 @@ search for
 `{static coroutine@
 */
 
-// Don't use Cow because it is so big?
 #[template_stream("templates")]
 pub gen fn test() -> Cow<'static, str> {
-    let template = yields!(g_partial_block());
-    let template = yields!(template.next());
-    let template = yields!(template.next());
-    let template = yields!(template.before("before"));
-    let template = yields!(template.next());
-    let template = yields!(template.next());
-    let template = yields!(template.test("test"));
-    let template = yields!(template.next());
-    let template = yields!(template.next());
-    let template = yields!(template.next());
-    let template = yields!(template.test("test"));
-    let template = yields!(template.next());
-    let template = yields!(template.next());
-    let template = yields!(template.after("after"));
-    yields!(template.next());
-    
+    let template = yieldi!(g_partial_block());
+    let template = yieldi!(template.next());
+    let template = yieldi!(template.next());
+    let template = yieldv!(template.before("before"));
+    let template = yieldi!(template.next());
+    let template = yieldi!(template.next());
+    let template = yieldv!(template.test("test"));
+    let template = yieldi!(template.next());
+    let template = yieldi!(template.next());
+    let template = yieldi!(template.next());
+    let template = yieldv!(template.test("test"));
+    let template = yieldi!(template.next());
+    let template = yieldi!(template.next());
+    let template = yieldv!(template.after("after"));
+    yieldi!(template.next());
 }
 
 #[tokio::main]
@@ -50,7 +48,7 @@ pub async fn main() {
     println!("size of &str: {}", std::mem::size_of::<&str>());
     println!("size of Cow: {}", std::mem::size_of::<Cow<'static, str>>());
     println!("size of String: {}", std::mem::size_of::<String>());
-    println!("size: {}", std::mem::size_of_val(&async_iterator)); // 264
+    println!("size of iterator: {}", std::mem::size_of_val(&async_iterator)); // 264
     let mut output = String::new();
     while let Some(value) = async_iterator.next() {
         output.push_str(&value);
