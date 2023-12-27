@@ -30,7 +30,7 @@ pub struct IntermediateAstElement {
 #[derive(Debug, PartialEq, Eq, Hash, PartialOrd, Ord, Clone)]
 pub enum IntermediateAstElementInner {
     Variable {
-        before: String,
+        // no before text so it does not store the caller provided value across yield points
         variable_name: String,
         escaping_fun: EscapingFunction,
         after: String,
@@ -95,7 +95,6 @@ impl Display for IntermediateAstElement {
                 tag,
                 inner:
                     IntermediateAstElementInner::Variable {
-                        before,
                         variable_name,
                         escaping_fun,
                         after,
@@ -103,7 +102,7 @@ impl Display for IntermediateAstElement {
             } => {
                 write!(
                     formatter,
-                    "[{tag}] {before}{{{{{variable_name}:{escaping_fun}}}}}{after}"
+                    "[{tag}] {{{{{variable_name}:{escaping_fun}}}}}{after}"
                 )
             }
             Self {
@@ -213,37 +212,8 @@ pub fn add_edge_maybe_with_node(
                     _,
                     Some(IntermediateAstElement {
                         tag: current_tag,
-                        inner: IntermediateAstElementInner::Text(old),
-                    }),
-                    IntermediateAstElement {
-                        tag: next_tag,
                         inner:
                             IntermediateAstElementInner::Variable {
-                                before,
-                                variable_name,
-                                escaping_fun,
-                                after,
-                            },
-                    },
-                ) => (
-                    from,
-                    Some(IntermediateAstElement {
-                        tag: current_tag + &next_tag,
-                        inner: IntermediateAstElementInner::Variable {
-                            before: old + &before,
-                            variable_name: variable_name.to_owned(),
-                            escaping_fun: escaping_fun.to_owned(),
-                            after: after.to_owned(),
-                        },
-                    }),
-                ),
-                (
-                    _,
-                    Some(IntermediateAstElement {
-                        tag: current_tag,
-                        inner:
-                            IntermediateAstElementInner::Variable {
-                                before,
                                 variable_name,
                                 escaping_fun,
                                 after,
@@ -258,7 +228,6 @@ pub fn add_edge_maybe_with_node(
                     Some(IntermediateAstElement {
                         tag: current_tag + &next_tag,
                         inner: IntermediateAstElementInner::Variable {
-                            before,
                             variable_name,
                             escaping_fun,
                             after: after + &new,
@@ -320,7 +289,6 @@ pub fn children_to_ast(
                     IntermediateAstElement {
                         tag: String::new(),
                         inner: IntermediateAstElementInner::Variable {
-                            before: String::new(),
                             variable_name: next_variable,
                             escaping_fun,
                             after: String::new(),
@@ -554,7 +522,6 @@ pub fn element_to_ast(
                             IntermediateAstElement {
                                 tag: String::new(),
                                 inner: IntermediateAstElementInner::Variable {
-                                    before: String::new(),
                                     variable_name: next_variable,
                                     escaping_fun,
                                     after: String::new(),

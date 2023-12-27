@@ -13,9 +13,7 @@ use zero_cost_templating::{template_stream, yields};
 // cargo expand --package zero-cost-templating --bin simple
 /*
 
-echo '#![feature(print_internals)] #![feature(unsafe_pin_internals)]' > zero-cost-templating/src/bin/test.rs
-cargo expand --package zero-cost-templating --bin simple >> zero-cost-templating/src/bin/test.rs
-RUSTFLAGS="-Zprint-type-sizes" cargo run --release --bin test > type-sizes.txt
+echo '#![feature(print_internals)] #![feature(unsafe_pin_internals)]' > zero-cost-templating/src/bin/test.rs && cargo expand --package zero-cost-templating --bin simple >> zero-cost-templating/src/bin/test.rs && RUSTFLAGS="-Zprint-type-sizes" cargo run --release --bin test > type-sizes.txt
 
 search for
 `{gen fn body@
@@ -30,10 +28,14 @@ search for
 pub gen fn test() -> Cow<'static, str> {
     let template = yields!(g_partial_block());
     let template = yields!(template.next());
+    let template = yields!(template.next());
     let template = yields!(template.before("before"));
-    let template = yields!(template.test("test"));
     let template = yields!(template.next());
     let template = yields!(template.test("test"));
+    let template = yields!(template.next());
+    let template = yields!(template.next());
+    let template = yields!(template.test("test"));
+    let template = yields!(template.next());
     let template = yields!(template.after("after"));
     yields!(template.next());
 }

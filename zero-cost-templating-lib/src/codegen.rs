@@ -231,27 +231,23 @@ pub fn element_to_yield(
     // TODO FIXME check for empty string yielding in production
     match &intermediate_ast_element.inner {
         IntermediateAstElementInner::Variable {
-            before,
             variable_name,
             escaping_fun: EscapingFunction::HtmlAttribute,
             after,
         } => {
             let variable_name = format_ident!("{}", variable_name);
             quote! {
-                yield ::alloc::borrow::Cow::from(#before);
                 yield zero_cost_templating::encode_double_quoted_attribute(#variable_name);
                 yield ::alloc::borrow::Cow::from(#after);
             }
         }
         IntermediateAstElementInner::Variable {
-            before,
             variable_name,
             escaping_fun: EscapingFunction::HtmlElementInner,
             after,
         } => {
             let variable_name = format_ident!("{}", variable_name);
             quote! {
-                yield ::alloc::borrow::Cow::from(#before);
                 yield zero_cost_templating::encode_element_text(#variable_name);
                 yield ::alloc::borrow::Cow::from(#after);
             }
