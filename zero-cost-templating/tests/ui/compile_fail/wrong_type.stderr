@@ -1,7 +1,0 @@
-error[E0308]: mismatched types
-  --> tests/ui/compile_fail/wrong_type.rs:23:24
-   |
-23 |     let test: String = yields!(template.test_template12());
-   |                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `String`, found `()`
-   |
-   = note: this error originates in the macro `yields` (in Nightly builds, run with -Z macro-backtrace for more info)
