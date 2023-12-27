@@ -102,27 +102,26 @@
     clippy::use_debug,
     reason = "development"
 )]
-#![feature(coroutines)]
+#![feature(async_closure, async_iterator, coroutines, gen_blocks, noop_waker)]
 #![feature(lint_reasons)]
 #![feature(proc_macro_span)]
 
-use std::collections::HashMap;
-use std::fs::File;
+use std::collections::{BTreeSet, HashMap};
+use std::fs::{self, File};
 use std::io::Write;
 use std::path::PathBuf;
 
-use itertools::{peek_nth, Itertools};
+use itertools::peek_nth;
 use petgraph::dot::{Config, Dot};
 use petgraph::stable_graph::StableGraph;
 use petgraph::visit::{EdgeRef, NodeRef};
 use quote::quote;
 use syn::punctuated::Punctuated;
-use syn::visit_mut::VisitMut;
 use syn::{parse_macro_input, Item, LitStr, Token};
-use zero_cost_templating_lib::codegen::{codegen, InnerReplace, TemplateCodegen};
+use zero_cost_templating_lib::codegen::{codegen, TemplateCodegen};
 use zero_cost_templating_lib::html_recursive_descent::parse_children;
 use zero_cost_templating_lib::intermediate_graph::{
-    children_to_ast, flush_pending_edge, IntermediateAstElement, NodeType, TemplateNode,
+    children_to_ast, flush_with_node, IntermediateAstElementInner, NodeType, TemplateNode,
 };
 
 // https://veykril.github.io/posts/ide-proc-macros/
@@ -138,7 +137,7 @@ pub fn template_stream(
     attributes: proc_macro::TokenStream,
     item: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
-    let input_paths = parse_macro_input!(attributes
+    let input_directories = parse_macro_input!(attributes
         with Punctuated::<LitStr, Token![,]>::parse_separated_nonempty);
     // https://github.com/dtolnay/trybuild/issues/202
     let cargo_manifest_dir = std::env::var_os("CARGO_MANIFEST_DIR_OVERRIDE")
@@ -147,11 +146,16 @@ pub fn template_stream(
 
     let root = PathBuf::from(&cargo_manifest_dir);
 
-    let inputs: Vec<_> = input_paths
+    let inputs: Vec<_> = input_directories
         .iter()
+        .flat_map(|directory| {
+            let path = root.join(directory.value());
+            fs::read_dir(path)
+                .unwrap()
+                .map(core::result::Result::unwrap)
+        })
         .map(|file| {
-            let path = root.join(file.value());
-
+            let path = file.path();
             let file_name = path.file_name().unwrap().to_string_lossy().to_string();
 
             let template_name = file_name.trim_end_matches(".html.hbs");
@@ -205,19 +209,17 @@ pub fn template_stream(
                 }
             };
             let first = first_nodes.get(template_name).unwrap();
-            let (last, current) = children_to_ast(
+            let tmp = children_to_ast(
                 &first_nodes,
                 template_name,
                 graph,
-                *first,
-                IntermediateAstElement::Noop,
+                BTreeSet::from([(*first, None)]),
                 dom,
                 "root",
             );
-            flush_pending_edge(
+            let last = flush_with_node(
                 graph,
-                last,
-                current,
+                tmp,
                 TemplateNode {
                     template_name: template_name.clone(),
                     node_type: NodeType::Other,
@@ -233,15 +235,7 @@ pub fn template_stream(
         })
         .collect();
 
-    let mut file = File::create(
-        inputs
-            .first()
-            .unwrap()
-            .path
-            .with_file_name(inputs.iter().map(|tc| tc.template_name.clone()).join(","))
-            .with_extension("dot"),
-    )
-    .unwrap();
+    let mut file = File::create("template_graph.dot").unwrap();
     let immut_graph = &*graph;
     file.write_all(
         format!(
@@ -249,28 +243,46 @@ pub fn template_stream(
             Dot::with_attr_getters(
                 immut_graph,
                 &[Config::NodeNoLabel, Config::EdgeNoLabel],
-                &|_, er| match er.weight() {
-                    IntermediateAstElement::InnerTemplate
-                    | IntermediateAstElement::PartialBlockPartial => {
+                &|_, er| match er.weight().inner {
+                    IntermediateAstElementInner::InnerTemplate => {
                         format!(
-                            "label = \"{} {}\" style = dotted",
+                            "label = \"{}: {}\" style = dashed color = blue",
+                            er.id().index(),
+                            er.weight().to_string().replace('\"', "\\\"")
+                        )
+                    }
+                    IntermediateAstElementInner::PartialBlockPartial => {
+                        format!(
+                            "label = \"{}: {}\" style = dashed color = orange",
                             er.id().index(),
                             er.weight().to_string().replace('\"', "\\\"")
                         )
                     }
                     _ => {
                         format!(
-                            "label = \"{} {}\"",
+                            "label = \"{}: {}\" color = red",
                             er.id().index(),
                             er.weight().to_string().replace('\"', "\\\"")
                         )
                     }
                 },
-                &|_, nr| format!(
-                    "label = \"{} {}\"",
-                    nr.id().index(),
-                    nr.weight().to_string().replace('\"', "\\\"")
-                ),
+                &|_, nr| match nr.weight().node_type {
+                    NodeType::PartialBlock => format!(
+                        "label = \"{}: {}\" color = orange",
+                        nr.id().index(),
+                        nr.weight().to_string().replace('\"', "\\\"")
+                    ),
+                    NodeType::InnerTemplate => format!(
+                        "label = \"{}: {}\" color = blue",
+                        nr.id().index(),
+                        nr.weight().to_string().replace('\"', "\\\"")
+                    ),
+                    NodeType::Other => format!(
+                        "label = \"{}: {}\" color = red",
+                        nr.id().index(),
+                        nr.weight().to_string().replace('\"', "\\\"")
+                    ),
+                },
             )
         )
         .as_bytes(),
@@ -279,24 +291,19 @@ pub fn template_stream(
 
     let code = codegen(graph, &inputs);
 
-    let mut item = parse_macro_input!(item as Item);
-
-    if std::env::var_os("ZERO_COST_TEMPLATING_NO_EXPAND").is_none() {
-        InnerReplace(inputs, graph).visit_item_mut(&mut item);
-    }
+    let item = parse_macro_input!(item as Item);
 
     let expanded = quote! {
 
         #code
 
-        #[::futures_async_stream::stream(item = alloc::borrow::Cow<'static, str>)]
         #item
     };
 
     // TODO FIXME remove for production
-    if let Err(error) = syn::parse2::<syn::File>(expanded.clone()) {
-        panic!("{error}\n{expanded}")
-    }
+    //if let Err(error) = syn::parse2::<syn::File>(expanded.clone()) {
+    //panic!("{error}\n{expanded}")
+    //}
 
     proc_macro::TokenStream::from(expanded)
 }

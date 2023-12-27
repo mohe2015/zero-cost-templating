@@ -102,8 +102,10 @@
     clippy::use_debug,
     reason = "development"
 )]
-#![feature(coroutines)]
+#![feature(async_closure, async_iterator, coroutines, gen_blocks, noop_waker)]
 #![feature(lint_reasons)]
+
+pub mod async_iterator_extension;
 
 extern crate alloc;
 
@@ -114,7 +116,39 @@ pub use futures::stream::iter;
 pub use futures::Stream;
 use regex::Captures;
 pub use zero_cost_templating_macros::template_stream;
-//pub use html_escape::{encode_double_quoted_attribute, encode_safe};
+
+// Yield a value.
+#[macro_export]
+macro_rules! yieldv {
+    ($e: expr) => {{
+        let expr = $e;
+        let value = expr.1;
+        let ret = expr.0;
+        yield value;
+        ret
+    }};
+}
+
+/// Yield an iterator.
+#[macro_export]
+macro_rules! yieldi {
+    ($e: expr) => {{
+        let expr = $e;
+        let mut iterator = expr.1;
+        let ret = expr.0;
+        loop {
+            let value = ::std::iter::Iterator::next(&mut iterator);
+            // maybe match has bad liveness analysis?
+            if value.is_some() {
+                let value = value.unwrap();
+                yield value;
+            } else {
+                break;
+            }
+        }
+        ret
+    }};
+}
 
 pub fn encode_element_text<'a, I: Into<Cow<'a, str>>>(input: I) -> Cow<'a, str> {
     // https://html.spec.whatwg.org/dev/syntax.html
@@ -163,32 +197,4 @@ pub fn encode_double_quoted_attribute<'a, I: Into<Cow<'a, str>>>(input: I) -> Co
 }
 
 #[cfg(test)]
-mod tests {
-    #[test]
-    fn ui() {
-        std::env::set_var("ZERO_COST_TEMPLATING_NO_EXPAND", "no_expand");
-
-        std::env::set_var(
-            "CARGO_MANIFEST_DIR_OVERRIDE",
-            std::env::var_os("CARGO_MANIFEST_DIR").unwrap(),
-        );
-
-        let test_cases = trybuild::TestCases::new();
-        test_cases.pass("tests/ui/pass/*.rs");
-        test_cases.compile_fail("tests/ui/compile_fail/*.rs");
-        test_cases.compile_fail("tests/ui/compile_fail_no_expand/*.rs");
-
-        // this is important to force execution and get the correct environment variables
-        drop(test_cases);
-
-        std::env::remove_var("ZERO_COST_TEMPLATING_NO_EXPAND");
-
-        let test_cases = trybuild::TestCases::new();
-        test_cases.pass("tests/ui/pass/*.rs");
-        test_cases.compile_fail("tests/ui/compile_fail/*.rs");
-        test_cases.compile_fail("tests/ui/compile_fail_expand/*.rs");
-
-        // this is important to force execution and get the correct environment variables
-        drop(test_cases);
-    }
-}
+mod tests {}

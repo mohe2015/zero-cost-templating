@@ -1,21 +1,21 @@
+cargo-features = ["edition2024"]
+
 [package]
 name = "zero-cost-templating"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 zero-cost-templating-macros = { path = "../zero-cost-templating-macros" }
 futures = "0.3"
-futures-async-stream = { git = "https://github.com/mohe2015/futures-async-stream.git" }
 tokio = { version = "1", features = ["full"] }
 pin-project = "1"
-html-escape = "0.2"
 regex = "1"
 
 [dev-dependencies]
-trybuild = "1"
+trybuild = { git = "https://github.com/mohe2015/trybuild.git", branch = "edition-2024" }
 iai-callgrind = "0.8"
 
 #[[bench]]
@@ -23,8 +23,16 @@ iai-callgrind = "0.8"
 #harness = false
 
 #[[bin]]
-#name = "initial_macro_unexpected_parameter"
-#path = "tests/ui/compile_fail/initial_macro_unexpected_parameter.rs"
+#name = "initial_unexpected_parameter"
+#path = "tests/ui/compile_fail/initial_unexpected_parameter.rs"
+
+#[[bin]]
+#name = "mismatched_types_unit"
+#path = "tests/ui/compile_fail/mismatched_types_unit.rs"
+
+#[[bin]]
+#name = "missing_variable_value"
+#path = "tests/ui/compile_fail/missing_variable_value.rs"
 
 #[[bin]]
 #name = "moved_value"
@@ -35,33 +43,21 @@ iai-callgrind = "0.8"
 #path = "tests/ui/compile_fail/must_use.rs"
 
 #[[bin]]
-#name = "template_macro_missing_parameter"
-#path = "tests/ui/compile_fail/template_macro_missing_parameter.rs"
-
-#[[bin]]
 #name = "type_mismatch_because_missing_call"
 #path = "tests/ui/compile_fail/type_mismatch_because_missing_call.rs"
-
-#[[bin]]
-#name = "variable_macro_missing_first_parameter"
-#path = "tests/ui/compile_fail/variable_macro_missing_first_parameter.rs"
-
-#[[bin]]
-#name = "variable_macro_missing_parameters"
-#path = "tests/ui/compile_fail/variable_macro_missing_parameters.rs"
-
-#[[bin]]
-#name = "variable_macro_missing_second_parameter"
-#path = "tests/ui/compile_fail/variable_macro_missing_second_parameter.rs"
 
 #[[bin]]
 #name = "wrong_type"
 #path = "tests/ui/compile_fail/wrong_type.rs"
 
-[[bin]]
-name = "working_no_loop"
-path = "tests/ui/pass/working_no_loop.rs"
+#[[bin]]
+#name = "if_else"
+#path = "tests/ui/pass/if_else.rs"
 
-[[bin]]
-name = "if_else"
-path = "tests/ui/pass/if_else.rs"
+#[[bin]]
+#name = "only_template"
+#path = "tests/ui/pass/only_template.rs"
+
+#[[bin]]
+#name = "working_no_loop"
+#path = "tests/ui/pass/working_no_loop.rs"

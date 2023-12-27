@@ -100,11 +100,12 @@
     clippy::pattern_type_mismatch,
     clippy::print_stdout,
     clippy::use_debug,
+    clippy::indexing_slicing,
     reason = "development"
 )]
 #![feature(box_patterns)]
 #![feature(lint_reasons)]
-#![feature(coroutines, coroutine_trait)]
+#![feature(async_closure, async_iterator, coroutines, gen_blocks, noop_waker)]
 
 pub mod codegen;
 pub mod html_recursive_descent;

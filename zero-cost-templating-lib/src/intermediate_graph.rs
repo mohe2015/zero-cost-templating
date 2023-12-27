@@ -1,5 +1,5 @@
 use core::fmt::Display;
-use std::collections::HashMap;
+use std::collections::{BTreeSet, HashMap};
 
 use petgraph::stable_graph::{NodeIndex, StableGraph};
 
@@ -20,12 +20,22 @@ impl Display for EscapingFunction {
     }
 }
 
-// first variable then text, so we can print as much as possible
 #[derive(Debug, PartialEq, Eq, Hash, PartialOrd, Ord, Clone)]
-pub enum IntermediateAstElement {
-    Variable(String, EscapingFunction),
+pub struct IntermediateAstElement {
+    /// The tag to distinguish multiple outgoing nodes. E.g. `true` and `false` for an if.
+    pub tag: String,
+    pub inner: IntermediateAstElementInner,
+}
+
+#[derive(Debug, PartialEq, Eq, Hash, PartialOrd, Ord, Clone)]
+pub enum IntermediateAstElementInner {
+    Variable {
+        // don't yield text before or after,
+        // so we don't need to store the caller provided value across yield points
+        variable_name: String,
+        escaping_fun: EscapingFunction,
+    },
     Text(String),
-    Noop,
     /// The part we want to render when a partial block occurs.
     PartialBlockPartial,
     /// The inner template that we want to render
@@ -35,8 +45,17 @@ pub enum IntermediateAstElement {
 impl IntermediateAstElement {
     #[must_use]
     pub const fn variable(&self) -> Option<(&String, &EscapingFunction)> {
-        if let Self::Variable(name, escaping_fun) = self {
-            Some((name, escaping_fun))
+        if let Self {
+            inner:
+                IntermediateAstElementInner::Variable {
+                    variable_name,
+                    escaping_fun,
+                    ..
+                },
+            ..
+        } = self
+        {
+            Some((variable_name, escaping_fun))
         } else {
             None
         }
@@ -44,8 +63,12 @@ impl IntermediateAstElement {
 
     #[must_use]
     pub const fn variable_name(&self) -> Option<&String> {
-        if let Self::Variable(name, _) = self {
-            Some(name)
+        if let Self {
+            inner: IntermediateAstElementInner::Variable { variable_name, .. },
+            ..
+        } = self
+        {
+            Some(variable_name)
         } else {
             None
         }
@@ -53,7 +76,11 @@ impl IntermediateAstElement {
 
     #[must_use]
     pub const fn text(&self) -> Option<&String> {
-        if let Self::Text(string) = self {
+        if let Self {
+            inner: IntermediateAstElementInner::Text(string),
+            ..
+        } = self
+        {
             Some(string)
         } else {
             None
@@ -64,22 +91,35 @@ impl IntermediateAstElement {
 impl Display for IntermediateAstElement {
     fn fmt(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         match self {
-            Self::Variable(variable, escaping_fun) => {
-                write!(formatter, "{{{{{variable}:{escaping_fun}}}}}")
+            Self {
+                tag,
+                inner:
+                    IntermediateAstElementInner::Variable {
+                        variable_name,
+                        escaping_fun,
+                    },
+            } => {
+                write!(formatter, "[{tag}] {{{{{variable_name}:{escaping_fun}}}}}")
             }
-            Self::Text(text) => {
-                write!(formatter, "{text}")
+            Self {
+                tag,
+                inner: IntermediateAstElementInner::Text(text),
+            } => {
+                write!(formatter, "[{tag}] {text}")
             }
-            Self::Noop => {
-                write!(formatter, "noop")
-            }
-            Self::PartialBlockPartial => write!(formatter, "partial"),
-            Self::InnerTemplate => write!(formatter, "template"),
+            Self {
+                tag,
+                inner: IntermediateAstElementInner::PartialBlockPartial,
+            } => write!(formatter, "[{tag}] partial"),
+            Self {
+                tag,
+                inner: IntermediateAstElementInner::InnerTemplate,
+            } => write!(formatter, "[{tag}] template"),
         }
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub enum NodeType {
     PartialBlock,
     InnerTemplate,
@@ -108,43 +148,92 @@ impl Display for TemplateNode {
     }
 }
 
-pub fn add_node_with_edge(
+// Normal use of the library should create few nodes and few necessary calls.
+// But edge cases should not all be optimized if it makes the code ugly etc.
+// Maybe in some future version add the full path to the graph including inner template stuff?
+// maybe for inner templates add an edge layer or
+// something like that for edges that don't exist for all users
+// probably not a good idea because of generic programming
+// the end of the partial could point to the after partial node
+// (no doesn't work if partial is used multiple times)
+
+/// Adds the node in all cases if it is not NodeType::Other.
+/// If it is NodeType::Other only adds it if there are pending outgoing edges
+/// (even not added if current node type is not NodeType::Other).
+// Two partials after each other...
+pub fn flush_with_node(
     graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
-    last: NodeIndex,
-    current: IntermediateAstElement,
+    tmp: BTreeSet<(NodeIndex, Option<IntermediateAstElement>)>,
     node: TemplateNode,
-    edge_type: IntermediateAstElement,
-) -> (NodeIndex, IntermediateAstElement) {
-    match (&node.node_type, current, edge_type) {
-        (NodeType::Other, IntermediateAstElement::Text(old), IntermediateAstElement::Text(new)) => {
-            (last, IntermediateAstElement::Text(old + &new))
-        }
-        (NodeType::Other, IntermediateAstElement::Noop, edge_type) => (last, edge_type),
-        (_, current, edge_type) => {
-            let current_node = graph.add_node(node);
-            graph.add_edge(last, current_node, current);
-            (current_node, edge_type)
-        }
+) -> NodeIndex {
+    if tmp.len() == 1 && tmp.first().unwrap().1.is_none() && node.node_type == NodeType::Other {
+        return tmp.first().unwrap().0;
+    }
+    // TODO FIXME don't flush if .e.g. compatible two text nodes.
+    // maybe check if length == 1 then maybe no new node, otherwise always new node
+
+    let to = graph.add_node(node.clone());
+    for (from, edge) in tmp {
+        graph.add_edge(
+            from,
+            to,
+            edge.unwrap_or_else(|| IntermediateAstElement {
+                tag: String::new(),
+                inner: IntermediateAstElementInner::Text(String::new()),
+            }),
+        );
+    }
+    to
+}
+
+pub fn connect_edges_to_node(
+    graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
+    tmp: BTreeSet<(NodeIndex, Option<IntermediateAstElement>)>,
+    to: NodeIndex,
+) {
+    for (from, edge) in tmp {
+        graph.add_edge(from, to, edge.unwrap());
     }
 }
 
-pub fn flush_pending_edge(
+/// Adds the edge in all cases.
+/// If adding the edge requires a new node, it adds the node of the specified type.
+pub fn add_edge_maybe_with_node(
     graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
-    last: NodeIndex,
-    current: IntermediateAstElement,
-    node: TemplateNode,
-) -> (NodeIndex, IntermediateAstElement) {
-    match current {
-        IntermediateAstElement::Noop => (last, IntermediateAstElement::Noop),
-        current @ (IntermediateAstElement::Variable(..)
-        | IntermediateAstElement::Text(_)
-        | IntermediateAstElement::PartialBlockPartial
-        | IntermediateAstElement::InnerTemplate) => {
-            let current_node = graph.add_node(node);
-            graph.add_edge(last, current_node, current);
-            (current_node, IntermediateAstElement::Noop)
-        }
-    }
+    tmp: BTreeSet<(NodeIndex, Option<IntermediateAstElement>)>,
+    next_edge: IntermediateAstElement,
+    to: TemplateNode,
+) -> BTreeSet<(NodeIndex, Option<IntermediateAstElement>)> {
+    let mut new_node = None;
+    tmp.into_iter()
+        .map(
+            |(from, current_edge)| match (&graph[from].node_type, current_edge, &next_edge) {
+                (
+                    _,
+                    Some(IntermediateAstElement {
+                        tag: current_tag,
+                        inner: IntermediateAstElementInner::Text(old),
+                    }),
+                    IntermediateAstElement {
+                        tag: next_tag,
+                        inner: IntermediateAstElementInner::Text(new),
+                    },
+                ) => (
+                    from,
+                    Some(IntermediateAstElement {
+                        tag: current_tag + &next_tag,
+                        inner: IntermediateAstElementInner::Text(old + &new),
+                    }),
+                ),
+                (_, None, edge_type) => (from, Some(edge_type.clone())),
+                (_, Some(current), edge_type) => {
+                    let to = new_node.get_or_insert_with(|| graph.add_node(to.clone()));
+                    graph.add_edge(from, *to, current);
+                    (*to, Some(edge_type.clone()))
+                }
+            },
+        )
+        .collect()
 }
 
 #[must_use]
@@ -153,41 +242,52 @@ pub fn children_to_ast(
     first_nodes: &HashMap<String, NodeIndex>,
     template_name: &str,
     graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
-    mut last: NodeIndex,
-    mut current: IntermediateAstElement,
+    mut tmp: BTreeSet<(NodeIndex, Option<IntermediateAstElement>)>,
     input: Vec<Child>,
     parent: &str,
-) -> (NodeIndex, IntermediateAstElement) {
+) -> BTreeSet<(NodeIndex, Option<IntermediateAstElement>)> {
     for child in input {
         match child {
             Child::Variable(next_variable) => {
                 // https://html.spec.whatwg.org/dev/syntax.html
                 // https://github.com/cure53/DOMPurify/blob/main/src/tags.js
                 let escaping_fun = match parent {
-                    "h1" | "li" | "span" | "title" | "main" => EscapingFunction::HtmlElementInner,
-                    other => panic!("unknown escaping rules for element {other}"),
+                    "h1" | "li" | "span" | "title" | "main" | "a" | "p" | "div" => {
+                        EscapingFunction::HtmlElementInner
+                    }
+                    other => panic!(
+                        "while parsing template {template_name}: \
+                    unknown escaping rules for element {other}"
+                    ),
                 };
-                (last, current) = add_node_with_edge(
+                tmp = add_edge_maybe_with_node(
                     graph,
-                    last,
-                    current,
+                    tmp,
+                    IntermediateAstElement {
+                        tag: String::new(),
+                        inner: IntermediateAstElementInner::Variable {
+                            variable_name: next_variable,
+                            escaping_fun,
+                        },
+                    },
                     TemplateNode {
                         template_name: template_name.to_owned(),
                         node_type: NodeType::Other,
                     },
-                    IntermediateAstElement::Variable(next_variable, escaping_fun),
                 );
             }
             Child::Literal(string) => {
-                (last, current) = add_node_with_edge(
+                tmp = add_edge_maybe_with_node(
                     graph,
-                    last,
-                    current,
+                    tmp,
+                    IntermediateAstElement {
+                        tag: String::new(),
+                        inner: IntermediateAstElementInner::Text(string),
+                    },
                     TemplateNode {
                         template_name: template_name.to_owned(),
                         node_type: NodeType::Other,
                     },
-                    IntermediateAstElement::Text(string),
                 );
             }
             Child::Element(element) => {
@@ -195,202 +295,153 @@ pub fn children_to_ast(
                     !(parent == "script" || parent == "style"),
                     "children are unsafe in <script> and <style>"
                 );
-                (last, current) =
-                    element_to_ast(first_nodes, template_name, graph, last, current, element);
+                tmp = element_to_ast(first_nodes, template_name, graph, tmp, element);
             }
             Child::Each(_identifier, children) => {
-                (last, current) = flush_pending_edge(
+                let loop_start = flush_with_node(
                     graph,
-                    last,
-                    current,
+                    tmp,
                     TemplateNode {
                         template_name: template_name.to_owned(),
                         node_type: NodeType::Other,
                     },
                 );
-                let loop_start = last;
-                (last, current) = children_to_ast(
+                let loop_end = children_to_ast(
                     first_nodes,
                     template_name,
                     graph,
-                    last,
-                    current,
+                    BTreeSet::from([(
+                        loop_start,
+                        Some(IntermediateAstElement {
+                            tag: "enter_loop".to_owned(),
+                            inner: IntermediateAstElementInner::Text(String::new()),
+                        }),
+                    )]),
                     children,
                     parent,
                 );
 
-                graph.add_edge(last, loop_start, current);
-                current = IntermediateAstElement::Noop;
+                connect_edges_to_node(graph, loop_end, loop_start);
 
-                last = loop_start;
+                tmp = BTreeSet::from([(
+                    loop_start,
+                    Some(IntermediateAstElement {
+                        tag: "end_loop".to_owned(),
+                        inner: IntermediateAstElementInner::Text(String::new()),
+                    }),
+                )]);
             }
             Child::PartialBlock(name, children) => {
-                let partial_block_partial = {
-                    // this part needs to be fully disjunct from the rest
-                    let partial_block_partial = graph.add_node(TemplateNode {
-                        template_name: template_name.to_owned(),
-                        node_type: NodeType::Other,
-                    });
-                    let (inner_last, inner_current) = children_to_ast(
-                        first_nodes,
-                        template_name,
-                        graph,
-                        partial_block_partial,
-                        IntermediateAstElement::Noop,
-                        children,
-                        parent,
-                    );
-                    flush_pending_edge(
-                        graph,
-                        inner_last,
-                        inner_current,
-                        TemplateNode {
-                            template_name: template_name.to_owned(),
-                            node_type: NodeType::Other,
-                        },
-                    );
-                    partial_block_partial
-                };
-
-                let inner_template;
-                (inner_template, current) = add_node_with_edge(
+                let inner_template_tmp = flush_with_node(
                     graph,
-                    last,
-                    current,
+                    tmp,
                     TemplateNode {
                         template_name: template_name.to_owned(),
                         node_type: NodeType::InnerTemplate,
                     },
-                    IntermediateAstElement::Noop,
                 );
 
-                graph.add_edge(
-                    inner_template,
-                    partial_block_partial,
-                    IntermediateAstElement::PartialBlockPartial,
-                );
-
-                let inner_template_target = *first_nodes.get(&name).unwrap();
-
-                graph.add_edge(
-                    inner_template,
-                    inner_template_target,
-                    IntermediateAstElement::InnerTemplate,
-                );
-
-                last = inner_template;
-
-                // This is needed so e.g. branching doesn't break the guarantee that
-                // there is exactly one successor node after InnerTemplate
-                // that guarantee is needed to tell the template what the after node is
-                // TODO FIXME maybe add a special current == NoopForceFlush
-                // It should be a Vec<(last, current)> because
-                // then a simple if else could be optimized too two nodes with a double edge.
-                (last, current) = add_node_with_edge(
+                // this part needs to be fully disjunct from the rest
+                // TODO create an add_edge function that enforces that a new node is not needed.
+                let mut partial_block_partial_tmp = BTreeSet::from([(
+                    inner_template_tmp,
+                    Some(IntermediateAstElement {
+                        tag: String::new(),
+                        inner: IntermediateAstElementInner::PartialBlockPartial,
+                    }),
+                )]);
+                partial_block_partial_tmp = children_to_ast(
+                    first_nodes,
+                    template_name,
                     graph,
-                    last,
-                    current,
+                    partial_block_partial_tmp,
+                    children,
+                    parent,
+                );
+                flush_with_node(
+                    graph,
+                    partial_block_partial_tmp,
                     TemplateNode {
                         template_name: template_name.to_owned(),
                         node_type: NodeType::Other,
                     },
-                    IntermediateAstElement::Noop,
                 );
+
+                let inner_template_target = *first_nodes
+                    .get(&name)
+                    .unwrap_or_else(|| panic!("unknown inner template {name}"));
+
+                let inner_template_template_tmp = BTreeSet::from([(
+                    inner_template_tmp,
+                    Some(IntermediateAstElement {
+                        tag: String::new(),
+                        inner: IntermediateAstElementInner::InnerTemplate,
+                    }),
+                )]);
+
+                connect_edges_to_node(graph, inner_template_template_tmp, inner_template_target);
+
+                tmp = BTreeSet::from([(inner_template_tmp, None)]);
             }
             Child::PartialBlockPartial => {
-                (last, current) = add_node_with_edge(
-                    graph,
-                    last,
-                    current,
-                    TemplateNode {
-                        template_name: template_name.to_owned(),
-                        node_type: NodeType::PartialBlock,
-                    },
-                    IntermediateAstElement::Noop,
-                );
-
-                // This is needed so e.g. branching doesn't break the guarantee that
-                // there is exactly one successor node after InnerTemplate
-                // that guarantee is needed to tell the template what the after node is
-                // TODO FIXME maybe add a special current == NoopForceFlush
-                (last, current) = add_node_with_edge(
-                    graph,
-                    last,
-                    current,
-                    TemplateNode {
-                        template_name: template_name.to_owned(),
-                        node_type: NodeType::Other,
-                    },
-                    IntermediateAstElement::Noop,
-                );
+                tmp = BTreeSet::from([(
+                    flush_with_node(
+                        graph,
+                        tmp,
+                        TemplateNode {
+                            template_name: template_name.to_owned(),
+                            node_type: NodeType::PartialBlock,
+                        },
+                    ),
+                    None,
+                )]);
             }
             Child::If(_variable, if_children, else_children) => {
-                (last, current) = flush_pending_edge(
+                let if_start = flush_with_node(
                     graph,
-                    last,
-                    current,
+                    tmp,
                     TemplateNode {
                         template_name: template_name.to_owned(),
                         node_type: NodeType::Other,
                     },
                 );
 
-                let if_last = {
-                    let (mut if_last, if_current) = children_to_ast(
-                        first_nodes,
-                        template_name,
-                        graph,
-                        last,
-                        IntermediateAstElement::Noop,
-                        if_children,
-                        parent,
-                    );
-                    (if_last, _) = flush_pending_edge(
-                        graph,
-                        if_last,
-                        if_current,
-                        TemplateNode {
-                            template_name: template_name.to_owned(),
-                            node_type: NodeType::Other,
-                        },
-                    );
-                    if_last
-                };
+                let true_tmp = children_to_ast(
+                    first_nodes,
+                    template_name,
+                    graph,
+                    BTreeSet::from([(
+                        if_start,
+                        Some(IntermediateAstElement {
+                            tag: "true".to_owned(),
+                            inner: IntermediateAstElementInner::Text(String::new()),
+                        }),
+                    )]),
+                    if_children,
+                    parent,
+                );
 
-                let else_last = {
-                    let (mut else_last, else_current) = children_to_ast(
-                        first_nodes,
-                        template_name,
-                        graph,
-                        last,
-                        IntermediateAstElement::Noop,
-                        else_children,
-                        parent,
-                    );
-                    (else_last, _) = flush_pending_edge(
-                        graph,
-                        else_last,
-                        else_current,
-                        TemplateNode {
-                            template_name: template_name.to_owned(),
-                            node_type: NodeType::Other,
-                        },
-                    );
-                    else_last
-                };
+                let mut false_tmp = children_to_ast(
+                    first_nodes,
+                    template_name,
+                    graph,
+                    BTreeSet::from([(
+                        if_start,
+                        Some(IntermediateAstElement {
+                            tag: "false".to_owned(),
+                            inner: IntermediateAstElementInner::Text(String::new()),
+                        }),
+                    )]),
+                    else_children,
+                    parent,
+                );
 
-                // TODO FIXME if last would be a vec, then we probably wouldn't need this
-                last = graph.add_node(TemplateNode {
-                    template_name: template_name.to_owned(),
-                    node_type: NodeType::Other,
-                });
-
-                graph.add_edge(if_last, last, IntermediateAstElement::Noop);
-                graph.add_edge(else_last, last, IntermediateAstElement::Noop);
+                tmp = true_tmp;
+                tmp.append(&mut false_tmp);
             }
         }
     }
-    (last, current)
+    tmp
 }
 
 #[must_use]
@@ -399,32 +450,35 @@ pub fn element_to_ast(
     first_nodes: &HashMap<String, NodeIndex>,
     template_name: &str,
     graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
-    mut last: NodeIndex,
-    mut current: IntermediateAstElement,
+    mut tmp: BTreeSet<(NodeIndex, Option<IntermediateAstElement>)>,
     input: Element,
-) -> (NodeIndex, IntermediateAstElement) {
+) -> BTreeSet<(NodeIndex, Option<IntermediateAstElement>)> {
     let name = input.name;
-    (last, current) = add_node_with_edge(
+    tmp = add_edge_maybe_with_node(
         graph,
-        last,
-        current,
+        tmp,
+        IntermediateAstElement {
+            tag: String::new(),
+            inner: IntermediateAstElementInner::Text(format!("<{name}")),
+        },
         TemplateNode {
             template_name: template_name.to_owned(),
             node_type: NodeType::Other,
         },
-        IntermediateAstElement::Text(format!("<{name}")),
     );
     for attribute in input.attributes {
         if let Some(value) = attribute.value {
-            (last, current) = add_node_with_edge(
+            tmp = add_edge_maybe_with_node(
                 graph,
-                last,
-                current,
+                tmp,
+                IntermediateAstElement {
+                    tag: String::new(),
+                    inner: IntermediateAstElementInner::Text(format!(r#" {}=""#, attribute.key)),
+                },
                 TemplateNode {
                     template_name: template_name.to_owned(),
                     node_type: NodeType::Other,
                 },
-                IntermediateAstElement::Text(format!(r#" {}=""#, attribute.key)),
             );
             for value_part in value {
                 match value_part {
@@ -434,74 +488,87 @@ pub fn element_to_ast(
                         let escaping_fun = match (name.as_str(), attribute.key.as_str()) {
                             (_, "value" | "class") => EscapingFunction::HtmlAttribute,
                             (name, attr) => panic!(
-                                "in element {name}, unknown escaping rules for attribute name \
+                                "while parsing template {template_name}: \
+                                in element {name}, unknown escaping rules for attribute name \
                                  {attr}"
                             ),
                         };
-                        (last, current) = add_node_with_edge(
+                        tmp = add_edge_maybe_with_node(
                             graph,
-                            last,
-                            current,
+                            tmp,
+                            IntermediateAstElement {
+                                tag: String::new(),
+                                inner: IntermediateAstElementInner::Variable {
+                                    variable_name: next_variable,
+                                    escaping_fun,
+                                },
+                            },
                             TemplateNode {
                                 template_name: template_name.to_owned(),
                                 node_type: NodeType::Other,
                             },
-                            IntermediateAstElement::Variable(next_variable, escaping_fun),
                         );
                     }
                     AttributeValuePart::Literal(string) => {
-                        (last, current) = add_node_with_edge(
+                        tmp = add_edge_maybe_with_node(
                             graph,
-                            last,
-                            current,
+                            tmp,
+                            IntermediateAstElement {
+                                tag: String::new(),
+                                inner: IntermediateAstElementInner::Text(string),
+                            },
                             TemplateNode {
                                 template_name: template_name.to_owned(),
                                 node_type: NodeType::Other,
                             },
-                            IntermediateAstElement::Text(string),
                         );
                     }
                 }
             }
-            (last, current) = add_node_with_edge(
+            tmp = add_edge_maybe_with_node(
                 graph,
-                last,
-                current,
+                tmp,
+                IntermediateAstElement {
+                    tag: String::new(),
+                    inner: IntermediateAstElementInner::Text(r#"""#.to_owned()),
+                },
                 TemplateNode {
                     template_name: template_name.to_owned(),
                     node_type: NodeType::Other,
                 },
-                IntermediateAstElement::Text(r#"""#.to_owned()),
             );
         } else {
-            (last, current) = add_node_with_edge(
+            tmp = add_edge_maybe_with_node(
                 graph,
-                last,
-                current,
+                tmp,
+                IntermediateAstElement {
+                    tag: String::new(),
+                    inner: IntermediateAstElementInner::Text(format!(r#" {}"#, attribute.key)),
+                },
                 TemplateNode {
                     template_name: template_name.to_owned(),
                     node_type: NodeType::Other,
                 },
-                IntermediateAstElement::Text(format!(r#" {}"#, attribute.key)),
             );
         }
     }
-    (last, current) = add_node_with_edge(
+    tmp = add_edge_maybe_with_node(
         graph,
-        last,
-        current,
+        tmp,
+        IntermediateAstElement {
+            tag: String::new(),
+            inner: IntermediateAstElementInner::Text(">".to_owned()),
+        },
         TemplateNode {
             template_name: template_name.to_owned(),
             node_type: NodeType::Other,
         },
-        IntermediateAstElement::Text(">".to_owned()),
     );
-    (last, current) = children_to_ast(
+    tmp = children_to_ast(
         first_nodes,
         template_name,
         graph,
-        last,
-        current,
+        tmp,
         input.children,
         &name,
     );
@@ -510,17 +577,19 @@ pub fn element_to_ast(
         "!doctype" | "area" | "base" | "br" | "col" | "embed" | "hr" | "img" | "input" | "link"
         | "meta" | "source" | "track" | "wbr" => {}
         _ => {
-            (last, current) = add_node_with_edge(
+            tmp = add_edge_maybe_with_node(
                 graph,
-                last,
-                current,
+                tmp,
+                IntermediateAstElement {
+                    tag: String::new(),
+                    inner: IntermediateAstElementInner::Text(format!("</{name}>")),
+                },
                 TemplateNode {
                     template_name: template_name.to_owned(),
                     node_type: NodeType::Other,
                 },
-                IntermediateAstElement::Text(format!("</{name}>")),
             );
         }
     }
-    (last, current)
+    tmp
 }
