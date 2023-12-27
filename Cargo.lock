@@ -787,6 +787,7 @@ name = "zero-cost-templating"
 version = "0.1.0"
 dependencies = [
  "futures",
+ "futures-core",
  "iai-callgrind",
  "pin-project",
  "regex",
