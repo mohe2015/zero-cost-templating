@@ -125,6 +125,7 @@ macro_rules! yields {
         let ret = expr.0;
         loop {
             let value = ::std::iter::Iterator::next(&mut iterator);
+            // maybe match has bad liveness analysis?
             if value.is_some() {
                 let value = value.unwrap();
                 yield value;
