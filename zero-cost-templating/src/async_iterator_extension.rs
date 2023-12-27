@@ -32,7 +32,7 @@ impl<S: AsyncIterator + Unpin> Future for &mut Next<S> {
 }
 
 #[pin_project]
-pub struct AsyncIteratorStream<Item, AI: AsyncIterator<Item = Item>>(#[pin] AI);
+pub struct AsyncIteratorStream<Item, AI: AsyncIterator<Item = Item>>(#[pin] pub AI);
 
 impl<Item, AI: AsyncIterator<Item = Item>> futures_core::stream::Stream
     for AsyncIteratorStream<Item, AI>
