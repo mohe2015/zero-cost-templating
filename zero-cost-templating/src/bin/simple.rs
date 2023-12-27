@@ -11,17 +11,19 @@ use zero_cost_templating::{template_stream, yields};
 // export RUSTFLAGS="-Z proc-macro-backtrace"
 // cargo build
 // cargo expand --package zero-cost-templating --bin simple
-// echo '#![feature(print_internals)] #![feature(unsafe_pin_internals)]' > zero-cost-templating/src/bin/test.rs
-// cargo expand --package zero-cost-templating --bin simple >> zero-cost-templating/src/bin/test.rs
-// cargo run --release --bin simple
+/*
 
-// RUSTFLAGS="-Zprint-type-sizes" cargo run --release --bin test > type-sizes.txt
-// search for
-// `{gen fn body@
-// `{gen block@
-// `{async gen fn body@
-// `{async gen block@
-// `{static coroutine@
+echo '#![feature(print_internals)] #![feature(unsafe_pin_internals)]' > zero-cost-templating/src/bin/test.rs
+cargo expand --package zero-cost-templating --bin simple >> zero-cost-templating/src/bin/test.rs
+RUSTFLAGS="-Zprint-type-sizes" cargo run --release --bin test > type-sizes.txt
+
+search for
+`{gen fn body@
+`{gen block@
+`{async gen fn body@
+`{async gen block@
+`{static coroutine@
+*/
 
 // Don't use Cow because it is so big?
 #[template_stream("templates")]

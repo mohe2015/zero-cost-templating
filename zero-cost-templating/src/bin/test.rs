@@ -17,17 +17,19 @@ use zero_cost_templating::{template_stream, yields};
 // export RUSTFLAGS="-Z proc-macro-backtrace"
 // cargo build
 // cargo expand --package zero-cost-templating --bin simple
-// echo '#![feature(print_internals)] #![feature(unsafe_pin_internals)]' > zero-cost-templating/src/bin/test.rs
-// cargo expand --package zero-cost-templating --bin simple >> zero-cost-templating/src/bin/test.rs
-// cargo run --release --bin simple
+/*
 
-// RUSTFLAGS="-Zprint-type-sizes" cargo run --release --bin test > type-sizes.txt
-// search for
-// `{gen fn body@
-// `{gen block@
-// `{async gen fn body@
-// `{async gen block@
-// `{static coroutine@
+echo '#![feature(print_internals)] #![feature(unsafe_pin_internals)]' > zero-cost-templating/src/bin/test.rs
+cargo expand --package zero-cost-templating --bin simple >> zero-cost-templating/src/bin/test.rs
+RUSTFLAGS="-Zprint-type-sizes" cargo run --release --bin test > type-sizes.txt
+
+search for
+`{gen fn body@
+`{gen block@
+`{async gen fn body@
+`{async gen block@
+`{static coroutine@
+*/
 
 // Don't use Cow because it is so big?
 #[must_use]
@@ -60342,79 +60344,111 @@ pub gen fn test() -> Cow<'static, str> {
         // 264
         {
             let expr = g_partial_block();
-            let mut iter = expr.1;
+            let mut iterator = expr.1;
             let ret = expr.0;
-            while let Some(v) = ::std::iter::Iterator::next(&mut iter) {
-                yield v;
+            loop {
+                let value = ::std::iter::Iterator::next(&mut iterator);
+                if value.is_some() {
+                        let value = value.unwrap();
+                        yield value;
+                    } else { break; }
             }
             ret
         };
     let template =
         {
             let expr = template.next();
-            let mut iter = expr.1;
+            let mut iterator = expr.1;
             let ret = expr.0;
-            while let Some(v) = ::std::iter::Iterator::next(&mut iter) {
-                yield v;
+            loop {
+                let value = ::std::iter::Iterator::next(&mut iterator);
+                if value.is_some() {
+                        let value = value.unwrap();
+                        yield value;
+                    } else { break; }
             }
             ret
         };
     let template =
         {
             let expr = template.before("before");
-            let mut iter = expr.1;
+            let mut iterator = expr.1;
             let ret = expr.0;
-            while let Some(v) = ::std::iter::Iterator::next(&mut iter) {
-                yield v;
+            loop {
+                let value = ::std::iter::Iterator::next(&mut iterator);
+                if value.is_some() {
+                        let value = value.unwrap();
+                        yield value;
+                    } else { break; }
             }
             ret
         };
     let template =
         {
             let expr = template.test("test");
-            let mut iter = expr.1;
+            let mut iterator = expr.1;
             let ret = expr.0;
-            while let Some(v) = ::std::iter::Iterator::next(&mut iter) {
-                yield v;
+            loop {
+                let value = ::std::iter::Iterator::next(&mut iterator);
+                if value.is_some() {
+                        let value = value.unwrap();
+                        yield value;
+                    } else { break; }
             }
             ret
         };
     let template =
         {
             let expr = template.next();
-            let mut iter = expr.1;
+            let mut iterator = expr.1;
             let ret = expr.0;
-            while let Some(v) = ::std::iter::Iterator::next(&mut iter) {
-                yield v;
+            loop {
+                let value = ::std::iter::Iterator::next(&mut iterator);
+                if value.is_some() {
+                        let value = value.unwrap();
+                        yield value;
+                    } else { break; }
             }
             ret
         };
     let template =
         {
             let expr = template.test("test");
-            let mut iter = expr.1;
+            let mut iterator = expr.1;
             let ret = expr.0;
-            while let Some(v) = ::std::iter::Iterator::next(&mut iter) {
-                yield v;
+            loop {
+                let value = ::std::iter::Iterator::next(&mut iterator);
+                if value.is_some() {
+                        let value = value.unwrap();
+                        yield value;
+                    } else { break; }
             }
             ret
         };
     let template =
         {
             let expr = template.after("after");
-            let mut iter = expr.1;
+            let mut iterator = expr.1;
             let ret = expr.0;
-            while let Some(v) = ::std::iter::Iterator::next(&mut iter) {
-                yield v;
+            loop {
+                let value = ::std::iter::Iterator::next(&mut iterator);
+                if value.is_some() {
+                        let value = value.unwrap();
+                        yield value;
+                    } else { break; }
             }
             ret
         };
     {
         let expr = template.next();
-        let mut iter = expr.1;
+        let mut iterator = expr.1;
         let ret = expr.0;
-        while let Some(v) = ::std::iter::Iterator::next(&mut iter) {
-            yield v;
+        loop {
+            let value = ::std::iter::Iterator::next(&mut iterator);
+            if value.is_some() {
+                    let value = value.unwrap();
+                    yield value;
+                } else { break; }
         }
         ret
     };

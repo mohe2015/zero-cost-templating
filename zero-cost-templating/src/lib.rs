@@ -121,10 +121,16 @@ pub use zero_cost_templating_macros::template_stream;
 macro_rules! yields {
     ($e: expr) => {{
         let expr = $e;
-        let mut iter = expr.1;
+        let mut iterator = expr.1;
         let ret = expr.0;
-        while let Some(v) = ::std::iter::Iterator::next(&mut iter) {
-            yield v;
+        loop {
+            let value = ::std::iter::Iterator::next(&mut iterator);
+            if value.is_some() {
+                let value = value.unwrap();
+                yield value;
+            } else {
+                break;
+            }
         }
         ret
     }};
