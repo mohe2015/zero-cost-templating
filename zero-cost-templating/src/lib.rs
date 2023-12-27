@@ -121,10 +121,9 @@ pub use zero_cost_templating_macros::template_stream;
 macro_rules! yields {
     ($e: expr) => {{
         let expr = $e;
+        let mut iter = expr.1;
         let ret = expr.0;
-        let iter = ::core::pin::pin!(expr.1);
-        let mut iter = ::zero_cost_templating::async_iterator_extension::AsyncIterExt::next(iter);
-        while let Some(v) = (&mut iter).await {
+        while let Some(v) = ::std::iter::Iterator::next(&mut iter) {
             yield v;
         }
         ret

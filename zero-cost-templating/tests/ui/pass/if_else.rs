@@ -18,7 +18,7 @@ mod if_else_true {
     use zero_cost_templating_macros::template_stream;
 
     #[template_stream("if_else.html.hbs")]
-    pub async gen fn test_true() -> Cow<'static, str> {
+    pub gen fn test_true() -> Cow<'static, str> {
         let template = yields!(if_else0());
         let template = if true {
             let template = yields!(template.next0());
@@ -31,7 +31,7 @@ mod if_else_true {
 }
 
 #[template_stream("if_else.html.hbs")]
-pub async gen fn test_false() -> Cow<'static, str> {
+pub gen fn test_false() -> Cow<'static, str> {
     let template = yields!(if_else0());
     let template = if false {
         let template = yields!(template.next0()); // TODO FIXME these methods should have a label (maybe we can enforce different labels at a control flow split and then don't need the number)

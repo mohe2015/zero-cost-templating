@@ -2,28 +2,30 @@
 
 extern crate alloc;
 
-use std::{borrow::Cow, pin::pin};
+use std::borrow::Cow;
 
-use zero_cost_templating::{async_iterator_extension::AsyncIterExt, template_stream, yields};
+use zero_cost_templating::{template_stream, yields};
 
 // https://github.com/dtolnay/cargo-expand
 
 // export RUSTFLAGS="-Z proc-macro-backtrace"
 // cargo build
 // cargo expand --package zero-cost-templating --bin simple
-// echo "#![feature(print_internals)] #![feature(unsafe_pin_internals)] " > zero-cost-templating/src/bin/test.rs
+// echo '#![feature(print_internals)] #![feature(unsafe_pin_internals)]' > zero-cost-templating/src/bin/test.rs
 // cargo expand --package zero-cost-templating --bin simple >> zero-cost-templating/src/bin/test.rs
 // cargo run --release --bin simple
 
-// RUSTFLAGS="-Zprint-type-sizes" cargo run --release --bin simple > type-sizes.txt
+// RUSTFLAGS="-Zprint-type-sizes" cargo run --release --bin test > type-sizes.txt
 // search for
-// `{async gen block@
+// `{gen fn body@
+// `{gen block@
 // `{async gen fn body@
+// `{async gen block@
 // `{static coroutine@
 
 // Don't use Cow because it is so big?
 #[template_stream("templates")]
-pub async gen fn test() -> Cow<'static, str> {
+pub gen fn test() -> Cow<'static, str> {
     let template = yields!(g_partial_block());
     let template = yields!(template.next());
     let template = yields!(template.before("before"));
@@ -38,10 +40,8 @@ pub async gen fn test() -> Cow<'static, str> {
 pub async fn main() {
     let mut async_iterator = test();
     println!("size: {}", std::mem::size_of_val(&async_iterator)); // 264
-    let async_iterator = pin!(async_iterator);
-    let mut async_iterator = async_iterator.next();
     let mut output = String::new();
-    while let Some(value) = (&mut async_iterator).await {
+    while let Some(value) = async_iterator.next() {
         output.push_str(&value);
     }
     print!("{}", output);

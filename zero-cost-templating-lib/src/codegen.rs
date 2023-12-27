@@ -358,9 +358,9 @@ pub fn calculate_edge(
                             > {
                     #[doc = #documentation]
                     pub fn #function_name(self #parameter) -> (#return_type,
-                            impl ::std::async_iter::AsyncIterator<Item =
+                            impl ::std::iter::Iterator<Item =
                                 ::alloc::borrow::Cow<'static, str>>) {
-                        (#return_create, async gen {
+                        (#return_create, gen {
                             #to_yield
                         })
                     }
@@ -384,9 +384,9 @@ pub fn calculate_edge(
 
                         #[doc = #documentation]
                         pub fn #function_name(self #parameter) -> (#return_type,
-                                impl ::std::async_iter::AsyncIterator<Item =
+                                impl ::std::iter::Iterator<Item =
                                     ::alloc::borrow::Cow<'static, str>>) {
-                            (#return_create, async gen {
+                            (#return_create, gen {
                                 #to_yield
                             })
                         }
@@ -441,8 +441,8 @@ pub fn codegen_template_codegen(
         #[allow(unused)]
         /// Start
         pub fn #ident() -> (#template_struct_type,
-                impl ::std::async_iter::AsyncIterator<Item = ::alloc::borrow::Cow<'static, str>>) {
-            (#template_struct_create, async gen {})
+                impl ::std::iter::Iterator<Item = ::alloc::borrow::Cow<'static, str>>) {
+            (#template_struct_create, gen {})
         }
 
         const #recompile_ident: &'static str = include_str!(#path);
