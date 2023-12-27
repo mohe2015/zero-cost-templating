@@ -41,6 +41,9 @@ pub gen fn test() -> Cow<'static, str> {
 #[tokio::main]
 pub async fn main() {
     let mut async_iterator = test();
+    println!("size of &str: {}", std::mem::size_of::<&str>());
+    println!("size of Cow: {}", std::mem::size_of::<Cow<'static, str>>());
+    println!("size of String: {}", std::mem::size_of::<String>());
     println!("size: {}", std::mem::size_of_val(&async_iterator)); // 264
     let mut output = String::new();
     while let Some(value) = async_iterator.next() {
