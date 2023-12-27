@@ -13,7 +13,9 @@ use zero_cost_templating::{template_stream, yieldi, yieldv};
 // cargo expand --package zero-cost-templating --bin simple
 /*
 
-echo '#![feature(print_internals)] #![feature(unsafe_pin_internals)]' > zero-cost-templating/src/bin/test.rs && cargo expand --package zero-cost-templating --bin simple >> zero-cost-templating/src/bin/test.rs && RUSTFLAGS="-Zprint-type-sizes" cargo run --release --bin test > type-sizes.txt
+echo '#![feature(print_internals)] #![feature(unsafe_pin_internals)]' > zero-cost-templating/src/bin/test.rs \
+&& cargo expand --package zero-cost-templating --bin simple >> zero-cost-templating/src/bin/test.rs \
+&& RUSTFLAGS="-Zprint-type-sizes" cargo run --release --bin test > type-sizes.txt
 
 search for
 `{gen fn body@
@@ -48,7 +50,10 @@ pub async fn main() {
     println!("size of &str: {}", std::mem::size_of::<&str>());
     println!("size of Cow: {}", std::mem::size_of::<Cow<'static, str>>());
     println!("size of String: {}", std::mem::size_of::<String>());
-    println!("size of iterator: {}", std::mem::size_of_val(&async_iterator)); // 264
+    println!(
+        "size of iterator: {}",
+        std::mem::size_of_val(&async_iterator)
+    );
     let mut output = String::new();
     while let Some(value) = async_iterator.next() {
         output.push_str(&value);

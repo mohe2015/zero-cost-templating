@@ -1,5 +1,5 @@
 use core::fmt::Display;
-use std::collections::{HashMap, BTreeSet};
+use std::collections::{BTreeSet, HashMap};
 
 use petgraph::stable_graph::{NodeIndex, StableGraph};
 
@@ -30,7 +30,8 @@ pub struct IntermediateAstElement {
 #[derive(Debug, PartialEq, Eq, Hash, PartialOrd, Ord, Clone)]
 pub enum IntermediateAstElementInner {
     Variable {
-        // don't yield text before or after, so we don't need to store the caller provided value across yield points
+        // don't yield text before or after,
+        // so we don't need to store the caller provided value across yield points
         variable_name: String,
         escaping_fun: EscapingFunction,
     },
@@ -98,10 +99,7 @@ impl Display for IntermediateAstElement {
                         escaping_fun,
                     },
             } => {
-                write!(
-                    formatter,
-                    "[{tag}] {{{{{variable_name}:{escaping_fun}}}}}"
-                )
+                write!(formatter, "[{tag}] {{{{{variable_name}:{escaping_fun}}}}}")
             }
             Self {
                 tag,
@@ -176,10 +174,14 @@ pub fn flush_with_node(
 
     let to = graph.add_node(node.clone());
     for (from, edge) in tmp {
-        graph.add_edge(from, to, edge.unwrap_or_else(|| IntermediateAstElement {
-            tag: String::new(),
-            inner: IntermediateAstElementInner::Text(String::new())
-        }));
+        graph.add_edge(
+            from,
+            to,
+            edge.unwrap_or_else(|| IntermediateAstElement {
+                tag: String::new(),
+                inner: IntermediateAstElementInner::Text(String::new()),
+            }),
+        );
     }
     to
 }
@@ -253,7 +255,10 @@ pub fn children_to_ast(
                     "h1" | "li" | "span" | "title" | "main" | "a" | "p" | "div" => {
                         EscapingFunction::HtmlElementInner
                     }
-                    other => panic!("while parsing template {template_name}: unknown escaping rules for element {other}"),
+                    other => panic!(
+                        "while parsing template {template_name}: \
+                    unknown escaping rules for element {other}"
+                    ),
                 };
                 tmp = add_edge_maybe_with_node(
                     graph,
@@ -483,7 +488,8 @@ pub fn element_to_ast(
                         let escaping_fun = match (name.as_str(), attribute.key.as_str()) {
                             (_, "value" | "class") => EscapingFunction::HtmlAttribute,
                             (name, attr) => panic!(
-                                "while parsing template {template_name}: in element {name}, unknown escaping rules for attribute name \
+                                "while parsing template {template_name}: \
+                                in element {name}, unknown escaping rules for attribute name \
                                  {attr}"
                             ),
                         };
