@@ -106,7 +106,7 @@
 #![feature(lint_reasons)]
 #![feature(proc_macro_span)]
 
-use std::collections::HashMap;
+use std::collections::{BTreeSet, HashMap};
 use std::fs::{self, File};
 use std::io::Write;
 use std::path::PathBuf;
@@ -213,7 +213,7 @@ pub fn template_stream(
                 &first_nodes,
                 template_name,
                 graph,
-                vec![(*first, None)],
+                BTreeSet::from([(*first, None)]),
                 dom,
                 "root",
             );

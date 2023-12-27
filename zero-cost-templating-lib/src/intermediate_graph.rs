@@ -1,5 +1,5 @@
 use core::fmt::Display;
-use std::collections::HashMap;
+use std::collections::{HashMap, BTreeSet};
 
 use petgraph::stable_graph::{NodeIndex, StableGraph};
 
@@ -165,11 +165,11 @@ impl Display for TemplateNode {
 // Two partials after each other...
 pub fn flush_with_node(
     graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
-    tmp: Vec<(NodeIndex, Option<IntermediateAstElement>)>,
+    tmp: BTreeSet<(NodeIndex, Option<IntermediateAstElement>)>,
     node: TemplateNode,
 ) -> NodeIndex {
-    if tmp.len() == 1 && tmp[0].1.is_none() && node.node_type == NodeType::Other {
-        return tmp[0].0;
+    if tmp.len() == 1 && tmp.first().unwrap().1.is_none() && node.node_type == NodeType::Other {
+        return tmp.first().unwrap().0;
     }
     // TODO FIXME don't flush if .e.g. compatible two text nodes.
     // maybe check if length == 1 then maybe no new node, otherwise always new node
@@ -186,7 +186,7 @@ pub fn flush_with_node(
 
 pub fn connect_edges_to_node(
     graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
-    tmp: Vec<(NodeIndex, Option<IntermediateAstElement>)>,
+    tmp: BTreeSet<(NodeIndex, Option<IntermediateAstElement>)>,
     to: NodeIndex,
 ) {
     for (from, edge) in tmp {
@@ -198,10 +198,10 @@ pub fn connect_edges_to_node(
 /// If adding the edge requires a new node, it adds the node of the specified type.
 pub fn add_edge_maybe_with_node(
     graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
-    tmp: Vec<(NodeIndex, Option<IntermediateAstElement>)>,
+    tmp: BTreeSet<(NodeIndex, Option<IntermediateAstElement>)>,
     next_edge: IntermediateAstElement,
     to: TemplateNode,
-) -> Vec<(NodeIndex, Option<IntermediateAstElement>)> {
+) -> BTreeSet<(NodeIndex, Option<IntermediateAstElement>)> {
     let mut new_node = None;
     tmp.into_iter()
         .map(
@@ -240,10 +240,10 @@ pub fn children_to_ast(
     first_nodes: &HashMap<String, NodeIndex>,
     template_name: &str,
     graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
-    mut tmp: Vec<(NodeIndex, Option<IntermediateAstElement>)>,
+    mut tmp: BTreeSet<(NodeIndex, Option<IntermediateAstElement>)>,
     input: Vec<Child>,
     parent: &str,
-) -> Vec<(NodeIndex, Option<IntermediateAstElement>)> {
+) -> BTreeSet<(NodeIndex, Option<IntermediateAstElement>)> {
     for child in input {
         match child {
             Child::Variable(next_variable) => {
@@ -305,26 +305,26 @@ pub fn children_to_ast(
                     first_nodes,
                     template_name,
                     graph,
-                    vec![(
+                    BTreeSet::from([(
                         loop_start,
                         Some(IntermediateAstElement {
                             tag: "enter_loop".to_owned(),
                             inner: IntermediateAstElementInner::Text(String::new()),
                         }),
-                    )],
+                    )]),
                     children,
                     parent,
                 );
 
                 connect_edges_to_node(graph, loop_end, loop_start);
 
-                tmp = vec![(
+                tmp = BTreeSet::from([(
                     loop_start,
                     Some(IntermediateAstElement {
                         tag: "end_loop".to_owned(),
                         inner: IntermediateAstElementInner::Text(String::new()),
                     }),
-                )];
+                )]);
             }
             Child::PartialBlock(name, children) => {
                 let inner_template_tmp = flush_with_node(
@@ -338,13 +338,13 @@ pub fn children_to_ast(
 
                 // this part needs to be fully disjunct from the rest
                 // TODO create an add_edge function that enforces that a new node is not needed.
-                let mut partial_block_partial_tmp = vec![(
+                let mut partial_block_partial_tmp = BTreeSet::from([(
                     inner_template_tmp,
                     Some(IntermediateAstElement {
                         tag: String::new(),
                         inner: IntermediateAstElementInner::PartialBlockPartial,
                     }),
-                )];
+                )]);
                 partial_block_partial_tmp = children_to_ast(
                     first_nodes,
                     template_name,
@@ -366,20 +366,20 @@ pub fn children_to_ast(
                     .get(&name)
                     .unwrap_or_else(|| panic!("unknown inner template {name}"));
 
-                let inner_template_template_tmp = vec![(
+                let inner_template_template_tmp = BTreeSet::from([(
                     inner_template_tmp,
                     Some(IntermediateAstElement {
                         tag: String::new(),
                         inner: IntermediateAstElementInner::InnerTemplate,
                     }),
-                )];
+                )]);
 
                 connect_edges_to_node(graph, inner_template_template_tmp, inner_template_target);
 
-                tmp = vec![(inner_template_tmp, None)];
+                tmp = BTreeSet::from([(inner_template_tmp, None)]);
             }
             Child::PartialBlockPartial => {
-                tmp = vec![(
+                tmp = BTreeSet::from([(
                     flush_with_node(
                         graph,
                         tmp,
@@ -389,7 +389,7 @@ pub fn children_to_ast(
                         },
                     ),
                     None,
-                )];
+                )]);
             }
             Child::If(_variable, if_children, else_children) => {
                 let if_start = flush_with_node(
@@ -405,13 +405,13 @@ pub fn children_to_ast(
                     first_nodes,
                     template_name,
                     graph,
-                    vec![(
+                    BTreeSet::from([(
                         if_start,
                         Some(IntermediateAstElement {
                             tag: "true".to_owned(),
                             inner: IntermediateAstElementInner::Text(String::new()),
                         }),
-                    )],
+                    )]),
                     if_children,
                     parent,
                 );
@@ -420,13 +420,13 @@ pub fn children_to_ast(
                     first_nodes,
                     template_name,
                     graph,
-                    vec![(
+                    BTreeSet::from([(
                         if_start,
                         Some(IntermediateAstElement {
                             tag: "false".to_owned(),
                             inner: IntermediateAstElementInner::Text(String::new()),
                         }),
-                    )],
+                    )]),
                     else_children,
                     parent,
                 );
@@ -445,9 +445,9 @@ pub fn element_to_ast(
     first_nodes: &HashMap<String, NodeIndex>,
     template_name: &str,
     graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
-    mut tmp: Vec<(NodeIndex, Option<IntermediateAstElement>)>,
+    mut tmp: BTreeSet<(NodeIndex, Option<IntermediateAstElement>)>,
     input: Element,
-) -> Vec<(NodeIndex, Option<IntermediateAstElement>)> {
+) -> BTreeSet<(NodeIndex, Option<IntermediateAstElement>)> {
     let name = input.name;
     tmp = add_edge_maybe_with_node(
         graph,

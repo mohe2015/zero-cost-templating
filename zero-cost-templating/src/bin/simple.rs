@@ -31,13 +31,17 @@ pub gen fn test() -> Cow<'static, str> {
     let template = yields!(template.next());
     let template = yields!(template.before("before"));
     let template = yields!(template.next());
+    let template = yields!(template.next());
     let template = yields!(template.test("test"));
     let template = yields!(template.next());
     let template = yields!(template.next());
+    let template = yields!(template.next());
     let template = yields!(template.test("test"));
+    let template = yields!(template.next());
     let template = yields!(template.next());
     let template = yields!(template.after("after"));
     yields!(template.next());
+    
 }
 
 #[tokio::main]
