@@ -2,6 +2,7 @@ cargo-features = ["edition2024"]
 
 [package]
 name = "zero-cost-templating"
+license = "AGPL-3.0-or-later"
 version = "0.1.0"
 edition = "2024"
 
