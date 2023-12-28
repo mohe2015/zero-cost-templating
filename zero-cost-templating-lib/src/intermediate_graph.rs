@@ -252,7 +252,7 @@ pub fn children_to_ast(
                 // https://html.spec.whatwg.org/dev/syntax.html
                 // https://github.com/cure53/DOMPurify/blob/main/src/tags.js
                 let escaping_fun = match parent {
-                    "h1" | "li" | "span" | "title" | "main" | "a" | "p" | "div" => {
+                    "h1" | "h2" | "li" | "span" | "title" | "main" | "a" | "p" | "div" | "button" => {
                         EscapingFunction::HtmlElementInner
                     }
                     other => panic!(
