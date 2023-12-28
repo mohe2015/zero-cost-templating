@@ -256,7 +256,7 @@ pub fn children_to_ast(
                         EscapingFunction::HtmlElementInner
                     }
                     other => panic!(
-                        "while parsing template {template_name}: \
+                        "while parsing template {template_name}: while parsing template {template_name}: \
                     unknown escaping rules for element {other}"
                     ),
                 };
@@ -293,7 +293,7 @@ pub fn children_to_ast(
             Child::Element(element) => {
                 assert!(
                     !(parent == "script" || parent == "style"),
-                    "children are unsafe in <script> and <style>"
+                    "while parsing template {template_name}: children are unsafe in <script> and <style>"
                 );
                 tmp = element_to_ast(first_nodes, template_name, graph, tmp, element);
             }
@@ -369,7 +369,7 @@ pub fn children_to_ast(
 
                 let inner_template_target = *first_nodes
                     .get(&name)
-                    .unwrap_or_else(|| panic!("unknown inner template {name}"));
+                    .unwrap_or_else(|| panic!("while parsing template {template_name}: unknown inner template {name}"));
 
                 let inner_template_template_tmp = BTreeSet::from([(
                     inner_template_tmp,
