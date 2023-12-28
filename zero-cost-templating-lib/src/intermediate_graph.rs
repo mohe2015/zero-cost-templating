@@ -396,7 +396,7 @@ pub fn children_to_ast(
                     None,
                 )]);
             }
-            Child::If(_variable, if_children, else_children) => {
+            Child::If(variable, if_children, else_children) => {
                 let if_start = flush_with_node(
                     graph,
                     tmp,
@@ -413,7 +413,7 @@ pub fn children_to_ast(
                     BTreeSet::from([(
                         if_start,
                         Some(IntermediateAstElement {
-                            tag: "true".to_owned(),
+                            tag: variable.clone() + "_true",
                             inner: IntermediateAstElementInner::Text(String::new()),
                         }),
                     )]),
@@ -428,7 +428,7 @@ pub fn children_to_ast(
                     BTreeSet::from([(
                         if_start,
                         Some(IntermediateAstElement {
-                            tag: "false".to_owned(),
+                            tag: variable + "_false",
                             inner: IntermediateAstElementInner::Text(String::new()),
                         }),
                     )]),
