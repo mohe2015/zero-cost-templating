@@ -252,11 +252,11 @@ pub fn children_to_ast(
                 // https://html.spec.whatwg.org/dev/syntax.html
                 // https://github.com/cure53/DOMPurify/blob/main/src/tags.js
                 let escaping_fun = match parent {
-                    "h1" | "li" | "span" | "title" | "main" | "a" | "p" | "div" => {
+                    "h1" | "h2" | "li" | "span" | "title" | "main" | "a" | "p" | "div" | "button" => {
                         EscapingFunction::HtmlElementInner
                     }
                     other => panic!(
-                        "while parsing template {template_name}: \
+                        "while parsing template {template_name}: while parsing template {template_name}: \
                     unknown escaping rules for element {other}"
                     ),
                 };
@@ -293,7 +293,7 @@ pub fn children_to_ast(
             Child::Element(element) => {
                 assert!(
                     !(parent == "script" || parent == "style"),
-                    "children are unsafe in <script> and <style>"
+                    "while parsing template {template_name}: children are unsafe in <script> and <style>"
                 );
                 tmp = element_to_ast(first_nodes, template_name, graph, tmp, element);
             }
@@ -369,7 +369,7 @@ pub fn children_to_ast(
 
                 let inner_template_target = *first_nodes
                     .get(&name)
-                    .unwrap_or_else(|| panic!("unknown inner template {name}"));
+                    .unwrap_or_else(|| panic!("while parsing template {template_name}: unknown inner template {name}"));
 
                 let inner_template_template_tmp = BTreeSet::from([(
                     inner_template_tmp,
@@ -396,7 +396,7 @@ pub fn children_to_ast(
                     None,
                 )]);
             }
-            Child::If(_variable, if_children, else_children) => {
+            Child::If(variable, if_children, else_children) => {
                 let if_start = flush_with_node(
                     graph,
                     tmp,
@@ -413,7 +413,7 @@ pub fn children_to_ast(
                     BTreeSet::from([(
                         if_start,
                         Some(IntermediateAstElement {
-                            tag: "true".to_owned(),
+                            tag: variable.clone() + "_true",
                             inner: IntermediateAstElementInner::Text(String::new()),
                         }),
                     )]),
@@ -428,7 +428,7 @@ pub fn children_to_ast(
                     BTreeSet::from([(
                         if_start,
                         Some(IntermediateAstElement {
-                            tag: "false".to_owned(),
+                            tag: variable + "_false",
                             inner: IntermediateAstElementInner::Text(String::new()),
                         }),
                     )]),

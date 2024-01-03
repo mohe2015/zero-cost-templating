@@ -70,6 +70,7 @@ fn node_inner_template_type(
     graph: &StableGraph<TemplateNode, IntermediateAstElement>,
     node_index: NodeIndex,
     span: Span,
+    partial: &(TokenStream, TokenStream),
 ) -> (TokenStream, TokenStream) {
     assert_eq!(
         graph[node_index].node_type,
@@ -81,7 +82,7 @@ fn node_inner_template_type(
         graph,
         node_index,
         span,
-        &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
+        partial,
         &(quote_spanned! {span=> () }, quote_spanned! {span=> () }),
     );
 
@@ -193,7 +194,7 @@ fn node_type(
     let node = &graph[node_index];
     match node.node_type {
         NodeType::PartialBlock => panic!(),
-        NodeType::InnerTemplate => node_inner_template_type(graph, node_index, span),
+        NodeType::InnerTemplate => node_inner_template_type(graph, node_index, span, partial),
         NodeType::Other => node_other_type(graph, node_index, span, partial, after),
     }
 }
@@ -382,7 +383,7 @@ pub fn calculate_edge(
             let return_create = r#return.1;
             Some({
                 quote! {
-                    impl<Partial, After>
+                    impl<Partial: Copy, After>
                         Template<#impl_template_name, Partial, After> {
 
                         #[doc = #documentation]

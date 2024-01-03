@@ -150,6 +150,39 @@ macro_rules! yieldi {
     }};
 }
 
+// Yieldok a value.
+#[macro_export]
+macro_rules! yieldokv {
+    ($e: expr) => {{
+        let expr = $e;
+        let value = expr.1;
+        let ret = expr.0;
+        yield Ok(value);
+        ret
+    }};
+}
+
+/// Yieldok an iterator.
+#[macro_export]
+macro_rules! yieldoki {
+    ($e: expr) => {{
+        let expr = $e;
+        let mut iterator = expr.1;
+        let ret = expr.0;
+        loop {
+            let value = ::std::iter::Iterator::next(&mut iterator);
+            // maybe match has bad liveness analysis?
+            if value.is_some() {
+                let value = value.unwrap();
+                yield Ok(value);
+            } else {
+                break;
+            }
+        }
+        ret
+    }};
+}
+
 pub fn encode_element_text<'a, I: Into<Cow<'a, str>>>(input: I) -> Cow<'a, str> {
     // https://html.spec.whatwg.org/dev/syntax.html
     // https://www.php.net/manual/en/function.htmlspecialchars.php
