@@ -367,9 +367,9 @@ pub fn children_to_ast(
                     },
                 );
 
-                let inner_template_target = *first_nodes
-                    .get(&name)
-                    .unwrap_or_else(|| panic!("while parsing template {template_name}: unknown inner template {name}"));
+                let inner_template_target = *first_nodes.get(&name).unwrap_or_else(|| {
+                    panic!("while parsing template {template_name}: unknown inner template {name}")
+                });
 
                 let inner_template_template_tmp = BTreeSet::from([(
                     inner_template_tmp,

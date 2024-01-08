@@ -325,7 +325,8 @@ pub fn calculate_edge(
         edge.source().index().to_string(),
     );
     let (yield_return_type, yield_value) = element_to_yield(edge.weight());
-    let documentation = format!(
+    // TODO FIXME the ` makes doc test parsing fail
+    let _documentation = format!(
         "Transition from `{}: {}` to `{}: {}` using `{}: {}`",
         edge.source().index(),
         graph[edge.source()],
@@ -363,7 +364,6 @@ pub fn calculate_edge(
                             Template<PartialName, PartialPartial, PartialAfter>,
                             After
                             > {
-                    #[doc = #documentation]
                     pub fn #function_name(self #parameter) -> (#return_type,
                             #yield_return_type) {
                         (#return_create, #yield_value)
@@ -386,7 +386,6 @@ pub fn calculate_edge(
                     impl<Partial: Copy, After>
                         Template<#impl_template_name, Partial, After> {
 
-                        #[doc = #documentation]
                         pub fn #function_name(self #parameter) -> (#return_type,
                                 #yield_return_type) {
                             (#return_create, #yield_value)
