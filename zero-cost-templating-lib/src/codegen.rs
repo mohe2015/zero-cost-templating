@@ -256,16 +256,16 @@ pub fn element_to_yield(
             )
         }
         IntermediateAstElementInner::Text(text) => (
-            quote! { impl ::std::iter::Iterator<Item = ::alloc::borrow::Cow<'static, str>> },
+            quote! { impl ::std::iter::Iterator<Item = &'static str> },
             quote! {
                 gen {
-                    yield ::alloc::borrow::Cow::from(#text);
+                    yield #text;
                 }
             },
         ),
         IntermediateAstElementInner::InnerTemplate
         | IntermediateAstElementInner::PartialBlockPartial => (
-            quote! { impl ::std::iter::Iterator<Item = ::alloc::borrow::Cow<'static, str>> },
+            quote! { impl ::std::iter::Iterator<Item = &'static str> },
             quote! {
                 gen {
 
@@ -441,7 +441,7 @@ pub fn codegen_template_codegen(
         #[allow(unused)]
         /// Start
         pub fn #ident() -> (#template_struct_type,
-                impl ::std::iter::Iterator<Item = ::alloc::borrow::Cow<'static, str>>) {
+                impl ::std::iter::Iterator<Item = &'static str>) {
             (#template_struct_create, gen {})
         }
 

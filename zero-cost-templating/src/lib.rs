@@ -141,7 +141,7 @@ macro_rules! yieldi {
             // maybe match has bad liveness analysis?
             if value.is_some() {
                 let value = value.unwrap();
-                yield value;
+                yield ::alloc::borrow::Cow::from(value);
             } else {
                 break;
             }
