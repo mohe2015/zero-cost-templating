@@ -183,6 +183,18 @@ macro_rules! yieldoki {
     }};
 }
 
+pub struct Unsafe<T: Into<::alloc::borrow::Cow<'static, str>>>(T);
+
+impl<T: Into<::alloc::borrow::Cow<'static, str>>> Unsafe<T> {
+    pub fn unsafe_input(input: T) -> Self {
+        Self(input)
+    }
+
+    pub fn get_unsafe_input(self) -> T {
+        self.0
+    }
+}
+
 pub fn encode_element_text<'a, I: Into<Cow<'a, str>>>(input: I) -> Cow<'a, str> {
     // https://html.spec.whatwg.org/dev/syntax.html
     // https://www.php.net/manual/en/function.htmlspecialchars.php

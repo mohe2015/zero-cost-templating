@@ -255,6 +255,18 @@ pub fn element_to_yield(
                 },
             )
         }
+        IntermediateAstElementInner::Variable {
+            variable_name,
+            escaping_fun: EscapingFunction::Unsafe,
+        } => {
+            let variable_name = format_ident!("{}", variable_name);
+            (
+                quote! { ::alloc::borrow::Cow<'static, str> },
+                quote! {
+                    #variable_name.get_unsafe_input().into()
+                },
+            )
+        }
         IntermediateAstElementInner::Text(text) => (
             quote! { impl ::std::iter::Iterator<Item = &'static str> },
             quote! {
@@ -285,39 +297,47 @@ pub fn calculate_edge(
     // TODO FIXME only add number when multiple outgoing edges
     // (add the number to documentation to aid in debugging)
 
-    let function_name = edge.weight().variable_name().as_ref().map_or_else(
-        || {
-            format_ident!(
+    let function_header = match &edge.weight().inner {
+        IntermediateAstElementInner::Variable {
+            variable_name,
+            escaping_fun,
+        } => {
+            let function_name = format_ident!(
+                "{}{}{}",
+                variable_name,
+                if edge.weight().tag.is_empty() {
+                    String::new()
+                } else {
+                    "_".to_owned() + &edge.weight().tag
+                },
+                if matches!(escaping_fun, EscapingFunction::Unsafe) {
+                    "_unsafe".to_owned()
+                } else {
+                    String::new()
+                }
+            );
+            let variable_name = format_ident!("{}", variable_name);
+            let variable_type = if matches!(escaping_fun, EscapingFunction::Unsafe) {
+                quote! { Unsafe }
+            } else {
+                quote! { impl Into<::alloc::borrow::Cow<'static, str>> }
+            };
+            quote! { #function_name(self, #variable_name: #variable_type) }
+        }
+        IntermediateAstElementInner::Text(_)
+        | IntermediateAstElementInner::PartialBlockPartial
+        | IntermediateAstElementInner::InnerTemplate => {
+            let function_name = format_ident!(
                 "next{}",
                 if edge.weight().tag.is_empty() {
                     String::new()
                 } else {
                     "_".to_owned() + &edge.weight().tag
                 }
-            )
-        },
-        |variable| {
-            format_ident!(
-                "{}{}",
-                variable,
-                if edge.weight().tag.is_empty() {
-                    String::new()
-                } else {
-                    "_".to_owned() + &edge.weight().tag
-                }
-            )
-        },
-    );
-    let variable_name = edge
-        .weight()
-        .variable_name()
-        .as_ref()
-        .map(|variable| format_ident!("{}", variable));
-    let parameter = variable_name.as_ref().map(|variable| {
-        quote! {
-            , #variable: impl Into<::alloc::borrow::Cow<'static, str>>
+            );
+            quote! { #function_name(self) }
         }
-    });
+    };
 
     let impl_template_name = format_ident!(
         "{}Template{}",
@@ -364,7 +384,7 @@ pub fn calculate_edge(
                             Template<PartialName, PartialPartial, PartialAfter>,
                             After
                             > {
-                    pub fn #function_name(self #parameter) -> (#return_type,
+                    pub fn #function_header -> (#return_type,
                             #yield_return_type) {
                         (#return_create, #yield_value)
                     }
@@ -386,7 +406,7 @@ pub fn calculate_edge(
                     impl<Partial: Copy, After>
                         Template<#impl_template_name, Partial, After> {
 
-                        pub fn #function_name(self #parameter) -> (#return_type,
+                        pub fn #function_header -> (#return_type,
                                 #yield_return_type) {
                             (#return_create, #yield_value)
                         }

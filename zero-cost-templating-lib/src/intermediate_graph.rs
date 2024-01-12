@@ -9,6 +9,7 @@ use crate::html_recursive_descent::{AttributeValuePart, Child, Element};
 pub enum EscapingFunction {
     HtmlAttribute,
     HtmlElementInner,
+    Unsafe,
 }
 
 impl Display for EscapingFunction {
@@ -16,6 +17,7 @@ impl Display for EscapingFunction {
         match self {
             Self::HtmlAttribute => write!(formatter, "attr"),
             Self::HtmlElementInner => write!(formatter, "element"),
+            Self::Unsafe => write!(formatter, "unsafe"),
         }
     }
 }
@@ -40,52 +42,6 @@ pub enum IntermediateAstElementInner {
     PartialBlockPartial,
     /// The inner template that we want to render
     InnerTemplate,
-}
-
-impl IntermediateAstElement {
-    #[must_use]
-    pub const fn variable(&self) -> Option<(&String, &EscapingFunction)> {
-        if let Self {
-            inner:
-                IntermediateAstElementInner::Variable {
-                    variable_name,
-                    escaping_fun,
-                    ..
-                },
-            ..
-        } = self
-        {
-            Some((variable_name, escaping_fun))
-        } else {
-            None
-        }
-    }
-
-    #[must_use]
-    pub const fn variable_name(&self) -> Option<&String> {
-        if let Self {
-            inner: IntermediateAstElementInner::Variable { variable_name, .. },
-            ..
-        } = self
-        {
-            Some(variable_name)
-        } else {
-            None
-        }
-    }
-
-    #[must_use]
-    pub const fn text(&self) -> Option<&String> {
-        if let Self {
-            inner: IntermediateAstElementInner::Text(string),
-            ..
-        } = self
-        {
-            Some(string)
-        } else {
-            None
-        }
-    }
 }
 
 impl Display for IntermediateAstElement {
