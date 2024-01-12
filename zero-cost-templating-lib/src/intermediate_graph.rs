@@ -211,10 +211,7 @@ pub fn children_to_ast(
                     "h1" | "h2" | "li" | "span" | "title" | "main" | "a" | "p" | "div" | "button" => {
                         EscapingFunction::HtmlElementInner
                     }
-                    other => panic!(
-                        "while parsing template {template_name}: while parsing template {template_name}: \
-                    unknown escaping rules for element {other}"
-                    ),
+                    other => EscapingFunction::Unsafe,
                 };
                 tmp = add_edge_maybe_with_node(
                     graph,
@@ -443,11 +440,7 @@ pub fn element_to_ast(
                         // https://github.com/cure53/DOMPurify/blob/main/src/attrs.js
                         let escaping_fun = match (name.as_str(), attribute.key.as_str()) {
                             (_, "value" | "class") => EscapingFunction::HtmlAttribute,
-                            (name, attr) => panic!(
-                                "while parsing template {template_name}: \
-                                in element {name}, unknown escaping rules for attribute name \
-                                 {attr}"
-                            ),
+                            _ => EscapingFunction::Unsafe,
                         };
                         tmp = add_edge_maybe_with_node(
                             graph,
