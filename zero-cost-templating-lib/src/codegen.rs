@@ -318,7 +318,7 @@ pub fn calculate_edge(
             );
             let variable_name = format_ident!("{}", variable_name);
             let variable_type = if matches!(escaping_fun, EscapingFunction::Unsafe) {
-                quote! { ::zero_cost_templating::Unsafe }
+                quote! { ::zero_cost_templating::Unsafe<impl Into<::alloc::borrow::Cow<'static, str>>> }
             } else {
                 quote! { impl Into<::alloc::borrow::Cow<'static, str>> }
             };
