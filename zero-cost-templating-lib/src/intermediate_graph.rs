@@ -211,7 +211,7 @@ pub fn children_to_ast(
                     "h1" | "h2" | "li" | "span" | "title" | "main" | "a" | "p" | "div" | "button" => {
                         EscapingFunction::HtmlElementInner
                     }
-                    other => EscapingFunction::Unsafe,
+                    _ => EscapingFunction::Unsafe,
                 };
                 tmp = add_edge_maybe_with_node(
                     graph,
