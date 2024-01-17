@@ -235,60 +235,6 @@ pub fn template_stream(
         })
         .collect();
 
-    let mut file = File::create("template_graph.dot").unwrap();
-    let immut_graph = &*graph;
-    file.write_all(
-        format!(
-            "{:?}",
-            Dot::with_attr_getters(
-                immut_graph,
-                &[Config::NodeNoLabel, Config::EdgeNoLabel],
-                &|_, er| match er.weight().inner {
-                    IntermediateAstElementInner::InnerTemplate => {
-                        format!(
-                            "label = \"{}: {}\" style = dashed color = blue",
-                            er.id().index(),
-                            er.weight().to_string().replace('\"', "\\\"")
-                        )
-                    }
-                    IntermediateAstElementInner::PartialBlockPartial => {
-                        format!(
-                            "label = \"{}: {}\" style = dashed color = orange",
-                            er.id().index(),
-                            er.weight().to_string().replace('\"', "\\\"")
-                        )
-                    }
-                    _ => {
-                        format!(
-                            "label = \"{}: {}\" color = red",
-                            er.id().index(),
-                            er.weight().to_string().replace('\"', "\\\"")
-                        )
-                    }
-                },
-                &|_, nr| match nr.weight().node_type {
-                    NodeType::PartialBlock => format!(
-                        "label = \"{}: {}\" color = orange",
-                        nr.id().index(),
-                        nr.weight().to_string().replace('\"', "\\\"")
-                    ),
-                    NodeType::InnerTemplate => format!(
-                        "label = \"{}: {}\" color = blue",
-                        nr.id().index(),
-                        nr.weight().to_string().replace('\"', "\\\"")
-                    ),
-                    NodeType::Other => format!(
-                        "label = \"{}: {}\" color = red",
-                        nr.id().index(),
-                        nr.weight().to_string().replace('\"', "\\\"")
-                    ),
-                },
-            )
-        )
-        .as_bytes(),
-    )
-    .unwrap();
-
     let code = codegen(graph, &inputs);
 
     let item = parse_macro_input!(item as Item);
