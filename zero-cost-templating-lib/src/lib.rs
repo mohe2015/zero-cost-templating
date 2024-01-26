@@ -89,10 +89,9 @@
 #![allow(
     clippy::missing_errors_doc,
     clippy::missing_panics_doc,
-    clippy::module_name_repetitions,
-    reason = "not yet ready for that"
+    clippy::module_name_repetitions
 )]
-#![allow(clippy::shadow_unrelated, reason = "likely useful for templates")]
+#![allow(clippy::shadow_unrelated)]
 #![allow(
     clippy::unwrap_used,
     clippy::cargo,
@@ -100,12 +99,8 @@
     clippy::pattern_type_mismatch,
     clippy::print_stdout,
     clippy::use_debug,
-    clippy::indexing_slicing,
-    reason = "development"
+    clippy::indexing_slicing
 )]
-#![feature(box_patterns)]
-#![feature(lint_reasons)]
-#![feature(async_closure, async_iterator, coroutines, gen_blocks, noop_waker)]
 
 pub mod codegen;
 pub mod html_recursive_descent;

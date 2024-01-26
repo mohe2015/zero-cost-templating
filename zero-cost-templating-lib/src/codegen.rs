@@ -262,14 +262,14 @@ pub fn element_to_yield(
             }
         }
         IntermediateAstElementInner::Text(text) => quote! {
-            ::zero_cost_templating::FutureToStream(())._yield(#text).await;
+            ::zero_cost_templating::FutureToStream(())._yield(::bytes::Bytes::from_static(#text.as_bytes())).await;
         },
         IntermediateAstElementInner::InnerTemplate
         | IntermediateAstElementInner::PartialBlockPartial => quote! {},
     }
 }
 
-#[expect(clippy::too_many_lines, reason = "tmp")]
+#[allow(clippy::too_many_lines)]
 #[must_use]
 pub fn calculate_edge(
     graph: &StableGraph<TemplateNode, IntermediateAstElement>,
@@ -442,7 +442,7 @@ pub fn codegen_template_codegen(
 
         #[allow(unused)]
         /// Start
-        pub fn #ident() -> #template_struct_type {
+        pub fn #ident(stream: ::zero_cost_templating::FutureToStream) -> #template_struct_type {
             #template_struct_create
         }
 

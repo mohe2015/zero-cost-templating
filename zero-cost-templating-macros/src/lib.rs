@@ -89,22 +89,17 @@
 #![allow(
     clippy::missing_errors_doc,
     clippy::missing_panics_doc,
-    clippy::module_name_repetitions,
-    reason = "not yet ready for that"
+    clippy::module_name_repetitions
 )]
-#![allow(clippy::shadow_unrelated, reason = "likely useful for templates")]
+#![allow(clippy::shadow_unrelated)]
 #![allow(
     clippy::unwrap_used,
     clippy::cargo,
     clippy::unreachable,
     clippy::pattern_type_mismatch,
     clippy::print_stdout,
-    clippy::use_debug,
-    reason = "development"
+    clippy::use_debug
 )]
-#![feature(async_closure, async_iterator, coroutines, gen_blocks, noop_waker)]
-#![feature(lint_reasons)]
-#![feature(proc_macro_span)]
 
 use std::collections::{BTreeSet, HashMap};
 use std::fs::{self, File};
@@ -130,9 +125,8 @@ use zero_cost_templating_lib::intermediate_graph::{
 // https://github.com/intellij-rust/intellij-rust/pull/9711
 // https://github.com/yewstack/yew/pull/2972
 
-// TODO FIXME allow passing whole directory?
 #[proc_macro_attribute]
-#[expect(clippy::too_many_lines, reason = "tmp")]
+#[allow(clippy::too_many_lines)]
 pub fn template_stream(
     attributes: proc_macro::TokenStream,
     item: proc_macro::TokenStream,

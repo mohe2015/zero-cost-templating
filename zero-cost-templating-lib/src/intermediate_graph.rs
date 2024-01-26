@@ -193,7 +193,7 @@ pub fn add_edge_maybe_with_node(
 }
 
 #[must_use]
-#[expect(clippy::too_many_lines, reason = "tmp")]
+#[allow(clippy::too_many_lines)]
 pub fn children_to_ast(
     first_nodes: &HashMap<String, NodeIndex>,
     template_name: &str,
@@ -397,7 +397,7 @@ pub fn children_to_ast(
 }
 
 #[must_use]
-#[expect(clippy::too_many_lines, reason = "tmp")]
+#[allow(clippy::too_many_lines)]
 pub fn element_to_ast(
     first_nodes: &HashMap<String, NodeIndex>,
     template_name: &str,

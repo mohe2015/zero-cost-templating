@@ -89,23 +89,18 @@
 #![allow(
     clippy::missing_errors_doc,
     clippy::missing_panics_doc,
-    clippy::module_name_repetitions,
-    reason = "not yet ready for that"
+    clippy::module_name_repetitions
 )]
-#![allow(clippy::shadow_unrelated, reason = "likely useful for templates")]
+#![allow(clippy::shadow_unrelated)]
 #![allow(
     clippy::unwrap_used,
     clippy::cargo,
     clippy::unreachable,
     clippy::pattern_type_mismatch,
     clippy::print_stdout,
-    clippy::use_debug,
-    reason = "development"
+    clippy::use_debug
 )]
-#![feature(async_closure, async_iterator, coroutines, gen_blocks, noop_waker)]
-#![feature(lint_reasons)]
 
-pub mod async_iterator_extension;
 pub mod future_to_stream;
 
 extern crate alloc;
@@ -115,6 +110,7 @@ use bytes::Bytes;
 use std::sync::OnceLock;
 
 pub use future_to_stream::FutureToStream;
+pub use future_to_stream::TheStream;
 pub use futures::stream::iter;
 pub use futures::Stream;
 use regex::Captures;
