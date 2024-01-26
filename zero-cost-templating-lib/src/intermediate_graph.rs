@@ -32,10 +32,10 @@ pub struct IntermediateAstElement {
 #[derive(Debug, PartialEq, Eq, Hash, PartialOrd, Ord, Clone)]
 pub enum IntermediateAstElementInner {
     Variable {
-        // don't yield text before or after,
-        // so we don't need to store the caller provided value across yield points
+        before: String,
         variable_name: String,
         escaping_fun: EscapingFunction,
+        after: String,
     },
     Text(String),
     /// The part we want to render when a partial block occurs.
@@ -51,11 +51,16 @@ impl Display for IntermediateAstElement {
                 tag,
                 inner:
                     IntermediateAstElementInner::Variable {
+                        before,
                         variable_name,
                         escaping_fun,
+                        after,
                     },
             } => {
-                write!(formatter, "[{tag}] {{{{{variable_name}:{escaping_fun}}}}}")
+                write!(
+                    formatter,
+                    "[{tag}] {before}{{{{{variable_name}:{escaping_fun}}}}}{after}"
+                )
             }
             Self {
                 tag,
@@ -181,6 +186,62 @@ pub fn add_edge_maybe_with_node(
                         inner: IntermediateAstElementInner::Text(old + &new),
                     }),
                 ),
+                (
+                    _,
+                    Some(IntermediateAstElement {
+                        tag: current_tag,
+                        inner: IntermediateAstElementInner::Text(old),
+                    }),
+                    IntermediateAstElement {
+                        tag: next_tag,
+                        inner:
+                            IntermediateAstElementInner::Variable {
+                                before,
+                                variable_name,
+                                escaping_fun,
+                                after,
+                            },
+                    },
+                ) => (
+                    from,
+                    Some(IntermediateAstElement {
+                        tag: current_tag + &next_tag,
+                        inner: IntermediateAstElementInner::Variable {
+                            before: old + &before,
+                            variable_name: variable_name.clone(),
+                            escaping_fun: escaping_fun.clone(),
+                            after: after.clone(),
+                        },
+                    }),
+                ),
+                (
+                    _,
+                    Some(IntermediateAstElement {
+                        tag: current_tag,
+                        inner:
+                            IntermediateAstElementInner::Variable {
+                                before,
+                                variable_name,
+                                escaping_fun,
+                                after,
+                            },
+                    }),
+                    IntermediateAstElement {
+                        tag: next_tag,
+                        inner: IntermediateAstElementInner::Text(new),
+                    },
+                ) => (
+                    from,
+                    Some(IntermediateAstElement {
+                        tag: current_tag + &next_tag,
+                        inner: IntermediateAstElementInner::Variable {
+                            before,
+                            variable_name,
+                            escaping_fun,
+                            after: after + new,
+                        },
+                    }),
+                ),
                 (_, None, edge_type) => (from, Some(edge_type.clone())),
                 (_, Some(current), edge_type) => {
                     let to = new_node.get_or_insert_with(|| graph.add_node(to.clone()));
@@ -218,8 +279,10 @@ pub fn children_to_ast(
                     IntermediateAstElement {
                         tag: String::new(),
                         inner: IntermediateAstElementInner::Variable {
+                            before: String::new(),
                             variable_name: next_variable,
                             escaping_fun,
+                            after: String::new(),
                         },
                     },
                     TemplateNode {
@@ -447,8 +510,10 @@ pub fn element_to_ast(
                             IntermediateAstElement {
                                 tag: String::new(),
                                 inner: IntermediateAstElementInner::Variable {
+                                    before: String::new(),
                                     variable_name: next_variable,
                                     escaping_fun,
+                                    after: String::new(),
                                 },
                             },
                             TemplateNode {

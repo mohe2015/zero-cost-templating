@@ -229,36 +229,48 @@ pub fn calculate_nodes<'a>(
 pub fn element_to_yield(
     intermediate_ast_element: &IntermediateAstElement,
 ) -> proc_macro2::TokenStream {
-    // TODO FIXME check for empty string yielding in production
+    // TODO FIXME check for empty string yielding
     match &intermediate_ast_element.inner {
         IntermediateAstElementInner::Variable {
+            before,
             variable_name,
             escaping_fun: EscapingFunction::HtmlAttribute,
+            after,
         } => {
             let variable_name = format_ident!("{}", variable_name);
 
             quote! {
+                ::zero_cost_templating::FutureToStream(())._yield(::bytes::Bytes::from_static(#before.as_bytes())).await;
                 ::zero_cost_templating::FutureToStream(())._yield(zero_cost_templating::encode_double_quoted_attribute(#variable_name)).await;
+                ::zero_cost_templating::FutureToStream(())._yield(::bytes::Bytes::from_static(#after.as_bytes())).await;
             }
         }
         IntermediateAstElementInner::Variable {
+            before,
             variable_name,
             escaping_fun: EscapingFunction::HtmlElementInner,
+            after,
         } => {
             let variable_name = format_ident!("{}", variable_name);
 
             quote! {
+                ::zero_cost_templating::FutureToStream(())._yield(::bytes::Bytes::from_static(#before.as_bytes())).await;
                 ::zero_cost_templating::FutureToStream(())._yield(zero_cost_templating::encode_element_text(#variable_name)).await;
+                ::zero_cost_templating::FutureToStream(())._yield(::bytes::Bytes::from_static(#after.as_bytes())).await;
             }
         }
         IntermediateAstElementInner::Variable {
+            before,
             variable_name,
             escaping_fun: EscapingFunction::Unsafe,
+            after,
         } => {
             let variable_name = format_ident!("{}", variable_name);
 
             quote! {
+                ::zero_cost_templating::FutureToStream(())._yield(::bytes::Bytes::from_static(#before.as_bytes())).await;
                 ::zero_cost_templating::FutureToStream(())._yield(#variable_name.get_unsafe_input().into()).await;
+                ::zero_cost_templating::FutureToStream(())._yield(::bytes::Bytes::from_static(#after.as_bytes())).await;
             }
         }
         IntermediateAstElementInner::Text(text) => quote! {
@@ -283,6 +295,7 @@ pub fn calculate_edge(
         IntermediateAstElementInner::Variable {
             variable_name,
             escaping_fun,
+            ..
         } => {
             let function_name = format_ident!(
                 "{}{}{}",
