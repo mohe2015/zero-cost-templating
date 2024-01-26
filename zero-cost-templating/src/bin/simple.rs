@@ -4,7 +4,7 @@ extern crate alloc;
 
 use std::borrow::Cow;
 
-use zero_cost_templating::{template_stream};
+use zero_cost_templating::template_stream;
 
 // https://github.com/dtolnay/cargo-expand
 
@@ -30,17 +30,17 @@ pub async fn test() -> Cow<'static, str> {
     let template = g_partial_block().await;
     let template = template.next().await;
     let template = template.next().await;
-    let template = template.before("before").await;
+    let template = template.before(b"before").await;
     let template = template.next().await;
     let template = template.next().await;
-    let template = template.test("test").await;
+    let template = template.test(b"test").await;
     let template = template.next().await;
     let template = template.next().await;
     let template = template.next().await;
-    let template = template.test("test").await;
+    let template = template.test(b"test").await;
     let template = template.next().await;
     let template = template.next().await;
-    let template = template.after("after").await;
+    let template = template.after(b"after").await;
     let template = template.next().await;
     template.next().await;
 }

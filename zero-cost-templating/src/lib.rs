@@ -111,6 +111,7 @@ pub mod future_to_stream;
 extern crate alloc;
 
 use alloc::borrow::Cow;
+use bytes::Bytes;
 use std::sync::OnceLock;
 
 pub use future_to_stream::FutureToStream;
@@ -131,13 +132,13 @@ impl<T: Into<::alloc::borrow::Cow<'static, str>>> Unsafe<T> {
     }
 }
 
-pub fn encode_element_text<'a, I: Into<Cow<'a, str>>>(input: I) -> Cow<'a, str> {
+pub fn encode_element_text<I: Into<Cow<'static, str>>>(input: I) -> Bytes {
     // https://html.spec.whatwg.org/dev/syntax.html
     // https://www.php.net/manual/en/function.htmlspecialchars.php
     static REGEX: OnceLock<regex::Regex> = OnceLock::new();
     let regex = REGEX.get_or_init(|| regex::Regex::new("[&<]").unwrap());
 
-    let input = input.into();
+    let input: Cow<'static, str> = input.into();
     match regex.replace_all(&input, |captures: &Captures| {
         match captures.get(0).unwrap().as_str() {
             "&" => "&amp;",
@@ -145,12 +146,15 @@ pub fn encode_element_text<'a, I: Into<Cow<'a, str>>>(input: I) -> Cow<'a, str> 
             _ => unreachable!(),
         }
     }) {
-        Cow::Borrowed(_) => input,
-        Cow::Owned(owned) => Cow::Owned(owned),
+        Cow::Borrowed(_) => match input {
+            Cow::Borrowed(value) => Bytes::from(value),
+            Cow::Owned(value) => Bytes::from(value),
+        },
+        Cow::Owned(owned) => Bytes::from(owned),
     }
 }
 
-pub fn encode_double_quoted_attribute<'a, I: Into<Cow<'a, str>>>(input: I) -> Cow<'a, str> {
+pub fn encode_double_quoted_attribute<I: Into<Cow<'static, str>>>(input: I) -> Bytes {
     // https://html.spec.whatwg.org/dev/dom.html#content-models
     // https://html.spec.whatwg.org/dev/syntax.html
     // https://html.spec.whatwg.org/#escapingString
@@ -172,8 +176,11 @@ pub fn encode_double_quoted_attribute<'a, I: Into<Cow<'a, str>>>(input: I) -> Co
             _ => unreachable!(),
         }
     }) {
-        Cow::Borrowed(_) => input,
-        Cow::Owned(owned) => Cow::Owned(owned),
+        Cow::Borrowed(_) => match input {
+            Cow::Borrowed(value) => Bytes::from(value),
+            Cow::Owned(value) => Bytes::from(value),
+        },
+        Cow::Owned(owned) => Bytes::from(owned),
     }
 }
 

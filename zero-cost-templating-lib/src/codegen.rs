@@ -228,58 +228,44 @@ pub fn calculate_nodes<'a>(
 #[must_use]
 pub fn element_to_yield(
     intermediate_ast_element: &IntermediateAstElement,
-) -> (proc_macro2::TokenStream, proc_macro2::TokenStream) {
+) -> proc_macro2::TokenStream {
     // TODO FIXME check for empty string yielding in production
-    // TODO FIXME always same function signature
     match &intermediate_ast_element.inner {
         IntermediateAstElementInner::Variable {
             variable_name,
             escaping_fun: EscapingFunction::HtmlAttribute,
         } => {
             let variable_name = format_ident!("{}", variable_name);
-            (
-                quote! { impl ::std::iter::Iterator<Item = &'static str> },
-                quote! {
-                    ::zero_cost_templating::FutureToStream(())._yield(zero_cost_templating::encode_double_quoted_attribute(#variable_name)).await;
-                },
-            )
+
+            quote! {
+                ::zero_cost_templating::FutureToStream(())._yield(zero_cost_templating::encode_double_quoted_attribute(#variable_name)).await;
+            }
         }
         IntermediateAstElementInner::Variable {
             variable_name,
             escaping_fun: EscapingFunction::HtmlElementInner,
         } => {
             let variable_name = format_ident!("{}", variable_name);
-            (
-                quote! { impl ::std::iter::Iterator<Item = &'static str> },
-                quote! {
-                    ::zero_cost_templating::FutureToStream(())._yield(zero_cost_templating::encode_element_text(#variable_name)).await;
-                },
-            )
+
+            quote! {
+                ::zero_cost_templating::FutureToStream(())._yield(zero_cost_templating::encode_element_text(#variable_name)).await;
+            }
         }
         IntermediateAstElementInner::Variable {
             variable_name,
             escaping_fun: EscapingFunction::Unsafe,
         } => {
             let variable_name = format_ident!("{}", variable_name);
-            (
-                quote! { impl ::std::iter::Iterator<Item = &'static str> },
-                quote! {
-                    ::zero_cost_templating::FutureToStream(())._yield(#variable_name.get_unsafe_input().into()).await;
-                },
-            )
+
+            quote! {
+                ::zero_cost_templating::FutureToStream(())._yield(#variable_name.get_unsafe_input().into()).await;
+            }
         }
-        IntermediateAstElementInner::Text(text) => (
-            quote! { impl ::std::iter::Iterator<Item = &'static str> },
-            quote! {
-                ::zero_cost_templating::FutureToStream(())._yield(#text).await;
-            },
-        ),
+        IntermediateAstElementInner::Text(text) => quote! {
+            ::zero_cost_templating::FutureToStream(())._yield(#text).await;
+        },
         IntermediateAstElementInner::InnerTemplate
-        | IntermediateAstElementInner::PartialBlockPartial => (
-            quote! { impl ::std::iter::Iterator<Item = &'static str> },
-            quote! {
-            },
-        ),
+        | IntermediateAstElementInner::PartialBlockPartial => quote! {},
     }
 }
 
@@ -340,7 +326,7 @@ pub fn calculate_edge(
         template_codegen.template_name.to_upper_camel_case(),
         edge.source().index().to_string(),
     );
-    let (yield_return_type, yield_value) = element_to_yield(edge.weight());
+    let yield_value = element_to_yield(edge.weight());
     // TODO FIXME the ` makes doc test parsing fail
     let _documentation = format!(
         "Transition from `{}: {}` to `{}: {}` using `{}: {}`",
