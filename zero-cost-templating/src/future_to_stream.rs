@@ -1,7 +1,7 @@
 // this file is duplicated
 
 use core::cell::Cell;
-use std::{pin::Pin, task::Poll};
+use core::{pin::Pin, task::Poll};
 
 use bytes::Bytes;
 use futures_core::{Future, Stream};
@@ -17,16 +17,16 @@ thread_local! {
 pub struct FutureToStream(pub ());
 
 impl FutureToStream {
-    pub fn _yield(&self, value: T) -> FutureToStream {
+    pub fn _yield(&self, value: T) -> Self {
         VALUE.set(Some(value));
-        FutureToStream(())
+        Self(())
     }
 }
 
 impl Future for FutureToStream {
     type Output = ();
 
-    fn poll(self: Pin<&mut Self>, _cx: &mut std::task::Context<'_>) -> Poll<Self::Output> {
+    fn poll(self: Pin<&mut Self>, _cx: &mut core::task::Context<'_>) -> Poll<Self::Output> {
         match VALUE.take() {
             Some(value) => {
                 VALUE.set(Some(value));
@@ -55,13 +55,13 @@ impl<F: Future<Output = ()>> Stream for TheStream<F> {
     type Item = T;
 
     fn poll_next(
-        self: std::pin::Pin<&mut Self>,
-        cx: &mut std::task::Context<'_>,
-    ) -> std::task::Poll<Option<Self::Item>> {
+        self: core::pin::Pin<&mut Self>,
+        cx: &mut core::task::Context<'_>,
+    ) -> core::task::Poll<Option<Self::Item>> {
         let this = self.project();
         let result = this.future.poll(cx);
         match result {
-            Poll::Ready(_) => Poll::Ready(None),
+            Poll::Ready(()) => Poll::Ready(None),
             Poll::Pending => {
                 if let Some(value) = VALUE.take() {
                     Poll::Ready(Some(value))
