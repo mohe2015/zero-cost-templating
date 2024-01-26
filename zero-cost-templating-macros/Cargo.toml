@@ -1,10 +1,9 @@
-cargo-features = ["edition2024"]
-
 [package]
 name = "zero-cost-templating-macros"
 license = "AGPL-3.0-or-later"
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
+repository = "https://github.com/mohe2015/zero-cost-templating"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

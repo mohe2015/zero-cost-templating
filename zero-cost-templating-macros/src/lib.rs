@@ -1,111 +1,3 @@
-#![forbid(unsafe_code)]
-#![warn(
-    future_incompatible,
-    let_underscore,
-    nonstandard_style,
-    unused,
-    clippy::pedantic,
-    clippy::nursery,
-    clippy::cargo,
-    clippy::alloc_instead_of_core,
-    clippy::allow_attributes,
-    clippy::allow_attributes_without_reason,
-    clippy::as_conversions,
-    clippy::as_underscore,
-    clippy::assertions_on_result_states,
-    clippy::clone_on_ref_ptr,
-    clippy::create_dir,
-    clippy::dbg_macro,
-    clippy::decimal_literal_representation,
-    clippy::default_numeric_fallback,
-    clippy::deref_by_slicing,
-    clippy::disallowed_script_idents,
-    clippy::else_if_without_else,
-    clippy::empty_drop,
-    clippy::empty_structs_with_brackets,
-    clippy::error_impl_error,
-    clippy::exit,
-    clippy::expect_used,
-    clippy::filetype_is_file,
-    clippy::float_arithmetic,
-    clippy::float_cmp_const,
-    clippy::fn_to_numeric_cast_any,
-    clippy::format_push_string,
-    clippy::if_then_some_else_none,
-    clippy::impl_trait_in_params,
-    clippy::indexing_slicing,
-    clippy::integer_division,
-    clippy::large_include_file,
-    clippy::let_underscore_must_use,
-    clippy::let_underscore_untyped,
-    clippy::lossy_float_literal,
-    clippy::map_err_ignore,
-    clippy::mem_forget,
-    clippy::min_ident_chars,
-    clippy::missing_assert_message,
-    clippy::missing_asserts_for_indexing,
-    clippy::mixed_read_write_in_expression,
-    clippy::mod_module_files,
-    clippy::modulo_arithmetic,
-    clippy::multiple_inherent_impl,
-    clippy::multiple_unsafe_ops_per_block,
-    clippy::mutex_atomic,
-    clippy::needless_raw_strings,
-    //clippy::panic,
-    //clippy::panic_in_result_fn,
-    clippy::partial_pub_fields,
-    clippy::pattern_type_mismatch,
-    clippy::print_stderr,
-    clippy::print_stdout,
-    clippy::rc_buffer,
-    clippy::rc_mutex,
-    clippy::redundant_type_annotations,
-    clippy::ref_patterns,
-    clippy::rest_pat_in_fully_bound_structs,
-    clippy::same_name_method,
-    clippy::semicolon_inside_block,
-    clippy::shadow_unrelated,
-    clippy::std_instead_of_alloc,
-    clippy::std_instead_of_core,
-    clippy::str_to_string,
-    clippy::string_lit_chars_any,
-    clippy::string_slice,
-    clippy::string_to_string,
-    clippy::suspicious_xor_used_as_pow,
-    clippy::tests_outside_test_module,
-    clippy::todo,
-    clippy::try_err,
-    clippy::unimplemented,
-    clippy::unnecessary_self_imports,
-    clippy::unneeded_field_pattern,
-    clippy::unreachable,
-    clippy::unseparated_literal_suffix,
-    //clippy::unwrap_in_result,
-    clippy::unwrap_used,
-    clippy::use_debug,
-    clippy::verbose_file_reads,
-    clippy::wildcard_enum_match_arm
-)]
-#![allow(
-    clippy::missing_errors_doc,
-    clippy::missing_panics_doc,
-    clippy::module_name_repetitions,
-    reason = "not yet ready for that"
-)]
-#![allow(clippy::shadow_unrelated, reason = "likely useful for templates")]
-#![allow(
-    clippy::unwrap_used,
-    clippy::cargo,
-    clippy::unreachable,
-    clippy::pattern_type_mismatch,
-    clippy::print_stdout,
-    clippy::use_debug,
-    reason = "development"
-)]
-#![feature(async_closure, async_iterator, coroutines, gen_blocks, noop_waker)]
-#![feature(lint_reasons)]
-#![feature(proc_macro_span)]
-
 use std::collections::{BTreeSet, HashMap};
 use std::fs::{self, File};
 use std::io::Write;
@@ -122,6 +14,7 @@ use zero_cost_templating_lib::codegen::{codegen, TemplateCodegen};
 use zero_cost_templating_lib::html_recursive_descent::parse_children;
 use zero_cost_templating_lib::intermediate_graph::{
     children_to_ast, flush_with_node, IntermediateAstElementInner, NodeType, TemplateNode,
+    TemplateNodeWithId,
 };
 
 // https://veykril.github.io/posts/ide-proc-macros/
@@ -130,9 +23,8 @@ use zero_cost_templating_lib::intermediate_graph::{
 // https://github.com/intellij-rust/intellij-rust/pull/9711
 // https://github.com/yewstack/yew/pull/2972
 
-// TODO FIXME allow passing whole directory?
 #[proc_macro_attribute]
-#[expect(clippy::too_many_lines, reason = "tmp")]
+#[allow(clippy::too_many_lines)]
 pub fn template_stream(
     attributes: proc_macro::TokenStream,
     item: proc_macro::TokenStream,
@@ -166,15 +58,16 @@ pub fn template_stream(
 
     let mut graph = StableGraph::new();
     let graph = &mut graph;
-    let first_nodes: HashMap<_, _> = inputs
+    let mut first_nodes: HashMap<_, _> = inputs
         .iter()
         .map(|(_path, template_name)| {
-            let first = graph.add_node(TemplateNode {
+            let first = graph.add_node(TemplateNodeWithId {
+                per_template_id: 0,
                 template_name: template_name.to_owned(),
                 node_type: NodeType::Other,
             });
 
-            (template_name.clone(), first)
+            (template_name.clone(), (first, 0usize))
         })
         .collect();
 
@@ -208,16 +101,17 @@ pub fn template_stream(
                     );
                 }
             };
-            let first = first_nodes.get(template_name).unwrap();
+            let first = first_nodes.get(template_name).unwrap().0;
             let tmp = children_to_ast(
-                &first_nodes,
+                &mut first_nodes,
                 template_name,
                 graph,
-                BTreeSet::from([(*first, None)]),
+                BTreeSet::from([(first, None)]),
                 dom,
                 "root",
             );
             let last = flush_with_node(
+                &mut first_nodes,
                 graph,
                 tmp,
                 TemplateNode {
@@ -229,7 +123,7 @@ pub fn template_stream(
             TemplateCodegen {
                 template_name: template_name.to_owned(),
                 path: path.to_owned(),
-                first: *first,
+                first: first,
                 last,
             }
         })
@@ -301,9 +195,9 @@ pub fn template_stream(
     };
 
     // TODO FIXME remove for production
-    //if let Err(error) = syn::parse2::<syn::File>(expanded.clone()) {
-    //panic!("{error}\n{expanded}")
-    //}
+    if let Err(error) = syn::parse2::<syn::File>(expanded.clone()) {
+        panic!("{error}\n{expanded}")
+    }
 
     proc_macro::TokenStream::from(expanded)
 }

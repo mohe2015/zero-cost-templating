@@ -1,10 +1,8 @@
-cargo-features = ["edition2024"]
-
 [package]
 name = "zero-cost-templating"
 license = "AGPL-3.0-or-later"
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -15,6 +13,8 @@ futures-core = "0.3"
 tokio = { version = "1", features = ["full"] }
 regex = "1"
 pin-project = "1"
+bytes = { default-features = false, version = "1.5.0" }
+futures-util = { default-features = false, version = "0.3.30" }
 
 [dev-dependencies]
 trybuild = { git = "https://github.com/mohe2015/trybuild.git", branch = "edition-2024" }

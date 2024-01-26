@@ -1,3 +1,1 @@
 avoid-breaking-exported-api = false
-enforced-import-renames = []
-disallowed-types = []

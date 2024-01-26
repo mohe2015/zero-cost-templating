@@ -1,10 +1,8 @@
-#![feature(async_closure, async_iterator, coroutines, gen_blocks, noop_waker)]
-
 extern crate alloc;
 
-use std::borrow::Cow;
-
-use zero_cost_templating::{template_stream, yieldi, yieldv};
+use futures_util::StreamExt;
+use std::{borrow::Cow, io::Write, pin::pin};
+use zero_cost_templating::{template_stream, TheStream};
 
 // https://github.com/dtolnay/cargo-expand
 
@@ -15,7 +13,7 @@ use zero_cost_templating::{template_stream, yieldi, yieldv};
 
 echo '#![feature(print_internals)] #![feature(unsafe_pin_internals)]' > zero-cost-templating/src/bin/test.rs \
 && cargo expand --package zero-cost-templating --bin simple >> zero-cost-templating/src/bin/test.rs \
-&& RUSTFLAGS="-Zprint-type-sizes" cargo run --release --bin test > type-sizes.txt
+&& RUSTFLAGS="-Zprint-type-sizes" cargo +nightly run --release --bin test > type-sizes.txt
 
 search for
 `{gen fn body@
@@ -25,39 +23,34 @@ search for
 `{static coroutine@
 */
 
+// maybe add long hand type aliases for templates
+pub async fn inner<After>(template: Tp<Tpg_partial_block2, (), After>) -> After {
+    template.test("inner").await
+}
+
 #[template_stream("templates")]
-pub gen fn test() -> Cow<'static, str> {
-    let template = yieldi!(g_partial_block());
-    let template = yieldi!(template.next());
-    let template = yieldi!(template.next());
-    let template = yieldv!(template.before("before"));
-    let template = yieldi!(template.next());
-    let template = yieldi!(template.next());
-    let template = yieldv!(template.test("test"));
-    let template = yieldi!(template.next());
-    let template = yieldi!(template.next());
-    let template = yieldi!(template.next());
-    let template = yieldv!(template.test("test"));
-    let template = yieldi!(template.next());
-    let template = yieldi!(template.next());
-    let template = yieldv!(template.after("after"));
-    let template = yieldi!(template.next());
-    yieldi!(template.next());
+pub async fn test(stream: ::zero_cost_templating::FutureToStream) {
+    let template = g_partial_block(stream);
+    let template = template.next().await;
+    let template = template.before("before").await;
+    let template = inner(template).await;
+    let template = template.next().await;
+    let template = inner(template).await;
+    let template = template.after("after").await;
+    template.next().await;
 }
 
 #[tokio::main]
 pub async fn main() {
-    let async_iterator = test();
+    let stream = TheStream::new(test);
     println!("size of &str: {}", std::mem::size_of::<&str>());
     println!("size of Cow: {}", std::mem::size_of::<Cow<'static, str>>());
     println!("size of String: {}", std::mem::size_of::<String>());
-    println!(
-        "size of iterator: {}",
-        std::mem::size_of_val(&async_iterator)
-    );
-    let mut output = String::new();
-    for value in async_iterator {
-        output.push_str(&value);
+    println!("size of stream: {}", std::mem::size_of_val(&stream));
+    let mut stream = pin!(stream);
+    let mut stdout = std::io::stdout().lock();
+    while let Some(element) = stream.next().await {
+        stdout.write_all(&element).unwrap();
     }
-    print!("{}", output);
+    stdout.write_all(b"\n").unwrap();
 }

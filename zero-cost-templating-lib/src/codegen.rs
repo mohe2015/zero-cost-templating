@@ -11,6 +11,7 @@ use quote::{format_ident, quote, quote_spanned};
 
 use crate::intermediate_graph::{
     EscapingFunction, IntermediateAstElement, IntermediateAstElementInner, NodeType, TemplateNode,
+    TemplateNodeWithId,
 };
 
 /// design: all nodes have a struct type so you can go too all nodes
@@ -24,7 +25,7 @@ use crate::intermediate_graph::{
 /// partial is only the type of the node itself
 /// (maybe we could change this to be a full node type (with Template::?))
 fn node_partial_block_type(
-    graph: &StableGraph<TemplateNode, IntermediateAstElement>,
+    graph: &StableGraph<TemplateNodeWithId, IntermediateAstElement>,
     node_index: NodeIndex,
     span: Span,
     partial: &(TokenStream, TokenStream),
@@ -45,7 +46,7 @@ fn node_partial_block_type(
     let partial_after_create = partial_after.1;
 
     let common = quote_spanned! {span=>
-        Template::<#partial_template_name_type, (), #partial_after_type>
+        Tp::<#partial_template_name_type, (), #partial_after_type>
     };
     let create = quote_spanned! {span=>
     {
@@ -67,7 +68,7 @@ fn node_partial_block_type(
 /// the node itself will be visited when going out of the inner template
 
 fn node_inner_template_type(
-    graph: &StableGraph<TemplateNode, IntermediateAstElement>,
+    graph: &StableGraph<TemplateNodeWithId, IntermediateAstElement>,
     node_index: NodeIndex,
     span: Span,
     partial: &(TokenStream, TokenStream),
@@ -126,7 +127,7 @@ fn node_inner_template_type(
 }
 
 fn node_other_type(
-    graph: &StableGraph<TemplateNode, IntermediateAstElement>,
+    graph: &StableGraph<TemplateNodeWithId, IntermediateAstElement>,
     node_index: NodeIndex,
     span: Span,
     partial: &(TokenStream, TokenStream),
@@ -150,7 +151,7 @@ fn node_other_type(
 }
 
 fn node_raw_type(
-    graph: &StableGraph<TemplateNode, IntermediateAstElement>,
+    graph: &StableGraph<TemplateNodeWithId, IntermediateAstElement>,
     node_index: NodeIndex,
     span: Span,
     partial: &(TokenStream, TokenStream),
@@ -163,13 +164,13 @@ fn node_raw_type(
     let after_create = &after.1;
 
     let ident = format_ident!(
-        "{}Template{}",
-        graph[node_index].template_name.to_upper_camel_case(),
-        node_index.index().to_string(),
+        "Tp{}{}",
+        graph[node_index].template_name,
+        graph[node_index].per_template_id,
         span = span
     );
     let common = quote_spanned! {span=>
-        Template::<#ident, #partial_type, #after_type>
+        Tp::<#ident, #partial_type, #after_type>
     };
     let create = quote_spanned! {span=>
         { r#type: #ident, partial: #partial_create, after: #after_create }
@@ -185,7 +186,7 @@ fn node_raw_type(
 /// return.0 is type and return.1 is create expression
 /// This method's only responsibility is to convert the node to a type and creation ``TokenStream``.
 fn node_type(
-    graph: &StableGraph<TemplateNode, IntermediateAstElement>,
+    graph: &StableGraph<TemplateNodeWithId, IntermediateAstElement>,
     node_index: NodeIndex,
     span: Span,
     partial: &(TokenStream, TokenStream),
@@ -207,19 +208,20 @@ pub struct TemplateCodegen {
     pub last: NodeIndex,
 }
 
-pub fn calculate_nodes<'a>(
-    graph: &'a StableGraph<TemplateNode, IntermediateAstElement>,
-    template_codegen: &'a TemplateCodegen,
-) -> impl Iterator<Item = proc_macro2::TokenStream> + 'a {
-    graph.node_references().map(|(node_index, _)| {
+pub fn calculate_nodes(
+    graph: &StableGraph<TemplateNodeWithId, IntermediateAstElement>,
+) -> impl Iterator<Item = proc_macro2::TokenStream> + '_ {
+    graph.node_references().map(|(node_index, node)| {
         let template_struct = format_ident!(
-            "{}Template{}",
-            template_codegen.template_name.to_upper_camel_case(),
-            node_index.index().to_string(),
+            "Tp{}{}",
+            graph[node_index].template_name,
+            graph[node_index].per_template_id,
         );
+        let name = node.template_name.to_upper_camel_case();
         quote! {
             #[must_use]
             #[derive(Clone, Copy)]
+            #[doc = #name]
             pub struct #template_struct;
         }
     })
@@ -228,104 +230,119 @@ pub fn calculate_nodes<'a>(
 #[must_use]
 pub fn element_to_yield(
     intermediate_ast_element: &IntermediateAstElement,
-) -> (proc_macro2::TokenStream, proc_macro2::TokenStream) {
-    // TODO FIXME check for empty string yielding in production
+) -> proc_macro2::TokenStream {
+    // TODO FIXME check for empty string yielding
     match &intermediate_ast_element.inner {
         IntermediateAstElementInner::Variable {
+            before,
             variable_name,
             escaping_fun: EscapingFunction::HtmlAttribute,
+            after,
         } => {
             let variable_name = format_ident!("{}", variable_name);
-            (
-                quote! { ::alloc::borrow::Cow<'static, str> },
-                quote! {
-                    zero_cost_templating::encode_double_quoted_attribute(#variable_name)
-                },
-            )
+
+            quote! {
+                ::zero_cost_templating::FutureToStream(())._yield(::bytes::Bytes::from_static(#before.as_bytes())).await;
+                ::zero_cost_templating::FutureToStream(())._yield(zero_cost_templating::encode_double_quoted_attribute(#variable_name)).await;
+                ::zero_cost_templating::FutureToStream(())._yield(::bytes::Bytes::from_static(#after.as_bytes())).await;
+            }
         }
         IntermediateAstElementInner::Variable {
+            before,
             variable_name,
             escaping_fun: EscapingFunction::HtmlElementInner,
+            after,
         } => {
             let variable_name = format_ident!("{}", variable_name);
-            (
-                quote! { ::alloc::borrow::Cow<'static, str> },
-                quote! {
-                    zero_cost_templating::encode_element_text(#variable_name)
-                },
-            )
-        }
-        IntermediateAstElementInner::Text(text) => (
-            quote! { impl ::std::iter::Iterator<Item = ::alloc::borrow::Cow<'static, str>> },
-            quote! {
-                gen {
-                    yield ::alloc::borrow::Cow::from(#text);
-                }
-            },
-        ),
-        IntermediateAstElementInner::InnerTemplate
-        | IntermediateAstElementInner::PartialBlockPartial => (
-            quote! { impl ::std::iter::Iterator<Item = ::alloc::borrow::Cow<'static, str>> },
-            quote! {
-                gen {
 
-                }
-            },
-        ),
+            quote! {
+                ::zero_cost_templating::FutureToStream(())._yield(::bytes::Bytes::from_static(#before.as_bytes())).await;
+                ::zero_cost_templating::FutureToStream(())._yield(zero_cost_templating::encode_element_text(#variable_name)).await;
+                ::zero_cost_templating::FutureToStream(())._yield(::bytes::Bytes::from_static(#after.as_bytes())).await;
+            }
+        }
+        IntermediateAstElementInner::Variable {
+            before,
+            variable_name,
+            escaping_fun: EscapingFunction::Unsafe,
+            after,
+        } => {
+            let variable_name = format_ident!("{}", variable_name);
+
+            quote! {
+                ::zero_cost_templating::FutureToStream(())._yield(::bytes::Bytes::from_static(#before.as_bytes())).await;
+                ::zero_cost_templating::FutureToStream(())._yield(#variable_name.get_unsafe_input().into()).await;
+                ::zero_cost_templating::FutureToStream(())._yield(::bytes::Bytes::from_static(#after.as_bytes())).await;
+            }
+        }
+        IntermediateAstElementInner::Text(text) => quote! {
+            ::zero_cost_templating::FutureToStream(())._yield(::bytes::Bytes::from_static(#text.as_bytes())).await;
+        },
+        IntermediateAstElementInner::InnerTemplate
+        | IntermediateAstElementInner::PartialBlockPartial => quote! {},
     }
 }
 
-#[expect(clippy::too_many_lines, reason = "tmp")]
+#[allow(clippy::too_many_lines)]
 #[must_use]
 pub fn calculate_edge(
-    graph: &StableGraph<TemplateNode, IntermediateAstElement>,
-    template_codegen: &TemplateCodegen,
+    graph: &StableGraph<TemplateNodeWithId, IntermediateAstElement>,
     edge: petgraph::stable_graph::EdgeReference<'_, IntermediateAstElement>,
 ) -> proc_macro2::TokenStream {
     // TODO FIXME only add number when multiple outgoing edges
     // (add the number to documentation to aid in debugging)
 
-    let function_name = edge.weight().variable_name().as_ref().map_or_else(
-        || {
-            format_ident!(
+    let function_header = match &edge.weight().inner {
+        IntermediateAstElementInner::Variable {
+            variable_name,
+            escaping_fun,
+            ..
+        } => {
+            let function_name = format_ident!(
+                "{}{}{}",
+                variable_name,
+                if edge.weight().tag.is_empty() {
+                    String::new()
+                } else {
+                    "_".to_owned() + &edge.weight().tag
+                },
+                if matches!(escaping_fun, EscapingFunction::Unsafe) {
+                    "_unsafe".to_owned()
+                } else {
+                    String::new()
+                }
+            );
+            let variable_name = format_ident!("{}", variable_name);
+            let variable_type = if matches!(escaping_fun, EscapingFunction::Unsafe) {
+                quote! { ::zero_cost_templating::Unsafe<impl Into<::alloc::borrow::Cow<'static, str>>> }
+            } else {
+                quote! { impl Into<::alloc::borrow::Cow<'static, str>> }
+            };
+            quote! { #function_name(self, #variable_name: #variable_type) }
+        }
+        IntermediateAstElementInner::Text(_)
+        | IntermediateAstElementInner::PartialBlockPartial
+        | IntermediateAstElementInner::InnerTemplate => {
+            let function_name = format_ident!(
                 "next{}",
                 if edge.weight().tag.is_empty() {
                     String::new()
                 } else {
                     "_".to_owned() + &edge.weight().tag
                 }
-            )
-        },
-        |variable| {
-            format_ident!(
-                "{}{}",
-                variable,
-                if edge.weight().tag.is_empty() {
-                    String::new()
-                } else {
-                    "_".to_owned() + &edge.weight().tag
-                }
-            )
-        },
-    );
-    let variable_name = edge
-        .weight()
-        .variable_name()
-        .as_ref()
-        .map(|variable| format_ident!("{}", variable));
-    let parameter = variable_name.as_ref().map(|variable| {
-        quote! {
-            , #variable: impl Into<::alloc::borrow::Cow<'static, str>>
+            );
+            quote! { #function_name(self) }
         }
-    });
+    };
 
     let impl_template_name = format_ident!(
-        "{}Template{}",
-        template_codegen.template_name.to_upper_camel_case(),
-        edge.source().index().to_string(),
+        "Tp{}{}",
+        graph[edge.source()].template_name,
+        graph[edge.source()].per_template_id,
     );
-    let (yield_return_type, yield_value) = element_to_yield(edge.weight());
-    let documentation = format!(
+    let yield_value = element_to_yield(edge.weight());
+    // TODO FIXME the ` makes doc test parsing fail
+    let _documentation = format!(
         "Transition from `{}: {}` to `{}: {}` using `{}: {}`",
         edge.source().index(),
         graph[edge.source()],
@@ -344,7 +361,7 @@ pub fn calculate_edge(
                 edge.target(),
                 Span::call_site(),
                 &(
-                    quote! { Template<PartialName, PartialPartial, PartialAfter> },
+                    quote! { Tp<PartialName, PartialPartial, PartialAfter> },
                     quote! { self.partial },
                 ),
                 &(quote! { PartialName }, quote! { self.partial.r#type }),
@@ -358,15 +375,14 @@ pub fn calculate_edge(
                     PartialAfter,
                     After
                     >
-                    Template<
+                    Tp<
                             #impl_template_name,
-                            Template<PartialName, PartialPartial, PartialAfter>,
+                            Tp<PartialName, PartialPartial, PartialAfter>,
                             After
                             > {
-                    #[doc = #documentation]
-                    pub fn #function_name(self #parameter) -> (#return_type,
-                            #yield_return_type) {
-                        (#return_create, #yield_value)
+                    pub async fn #function_header -> #return_type {
+                        #yield_value
+                        #return_create
                     }
                 }
             }
@@ -384,12 +400,11 @@ pub fn calculate_edge(
             Some({
                 quote! {
                     impl<Partial: Copy, After>
-                        Template<#impl_template_name, Partial, After> {
+                    Tp<#impl_template_name, Partial, After> {
 
-                        #[doc = #documentation]
-                        pub fn #function_name(self #parameter) -> (#return_type,
-                                #yield_return_type) {
-                            (#return_create, #yield_value)
+                        pub async fn #function_header -> #return_type {
+                            #yield_value
+                            #return_create
                         }
                     }
                 }
@@ -401,26 +416,23 @@ pub fn calculate_edge(
     }
 }
 
-pub fn calculate_edges<'a>(
-    graph: &'a StableGraph<TemplateNode, IntermediateAstElement>,
-    template_codegen: &'a TemplateCodegen,
-) -> impl Iterator<Item = proc_macro2::TokenStream> + 'a {
+pub fn calculate_edges(
+    graph: &StableGraph<TemplateNodeWithId, IntermediateAstElement>,
+) -> impl Iterator<Item = proc_macro2::TokenStream> + '_ {
     graph
         .edge_references()
         .filter(|edge| {
             edge.weight().inner != IntermediateAstElementInner::PartialBlockPartial
                 && edge.weight().inner != IntermediateAstElementInner::InnerTemplate
         })
-        .map(|edge| calculate_edge(graph, template_codegen, edge))
+        .map(|edge| calculate_edge(graph, edge))
 }
 
 #[must_use]
 pub fn codegen_template_codegen(
-    graph: &StableGraph<TemplateNode, IntermediateAstElement>,
+    graph: &StableGraph<TemplateNodeWithId, IntermediateAstElement>,
     template_codegen: &TemplateCodegen,
 ) -> proc_macro2::TokenStream {
-    let instructions = calculate_nodes(graph, template_codegen);
-    let edges = calculate_edges(graph, template_codegen);
     let ident = format_ident!("{}", template_codegen.template_name,);
     let template_struct = node_type(
         graph,
@@ -435,15 +447,11 @@ pub fn codegen_template_codegen(
     let path = template_codegen.path.to_string_lossy();
     quote! {
 
-        #(#instructions)*
-
-        #(#edges)*
-
+        #[allow(clippy::unused_unit)]
         #[allow(unused)]
         /// Start
-        pub fn #ident() -> (#template_struct_type,
-                impl ::std::iter::Iterator<Item = ::alloc::borrow::Cow<'static, str>>) {
-            (#template_struct_create, gen {})
+        pub fn #ident(stream: ::zero_cost_templating::FutureToStream) -> #template_struct_type {
+            #template_struct_create
         }
 
         const #recompile_ident: &'static str = include_str!(#path);
@@ -452,9 +460,12 @@ pub fn codegen_template_codegen(
 
 #[must_use]
 pub fn codegen(
-    graph: &StableGraph<TemplateNode, IntermediateAstElement>,
+    graph: &StableGraph<TemplateNodeWithId, IntermediateAstElement>,
     templates: &[TemplateCodegen],
 ) -> proc_macro2::TokenStream {
+    let instructions = calculate_nodes(graph);
+    let edges = calculate_edges(graph);
+
     let code = templates
         .iter()
         .map(|template_codegen| codegen_template_codegen(graph, template_codegen));
@@ -462,11 +473,15 @@ pub fn codegen(
     let result = quote! {
         #[must_use]
         #[derive(Clone, Copy)]
-        pub struct Template<Type, Partial, After> {
+        pub struct Tp<Type, Partial, After> {
             r#type: Type,
             partial: Partial,
             after: After,
         }
+
+        #(#instructions)*
+
+        #(#edges)*
 
         #(#code)*
     };

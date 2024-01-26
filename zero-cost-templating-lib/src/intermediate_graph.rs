@@ -9,6 +9,7 @@ use crate::html_recursive_descent::{AttributeValuePart, Child, Element};
 pub enum EscapingFunction {
     HtmlAttribute,
     HtmlElementInner,
+    Unsafe,
 }
 
 impl Display for EscapingFunction {
@@ -16,6 +17,7 @@ impl Display for EscapingFunction {
         match self {
             Self::HtmlAttribute => write!(formatter, "attr"),
             Self::HtmlElementInner => write!(formatter, "element"),
+            Self::Unsafe => write!(formatter, "unsafe"),
         }
     }
 }
@@ -30,62 +32,16 @@ pub struct IntermediateAstElement {
 #[derive(Debug, PartialEq, Eq, Hash, PartialOrd, Ord, Clone)]
 pub enum IntermediateAstElementInner {
     Variable {
-        // don't yield text before or after,
-        // so we don't need to store the caller provided value across yield points
+        before: String,
         variable_name: String,
         escaping_fun: EscapingFunction,
+        after: String,
     },
     Text(String),
     /// The part we want to render when a partial block occurs.
     PartialBlockPartial,
     /// The inner template that we want to render
     InnerTemplate,
-}
-
-impl IntermediateAstElement {
-    #[must_use]
-    pub const fn variable(&self) -> Option<(&String, &EscapingFunction)> {
-        if let Self {
-            inner:
-                IntermediateAstElementInner::Variable {
-                    variable_name,
-                    escaping_fun,
-                    ..
-                },
-            ..
-        } = self
-        {
-            Some((variable_name, escaping_fun))
-        } else {
-            None
-        }
-    }
-
-    #[must_use]
-    pub const fn variable_name(&self) -> Option<&String> {
-        if let Self {
-            inner: IntermediateAstElementInner::Variable { variable_name, .. },
-            ..
-        } = self
-        {
-            Some(variable_name)
-        } else {
-            None
-        }
-    }
-
-    #[must_use]
-    pub const fn text(&self) -> Option<&String> {
-        if let Self {
-            inner: IntermediateAstElementInner::Text(string),
-            ..
-        } = self
-        {
-            Some(string)
-        } else {
-            None
-        }
-    }
 }
 
 impl Display for IntermediateAstElement {
@@ -95,11 +51,16 @@ impl Display for IntermediateAstElement {
                 tag,
                 inner:
                     IntermediateAstElementInner::Variable {
+                        before,
                         variable_name,
                         escaping_fun,
+                        after,
                     },
             } => {
-                write!(formatter, "[{tag}] {{{{{variable_name}:{escaping_fun}}}}}")
+                write!(
+                    formatter,
+                    "[{tag}] {before}{{{{{variable_name}:{escaping_fun}}}}}{after}"
+                )
             }
             Self {
                 tag,
@@ -142,9 +103,20 @@ pub struct TemplateNode {
     pub node_type: NodeType,
 }
 
-impl Display for TemplateNode {
+#[derive(Debug, Clone)]
+pub struct TemplateNodeWithId {
+    pub per_template_id: usize,
+    pub template_name: String,
+    pub node_type: NodeType,
+}
+
+impl Display for TemplateNodeWithId {
     fn fmt(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-        write!(formatter, "{} {}", self.template_name, self.node_type)
+        write!(
+            formatter,
+            "{}{} {}",
+            self.template_name, self.per_template_id, self.node_type
+        )
     }
 }
 
@@ -162,7 +134,8 @@ impl Display for TemplateNode {
 /// (even not added if current node type is not NodeType::Other).
 // Two partials after each other...
 pub fn flush_with_node(
-    graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
+    first_nodes: &mut HashMap<String, (NodeIndex, usize)>,
+    graph: &mut StableGraph<TemplateNodeWithId, IntermediateAstElement>,
     tmp: BTreeSet<(NodeIndex, Option<IntermediateAstElement>)>,
     node: TemplateNode,
 ) -> NodeIndex {
@@ -172,7 +145,13 @@ pub fn flush_with_node(
     // TODO FIXME don't flush if .e.g. compatible two text nodes.
     // maybe check if length == 1 then maybe no new node, otherwise always new node
 
-    let to = graph.add_node(node.clone());
+    let current = first_nodes.get_mut(&node.template_name).unwrap();
+    current.1 += 1;
+    let to = graph.add_node(TemplateNodeWithId {
+        per_template_id: current.1,
+        template_name: node.template_name,
+        node_type: node.node_type,
+    });
     for (from, edge) in tmp {
         graph.add_edge(
             from,
@@ -187,7 +166,7 @@ pub fn flush_with_node(
 }
 
 pub fn connect_edges_to_node(
-    graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
+    graph: &mut StableGraph<TemplateNodeWithId, IntermediateAstElement>,
     tmp: BTreeSet<(NodeIndex, Option<IntermediateAstElement>)>,
     to: NodeIndex,
 ) {
@@ -199,7 +178,8 @@ pub fn connect_edges_to_node(
 /// Adds the edge in all cases.
 /// If adding the edge requires a new node, it adds the node of the specified type.
 pub fn add_edge_maybe_with_node(
-    graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
+    first_nodes: &mut HashMap<String, (NodeIndex, usize)>,
+    graph: &mut StableGraph<TemplateNodeWithId, IntermediateAstElement>,
     tmp: BTreeSet<(NodeIndex, Option<IntermediateAstElement>)>,
     next_edge: IntermediateAstElement,
     to: TemplateNode,
@@ -225,9 +205,74 @@ pub fn add_edge_maybe_with_node(
                         inner: IntermediateAstElementInner::Text(old + &new),
                     }),
                 ),
+                (
+                    _,
+                    Some(IntermediateAstElement {
+                        tag: current_tag,
+                        inner: IntermediateAstElementInner::Text(old),
+                    }),
+                    IntermediateAstElement {
+                        tag: next_tag,
+                        inner:
+                            IntermediateAstElementInner::Variable {
+                                before,
+                                variable_name,
+                                escaping_fun,
+                                after,
+                            },
+                    },
+                ) => (
+                    from,
+                    Some(IntermediateAstElement {
+                        tag: current_tag + &next_tag,
+                        inner: IntermediateAstElementInner::Variable {
+                            before: old + &before,
+                            variable_name: variable_name.clone(),
+                            escaping_fun: *escaping_fun,
+                            after: after.clone(),
+                        },
+                    }),
+                ),
+                (
+                    _,
+                    Some(IntermediateAstElement {
+                        tag: current_tag,
+                        inner:
+                            IntermediateAstElementInner::Variable {
+                                before,
+                                variable_name,
+                                escaping_fun,
+                                after,
+                            },
+                    }),
+                    IntermediateAstElement {
+                        tag: next_tag,
+                        inner: IntermediateAstElementInner::Text(new),
+                    },
+                ) => (
+                    from,
+                    Some(IntermediateAstElement {
+                        tag: current_tag + &next_tag,
+                        inner: IntermediateAstElementInner::Variable {
+                            before,
+                            variable_name,
+                            escaping_fun,
+                            after: after + new,
+                        },
+                    }),
+                ),
                 (_, None, edge_type) => (from, Some(edge_type.clone())),
                 (_, Some(current), edge_type) => {
-                    let to = new_node.get_or_insert_with(|| graph.add_node(to.clone()));
+                    let first_node = first_nodes.get_mut(&to.template_name).unwrap();
+                    first_node.1 += 1;
+                    let first_node = first_node.1;
+                    let to = new_node.get_or_insert_with(|| {
+                        graph.add_node(TemplateNodeWithId {
+                            per_template_id: first_node,
+                            template_name: to.template_name.clone(),
+                            node_type: to.node_type.clone(),
+                        })
+                    });
                     graph.add_edge(from, *to, current);
                     (*to, Some(edge_type.clone()))
                 }
@@ -237,11 +282,11 @@ pub fn add_edge_maybe_with_node(
 }
 
 #[must_use]
-#[expect(clippy::too_many_lines, reason = "tmp")]
+#[allow(clippy::too_many_lines)]
 pub fn children_to_ast(
-    first_nodes: &HashMap<String, NodeIndex>,
+    first_nodes: &mut HashMap<String, (NodeIndex, usize)>,
     template_name: &str,
-    graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
+    graph: &mut StableGraph<TemplateNodeWithId, IntermediateAstElement>,
     mut tmp: BTreeSet<(NodeIndex, Option<IntermediateAstElement>)>,
     input: Vec<Child>,
     parent: &str,
@@ -252,22 +297,21 @@ pub fn children_to_ast(
                 // https://html.spec.whatwg.org/dev/syntax.html
                 // https://github.com/cure53/DOMPurify/blob/main/src/tags.js
                 let escaping_fun = match parent {
-                    "h1" | "h2" | "li" | "span" | "title" | "main" | "a" | "p" | "div" | "button" => {
-                        EscapingFunction::HtmlElementInner
-                    }
-                    other => panic!(
-                        "while parsing template {template_name}: while parsing template {template_name}: \
-                    unknown escaping rules for element {other}"
-                    ),
+                    "h1" | "h2" | "li" | "span" | "title" | "main" | "a" | "p" | "div"
+                    | "button" => EscapingFunction::HtmlElementInner,
+                    _ => EscapingFunction::Unsafe,
                 };
                 tmp = add_edge_maybe_with_node(
+                    first_nodes,
                     graph,
                     tmp,
                     IntermediateAstElement {
                         tag: String::new(),
                         inner: IntermediateAstElementInner::Variable {
+                            before: String::new(),
                             variable_name: next_variable,
                             escaping_fun,
+                            after: String::new(),
                         },
                     },
                     TemplateNode {
@@ -278,6 +322,7 @@ pub fn children_to_ast(
             }
             Child::Literal(string) => {
                 tmp = add_edge_maybe_with_node(
+                    first_nodes,
                     graph,
                     tmp,
                     IntermediateAstElement {
@@ -299,6 +344,7 @@ pub fn children_to_ast(
             }
             Child::Each(_identifier, children) => {
                 let loop_start = flush_with_node(
+                    first_nodes,
                     graph,
                     tmp,
                     TemplateNode {
@@ -333,6 +379,7 @@ pub fn children_to_ast(
             }
             Child::PartialBlock(name, children) => {
                 let inner_template_tmp = flush_with_node(
+                    first_nodes,
                     graph,
                     tmp,
                     TemplateNode {
@@ -359,6 +406,7 @@ pub fn children_to_ast(
                     parent,
                 );
                 flush_with_node(
+                    first_nodes,
                     graph,
                     partial_block_partial_tmp,
                     TemplateNode {
@@ -367,9 +415,9 @@ pub fn children_to_ast(
                     },
                 );
 
-                let inner_template_target = *first_nodes
-                    .get(&name)
-                    .unwrap_or_else(|| panic!("while parsing template {template_name}: unknown inner template {name}"));
+                let inner_template_target = *first_nodes.get(&name).unwrap_or_else(|| {
+                    panic!("while parsing template {template_name}: unknown inner template {name}")
+                });
 
                 let inner_template_template_tmp = BTreeSet::from([(
                     inner_template_tmp,
@@ -379,13 +427,14 @@ pub fn children_to_ast(
                     }),
                 )]);
 
-                connect_edges_to_node(graph, inner_template_template_tmp, inner_template_target);
+                connect_edges_to_node(graph, inner_template_template_tmp, inner_template_target.0);
 
                 tmp = BTreeSet::from([(inner_template_tmp, None)]);
             }
             Child::PartialBlockPartial => {
                 tmp = BTreeSet::from([(
                     flush_with_node(
+                        first_nodes,
                         graph,
                         tmp,
                         TemplateNode {
@@ -398,6 +447,7 @@ pub fn children_to_ast(
             }
             Child::If(variable, if_children, else_children) => {
                 let if_start = flush_with_node(
+                    first_nodes,
                     graph,
                     tmp,
                     TemplateNode {
@@ -445,16 +495,17 @@ pub fn children_to_ast(
 }
 
 #[must_use]
-#[expect(clippy::too_many_lines, reason = "tmp")]
+#[allow(clippy::too_many_lines)]
 pub fn element_to_ast(
-    first_nodes: &HashMap<String, NodeIndex>,
+    first_nodes: &mut HashMap<String, (NodeIndex, usize)>,
     template_name: &str,
-    graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
+    graph: &mut StableGraph<TemplateNodeWithId, IntermediateAstElement>,
     mut tmp: BTreeSet<(NodeIndex, Option<IntermediateAstElement>)>,
     input: Element,
 ) -> BTreeSet<(NodeIndex, Option<IntermediateAstElement>)> {
     let name = input.name;
     tmp = add_edge_maybe_with_node(
+        first_nodes,
         graph,
         tmp,
         IntermediateAstElement {
@@ -469,6 +520,7 @@ pub fn element_to_ast(
     for attribute in input.attributes {
         if let Some(value) = attribute.value {
             tmp = add_edge_maybe_with_node(
+                first_nodes,
                 graph,
                 tmp,
                 IntermediateAstElement {
@@ -487,20 +539,19 @@ pub fn element_to_ast(
                         // https://github.com/cure53/DOMPurify/blob/main/src/attrs.js
                         let escaping_fun = match (name.as_str(), attribute.key.as_str()) {
                             (_, "value" | "class") => EscapingFunction::HtmlAttribute,
-                            (name, attr) => panic!(
-                                "while parsing template {template_name}: \
-                                in element {name}, unknown escaping rules for attribute name \
-                                 {attr}"
-                            ),
+                            _ => EscapingFunction::Unsafe,
                         };
                         tmp = add_edge_maybe_with_node(
+                            first_nodes,
                             graph,
                             tmp,
                             IntermediateAstElement {
                                 tag: String::new(),
                                 inner: IntermediateAstElementInner::Variable {
+                                    before: String::new(),
                                     variable_name: next_variable,
                                     escaping_fun,
+                                    after: String::new(),
                                 },
                             },
                             TemplateNode {
@@ -511,6 +562,7 @@ pub fn element_to_ast(
                     }
                     AttributeValuePart::Literal(string) => {
                         tmp = add_edge_maybe_with_node(
+                            first_nodes,
                             graph,
                             tmp,
                             IntermediateAstElement {
@@ -526,6 +578,7 @@ pub fn element_to_ast(
                 }
             }
             tmp = add_edge_maybe_with_node(
+                first_nodes,
                 graph,
                 tmp,
                 IntermediateAstElement {
@@ -539,6 +592,7 @@ pub fn element_to_ast(
             );
         } else {
             tmp = add_edge_maybe_with_node(
+                first_nodes,
                 graph,
                 tmp,
                 IntermediateAstElement {
@@ -553,6 +607,7 @@ pub fn element_to_ast(
         }
     }
     tmp = add_edge_maybe_with_node(
+        first_nodes,
         graph,
         tmp,
         IntermediateAstElement {
@@ -578,6 +633,7 @@ pub fn element_to_ast(
         | "meta" | "source" | "track" | "wbr" => {}
         _ => {
             tmp = add_edge_maybe_with_node(
+                first_nodes,
                 graph,
                 tmp,
                 IntermediateAstElement {

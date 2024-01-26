@@ -1,195 +1,37 @@
-#![forbid(unsafe_code)]
-#![warn(
-    future_incompatible,
-    let_underscore,
-    nonstandard_style,
-    unused,
-    clippy::pedantic,
-    clippy::nursery,
-    clippy::cargo,
-    clippy::alloc_instead_of_core,
-    clippy::allow_attributes,
-    clippy::allow_attributes_without_reason,
-    clippy::as_conversions,
-    clippy::as_underscore,
-    clippy::assertions_on_result_states,
-    clippy::clone_on_ref_ptr,
-    clippy::create_dir,
-    clippy::dbg_macro,
-    clippy::decimal_literal_representation,
-    clippy::default_numeric_fallback,
-    clippy::deref_by_slicing,
-    clippy::disallowed_script_idents,
-    clippy::else_if_without_else,
-    clippy::empty_drop,
-    clippy::empty_structs_with_brackets,
-    clippy::error_impl_error,
-    clippy::exit,
-    clippy::expect_used,
-    clippy::filetype_is_file,
-    clippy::float_arithmetic,
-    clippy::float_cmp_const,
-    clippy::fn_to_numeric_cast_any,
-    clippy::format_push_string,
-    clippy::if_then_some_else_none,
-    clippy::impl_trait_in_params,
-    clippy::indexing_slicing,
-    clippy::integer_division,
-    clippy::large_include_file,
-    clippy::let_underscore_must_use,
-    clippy::let_underscore_untyped,
-    clippy::lossy_float_literal,
-    clippy::map_err_ignore,
-    clippy::mem_forget,
-    clippy::min_ident_chars,
-    clippy::missing_assert_message,
-    clippy::missing_asserts_for_indexing,
-    clippy::mixed_read_write_in_expression,
-    clippy::mod_module_files,
-    clippy::modulo_arithmetic,
-    clippy::multiple_inherent_impl,
-    clippy::multiple_unsafe_ops_per_block,
-    clippy::mutex_atomic,
-    clippy::needless_raw_strings,
-    //clippy::panic,
-    //clippy::panic_in_result_fn,
-    clippy::partial_pub_fields,
-    clippy::pattern_type_mismatch,
-    clippy::print_stderr,
-    clippy::print_stdout,
-    clippy::rc_buffer,
-    clippy::rc_mutex,
-    clippy::redundant_type_annotations,
-    clippy::ref_patterns,
-    clippy::rest_pat_in_fully_bound_structs,
-    clippy::same_name_method,
-    clippy::semicolon_inside_block,
-    clippy::shadow_unrelated,
-    clippy::std_instead_of_alloc,
-    clippy::std_instead_of_core,
-    clippy::str_to_string,
-    clippy::string_lit_chars_any,
-    clippy::string_slice,
-    clippy::string_to_string,
-    clippy::suspicious_xor_used_as_pow,
-    clippy::tests_outside_test_module,
-    clippy::todo,
-    clippy::try_err,
-    clippy::unimplemented,
-    clippy::unnecessary_self_imports,
-    clippy::unneeded_field_pattern,
-    clippy::unreachable,
-    clippy::unseparated_literal_suffix,
-    //clippy::unwrap_in_result,
-    clippy::unwrap_used,
-    clippy::use_debug,
-    clippy::verbose_file_reads,
-    clippy::wildcard_enum_match_arm
-)]
-#![allow(
-    clippy::missing_errors_doc,
-    clippy::missing_panics_doc,
-    clippy::module_name_repetitions,
-    reason = "not yet ready for that"
-)]
-#![allow(clippy::shadow_unrelated, reason = "likely useful for templates")]
-#![allow(
-    clippy::unwrap_used,
-    clippy::cargo,
-    clippy::unreachable,
-    clippy::pattern_type_mismatch,
-    clippy::print_stdout,
-    clippy::use_debug,
-    reason = "development"
-)]
-#![feature(async_closure, async_iterator, coroutines, gen_blocks, noop_waker)]
-#![feature(lint_reasons)]
-
-pub mod async_iterator_extension;
+pub mod future_to_stream;
 
 extern crate alloc;
 
 use alloc::borrow::Cow;
+use bytes::Bytes;
 use std::sync::OnceLock;
 
+pub use future_to_stream::FutureToStream;
+pub use future_to_stream::TheStream;
 pub use futures::stream::iter;
 pub use futures::Stream;
 use regex::Captures;
 pub use zero_cost_templating_macros::template_stream;
 
-// Yield a value.
-#[macro_export]
-macro_rules! yieldv {
-    ($e: expr) => {{
-        let expr = $e;
-        let value = expr.1;
-        let ret = expr.0;
-        yield value;
-        ret
-    }};
+pub struct Unsafe<T: Into<::alloc::borrow::Cow<'static, str>>>(T);
+
+impl<T: Into<::alloc::borrow::Cow<'static, str>>> Unsafe<T> {
+    pub fn unsafe_input(input: T) -> Self {
+        Self(input)
+    }
+
+    pub fn get_unsafe_input(self) -> T {
+        self.0
+    }
 }
 
-/// Yield an iterator.
-#[macro_export]
-macro_rules! yieldi {
-    ($e: expr) => {{
-        let expr = $e;
-        let mut iterator = expr.1;
-        let ret = expr.0;
-        loop {
-            let value = ::std::iter::Iterator::next(&mut iterator);
-            // maybe match has bad liveness analysis?
-            if value.is_some() {
-                let value = value.unwrap();
-                yield value;
-            } else {
-                break;
-            }
-        }
-        ret
-    }};
-}
-
-// Yieldok a value.
-#[macro_export]
-macro_rules! yieldokv {
-    ($e: expr) => {{
-        let expr = $e;
-        let value = expr.1;
-        let ret = expr.0;
-        yield Ok(value);
-        ret
-    }};
-}
-
-/// Yieldok an iterator.
-#[macro_export]
-macro_rules! yieldoki {
-    ($e: expr) => {{
-        let expr = $e;
-        let mut iterator = expr.1;
-        let ret = expr.0;
-        loop {
-            let value = ::std::iter::Iterator::next(&mut iterator);
-            // maybe match has bad liveness analysis?
-            if value.is_some() {
-                let value = value.unwrap();
-                yield Ok(value);
-            } else {
-                break;
-            }
-        }
-        ret
-    }};
-}
-
-pub fn encode_element_text<'a, I: Into<Cow<'a, str>>>(input: I) -> Cow<'a, str> {
+pub fn encode_element_text<I: Into<Cow<'static, str>>>(input: I) -> Bytes {
     // https://html.spec.whatwg.org/dev/syntax.html
     // https://www.php.net/manual/en/function.htmlspecialchars.php
     static REGEX: OnceLock<regex::Regex> = OnceLock::new();
     let regex = REGEX.get_or_init(|| regex::Regex::new("[&<]").unwrap());
 
-    let input = input.into();
+    let input: Cow<'static, str> = input.into();
     match regex.replace_all(&input, |captures: &Captures| {
         match captures.get(0).unwrap().as_str() {
             "&" => "&amp;",
@@ -197,12 +39,15 @@ pub fn encode_element_text<'a, I: Into<Cow<'a, str>>>(input: I) -> Cow<'a, str> 
             _ => unreachable!(),
         }
     }) {
-        Cow::Borrowed(_) => input,
-        Cow::Owned(owned) => Cow::Owned(owned),
+        Cow::Borrowed(_) => match input {
+            Cow::Borrowed(value) => Bytes::from(value),
+            Cow::Owned(value) => Bytes::from(value),
+        },
+        Cow::Owned(owned) => Bytes::from(owned),
     }
 }
 
-pub fn encode_double_quoted_attribute<'a, I: Into<Cow<'a, str>>>(input: I) -> Cow<'a, str> {
+pub fn encode_double_quoted_attribute<I: Into<Cow<'static, str>>>(input: I) -> Bytes {
     // https://html.spec.whatwg.org/dev/dom.html#content-models
     // https://html.spec.whatwg.org/dev/syntax.html
     // https://html.spec.whatwg.org/#escapingString
@@ -224,8 +69,11 @@ pub fn encode_double_quoted_attribute<'a, I: Into<Cow<'a, str>>>(input: I) -> Co
             _ => unreachable!(),
         }
     }) {
-        Cow::Borrowed(_) => input,
-        Cow::Owned(owned) => Cow::Owned(owned),
+        Cow::Borrowed(_) => match input {
+            Cow::Borrowed(value) => Bytes::from(value),
+            Cow::Owned(value) => Bytes::from(value),
+        },
+        Cow::Owned(owned) => Bytes::from(owned),
     }
 }
 
