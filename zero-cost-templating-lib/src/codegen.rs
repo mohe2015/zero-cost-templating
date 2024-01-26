@@ -45,7 +45,7 @@ fn node_partial_block_type(
     let partial_after_create = partial_after.1;
 
     let common = quote_spanned! {span=>
-        Template::<#partial_template_name_type, (), #partial_after_type>
+        Tp::<#partial_template_name_type, (), #partial_after_type>
     };
     let create = quote_spanned! {span=>
     {
@@ -162,14 +162,9 @@ fn node_raw_type(
     let after_type = &after.0;
     let after_create = &after.1;
 
-    let ident = format_ident!(
-        "{}Template{}",
-        graph[node_index].template_name.to_upper_camel_case(),
-        node_index.index().to_string(),
-        span = span
-    );
+    let ident = format_ident!("Tp{}", node_index.index().to_string(), span = span);
     let common = quote_spanned! {span=>
-        Template::<#ident, #partial_type, #after_type>
+        Tp::<#ident, #partial_type, #after_type>
     };
     let create = quote_spanned! {span=>
         { r#type: #ident, partial: #partial_create, after: #after_create }
@@ -212,14 +207,12 @@ pub fn calculate_nodes<'a>(
     template_codegen: &'a TemplateCodegen,
 ) -> impl Iterator<Item = proc_macro2::TokenStream> + 'a {
     graph.node_references().map(|(node_index, _)| {
-        let template_struct = format_ident!(
-            "{}Template{}",
-            template_codegen.template_name.to_upper_camel_case(),
-            node_index.index().to_string(),
-        );
+        let template_struct = format_ident!("Tp{}", node_index.index().to_string(),);
+        let name = template_codegen.template_name.to_upper_camel_case();
         quote! {
             #[must_use]
             #[derive(Clone, Copy)]
+            #[doc = #name]
             pub struct #template_struct;
         }
     })
@@ -334,11 +327,7 @@ pub fn calculate_edge(
         }
     };
 
-    let impl_template_name = format_ident!(
-        "{}Template{}",
-        template_codegen.template_name.to_upper_camel_case(),
-        edge.source().index().to_string(),
-    );
+    let impl_template_name = format_ident!("Tp{}", edge.source().index().to_string(),);
     let yield_value = element_to_yield(edge.weight());
     // TODO FIXME the ` makes doc test parsing fail
     let _documentation = format!(
@@ -360,7 +349,7 @@ pub fn calculate_edge(
                 edge.target(),
                 Span::call_site(),
                 &(
-                    quote! { Template<PartialName, PartialPartial, PartialAfter> },
+                    quote! { Tp<PartialName, PartialPartial, PartialAfter> },
                     quote! { self.partial },
                 ),
                 &(quote! { PartialName }, quote! { self.partial.r#type }),
@@ -374,9 +363,9 @@ pub fn calculate_edge(
                     PartialAfter,
                     After
                     >
-                    Template<
+                    Tp<
                             #impl_template_name,
-                            Template<PartialName, PartialPartial, PartialAfter>,
+                            Tp<PartialName, PartialPartial, PartialAfter>,
                             After
                             > {
                     pub async fn #function_header -> #return_type {
@@ -399,7 +388,7 @@ pub fn calculate_edge(
             Some({
                 quote! {
                     impl<Partial: Copy, After>
-                        Template<#impl_template_name, Partial, After> {
+                        Tp<#impl_template_name, Partial, After> {
 
                         pub async fn #function_header -> #return_type {
                             #yield_value
@@ -475,7 +464,7 @@ pub fn codegen(
     let result = quote! {
         #[must_use]
         #[derive(Clone, Copy)]
-        pub struct Template<Type, Partial, After> {
+        pub struct Tp<Type, Partial, After> {
             r#type: Type,
             partial: Partial,
             after: After,
