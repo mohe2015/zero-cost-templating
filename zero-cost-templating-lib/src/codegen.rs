@@ -238,9 +238,9 @@ pub fn element_to_yield(
         } => {
             let variable_name = format_ident!("{}", variable_name);
             (
-                quote! { ::alloc::borrow::Cow<'static, str> },
+                quote! { impl ::std::iter::Iterator<Item = &'static str> },
                 quote! {
-                    zero_cost_templating::encode_double_quoted_attribute(#variable_name)
+                    ::zero_cost_templating::FutureToStream(())._yield(zero_cost_templating::encode_double_quoted_attribute(#variable_name)).await;
                 },
             )
         }
@@ -250,9 +250,9 @@ pub fn element_to_yield(
         } => {
             let variable_name = format_ident!("{}", variable_name);
             (
-                quote! { ::alloc::borrow::Cow<'static, str> },
+                quote! { impl ::std::iter::Iterator<Item = &'static str> },
                 quote! {
-                    zero_cost_templating::encode_element_text(#variable_name)
+                    ::zero_cost_templating::FutureToStream(())._yield(zero_cost_templating::encode_element_text(#variable_name)).await;
                 },
             )
         }
@@ -262,27 +262,22 @@ pub fn element_to_yield(
         } => {
             let variable_name = format_ident!("{}", variable_name);
             (
-                quote! { ::alloc::borrow::Cow<'static, str> },
+                quote! { impl ::std::iter::Iterator<Item = &'static str> },
                 quote! {
-                    #variable_name.get_unsafe_input().into()
+                    ::zero_cost_templating::FutureToStream(())._yield(#variable_name.get_unsafe_input().into()).await;
                 },
             )
         }
         IntermediateAstElementInner::Text(text) => (
             quote! { impl ::std::iter::Iterator<Item = &'static str> },
             quote! {
-                async {
-                    ::zero_cost_templating::FutureToStream(())._yield(#text).await;
-                }
+                ::zero_cost_templating::FutureToStream(())._yield(#text).await;
             },
         ),
         IntermediateAstElementInner::InnerTemplate
         | IntermediateAstElementInner::PartialBlockPartial => (
             quote! { impl ::std::iter::Iterator<Item = &'static str> },
             quote! {
-                async {
-
-                }
             },
         ),
     }

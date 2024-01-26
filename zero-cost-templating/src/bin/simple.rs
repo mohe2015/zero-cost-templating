@@ -4,7 +4,7 @@ extern crate alloc;
 
 use std::borrow::Cow;
 
-use zero_cost_templating::{template_stream, yieldi, yieldv};
+use zero_cost_templating::{template_stream};
 
 // https://github.com/dtolnay/cargo-expand
 
