@@ -23,18 +23,21 @@ search for
 `{static coroutine@
 */
 
+pub async fn inner<After>(template: Template<GPartialBlockTemplate60, (), After>) -> After {
+    template.test("inner").await
+}
+
 #[template_stream("templates")]
 pub async fn test(stream: ::zero_cost_templating::FutureToStream) {
-    // reduce next calls.
     // shorten type so this is not so messy
     // find out why we emit copy derives
     // check dynamic composition feasability
     let template = g_partial_block(stream);
     let template = template.next().await;
     let template = template.before("before").await;
-    let template = template.test("test").await;
+    let template = inner(template).await;
     let template = template.next().await;
-    let template = template.test("test").await;
+    let template = inner(template).await;
     let template = template.after("after").await;
     template.next().await;
 }
