@@ -26,7 +26,7 @@ search for
 */
 
 #[template_stream("templates")]
-pub gen fn test() -> Cow<'static, str> {
+pub async fn test() -> Cow<'static, str> {
     let template = yieldi!(g_partial_block());
     let template = yieldi!(template.next());
     let template = yieldi!(template.next());

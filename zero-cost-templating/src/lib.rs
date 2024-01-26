@@ -106,6 +106,7 @@
 #![feature(lint_reasons)]
 
 pub mod async_iterator_extension;
+pub mod future_to_stream;
 
 extern crate alloc;
 
@@ -116,6 +117,7 @@ pub use futures::stream::iter;
 pub use futures::Stream;
 use regex::Captures;
 pub use zero_cost_templating_macros::template_stream;
+pub use future_to_stream::FutureToStream;
 
 // Yield a value.
 #[macro_export]
@@ -124,7 +126,7 @@ macro_rules! yieldv {
         let expr = $e;
         let value = expr.1;
         let ret = expr.0;
-        yield value;
+        ::zero_cost_templating::FutureToStream(())._yield(value).await;
         ret
     }};
 }
@@ -141,7 +143,7 @@ macro_rules! yieldi {
             // maybe match has bad liveness analysis?
             if value.is_some() {
                 let value = value.unwrap();
-                yield ::alloc::borrow::Cow::from(value);
+                ::zero_cost_templating::FutureToStream(())._yield(::alloc::borrow::Cow::from(value)).await;
             } else {
                 break;
             }
@@ -157,7 +159,7 @@ macro_rules! yieldokv {
         let expr = $e;
         let value = expr.1;
         let ret = expr.0;
-        yield Ok(value);
+        ::zero_cost_templating::FutureToStream(())._yield(Ok(value)).await;
         ret
     }};
 }
@@ -174,7 +176,7 @@ macro_rules! yieldoki {
             // maybe match has bad liveness analysis?
             if value.is_some() {
                 let value = value.unwrap();
-                yield Ok(value);
+                ::zero_cost_templating::FutureToStream(())._yield(Ok(value)).await;
             } else {
                 break;
             }

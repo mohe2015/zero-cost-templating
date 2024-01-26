@@ -270,8 +270,8 @@ pub fn element_to_yield(
         IntermediateAstElementInner::Text(text) => (
             quote! { impl ::std::iter::Iterator<Item = &'static str> },
             quote! {
-                gen {
-                    yield #text;
+                async {
+                    ::zero_cost_templating::FutureToStream(())._yield(#text).await;
                 }
             },
         ),
@@ -279,7 +279,7 @@ pub fn element_to_yield(
         | IntermediateAstElementInner::PartialBlockPartial => (
             quote! { impl ::std::iter::Iterator<Item = &'static str> },
             quote! {
-                gen {
+                async {
 
                 }
             },
@@ -462,7 +462,7 @@ pub fn codegen_template_codegen(
         /// Start
         pub fn #ident() -> (#template_struct_type,
                 impl ::std::iter::Iterator<Item = &'static str>) {
-            (#template_struct_create, gen {})
+            (#template_struct_create, async {})
         }
 
         const #recompile_ident: &'static str = include_str!(#path);
