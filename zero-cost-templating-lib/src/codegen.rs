@@ -41,7 +41,7 @@ fn node_partial_block_type(
     let partial_template_name_type = &partial_template_name.0;
     let partial_template_name_create = &partial_template_name.1;
 
-    let partial_after = node_raw_type(node_index, span, partial, after);
+    let partial_after = node_raw_type(graph, node_index, span, partial, after);
     let partial_after_type = partial_after.0;
     let partial_after_create = partial_after.1;
 
@@ -80,6 +80,7 @@ fn node_inner_template_type(
     );
 
     let inner_after = node_raw_type(
+        graph,
         node_index,
         span,
         partial,
@@ -146,10 +147,11 @@ fn node_other_type(
         return after.clone();
     }
 
-    node_raw_type(node_index, span, partial, after)
+    node_raw_type(graph, node_index, span, partial, after)
 }
 
 fn node_raw_type(
+    graph: &StableGraph<TemplateNodeWithId, IntermediateAstElement>,
     node_index: NodeIndex,
     span: Span,
     partial: &(TokenStream, TokenStream),
@@ -161,7 +163,12 @@ fn node_raw_type(
     let after_type = &after.0;
     let after_create = &after.1;
 
-    let ident = format_ident!("Tp{}", node_index.index().to_string(), span = span);
+    let ident = format_ident!(
+        "Tp{}{}",
+        graph[node_index].template_name,
+        graph[node_index].per_template_id,
+        span = span
+    );
     let common = quote_spanned! {span=>
         Tp::<#ident, #partial_type, #after_type>
     };
@@ -205,7 +212,11 @@ pub fn calculate_nodes(
     graph: &StableGraph<TemplateNodeWithId, IntermediateAstElement>,
 ) -> impl Iterator<Item = proc_macro2::TokenStream> + '_ {
     graph.node_references().map(|(node_index, node)| {
-        let template_struct = format_ident!("Tp{}", node_index.index().to_string(),);
+        let template_struct = format_ident!(
+            "Tp{}{}",
+            graph[node_index].template_name,
+            graph[node_index].per_template_id,
+        );
         let name = node.template_name.to_upper_camel_case();
         quote! {
             #[must_use]
@@ -324,7 +335,11 @@ pub fn calculate_edge(
         }
     };
 
-    let impl_template_name = format_ident!("Tp{}", edge.source().index().to_string(),);
+    let impl_template_name = format_ident!(
+        "Tp{}{}",
+        graph[edge.source()].template_name,
+        graph[edge.source()].per_template_id,
+    );
     let yield_value = element_to_yield(edge.weight());
     // TODO FIXME the ` makes doc test parsing fail
     let _documentation = format!(

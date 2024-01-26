@@ -14,6 +14,7 @@ use zero_cost_templating_lib::codegen::{codegen, TemplateCodegen};
 use zero_cost_templating_lib::html_recursive_descent::parse_children;
 use zero_cost_templating_lib::intermediate_graph::{
     children_to_ast, flush_with_node, IntermediateAstElementInner, NodeType, TemplateNode,
+    TemplateNodeWithId,
 };
 
 // https://veykril.github.io/posts/ide-proc-macros/
@@ -57,15 +58,16 @@ pub fn template_stream(
 
     let mut graph = StableGraph::new();
     let graph = &mut graph;
-    let first_nodes: HashMap<_, _> = inputs
+    let mut first_nodes: HashMap<_, _> = inputs
         .iter()
         .map(|(_path, template_name)| {
-            let first = graph.add_node(TemplateNode {
+            let first = graph.add_node(TemplateNodeWithId {
+                per_template_id: 0,
                 template_name: template_name.to_owned(),
                 node_type: NodeType::Other,
             });
 
-            (template_name.clone(), first)
+            (template_name.clone(), (first, 0usize))
         })
         .collect();
 
@@ -99,16 +101,17 @@ pub fn template_stream(
                     );
                 }
             };
-            let first = first_nodes.get(template_name).unwrap();
+            let first = first_nodes.get(template_name).unwrap().0;
             let tmp = children_to_ast(
-                &first_nodes,
+                &mut first_nodes,
                 template_name,
                 graph,
-                BTreeSet::from([(*first, None)]),
+                BTreeSet::from([(first, None)]),
                 dom,
                 "root",
             );
             let last = flush_with_node(
+                &mut first_nodes,
                 graph,
                 tmp,
                 TemplateNode {
@@ -120,7 +123,7 @@ pub fn template_stream(
             TemplateCodegen {
                 template_name: template_name.to_owned(),
                 path: path.to_owned(),
-                first: *first,
+                first: first,
                 last,
             }
         })

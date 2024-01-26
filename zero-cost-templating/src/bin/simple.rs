@@ -24,7 +24,7 @@ search for
 */
 
 // maybe add long hand type aliases for templates
-pub async fn inner<After>(template: Tp<Tp60, (), After>) -> After {
+pub async fn inner<After>(template: Tp<Tpg_partial_block2, (), After>) -> After {
     template.test("inner").await
 }
 
