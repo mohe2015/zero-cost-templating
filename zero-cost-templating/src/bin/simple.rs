@@ -23,7 +23,8 @@ search for
 `{static coroutine@
 */
 
-pub async fn inner<After>(template: Tp<GPartialBlockTemplate60, (), After>) -> After {
+// maybe add long hand type aliases for templates
+pub async fn inner<After>(template: Tp<Tp60, (), After>) -> After {
     template.test("inner").await
 }
 

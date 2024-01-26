@@ -204,11 +204,10 @@ pub struct TemplateCodegen {
 
 pub fn calculate_nodes<'a>(
     graph: &'a StableGraph<TemplateNode, IntermediateAstElement>,
-    template_codegen: &'a TemplateCodegen,
 ) -> impl Iterator<Item = proc_macro2::TokenStream> + 'a {
-    graph.node_references().map(|(node_index, _)| {
+    graph.node_references().map(|(node_index, node)| {
         let template_struct = format_ident!("Tp{}", node_index.index().to_string(),);
-        let name = template_codegen.template_name.to_upper_camel_case();
+        let name = node.template_name.to_upper_camel_case();
         quote! {
             #[must_use]
             #[derive(Clone, Copy)]
@@ -278,7 +277,6 @@ pub fn element_to_yield(
 #[must_use]
 pub fn calculate_edge(
     graph: &StableGraph<TemplateNode, IntermediateAstElement>,
-    template_codegen: &TemplateCodegen,
     edge: petgraph::stable_graph::EdgeReference<'_, IntermediateAstElement>,
 ) -> proc_macro2::TokenStream {
     // TODO FIXME only add number when multiple outgoing edges
@@ -406,7 +404,6 @@ pub fn calculate_edge(
 
 pub fn calculate_edges<'a>(
     graph: &'a StableGraph<TemplateNode, IntermediateAstElement>,
-    template_codegen: &'a TemplateCodegen,
 ) -> impl Iterator<Item = proc_macro2::TokenStream> + 'a {
     graph
         .edge_references()
@@ -414,7 +411,7 @@ pub fn calculate_edges<'a>(
             edge.weight().inner != IntermediateAstElementInner::PartialBlockPartial
                 && edge.weight().inner != IntermediateAstElementInner::InnerTemplate
         })
-        .map(|edge| calculate_edge(graph, template_codegen, edge))
+        .map(|edge| calculate_edge(graph, edge))
 }
 
 #[must_use]
@@ -422,8 +419,6 @@ pub fn codegen_template_codegen(
     graph: &StableGraph<TemplateNode, IntermediateAstElement>,
     template_codegen: &TemplateCodegen,
 ) -> proc_macro2::TokenStream {
-    let instructions = calculate_nodes(graph, template_codegen);
-    let edges = calculate_edges(graph, template_codegen);
     let ident = format_ident!("{}", template_codegen.template_name,);
     let template_struct = node_type(
         graph,
@@ -438,9 +433,6 @@ pub fn codegen_template_codegen(
     let path = template_codegen.path.to_string_lossy();
     quote! {
 
-        #(#instructions)*
-
-        #(#edges)*
 
         #[allow(unused)]
         /// Start
@@ -457,6 +449,9 @@ pub fn codegen(
     graph: &StableGraph<TemplateNode, IntermediateAstElement>,
     templates: &[TemplateCodegen],
 ) -> proc_macro2::TokenStream {
+    let instructions = calculate_nodes(graph);
+    let edges = calculate_edges(graph);
+
     let code = templates
         .iter()
         .map(|template_codegen| codegen_template_codegen(graph, template_codegen));
@@ -469,6 +464,10 @@ pub fn codegen(
             partial: Partial,
             after: After,
         }
+
+        #(#instructions)*
+
+        #(#edges)*
 
         #(#code)*
     };
