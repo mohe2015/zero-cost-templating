@@ -386,7 +386,7 @@ pub fn calculate_edge(
             Some({
                 quote! {
                     impl<Partial: Copy, After>
-                        Tp<#impl_template_name, Partial, After> {
+                    Tp<#impl_template_name, Partial, After> {
 
                         pub async fn #function_header -> #return_type {
                             #yield_value
