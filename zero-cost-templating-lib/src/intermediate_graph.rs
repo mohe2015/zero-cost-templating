@@ -209,7 +209,7 @@ pub fn add_edge_maybe_with_node(
                         inner: IntermediateAstElementInner::Variable {
                             before: old + &before,
                             variable_name: variable_name.clone(),
-                            escaping_fun: escaping_fun.clone(),
+                            escaping_fun: *escaping_fun,
                             after: after.clone(),
                         },
                     }),

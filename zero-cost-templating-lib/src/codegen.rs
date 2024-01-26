@@ -200,9 +200,9 @@ pub struct TemplateCodegen {
     pub last: NodeIndex,
 }
 
-pub fn calculate_nodes<'a>(
-    graph: &'a StableGraph<TemplateNode, IntermediateAstElement>,
-) -> impl Iterator<Item = proc_macro2::TokenStream> + 'a {
+pub fn calculate_nodes(
+    graph: &StableGraph<TemplateNode, IntermediateAstElement>,
+) -> impl Iterator<Item = proc_macro2::TokenStream> + '_ {
     graph.node_references().map(|(node_index, node)| {
         let template_struct = format_ident!("Tp{}", node_index.index().to_string(),);
         let name = node.template_name.to_upper_camel_case();
@@ -400,9 +400,9 @@ pub fn calculate_edge(
     }
 }
 
-pub fn calculate_edges<'a>(
-    graph: &'a StableGraph<TemplateNode, IntermediateAstElement>,
-) -> impl Iterator<Item = proc_macro2::TokenStream> + 'a {
+pub fn calculate_edges(
+    graph: &StableGraph<TemplateNode, IntermediateAstElement>,
+) -> impl Iterator<Item = proc_macro2::TokenStream> + '_ {
     graph
         .edge_references()
         .filter(|edge| {
@@ -431,7 +431,7 @@ pub fn codegen_template_codegen(
     let path = template_codegen.path.to_string_lossy();
     quote! {
 
-
+        #[allow(clippy::unused_unit)]
         #[allow(unused)]
         /// Start
         pub fn #ident(stream: ::zero_cost_templating::FutureToStream) -> #template_struct_type {
