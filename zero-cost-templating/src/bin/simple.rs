@@ -30,8 +30,6 @@ pub async fn inner<After>(template: Tp<Tp60, (), After>) -> After {
 
 #[template_stream("templates")]
 pub async fn test(stream: ::zero_cost_templating::FutureToStream) {
-    // shorten type so this is not so messy
-    // find out why we emit copy derives
     let template = g_partial_block(stream);
     let template = template.next().await;
     let template = template.before("before").await;
