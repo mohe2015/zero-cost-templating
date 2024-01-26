@@ -103,9 +103,20 @@ pub struct TemplateNode {
     pub node_type: NodeType,
 }
 
-impl Display for TemplateNode {
+#[derive(Debug, Clone)]
+pub struct TemplateNodeWithId {
+    pub per_template_id: usize,
+    pub template_name: String,
+    pub node_type: NodeType,
+}
+
+impl Display for TemplateNodeWithId {
     fn fmt(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-        write!(formatter, "{} {}", self.template_name, self.node_type)
+        write!(
+            formatter,
+            "{}{} {}",
+            self.template_name, self.per_template_id, self.node_type
+        )
     }
 }
 
@@ -123,7 +134,7 @@ impl Display for TemplateNode {
 /// (even not added if current node type is not NodeType::Other).
 // Two partials after each other...
 pub fn flush_with_node(
-    graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
+    graph: &mut StableGraph<TemplateNodeWithId, IntermediateAstElement>,
     tmp: BTreeSet<(NodeIndex, Option<IntermediateAstElement>)>,
     node: TemplateNode,
 ) -> NodeIndex {
@@ -148,7 +159,7 @@ pub fn flush_with_node(
 }
 
 pub fn connect_edges_to_node(
-    graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
+    graph: &mut StableGraph<TemplateNodeWithId, IntermediateAstElement>,
     tmp: BTreeSet<(NodeIndex, Option<IntermediateAstElement>)>,
     to: NodeIndex,
 ) {
@@ -160,7 +171,7 @@ pub fn connect_edges_to_node(
 /// Adds the edge in all cases.
 /// If adding the edge requires a new node, it adds the node of the specified type.
 pub fn add_edge_maybe_with_node(
-    graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
+    graph: &mut StableGraph<TemplateNodeWithId, IntermediateAstElement>,
     tmp: BTreeSet<(NodeIndex, Option<IntermediateAstElement>)>,
     next_edge: IntermediateAstElement,
     to: TemplateNode,
@@ -258,7 +269,7 @@ pub fn add_edge_maybe_with_node(
 pub fn children_to_ast(
     first_nodes: &HashMap<String, NodeIndex>,
     template_name: &str,
-    graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
+    graph: &mut StableGraph<TemplateNodeWithId, IntermediateAstElement>,
     mut tmp: BTreeSet<(NodeIndex, Option<IntermediateAstElement>)>,
     input: Vec<Child>,
     parent: &str,
@@ -464,7 +475,7 @@ pub fn children_to_ast(
 pub fn element_to_ast(
     first_nodes: &HashMap<String, NodeIndex>,
     template_name: &str,
-    graph: &mut StableGraph<TemplateNode, IntermediateAstElement>,
+    graph: &mut StableGraph<TemplateNodeWithId, IntermediateAstElement>,
     mut tmp: BTreeSet<(NodeIndex, Option<IntermediateAstElement>)>,
     input: Element,
 ) -> BTreeSet<(NodeIndex, Option<IntermediateAstElement>)> {

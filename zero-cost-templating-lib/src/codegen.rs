@@ -11,6 +11,7 @@ use quote::{format_ident, quote, quote_spanned};
 
 use crate::intermediate_graph::{
     EscapingFunction, IntermediateAstElement, IntermediateAstElementInner, NodeType, TemplateNode,
+    TemplateNodeWithId,
 };
 
 /// design: all nodes have a struct type so you can go too all nodes
@@ -24,7 +25,7 @@ use crate::intermediate_graph::{
 /// partial is only the type of the node itself
 /// (maybe we could change this to be a full node type (with Template::?))
 fn node_partial_block_type(
-    graph: &StableGraph<TemplateNode, IntermediateAstElement>,
+    graph: &StableGraph<TemplateNodeWithId, IntermediateAstElement>,
     node_index: NodeIndex,
     span: Span,
     partial: &(TokenStream, TokenStream),
@@ -67,7 +68,7 @@ fn node_partial_block_type(
 /// the node itself will be visited when going out of the inner template
 
 fn node_inner_template_type(
-    graph: &StableGraph<TemplateNode, IntermediateAstElement>,
+    graph: &StableGraph<TemplateNodeWithId, IntermediateAstElement>,
     node_index: NodeIndex,
     span: Span,
     partial: &(TokenStream, TokenStream),
@@ -125,7 +126,7 @@ fn node_inner_template_type(
 }
 
 fn node_other_type(
-    graph: &StableGraph<TemplateNode, IntermediateAstElement>,
+    graph: &StableGraph<TemplateNodeWithId, IntermediateAstElement>,
     node_index: NodeIndex,
     span: Span,
     partial: &(TokenStream, TokenStream),
@@ -178,7 +179,7 @@ fn node_raw_type(
 /// return.0 is type and return.1 is create expression
 /// This method's only responsibility is to convert the node to a type and creation ``TokenStream``.
 fn node_type(
-    graph: &StableGraph<TemplateNode, IntermediateAstElement>,
+    graph: &StableGraph<TemplateNodeWithId, IntermediateAstElement>,
     node_index: NodeIndex,
     span: Span,
     partial: &(TokenStream, TokenStream),
@@ -201,7 +202,7 @@ pub struct TemplateCodegen {
 }
 
 pub fn calculate_nodes(
-    graph: &StableGraph<TemplateNode, IntermediateAstElement>,
+    graph: &StableGraph<TemplateNodeWithId, IntermediateAstElement>,
 ) -> impl Iterator<Item = proc_macro2::TokenStream> + '_ {
     graph.node_references().map(|(node_index, node)| {
         let template_struct = format_ident!("Tp{}", node_index.index().to_string(),);
@@ -274,7 +275,7 @@ pub fn element_to_yield(
 #[allow(clippy::too_many_lines)]
 #[must_use]
 pub fn calculate_edge(
-    graph: &StableGraph<TemplateNode, IntermediateAstElement>,
+    graph: &StableGraph<TemplateNodeWithId, IntermediateAstElement>,
     edge: petgraph::stable_graph::EdgeReference<'_, IntermediateAstElement>,
 ) -> proc_macro2::TokenStream {
     // TODO FIXME only add number when multiple outgoing edges
@@ -401,7 +402,7 @@ pub fn calculate_edge(
 }
 
 pub fn calculate_edges(
-    graph: &StableGraph<TemplateNode, IntermediateAstElement>,
+    graph: &StableGraph<TemplateNodeWithId, IntermediateAstElement>,
 ) -> impl Iterator<Item = proc_macro2::TokenStream> + '_ {
     graph
         .edge_references()
@@ -414,7 +415,7 @@ pub fn calculate_edges(
 
 #[must_use]
 pub fn codegen_template_codegen(
-    graph: &StableGraph<TemplateNode, IntermediateAstElement>,
+    graph: &StableGraph<TemplateNodeWithId, IntermediateAstElement>,
     template_codegen: &TemplateCodegen,
 ) -> proc_macro2::TokenStream {
     let ident = format_ident!("{}", template_codegen.template_name,);
@@ -444,7 +445,7 @@ pub fn codegen_template_codegen(
 
 #[must_use]
 pub fn codegen(
-    graph: &StableGraph<TemplateNode, IntermediateAstElement>,
+    graph: &StableGraph<TemplateNodeWithId, IntermediateAstElement>,
     templates: &[TemplateCodegen],
 ) -> proc_macro2::TokenStream {
     let instructions = calculate_nodes(graph);
