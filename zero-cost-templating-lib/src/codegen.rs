@@ -230,6 +230,7 @@ pub fn element_to_yield(
     intermediate_ast_element: &IntermediateAstElement,
 ) -> (proc_macro2::TokenStream, proc_macro2::TokenStream) {
     // TODO FIXME check for empty string yielding in production
+    // TODO FIXME always same function signature
     match &intermediate_ast_element.inner {
         IntermediateAstElementInner::Variable {
             variable_name,
@@ -384,9 +385,9 @@ pub fn calculate_edge(
                             Template<PartialName, PartialPartial, PartialAfter>,
                             After
                             > {
-                    pub fn #function_header -> (#return_type,
-                            #yield_return_type) {
-                        (#return_create, #yield_value)
+                    pub async fn #function_header -> #return_type {
+                        #yield_value
+                        #return_create
                     }
                 }
             }
@@ -406,9 +407,9 @@ pub fn calculate_edge(
                     impl<Partial: Copy, After>
                         Template<#impl_template_name, Partial, After> {
 
-                        pub fn #function_header -> (#return_type,
-                                #yield_return_type) {
-                            (#return_create, #yield_value)
+                        pub async fn #function_header -> #return_type {
+                            #yield_value
+                            #return_create
                         }
                     }
                 }
@@ -460,9 +461,8 @@ pub fn codegen_template_codegen(
 
         #[allow(unused)]
         /// Start
-        pub fn #ident() -> (#template_struct_type,
-                impl ::std::iter::Iterator<Item = &'static str>) {
-            (#template_struct_create, async {})
+        pub fn #ident() -> #template_struct_type {
+            #template_struct_create
         }
 
         const #recompile_ident: &'static str = include_str!(#path);

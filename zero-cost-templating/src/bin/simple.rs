@@ -27,22 +27,22 @@ search for
 
 #[template_stream("templates")]
 pub async fn test() -> Cow<'static, str> {
-    let template = yieldi!(g_partial_block());
-    let template = yieldi!(template.next());
-    let template = yieldi!(template.next());
-    let template = yieldv!(template.before("before"));
-    let template = yieldi!(template.next());
-    let template = yieldi!(template.next());
-    let template = yieldv!(template.test("test"));
-    let template = yieldi!(template.next());
-    let template = yieldi!(template.next());
-    let template = yieldi!(template.next());
-    let template = yieldv!(template.test("test"));
-    let template = yieldi!(template.next());
-    let template = yieldi!(template.next());
-    let template = yieldv!(template.after("after"));
-    let template = yieldi!(template.next());
-    yieldi!(template.next());
+    let template = g_partial_block().await;
+    let template = template.next().await;
+    let template = template.next().await;
+    let template = template.before("before").await;
+    let template = template.next().await;
+    let template = template.next().await;
+    let template = template.test("test").await;
+    let template = template.next().await;
+    let template = template.next().await;
+    let template = template.next().await;
+    let template = template.test("test").await;
+    let template = template.next().await;
+    let template = template.next().await;
+    let template = template.after("after").await;
+    let template = template.next().await;
+    template.next().await;
 }
 
 #[tokio::main]

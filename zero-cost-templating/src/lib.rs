@@ -113,77 +113,11 @@ extern crate alloc;
 use alloc::borrow::Cow;
 use std::sync::OnceLock;
 
+pub use future_to_stream::FutureToStream;
 pub use futures::stream::iter;
 pub use futures::Stream;
 use regex::Captures;
 pub use zero_cost_templating_macros::template_stream;
-pub use future_to_stream::FutureToStream;
-
-// Yield a value.
-#[macro_export]
-macro_rules! yieldv {
-    ($e: expr) => {{
-        let expr = $e;
-        let value = expr.1;
-        let ret = expr.0;
-        ::zero_cost_templating::FutureToStream(())._yield(value).await;
-        ret
-    }};
-}
-
-/// Yield an iterator.
-#[macro_export]
-macro_rules! yieldi {
-    ($e: expr) => {{
-        let expr = $e;
-        let mut iterator = expr.1;
-        let ret = expr.0;
-        loop {
-            let value = ::std::iter::Iterator::next(&mut iterator);
-            // maybe match has bad liveness analysis?
-            if value.is_some() {
-                let value = value.unwrap();
-                ::zero_cost_templating::FutureToStream(())._yield(::alloc::borrow::Cow::from(value)).await;
-            } else {
-                break;
-            }
-        }
-        ret
-    }};
-}
-
-// Yieldok a value.
-#[macro_export]
-macro_rules! yieldokv {
-    ($e: expr) => {{
-        let expr = $e;
-        let value = expr.1;
-        let ret = expr.0;
-        ::zero_cost_templating::FutureToStream(())._yield(Ok(value)).await;
-        ret
-    }};
-}
-
-/// Yieldok an iterator.
-#[macro_export]
-macro_rules! yieldoki {
-    ($e: expr) => {{
-        let expr = $e;
-        let mut iterator = expr.1;
-        let ret = expr.0;
-        loop {
-            let value = ::std::iter::Iterator::next(&mut iterator);
-            // maybe match has bad liveness analysis?
-            if value.is_some() {
-                let value = value.unwrap();
-                ::zero_cost_templating::FutureToStream(())._yield(Ok(value)).await;
-            } else {
-                break;
-            }
-        }
-        ret
-    }};
-}
 
 pub struct Unsafe<T: Into<::alloc::borrow::Cow<'static, str>>>(T);
 
