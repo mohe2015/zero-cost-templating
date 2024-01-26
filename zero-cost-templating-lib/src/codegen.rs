@@ -40,7 +40,7 @@ fn node_partial_block_type(
     let partial_template_name_type = &partial_template_name.0;
     let partial_template_name_create = &partial_template_name.1;
 
-    let partial_after = node_raw_type(graph, node_index, span, partial, after);
+    let partial_after = node_raw_type(node_index, span, partial, after);
     let partial_after_type = partial_after.0;
     let partial_after_create = partial_after.1;
 
@@ -79,7 +79,6 @@ fn node_inner_template_type(
     );
 
     let inner_after = node_raw_type(
-        graph,
         node_index,
         span,
         partial,
@@ -146,7 +145,7 @@ fn node_other_type(
         return after.clone();
     }
 
-    node_raw_type(graph, node_index, span, partial, after)
+    node_raw_type(node_index, span, partial, after)
 }
 
 fn node_raw_type(
