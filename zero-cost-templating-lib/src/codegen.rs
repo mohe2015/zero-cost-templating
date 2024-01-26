@@ -150,7 +150,6 @@ fn node_other_type(
 }
 
 fn node_raw_type(
-    graph: &StableGraph<TemplateNode, IntermediateAstElement>,
     node_index: NodeIndex,
     span: Span,
     partial: &(TokenStream, TokenStream),
